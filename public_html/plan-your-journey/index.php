@@ -1,7 +1,7 @@
 <?php require_once '../header.php'; ?>
 
 <!-- Page Banner -->
-<div class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1534143026859-00f7239f60f6?q=80&w=2940&auto=format&fit=crop'); background-size: cover; background-position: center; padding: 120px 0; text-align: center; color: white; position: relative;">
+<div class="page-banner" style="background-image: url('/assets/images/landscape1.jpg'); background-size: cover; background-position: center; padding: 120px 0; text-align: center; color: white; position: relative;">
     <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);"></div>
     <div class="container" style="position: relative; z-index: 2;">
         <h1 style="font-size: 50px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); color: #fff;">Plan Your Journey</h1>

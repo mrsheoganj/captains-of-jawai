@@ -77,9 +77,9 @@ img { max-width: 100%; height: auto; border-radius: 8px; }
 .slide-content p { font-size: 20px; font-weight: 300; max-width: 800px; margin: 0 auto 35px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
 
 /* Responsive Backgrounds */
-.slide-bg-1 { background-image: url('https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop'); }
-.slide-bg-2 { background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2936&auto=format&fit=crop'); }
-.slide-bg-3 { background-image: url('https://images.unsplash.com/photo-1534143026859-00f7239f60f6?q=80&w=2940&auto=format&fit=crop'); } /* Landscape / Tribe placeholder */
+.slide-bg-1 { background-image: url('/assets/images/leopard1.jpg'); }
+.slide-bg-2 { background-image: url('/assets/images/safari1.jpg'); }
+.slide-bg-3 { background-image: url('/assets/images/landscape1.jpg'); }
 
 @media (max-width: 768px) {
     .hero-slider { height: 60vh; border-radius: 0; }

@@ -1,7 +1,7 @@
 <?php require_once 'header.php'; ?>
 
 <!-- Page Banner -->
-<div class="page-banner" style="background-image: url('https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop'); background-size: cover; background-position: center; padding: 120px 0; text-align: center; color: white; position: relative;">
+<div class="page-banner" style="background-image: url('/assets/images/leopard1.jpg'); background-size: cover; background-position: center; padding: 120px 0; text-align: center; color: white; position: relative;">
     <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5);"></div>
     <div class="container" style="position: relative; z-index: 2;">
         <h1 style="font-size: 50px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); color: #fff;">About Captains of Jawai</h1>
@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="details-right">
-                <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2936&auto=format&fit=crop" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Rabari Guide">
+                <img src="/assets/images/safari1.jpg" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Rabari Guide">
             </div>
         </div>
     </div>

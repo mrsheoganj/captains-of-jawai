@@ -54,9 +54,9 @@
                 <div class="details-right" data-aos="fade-left" data-aos-duration="1200">
                     <div style="position: relative;">
                         <!-- Jawai Leopard Image -->
-                        <img src="https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Jawai Leopard">
+                        <img src="/assets/images/leopard2.jpg" style="width: 100%; border-radius: 20px; box-shadow: var(--shadow-soft);" alt="Jawai Leopard">
                         <!-- Overlapping Image (Culture/Landscape) -->
-                        <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2936&auto=format&fit=crop" style="position: absolute; bottom: -40px; left: -40px; width: 50%; border-radius: 20px; border: 10px solid #fff; box-shadow: var(--shadow-soft);" alt="Jawai Culture">
+                        <img src="/assets/images/safari1.jpg" style="position: absolute; bottom: -40px; left: -40px; width: 50%; border-radius: 20px; border: 10px solid #fff; box-shadow: var(--shadow-soft);" alt="Jawai Safari Jeep">
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
             <div class="package-grid">
                 <!-- Package 1 -->
                 <div class="package-card" data-aos="fade-up" data-aos-delay="100">
-                    <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1615598285513-43f1190bc1b9?q=80&w=2940&auto=format&fit=crop" alt="Morning Safari"></div>
+                    <div style="overflow: hidden;"><img src="/assets/images/leopard1.jpg" alt="Morning Safari"></div>
                     <div class="package-content">
                         <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_1_title', 'Sunrise Leopard Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Track apex predators as they return from their night hunts in the soft dawn light.</p>
@@ -92,7 +92,7 @@
                 <!-- Package 2 -->
                 <div class="package-card" data-aos="fade-up" data-aos-delay="200" style="border: 2px solid var(--primary-color);">
                     <div style="background: var(--primary-color); color: #fff; text-align: center; padding: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Recommended</div>
-                    <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop" alt="Evening Safari"></div>
+                    <div style="overflow: hidden;"><img src="/assets/images/leopard2.jpg" alt="Evening Safari"></div>
                     <div class="package-content">
                         <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_2_title', 'Sunset Leopard Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Watch leopards emerge from the granite caves to bask in the fading golden sunlight.</p>
@@ -108,7 +108,7 @@
 
                 <!-- Package 3 -->
                 <div class="package-card" data-aos="fade-up" data-aos-delay="300">
-                    <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1544482025-a83151817730?q=80&w=2940&auto=format&fit=crop" alt="Wetland Safari"></div>
+                    <div style="overflow: hidden;"><img src="/assets/images/bird1.jpg" alt="Wetland Safari"></div>
                     <div class="package-content">
                         <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_3_title', 'Wetland Birding Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Explore the dam area. Perfect for bird watchers, with crocodiles and flamingos.</p>
@@ -136,19 +136,19 @@
             
             <div class="gallery-grid" data-aos="fade-up" data-aos-delay="200">
                 <div class="gallery-item gi-1">
-                    <img src="https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop" alt="Jawai Leopard Close Up">
+                    <img src="/assets/images/leopard1.jpg" alt="Jawai Leopard Close Up">
                 </div>
                 <div class="gallery-item gi-2">
-                    <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2936&auto=format&fit=crop" alt="Rabari Herdsman">
+                    <img src="/assets/images/safari1.jpg" alt="Safari Jeep">
                 </div>
                 <div class="gallery-item gi-3">
-                    <img src="https://images.unsplash.com/photo-1534143026859-00f7239f60f6?q=80&w=2940&auto=format&fit=crop" alt="Jawai Granites">
+                    <img src="/assets/images/landscape1.jpg" alt="Jawai Granites">
                 </div>
                 <div class="gallery-item gi-2">
-                    <img src="https://images.unsplash.com/photo-1615598285513-43f1190bc1b9?q=80&w=2940&auto=format&fit=crop" alt="Sunset in Jawai">
+                    <img src="/assets/images/leopard2.jpg" alt="Leopard">
                 </div>
                 <div class="gallery-item gi-3">
-                    <img src="https://images.unsplash.com/photo-1544482025-a83151817730?q=80&w=2940&auto=format&fit=crop" alt="Birding Jawai Dam">
+                    <img src="/assets/images/bird1.jpg" alt="Birding Jawai Dam">
                 </div>
             </div>
         </div>

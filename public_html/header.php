@@ -8,9 +8,10 @@ use App\Settings;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jawai Leopard Safari Booking | Captains of Jawai</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- Using FontAwesome via CDN for standard travel site icons -->
+    <link rel="stylesheet" href="/css/style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 </head>
 <body>
 

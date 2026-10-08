@@ -91,7 +91,11 @@ if ($is_logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save
             <button type="submit" name="login">Login</button>
         </form>
     <?php else: ?>
-        <a href="?logout=1" class="logout">Logout</a>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+            <a href="index.php" style="color: #D4AF37; font-weight: bold; text-decoration: none;">CMS (Text Editor)</a>
+            <a href="crm/index.php" style="color: #4b5563; font-weight: bold; text-decoration: none;">CRM (Enquiries)</a>
+            <a href="?logout=1" style="color: #991b1b; font-weight: bold; text-decoration: none; margin-left: auto;">Logout</a>
+        </div>
         <h1>Homepage CMS Editor</h1>
         <p>Edit the text content of your website below. Changes reflect instantly on the live site.</p>
         

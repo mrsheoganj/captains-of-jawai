@@ -32,11 +32,11 @@
                         </li>
                         <li>
                             <i class="fa fa-envelope"></i>
-                            <div><a href="mailto:booking@captainsofjawai.com">booking@captainsofjawai.com</a></div>
+                            <div><a href="mailto:<?= htmlspecialchars(Settings::get('contact_email', 'booking@captainsofjawai.com')) ?>"><?= htmlspecialchars(Settings::get('contact_email', 'booking@captainsofjawai.com')) ?></a></div>
                         </li>
                         <li>
                             <i class="fa fa-phone"></i>
-                            <div><a href="tel:+919876543210">+91-9876543210</a></div>
+                            <div><a href="tel:<?= htmlspecialchars(Settings::get('contact_phone', '+91-9876543210')) ?>"><?= htmlspecialchars(Settings::get('contact_phone', '+91-9876543210')) ?></a></div>
                         </li>
                     </ul>
                 </div>
@@ -56,8 +56,8 @@
     <!-- Floating Contact Actions -->
     <div class="mf-social-side-list">
         <ul>
-            <li><a href="https://wa.me/+919876543210" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-            <li><a href="tel:+919876543210"><i class="fa fa-phone"></i></a></li>
+            <li><a href="https://wa.me/<?= htmlspecialchars(Settings::get('contact_phone', '+919876543210')) ?>" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="tel:<?= htmlspecialchars(Settings::get('contact_phone', '+91-9876543210')) ?>"><i class="fa fa-phone"></i></a></li>
         </ul>   
     </div>
 

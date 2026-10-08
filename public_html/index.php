@@ -6,23 +6,23 @@
             <!-- Slide 1: Leopards -->
             <div class="swiper-slide slide-bg-1">
                 <div class="slide-content" data-aos="fade-up" data-aos-duration="1000">
-                    <h1>The Leopards of Jawai</h1>
-                    <p>Track apex predators in their natural granite habitat. A breathtaking 100% ethical wildlife experience.</p>
+                    <h1><?= htmlspecialchars(\App\Settings::get('hero_title_1', 'The Leopards of Jawai')) ?></h1>
+                    <p><?= htmlspecialchars(\App\Settings::get('hero_desc_1', 'Track apex predators in their natural granite habitat. A breathtaking 100% ethical wildlife experience.')) ?></p>
                     <a href="#packages" class="primary-btn1">View Packages</a>
                 </div>
             </div>
             <!-- Slide 2: Rabari Culture -->
             <div class="swiper-slide slide-bg-2">
                 <div class="slide-content">
-                    <h1>A Sacred Coexistence</h1>
-                    <p>Experience the unique harmony between the ancient Rabari herdsmen and Jawai's wild leopards.</p>
+                    <h1><?= htmlspecialchars(\App\Settings::get('hero_title_2', 'A Sacred Coexistence')) ?></h1>
+                    <p><?= htmlspecialchars(\App\Settings::get('hero_desc_2', 'Experience the unique harmony between the ancient Rabari herdsmen and Jawai\'s wild leopards.')) ?></p>
                     <a href="#about" class="primary-btn1">Discover Jawai</a>
                 </div>
             </div>
             <!-- Slide 3: Landscapes -->
             <div class="swiper-slide slide-bg-3">
                 <div class="slide-content">
-                    <h1>Untamed Landscapes</h1>
+                    <h1><?= htmlspecialchars(\App\Settings::get('hero_title_3', 'Untamed Landscapes')) ?></h1>
                     <p>From monolithic granite boulders to shimmering wetlands, Jawai is a photographer's paradise.</p>
                     <a href="#gallery" class="primary-btn1">View Gallery</a>
                 </div>
@@ -39,9 +39,9 @@
             <div class="details-row">
                 <div class="details-left" data-aos="fade-right" data-aos-duration="1200">
                     <span class="section-subtitle">Welcome to Jawai Safari</span>
-                    <h2>The Most Unique Leopard Tracking Experience in India</h2>
-                    <p style="font-size: 18px; margin-bottom: 20px;">Located in the Pali district of Rajasthan, Jawai is a hidden gem where nature, wildlife, and local culture blend seamlessly. Unlike heavily regulated national parks, Jawai offers an unrestricted, intimate safari experience across private and community lands.</p>
-                    <p style="font-size: 16px; margin-bottom: 30px;">Our open-top 4x4 Gypsies, driven by indigenous trackers who have lived alongside these big cats for generations, get you closer to the action while maintaining absolute respect for the wildlife.</p>
+                    <h2><?= htmlspecialchars(\App\Settings::get('about_title', 'The Most Unique Leopard Tracking Experience in India')) ?></h2>
+                    <p style="font-size: 18px; margin-bottom: 20px;"><?= htmlspecialchars(\App\Settings::get('about_text_1', 'Located in the Pali district of Rajasthan, Jawai is a hidden gem where nature, wildlife, and local culture blend seamlessly. Unlike heavily regulated national parks, Jawai offers an unrestricted, intimate safari experience across private and community lands.')) ?></p>
+                    <p style="font-size: 16px; margin-bottom: 30px;"><?= htmlspecialchars(\App\Settings::get('about_text_2', 'Our open-top 4x4 Gypsies, driven by indigenous trackers who have lived alongside these big cats for generations, get you closer to the action while maintaining absolute respect for the wildlife.')) ?></p>
                     <div class="includ-and-exclud-area">
                         <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <li><i class="fa fa-paw"></i> <p>Highest Leopard Density</p></li>
@@ -77,12 +77,12 @@
                 <div class="package-card" data-aos="fade-up" data-aos-delay="100">
                     <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1615598285513-43f1190bc1b9?q=80&w=2940&auto=format&fit=crop" alt="Morning Safari"></div>
                     <div class="package-content">
-                        <h3 style="font-size: 22px; margin-bottom: 10px;">Sunrise Leopard Safari</h3>
+                        <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_1_title', 'Sunrise Leopard Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Track apex predators as they return from their night hunts in the soft dawn light.</p>
                         <div class="package-price-row">
                             <div>
                                 <span style="font-size: 13px; color: #999; text-transform: uppercase; font-weight: 600;">Per Jeep (Up to 6)</span>
-                                <div style="font-size: 24px; font-weight: 700; color: var(--text-dark);">₹6,500</div>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--text-dark);"><?= htmlspecialchars(\App\Settings::get('package_1_price', '₹6,500')) ?></div>
                             </div>
                             <a href="/plan-your-journey/" class="primary-btn1" style="padding: 10px 25px;">Book Now</a>
                         </div>
@@ -94,12 +94,12 @@
                     <div style="background: var(--primary-color); color: #fff; text-align: center; padding: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Recommended</div>
                     <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1549479354-945763a824cb?q=80&w=2938&auto=format&fit=crop" alt="Evening Safari"></div>
                     <div class="package-content">
-                        <h3 style="font-size: 22px; margin-bottom: 10px;">Sunset Leopard Safari</h3>
+                        <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_2_title', 'Sunset Leopard Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Watch leopards emerge from the granite caves to bask in the fading golden sunlight.</p>
                         <div class="package-price-row">
                             <div>
                                 <span style="font-size: 13px; color: #999; text-transform: uppercase; font-weight: 600;">Per Jeep (Up to 6)</span>
-                                <div style="font-size: 24px; font-weight: 700; color: var(--primary-color);">₹6,500</div>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--primary-color);"><?= htmlspecialchars(\App\Settings::get('package_2_price', '₹6,500')) ?></div>
                             </div>
                             <a href="/plan-your-journey/" class="primary-btn1" style="padding: 10px 25px;">Book Now</a>
                         </div>
@@ -110,12 +110,12 @@
                 <div class="package-card" data-aos="fade-up" data-aos-delay="300">
                     <div style="overflow: hidden;"><img src="https://images.unsplash.com/photo-1544482025-a83151817730?q=80&w=2940&auto=format&fit=crop" alt="Wetland Safari"></div>
                     <div class="package-content">
-                        <h3 style="font-size: 22px; margin-bottom: 10px;">Wetland Birding Safari</h3>
+                        <h3 style="font-size: 22px; margin-bottom: 10px;"><?= htmlspecialchars(\App\Settings::get('package_3_title', 'Wetland Birding Safari')) ?></h3>
                         <p style="color: #666; margin-bottom: 20px; min-height: 50px;">Explore the dam area. Perfect for bird watchers, with crocodiles and flamingos.</p>
                         <div class="package-price-row">
                             <div>
                                 <span style="font-size: 13px; color: #999; text-transform: uppercase; font-weight: 600;">Per Jeep (Up to 6)</span>
-                                <div style="font-size: 24px; font-weight: 700; color: var(--text-dark);">₹5,500</div>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--text-dark);"><?= htmlspecialchars(\App\Settings::get('package_3_price', '₹5,500')) ?></div>
                             </div>
                             <a href="/plan-your-journey/" class="primary-btn1" style="padding: 10px 25px;">Book Now</a>
                         </div>

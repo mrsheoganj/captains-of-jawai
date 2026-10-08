@@ -1,0 +1,11 @@
+# Master URL Meta Title & Description Matrix
+
+| Route | Canonical URL | Meta Title (< 60 chars) | Meta Description (< 155 chars) | Primary Keyword |
+| :--- | :--- | :--- | :--- | :--- |
+| `/` | `https://captainsofjawai.com/` | Jawai Leopard Safari & Expeditions \| Captains of Jawai | Private 4x4 leopard tracking across the ancient granite hills of Jawai, Rajasthan. Expert local naturalists, bespoke luxury, ethical wildlife viewing. | jawai leopard safari |
+| `/about/` | `https://captainsofjawai.com/about/` | About Captains of Jawai \| Masters of the Granite Sanctuary | Learn about Captains of Jawai: our master naturalists, Rabari heritage roots, and strict commitment to ethical, low-impact wildlife exploration. | captains of jawai |
+| `/safaris/` | `https://captainsofjawai.com/safaris/` | Jawai Safari Expeditions \| Private 4x4 Wildlife Journeys | Explore bespoke safari experiences in Jawai and Bera: private leopard tracking, Jawai Dam crocodile wetland drives, and photography expeditions. | jawai safari expeditions |
+| `/safaris/leopard-safari/` | `https://captainsofjawai.com/safaris/leopard-safari/` | Jawai Leopard Safari in Bera \| Private 4x4 Tracking | Experience wild leopards on ancient granite kopjes. Private customized 4x4 jeeps, dawn and dusk drives, expert local trackers in Jawai and Bera. | jawai leopard safari |
+| `/safaris/dam-birding-safari/` | `https://captainsofjawai.com/safaris/dam-birding-safari/` | Jawai Dam Safari \| Crocodiles & Migratory Bird Watching | Track 400+ mugger crocodiles and thousands of flamingos at Jawai Bandh. Specialist wetland birding drives with high-powered spotting optics. | jawai dam safari |
+| `/experiences/rabari-culture/` | `https://captainsofjawai.com/experiences/rabari-culture/` | Rabari Pastoral Heritage \| Human-Leopard Coexistence | Discover the sacred bond between wild leopards and red-turbaned Rabari herdsmen. Respectful guided cultural walks in Jawai's pastoral villages. | rabari shepherds jawai |
+| `/plan-your-journey/` | `https://captainsofjawai.com/plan-your-journey/` | Plan Your Jawai Safari \| Bespoke Journey Consultation | Plan your private wildlife expedition in Jawai, Rajasthan. Connect directly with an Expedition Captain for a customized safari and stay proposal. | jawai safari booking |

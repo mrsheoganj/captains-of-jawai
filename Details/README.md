@@ -39,3 +39,11 @@ This repository contains the complete research, brand strategy, design system, U
 1. Review `docs/PROJECT_MASTER.md`.
 2. Supply `docs/antigravity/MASTER_BUILD_PROMPT.md` to Antigravity IDE or your coding agent.
 3. Follow the build sequence in `docs/antigravity/build-order.md`.
+
+## Implementation status
+The blueprint in this folder has been implemented in `/public_html` + `/private` (see the root [`README.md`](../README.md) for features and the GoDaddy deployment guide):
+- Public site per `docs/ux/sitemap.md` and `docs/ux/homepage.md` (10 homepage sections, multi-step enquiry wizard, mobile sticky dock).
+- Design tokens from `docs/design/colors.md` / `typography.md` (Cormorant Garamond, Plus Jakarta Sans, Space Mono; light editorial theme).
+- Admin suite per `docs/admin/*`: dashboard KPIs, CRM pipeline, CMS, media vault, SEO module (meta, redirects, robots, sitemap, audit), settings (incl. SMTP & email routing), RBAC users and audit log.
+- Technical/SEO per `docs/technical/*` and `docs/seo/*`: PHP 8.3 + MariaDB, PDO, CSRF, Argon2id, JSON-LD schema, canonical URLs.
+- Items in `docs/CLIENT_INPUT_REQUIRED.md` are left as editable settings — nothing is fabricated.

@@ -1,137 +1,262 @@
--- Database DDL for Captains of Jawai
--- Target: MariaDB 10.6+ / MySQL 8.0
--- Charset: utf8mb4_unicode_ci
+-- Captains of Jawai — database schema (MySQL 8 / MariaDB 10.6+)
+-- Reference only: the web installer (/install) creates these tables automatically,
+-- and 'php private/cli/install.php --migrate' adds new columns after updates.
 
-CREATE TABLE IF NOT EXISTS users (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    role ENUM('super_admin', 'manager', 'sales', 'editor', 'read_only') NOT NULL DEFAULT 'sales',
-    is_active BOOLEAN NOT NULL DEFAULT TRUE,
-    last_login_at DATETIME NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_user_role (role),
-    INDEX idx_user_active (is_active)
+CREATE TABLE IF NOT EXISTS `audit_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `action` varchar(100) DEFAULT NULL,
+  `entity` varchar(100) DEFAULT NULL,
+  `entity_id` int(11) DEFAULT NULL,
+  `details` text DEFAULT NULL,
+  `ip` varchar(100) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_audit_log_created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS media (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    filename VARCHAR(255) NOT NULL,
-    filepath VARCHAR(255) NOT NULL,
-    mime_type VARCHAR(100) NOT NULL,
-    file_size INT UNSIGNED NOT NULL,
-    width INT UNSIGNED NULL,
-    height INT UNSIGNED NULL,
-    alt_text VARCHAR(255) NOT NULL,
-    caption TEXT NULL,
-    photographer VARCHAR(100) NULL,
-    license_type VARCHAR(50) NOT NULL DEFAULT 'Client Owned',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_media_mime (mime_type)
+CREATE TABLE IF NOT EXISTS `email_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `to_email` text DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `error` text DEFAULT NULL,
+  `context` varchar(100) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_email_log_created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS categories (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    slug VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS `enquiries` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `interests` text DEFAULT NULL,
+  `travel_window` varchar(255) DEFAULT NULL,
+  `nights` varchar(100) DEFAULT NULL,
+  `adults` int(11) DEFAULT NULL,
+  `children` int(11) DEFAULT NULL,
+  `private_vehicle` varchar(100) DEFAULT NULL,
+  `accommodation` varchar(255) DEFAULT NULL,
+  `transfer` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `source_page` varchar(255) DEFAULT NULL,
+  `utm_source` varchar(255) DEFAULT NULL,
+  `utm_medium` varchar(255) DEFAULT NULL,
+  `utm_campaign` varchar(255) DEFAULT NULL,
+  `ip` varchar(100) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `assigned_user_id` int(11) DEFAULT NULL,
+  `follow_up_date` date DEFAULT NULL,
+  `first_contacted_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_enquiries_status` (`status`),
+  KEY `ix_enquiries_created_at` (`created_at`),
+  KEY `ix_enquiries_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS journal_posts (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    slug VARCHAR(255) NOT NULL UNIQUE,
-    category_id INT UNSIGNED NOT NULL,
-    author_id INT UNSIGNED NOT NULL,
-    featured_image_id INT UNSIGNED NULL,
-    excerpt TEXT NOT NULL,
-    body_content LONGTEXT NOT NULL,
-    reading_time_minutes TINYINT UNSIGNED NOT NULL DEFAULT 5,
-    status ENUM('draft', 'review', 'published', 'archived') NOT NULL DEFAULT 'draft',
-    seo_meta_title VARCHAR(255) NULL,
-    seo_meta_description TEXT NULL,
-    published_at DATETIME NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT,
-    FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE RESTRICT,
-    FOREIGN KEY (featured_image_id) REFERENCES media(id) ON DELETE SET NULL,
-    INDEX idx_journal_status_date (status, published_at)
+CREATE TABLE IF NOT EXISTS `enquiry_notes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `enquiry_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_enquiry_notes_enquiry_id` (`enquiry_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS safaris (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    slug VARCHAR(255) NOT NULL UNIQUE,
-    category ENUM('leopard', 'wetland', 'photography', 'private') NOT NULL,
-    hero_image_id INT UNSIGNED NULL,
-    tagline VARCHAR(255) NOT NULL,
-    duration_hours DECIMAL(3,1) NOT NULL DEFAULT 3.5,
-    timing_description VARCHAR(255) NOT NULL,
-    body_content LONGTEXT NOT NULL,
-    included_features JSON NULL,
-    status ENUM('draft', 'published', 'archived') NOT NULL DEFAULT 'published',
-    sort_order INT NOT NULL DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (hero_image_id) REFERENCES media(id) ON DELETE SET NULL,
-    INDEX idx_safari_sort (sort_order)
+CREATE TABLE IF NOT EXISTS `faqs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) DEFAULT NULL,
+  `answer` text DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS enquiries (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    enquiry_code VARCHAR(30) NOT NULL UNIQUE,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    phone VARCHAR(30) NOT NULL,
-    country VARCHAR(100) NOT NULL DEFAULT 'India',
-    travel_dates VARCHAR(100) NOT NULL,
-    adults_count TINYINT UNSIGNED NOT NULL DEFAULT 2,
-    children_count TINYINT UNSIGNED NOT NULL DEFAULT 0,
-    safari_interests JSON NULL,
-    accommodation_preference VARCHAR(100) NULL,
-    notes TEXT NULL,
-    utm_source VARCHAR(100) NULL,
-    utm_medium VARCHAR(100) NULL,
-    utm_campaign VARCHAR(100) NULL,
-    status ENUM('new', 'contacted', 'qualified', 'proposal_sent', 'follow_up', 'confirmed_offline', 'completed', 'lost', 'spam') NOT NULL DEFAULT 'new',
-    assigned_user_id INT UNSIGNED NULL,
-    follow_up_date DATE NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (assigned_user_id) REFERENCES users(id) ON DELETE SET NULL,
-    INDEX idx_enquiry_status (status),
-    INDEX idx_enquiry_follow_up (follow_up_date)
+CREATE TABLE IF NOT EXISTS `journeys` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `duration_label` varchar(100) DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `excerpt` text DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
+  `itinerary` longtext DEFAULT NULL,
+  `inclusions` text DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
+  `sort_order` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_journeys_slug` (`slug`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS enquiry_notes (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    enquiry_id INT UNSIGNED NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
-    note_content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (enquiry_id) REFERENCES enquiries(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+CREATE TABLE IF NOT EXISTS `login_attempts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(100) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ix_login_attempts_ip` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS site_settings (
-    setting_key VARCHAR(100) PRIMARY KEY,
-    setting_value LONGTEXT NULL,
-    setting_group VARCHAR(50) NOT NULL DEFAULT 'general',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) DEFAULT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `mime` varchar(100) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `filesize` int(11) DEFAULT NULL,
+  `alt_text` varchar(255) DEFAULT NULL,
+  `caption` text DEFAULT NULL,
+  `credit` varchar(255) DEFAULT NULL,
+  `license` varchar(255) DEFAULT NULL,
+  `in_gallery` tinyint(1) NOT NULL DEFAULT 0,
+  `gallery_category` varchar(100) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS audit_logs (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NULL,
-    action VARCHAR(100) NOT NULL,
-    table_name VARCHAR(50) NOT NULL,
-    record_id INT UNSIGNED NOT NULL,
-    diff_payload JSON NULL,
-    ip_address VARCHAR(45) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_audit_created (created_at)
+CREATE TABLE IF NOT EXISTS `menu_items` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `location` varchar(100) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
+  `new_tab` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `kicker` varchar(255) DEFAULT NULL,
+  `intro` text DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `show_cta` tinyint(1) NOT NULL DEFAULT 0,
+  `status` varchar(100) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_pages_slug` (`slug`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `excerpt` text DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `author_name` varchar(255) DEFAULT NULL,
+  `reading_time` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `published_at` datetime DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_posts_slug` (`slug`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `redirects` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from_path` varchar(255) DEFAULT NULL,
+  `to_url` varchar(255) DEFAULT NULL,
+  `code` int(11) DEFAULT NULL,
+  `hits` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `safaris` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `excerpt` text DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
+  `highlights` text DEFAULT NULL,
+  `duration` varchar(100) DEFAULT NULL,
+  `timing` varchar(255) DEFAULT NULL,
+  `best_season` varchar(255) DEFAULT NULL,
+  `group_size` varchar(100) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
+  `sort_order` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_safaris_slug` (`slug`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  `skey` varchar(120) NOT NULL,
+  `svalue` longtext DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`skey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `team` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `testimonials` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author` varchar(255) DEFAULT NULL,
+  `origin` varchar(255) DEFAULT NULL,
+  `quote` text DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
+  `role` varchar(100) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 0,
+  `last_login_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_users_email` (`email`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

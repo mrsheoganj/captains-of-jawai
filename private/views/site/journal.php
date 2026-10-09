@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'The Field Journal', 'kicker' => 'Stories & guides', 'intro' => 'Leopard behaviour, wetland birding, Rabari culture and practical advice for planning your journey.', 'image' => $posts[0]['image_id'] ?? null, 'fallback' => 'landscape1', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'The Field Journal', 'kicker' => 'Stories & guides', 'intro' => 'Leopard behaviour, wetland birding, Rabari culture and practical advice for planning your journey.', 'image' => (int) setting('img_journal') ?: null, 'fallback' => 'lake-reflection', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <?php if ($categories): ?>

@@ -1,12 +1,5 @@
-<section class="plain-hero">
-  <div class="container narrow">
-    <nav class="crumbs crumbs-dark" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">Photo Credits</span></nav>
-    <span class="kicker">Thank you</span>
-    <h1 class="display-1">Photo credits</h1>
-    <p class="lead-muted">Some photographs on this website are shared by their creators under Creative Commons or public-domain licences. We are grateful to every photographer listed below.</p>
-  </div>
-</section>
-<section class="section section-tight">
+<?= \App\Core\View::partial('site/partials/page-hero', ['title' => 'Photo credits', 'kicker' => 'Thank you', 'intro' => 'Photographs shared by their creators under Creative Commons or public-domain licences. We are grateful to every photographer listed below.', 'image' => (int) setting('img_404') ?: null, 'fallback' => 'granite-boulders', 'crumbs' => $seo['breadcrumbs']]) ?>
+<section class="section">
   <div class="container">
     <?php if ($items): ?>
     <div class="credits-grid">

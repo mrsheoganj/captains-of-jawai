@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Expedition FAQ', 'kicker' => 'Good to know', 'intro' => 'Honest answers about wildlife, seasons, logistics and how we work.', 'image' => null, 'fallback' => 'safari1', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Expedition FAQ', 'kicker' => 'Good to know', 'intro' => 'Honest answers about wildlife, seasons, logistics and how we work.', 'image' => (int) setting('img_faq') ?: null, 'fallback' => 'safari-jeep', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container narrow">
     <?php foreach ($groups as $cat => $faqs): ?>

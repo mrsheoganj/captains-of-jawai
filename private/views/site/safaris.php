@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Signature Expeditions', 'kicker' => 'Private 4x4 safaris', 'intro' => 'Every drive is private, naturalist-led and shaped around you — from dawn leopard tracking to slow wetland mornings.', 'image' => $items[0]['image_id'] ?? null, 'fallback' => 'leopard1', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Signature Expeditions', 'kicker' => 'Private 4x4 safaris', 'intro' => 'Every drive is private, naturalist-led and shaped around you — from dawn leopard tracking to slow wetland mornings.', 'image' => (int) setting('img_safaris') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <div class="grid grid-2 grid-lg-2">

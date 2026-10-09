@@ -124,11 +124,18 @@ foreach (Settings::lines('stats') as $line) {
         <?php endforeach; ?>
       </div>
     <?php else: ?>
+      <?php
+      $valueIcons = ['binoculars', 'leaf', 'compass', 'shield'];
+      $valueImgs = array_values(array_filter(array_map('intval', explode(',', (string) setting('values_images')))));
+      $valueFallback = ['leopard-stalking', 'granite-boulders', 'safari-guests', 'leopard-basking'];
+      ?>
       <div class="grid grid-4 values">
-        <div class="value reveal"><?= icon('binoculars', 28) ?><h3>Mastery in the field</h3><p>Tracking by alarm calls, wind and light — an art learned over a lifetime in these hills.</p></div>
-        <div class="value reveal"><?= icon('leaf', 28) ?><h3>Reverent coexistence</h3><p>We honour the bond between the leopards and the Rabari who share their land.</p></div>
-        <div class="value reveal"><?= icon('compass', 28) ?><h3>Private by design</h3><p>Small parties, dedicated vehicles and pacing set entirely around you.</p></div>
-        <div class="value reveal"><?= icon('shield', 28) ?><h3>Ethics first</h3><p>Engines off, respectful distances, no baiting — and never a false promise.</p></div>
+        <?php foreach (Settings::lines('values_items') as $n => $line): [$vt, $vb] = array_pad(array_map('trim', explode('|', $line, 2)), 2, ''); ?>
+        <article class="value value-photo reveal">
+          <div class="value-media"><?= picture($valueImgs[$n] ?? null, $vt, ['sizes' => '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'], $valueFallback[$n % 4]) ?></div>
+          <div class="value-body"><?= icon($valueIcons[$n % 4], 26) ?><h3><?= e($vt) ?></h3><p><?= e($vb) ?></p></div>
+        </article>
+        <?php endforeach; ?>
       </div>
     <?php endif; ?>
     <div class="center reveal"><a class="btn btn-outline" href="/about/">Our story &amp; ethics</a></div>

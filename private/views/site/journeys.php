@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Curated Journeys', 'kicker' => 'Multi-day itineraries', 'intro' => 'Starting points for your own journey — every day, drive and stay can be shaped around you.', 'image' => $items[0]['image_id'] ?? null, 'fallback' => 'landscape1', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Curated Journeys', 'kicker' => 'Multi-day itineraries', 'intro' => 'Starting points for your own journey — every day, drive and stay can be shaped around you.', 'image' => (int) setting('img_journeys') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'ridge-sighting', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container stack-lg">
     <?php foreach ($items as $n => $j): ?>

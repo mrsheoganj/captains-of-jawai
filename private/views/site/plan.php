@@ -11,7 +11,7 @@ for ($n = 0; $n < 15; $n++) {
 ?>
 <section class="plan">
   <div class="plan-visual">
-    <?= picture(null, '', ['sizes' => '40vw', 'loading' => 'eager'], 'leopard1') ?>
+    <?= picture((int) setting('img_plan') ?: null, '', ['sizes' => '(min-width: 1024px) 42vw, 100vw', 'loading' => 'eager'], 'leopard-portrait') ?>
     <div class="plan-visual-inner">
       <div>
         <span class="kicker kicker-light">Private consultation</span>

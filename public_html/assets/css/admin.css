@@ -463,3 +463,5 @@ code { background: var(--subtle); padding: 1px 5px; border-radius: 4px; }
   .content { padding: 12px; }
 }
 @media (min-width: 1920px) { body { font-size: 15.5px; } .content { max-width: 1600px; } }
+.demo-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding-right: 16px; }
+.demo-banner form { margin-left: auto; }

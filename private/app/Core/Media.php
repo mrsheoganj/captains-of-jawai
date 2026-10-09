@@ -13,8 +13,10 @@ final class Media
     public const SIZES = ['lg' => 1600, 'md' => 800, 'sm' => 400];
     private const MAX_BYTES = 15 * 1024 * 1024;
     private const ALLOWED = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/gif' => 'gif'];
-    /** Built-in photos shipped in /assets/photos (used as fallbacks before real photos are uploaded). */
-    public const STOCK = ['leopard1', 'leopard2', 'landscape1', 'bird1', 'safari1'];
+    /** Built-in photos shipped in /assets/photos (see Demo::PHOTOS) — used as fallbacks so no slot is ever empty. */
+    public const STOCK = ['leopard1', 'leopard2', 'landscape1', 'bird1', 'safari1', 'leopard-portrait', 'leopard-basking', 'leopard-stalking',
+        'ridge-sighting', 'lake-reflection', 'bandh-shoreline', 'granite-boulders', 'sunset-valley', 'granite-dome-dusk', 'flamingo-flock',
+        'safari-jeep', 'safari-guests'];
 
     private static array $cache = [];
 

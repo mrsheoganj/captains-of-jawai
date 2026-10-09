@@ -149,6 +149,7 @@ final class App
 
         $r->get("$a/audit", [Admin\DashboardController::class, 'audit']);
         $r->get("$a/system", [Admin\DashboardController::class, 'system']);
+        $r->post("$a/demo/{action}", [Admin\DashboardController::class, 'demo']);
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
@@ -159,6 +160,7 @@ final class App
         }
         try {
             Schema::create(DB::pdo());
+            Demo::assignImages(); // register new built-in photos and fill any empty image slots
             Settings::set('schema_version', APP_VERSION);
         } catch (\Throwable $e) {
             error_log('Auto-migration failed: ' . $e->getMessage());

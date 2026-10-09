@@ -80,6 +80,33 @@ Other features:
 
 ---
 
+## Demo: ready in one command
+
+```bash
+php private/cli/demo.php          # installs with SQLite: demo photos everywhere + 14 sample CRM enquiries
+php -S localhost:8080 -t public_html private/cli/dev-router.php
+```
+
+* Website: <http://localhost:8080/>
+* Admin: <http://localhost:8080/admin>
+* Login: `demo@captainsofjawai.com` / `Demo@Jawai2026`
+* Start again from scratch with `php private/cli/demo.php --reset`.
+
+**What the demo includes:**
+* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, the value cards, all safaris, journeys and journal articles, every page (including legal pages), each listing page's header, the gallery, the Plan Your Journey side image, the 404 page and the admin login.
+* If an image is ever deleted, the site falls back to a built-in photo, so no slot is ever empty.
+* **Sample CRM data.** 14 enquiries across the whole pipeline, with notes, owners and follow-ups, so the dashboard KPIs, chart and lists look alive.
+  * They use codes starting `DEMO-` and are never emailed.
+  * The dashboard shows a "Demo mode" bar with a one-click **Remove sample data** button.
+* The web installer (`/install`) offers the same sample data with a checkbox, ticked by default.
+* **Admin → System → Demo content** lets you:
+  * load or remove the sample enquiries;
+  * fill any empty image slots;
+  * reset every image to the demo set.
+* The demo install sets email to "log only", so nothing is sent while presenting.
+
+---
+
 ## Folder structure
 
 ```
@@ -171,7 +198,7 @@ These are deliberately **not invented** (see `Details/docs/CLIENT_INPUT_REQUIRED
 | --- | --- |
 | Phone, WhatsApp, address, legal name, GSTIN, social links | Settings → Contact & Social |
 | Naturalist names, bios and portraits | Content → Team / Captains |
-| Authentic photography (run "Find Jawai photos → Starter photo pack" first, then replace with your own over time) | Media library |
+| Photography: the site ships with 17 built-in demo photos (filter "Demo photos" in the media library). Swap in your own, or use "Find Jawai photos" to import freely-licensed ones | Media library / Settings → Homepage & Page Images |
 | Genuine guest reviews only | Content → Testimonials |
 | Privacy, terms and cancellation policies (templates provided) | Content → Pages |
 | Pricing, fleet and partner lodges (if you want them published) | Content → Safaris / Journeys / Pages |

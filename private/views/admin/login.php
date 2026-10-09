@@ -11,7 +11,7 @@
 <body class="auth-body">
 <div class="auth-split">
   <div class="auth-visual">
-    <picture><source type="image/webp" srcset="/assets/photos/leopard2-1600.webp"><img src="/assets/photos/leopard2-1600.jpg" alt=""></picture>
+    <?= picture((int) setting('img_login') ?: null, '', ['sizes' => '55vw', 'loading' => 'eager'], 'leopard2') ?>
     <div class="auth-quote"><span>Captains of Jawai</span><p>Mastering the granite wilderness.</p></div>
   </div>
   <main class="auth-wrap">

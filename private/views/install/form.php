@@ -55,6 +55,7 @@
         <div class="field"><label>Login email</label><input type="email" name="admin_email" value="<?= e($old['admin_email'] ?? '') ?>" required><?php if (!empty($errors['admin_email'])): ?><em class="err"><?= e($errors['admin_email']) ?></em><?php endif; ?></div>
         <div class="field span-2"><label>Password (min. 10 characters)</label><input type="password" name="admin_password" required minlength="10" autocomplete="new-password"><?php if (!empty($errors['admin_password'])): ?><em class="err"><?= e($errors['admin_password']) ?></em><?php endif; ?></div>
       </div>
+      <label class="switch"><input type="checkbox" name="demo_data" value="1" <?= !$old || !empty($old['demo_data']) ? 'checked' : '' ?>><span class="switch-ui"></span><span>Load sample enquiries so the dashboard and CRM are ready to demo (removable with one click)</span></label>
       <button class="btn btn-primary btn-lg" type="submit">Install website</button>
     </form>
   </div>

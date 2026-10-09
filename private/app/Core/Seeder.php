@@ -10,41 +10,12 @@ namespace App\Core;
  */
 final class Seeder
 {
-    public static function run(): void
+    public static function run(bool $demoEnquiries = true): void
     {
         $now = now();
-        if ((int) DB::val('SELECT COUNT(*) FROM media') === 0) {
-            $photos = [
-                'leopard1' => 'Leopard resting on a granite boulder at golden hour',
-                'leopard2' => 'Leopard walking along a rocky granite ridge at sunset',
-                'landscape1' => 'Granite hills and the waters of Jawai Bandh',
-                'bird1' => 'Flamingos wading in the shallows of Jawai Dam',
-                'safari1' => 'Guests on an open 4x4 safari among the granite kopjes',
-            ];
-            foreach ($photos as $name => $alt) {
-                DB::insert('media', [
-                    'path' => 'assets/photos/' . $name, 'filename' => $name . '.jpg', 'mime' => 'image/jpeg',
-                    'width' => 1600, 'height' => 893, 'filesize' => 0, 'alt_text' => $alt, 'caption' => '',
-                    'credit' => 'Placeholder', 'license' => 'Placeholder — replace with authentic Jawai photography before launch',
-                    'in_gallery' => 1, 'gallery_category' => str_starts_with($name, 'leopard') ? 'Leopards' : (str_starts_with($name, 'bird') ? 'Birds & Wetland' : 'Landscape'),
-                    'sort_order' => 0, 'created_at' => $now,
-                ]);
-            }
-        }
-        $img = [];
-        foreach (DB::all('SELECT id, path FROM media') as $m) {
-            $img[basename($m['path'])] = (int) $m['id'];
-        }
+        $img = Demo::registerImages();
         $i = fn (string $n) => $img[$n] ?? null;
-
-        if (!(int) DB::val('SELECT COUNT(*) FROM settings')) {
-            Settings::setMany([
-                'hero_images' => implode(',', array_filter([$i('leopard1'), $i('landscape1'), $i('leopard2')])),
-                'intro_image' => $i('leopard2'),
-                'coexist_image' => $i('landscape1'),
-                'cta_image' => $i('safari1'),
-            ]);
-        }
+        $fresh = !(int) DB::val('SELECT COUNT(*) FROM safaris');
 
         if (!(int) DB::val('SELECT COUNT(*) FROM safaris')) {
             foreach (self::safaris($i) as $n => $s) {
@@ -74,6 +45,11 @@ final class Seeder
         }
         if (!(int) DB::val('SELECT COUNT(*) FROM menu_items')) {
             self::menus();
+        }
+        // Every image slot gets a photo, so the site is presentation-ready straight after install.
+        Demo::assignImages($fresh); // on a fresh install, apply the full curated image map
+        if ($demoEnquiries) {
+            Demo::loadEnquiries();
         }
     }
 
@@ -204,6 +180,27 @@ final class Seeder
                 'excerpt' => 'Leopards on granite or tigers in dry forest? An honest comparison to help you decide.',
                 'body' => '<p>Both are extraordinary — and very different.</p><h2>Ranthambhore</h2><p>A national park famous for tigers, with zoned routes, fixed permits and shared canters or gypsies. Busy in peak season.</p><h2>Jawai</h2><p>An open, lived-in landscape of granite hills, villages and a great reservoir. There are no rigid park zones; drives are in private 4x4s guided by local trackers, and the star is the leopard, often seen resting on open rock. Add the wetland birding and Rabari culture, and Jawai feels intimate and unhurried.</p><h2>Can you do both?</h2><p>Yes — many guests combine them on a longer Rajasthan journey. Speak to us and we will help you plan the Jawai portion in depth.</p>',
                 'meta_title' => 'Jawai vs Ranthambhore: Choosing Your Rajasthan Safari', 'meta_description' => 'An honest comparison of Jawai and Ranthambhore: leopards vs tigers, private 4x4 vs park zones, crowds, culture and how to combine them.',
+            ],
+            [
+                'title' => 'Monsoon in Jawai: The Hidden Season for Photographers', 'slug' => 'monsoon-in-jawai', 'category' => 'Seasons',
+                'image_id' => $i('granite-boulders'), 'reading_time' => 4,
+                'excerpt' => 'From July to September the granite hills turn emerald, waterfalls spill off the rocks and the skies put on a show.',
+                'body' => '<p>Most visitors come in winter, but the monsoon transforms Jawai. Fresh green scrub softens the granite, temporary waterfalls appear on the larger domes, and towering clouds make dramatic backdrops.</p><h2>What to expect</h2><ul><li>Lush landscapes and very few other vehicles.</li><li>Leopards are still active, though vegetation can make them harder to spot.</li><li>Some tracks become muddy or impassable after heavy rain — plans stay flexible.</li></ul><h2>Who it suits</h2><p>Landscape photographers, return visitors and anyone who wants Jawai at its quietest. Bring a rain shell and protection for your camera.</p>',
+                'meta_title' => 'Jawai in the Monsoon: A Photographer\'s Season', 'meta_description' => 'Why July to September is a hidden season in Jawai: green granite hills, waterfalls, dramatic skies and quiet safaris for photographers.',
+            ],
+            [
+                'title' => 'How to Reach Jawai from Udaipur', 'slug' => 'udaipur-to-jawai', 'category' => 'Planning',
+                'image_id' => $i('bandh-shoreline'), 'reading_time' => 4,
+                'excerpt' => 'The scenic 2.5-hour drive from Udaipur, with a perfect stop at the marble temples of Ranakpur.',
+                'body' => '<p>Udaipur is the most popular gateway to Jawai. The drive takes about two and a half hours through the Aravalli hills.</p><h2>The route</h2><p>Head north-west via the hill roads towards Ranakpur, then continue through Sadri and Desuri towards Bera and the Jawai Bandh area.</p><h2>Stop at Ranakpur</h2><p>The 15th-century Jain temple at Ranakpur, about an hour and a quarter from Jawai, is one of the great marble monuments of India — allow an hour, and dress modestly.</p><h2>Transfers</h2><p>We arrange private air-conditioned transfers from Udaipur airport or your hotel, timed so you arrive for an evening drive.</p>',
+                'meta_title' => 'Udaipur to Jawai: Route, Time & Ranakpur Stop', 'meta_description' => 'How to reach Jawai from Udaipur: the 2.5-hour scenic drive, a stop at Ranakpur temple, and private transfer options for safari guests.',
+            ],
+            [
+                'title' => 'The Code of the Captains: How We Watch Wildlife', 'slug' => 'code-of-the-captains', 'category' => 'Conservation',
+                'image_id' => $i('leopard-stalking'), 'reading_time' => 3,
+                'excerpt' => 'Engines off, respectful distances, no baiting — the simple rules that keep Jawai\'s leopards relaxed and wild.',
+                'body' => '<p>The leopards of Jawai are remarkably tolerant of people. Keeping it that way is everyone\'s responsibility.</p><h2>Our rules in the field</h2><ol><li>We never promise a sighting and never chase an animal.</li><li>Engines are switched off while we observe.</li><li>We keep our distance and never block a path or a den.</li><li>No baiting, calls, spotlights or drones.</li><li>When too many vehicles gather, we move on.</li></ol><p>These rules make for calmer animals — and better, longer sightings for our guests.</p>',
+                'meta_title' => 'Ethical Leopard Safaris in Jawai: Our Code', 'meta_description' => 'How Captains of Jawai watches wildlife ethically: engines off, respectful distances, no baiting, no chasing and never a guaranteed sighting.',
             ],
         ];
     }

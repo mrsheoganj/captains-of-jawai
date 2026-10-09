@@ -21,7 +21,7 @@ final class DashboardController extends BaseController
         $active = (int) DB::val("SELECT COUNT(*) FROM enquiries WHERE status IN ('proposal_sent', 'follow_up', 'qualified')");
         $total30 = (int) DB::val("SELECT COUNT(*) FROM enquiries WHERE created_at >= ? AND status <> 'spam'", [$d30]);
         $won30 = (int) DB::val("SELECT COUNT(*) FROM enquiries WHERE created_at >= ? AND status IN ('confirmed', 'active', 'completed')", [$d30]);
-        $resp = DB::all('SELECT created_at, first_contacted_at FROM enquiries WHERE first_contacted_at IS NOT NULL ORDER BY id DESC LIMIT 100');
+        $resp = DB::all('SELECT created_at, first_contacted_at FROM enquiries WHERE first_contacted_at IS NOT NULL ORDER BY created_at DESC LIMIT 100');
         $avgResp = $resp ? array_sum(array_map(fn ($r) => max(0, strtotime($r['first_contacted_at']) - strtotime($r['created_at'])), $resp)) / count($resp) / 3600 : null;
 
         $sixHoursAgo = date('Y-m-d H:i:s', strtotime('-6 hours'));
@@ -29,7 +29,7 @@ final class DashboardController extends BaseController
             "SELECT * FROM enquiries WHERE (status = 'new' AND created_at <= ?) OR (follow_up_date IS NOT NULL AND follow_up_date <= ? AND status NOT IN ('completed', 'lost', 'spam')) ORDER BY created_at ASC LIMIT 10",
             [$sixHoursAgo, date('Y-m-d')]
         );
-        $latest = DB::all("SELECT * FROM enquiries WHERE status <> 'spam' ORDER BY id DESC LIMIT 8");
+        $latest = DB::all("SELECT * FROM enquiries WHERE status <> 'spam' ORDER BY created_at DESC, id DESC LIMIT 8");
         $byStatus = [];
         foreach (DB::all('SELECT status, COUNT(*) AS n FROM enquiries GROUP BY status') as $r) {
             $byStatus[$r['status']] = (int) $r['n'];
@@ -55,12 +55,13 @@ final class DashboardController extends BaseController
             !setting('smtp_password') && setting('mail_transport') === 'smtp' ? ['Configure SMTP so enquiry emails are delivered', admin_url('settings/email')] : null,
             !setting('whatsapp_number') ? ['Add your WhatsApp number', admin_url('settings/contact')] : null,
             !setting('contact_phone') ? ['Add your phone number', admin_url('settings/contact')] : null,
-            (int) DB::val("SELECT COUNT(*) FROM media WHERE path LIKE 'assets/photos/%'") > 0 ? ['Replace placeholder photos with authentic Jawai photography', admin_url('media')] : null,
+            (int) DB::val("SELECT COUNT(*) FROM media WHERE path LIKE 'assets/photos/%'") > 0 ? ['Replace the built-in demo photos with your own Jawai photography', admin_url('media/find')] : null,
             !(int) DB::val('SELECT COUNT(*) FROM team') ? ['Introduce your Captains (team profiles)', admin_url('content/team/new')] : null,
             !setting('ga4_id') ? ['Connect Google Analytics', admin_url('settings/seo')] : null,
             Settings::bool('seo_noindex') ? ['Search engines are blocked (staging mode is on)', admin_url('settings/seo')] : null,
         ]);
-        return $this->render('dashboard', compact('new7', 'prev7', 'active', 'total30', 'won30', 'avgResp', 'priority', 'latest', 'byStatus', 'byCountry', 'daily', 'content', 'mailFailures', 'setup') + ['title' => 'Dashboard']);
+        $demoCount = \App\Core\Demo::hasEnquiries();
+        return $this->render('dashboard', compact('demoCount', 'new7', 'prev7', 'active', 'total30', 'won30', 'avgResp', 'priority', 'latest', 'byStatus', 'byCountry', 'daily', 'content', 'mailFailures', 'setup') + ['title' => 'Dashboard']);
     }
 
     public function audit(): string
@@ -70,6 +71,22 @@ final class DashboardController extends BaseController
         $rows = DB::all('SELECT a.*, u.name AS user_name FROM audit_log a LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT 100 OFFSET ' . (($page - 1) * 100));
         $total = (int) DB::val('SELECT COUNT(*) FROM audit_log');
         return $this->render('audit', ['rows' => $rows, 'page' => $page, 'total' => $total, 'title' => 'Activity log']);
+    }
+
+    /** Demo content tools (System page + dashboard banner). */
+    public function demo(string $action): void
+    {
+        $this->guard('settings', 'edit');
+        $msg = match ($action) {
+            'load' => \App\Core\Demo::loadEnquiries(\App\Core\Auth::id()) . ' sample enquiries loaded into the CRM.',
+            'clear' => \App\Core\Demo::clearEnquiries() . ' sample enquiries removed.',
+            'fill-images' => \App\Core\Demo::assignImages(false) . ' empty image slot(s) filled.',
+            'reset-images' => \App\Core\Demo::assignImages(true) . ' image slot(s) reset to the built-in photo set.',
+            default => 'Unknown action.',
+        };
+        \App\Core\Audit::log('demo_' . $action, 'system');
+        flash('success', $msg);
+        back(admin_url('system'));
     }
 
     public function system(): string

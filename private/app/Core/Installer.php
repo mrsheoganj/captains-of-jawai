@@ -75,7 +75,7 @@ final class Installer
         } else {
             DB::insert('users', ['name' => $name, 'email' => $email, 'password_hash' => Auth::hash($pass), 'role' => 'super_admin', 'is_active' => 1, 'created_at' => now(), 'updated_at' => now()]);
         }
-        Seeder::run();
+        Seeder::run(!empty($in['demo_data']));
         if (!empty($in['site_email']) && filter_var($in['site_email'], FILTER_VALIDATE_EMAIL)) {
             Settings::setMany(['contact_email' => $in['site_email'], 'notify_recipients' => $in['site_email'], 'mail_reply_to' => $in['site_email']]);
         }

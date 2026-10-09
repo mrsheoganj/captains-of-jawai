@@ -8,8 +8,8 @@ $cats = ['Leopards', 'Landscape', 'Birds & Wetland', 'Wildlife', 'Culture', 'Saf
 
 <?php if ($canEdit): ?>
 <section class="card pack-card" data-pack data-url="<?= e(admin_url('media/find/pack')) ?>" data-total="<?= count($presets) ?>">
-  <div class="card-head"><h2><?= icon('image', 18) ?> Starter photo pack</h2><span class="muted small"><?= $imported ?> imported so far · <?= $placeholders ?> placeholder(s)</span></div>
-  <p>One click: finds about 3 photos for each of <?= count($presets) ?> Jawai-related topics (leopards, Jawai Dam, granite hills, flamingos, cranes, crocodiles, Rabari herders, Ranakpur…), imports them into the gallery, and then puts them on the homepage, safaris, journeys, articles and pages <em>wherever a placeholder is still used</em>. Anything your team already chose is never overwritten.</p>
+  <div class="card-head"><h2><?= icon('image', 18) ?> Starter photo pack</h2><span class="muted small"><?= $imported ?> imported so far · <?= $placeholders ?> built-in demo photo(s)</span></div>
+  <p>One click: finds about 3 photos for each of <?= count($presets) ?> Jawai-related topics (leopards, Jawai Dam, granite hills, flamingos, cranes, crocodiles, Rabari herders, Ranakpur…), imports them into the gallery, and then puts them on the homepage, safaris, journeys, articles and pages <em>wherever a built-in demo photo is still used</em>. Anything your team already chose is never overwritten.</p>
   <div class="row-actions">
     <label class="check-inline">Photos per topic <select data-pack-per><option>2</option><option selected>3</option><option>4</option><option>6</option></select></label>
     <label class="check-inline"><input type="checkbox" data-pack-apply checked> Use them across the website when finished</label>

@@ -4,6 +4,12 @@ use App\Admin\EnquiryController;
 $delta = $prev7 ? round(($new7 - $prev7) / $prev7 * 100) : null;
 $max = max(1, ...array_values($daily));
 ?>
+<?php if (!empty($demoCount)): ?>
+<div class="alert alert-info demo-banner">
+  <strong>Demo mode:</strong> <?= (int) $demoCount ?> sample enquiries (codes DEMO-…) are loaded so the dashboard and CRM look alive. Remove them before going live.
+  <form method="post" action="<?= e(admin_url('demo/clear')) ?>"><?= csrf_field() ?><button class="btn btn-light btn-sm" type="submit" data-confirm="Remove all sample enquiries?">Remove sample data</button></form>
+</div>
+<?php endif; ?>
 <div class="kpis">
   <div class="kpi">
     <span class="kpi-label">New enquiries · 7 days</span>

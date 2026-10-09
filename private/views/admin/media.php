@@ -17,7 +17,7 @@
     <a class="<?= $filter === '' ? 'is-active' : '' ?>" href="?">All (<?= count($items) ?>)</a>
     <a class="<?= $filter === 'gallery' ? 'is-active' : '' ?>" href="?filter=gallery">In gallery</a>
     <a class="<?= $filter === 'noalt' ? 'is-active' : '' ?>" href="?filter=noalt">Missing alt text</a>
-    <a class="<?= $filter === 'placeholder' ? 'is-active' : '' ?>" href="?filter=placeholder">Placeholders</a>
+    <a class="<?= $filter === 'placeholder' ? 'is-active' : '' ?>" href="?filter=placeholder">Demo photos</a>
   </div>
 </div>
 
@@ -26,7 +26,7 @@
   <details class="media-item" id="m<?= (int) $m['id'] ?>">
     <summary>
       <img src="<?= e(Media::url($m, 'sm')) ?>" alt="<?= e($m['alt_text']) ?>" loading="lazy">
-      <span class="media-badges"><?php if ($m['in_gallery']): ?><b>Gallery</b><?php endif; ?><?php if (trim((string) $m['alt_text']) === ''): ?><b class="warn">No alt</b><?php endif; ?><?php if (str_starts_with($m['path'], 'assets/photos/')): ?><b class="warn">Placeholder</b><?php endif; ?></span>
+      <span class="media-badges"><?php if ($m['in_gallery']): ?><b>Gallery</b><?php endif; ?><?php if (trim((string) $m['alt_text']) === ''): ?><b class="warn">No alt</b><?php endif; ?><?php if (str_starts_with($m['path'], 'assets/photos/')): ?><b>Demo photo</b><?php endif; ?></span>
     </summary>
     <form class="media-edit" method="post" action="<?= e(admin_url('media/' . $m['id'])) ?>">
       <?= csrf_field() ?>

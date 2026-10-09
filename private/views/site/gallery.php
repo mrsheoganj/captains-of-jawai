@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Gallery', 'kicker' => 'Moments from the field', 'intro' => 'Leopards on granite, wetland wings and the light of the Jawai hills.', 'image' => $items[0]['id'] ?? null, 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Gallery', 'kicker' => 'Moments from the field', 'intro' => 'Leopards on granite, wetland wings and the light of the Jawai hills.', 'image' => (int) setting('img_gallery') ?: null, 'fallback' => 'leopard-basking', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <?php if (count($categories) > 1): ?>
@@ -27,6 +27,6 @@
 <div class="lightbox" hidden data-lightbox-view>
   <button type="button" class="lb-close" aria-label="Close" data-lb-close><?= icon('close', 28) ?></button>
   <button type="button" class="lb-prev" aria-label="Previous" data-lb-prev><?= icon('chevron-left', 32) ?></button>
-  <figure><img alt=""><figcaption></figcaption></figure>
+  <figure><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""><figcaption></figcaption></figure>
   <button type="button" class="lb-next" aria-label="Next" data-lb-next><?= icon('chevron-right', 32) ?></button>
 </div>

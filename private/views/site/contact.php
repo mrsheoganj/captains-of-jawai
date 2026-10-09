@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Speak with a Captain', 'kicker' => 'Contact', 'intro' => 'Questions, ideas or a journey already taking shape — we would love to hear from you.', 'image' => null, 'fallback' => 'landscape1', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Speak with a Captain', 'kicker' => 'Contact', 'intro' => 'Questions, ideas or a journey already taking shape — we would love to hear from you.', 'image' => (int) setting('img_contact') ?: null, 'fallback' => 'bandh-shoreline', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container contact-grid">
     <div class="contact-info reveal">

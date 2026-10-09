@@ -13,14 +13,15 @@ define('PRIVATE_PATH', dirname(__DIR__));
 define('PUBLIC_PATH', dirname(__DIR__, 2) . '/public_html');
 require PRIVATE_PATH . '/app/bootstrap.php';
 
-$opt = getopt('', ['driver::', 'host::', 'port::', 'db::', 'user::', 'pass::', 'email::', 'password::', 'name::', 'url::', 'admin-path::', 'migrate']);
+$opt = getopt('', ['driver::', 'host::', 'port::', 'db::', 'user::', 'pass::', 'email::', 'password::', 'name::', 'url::', 'admin-path::', 'migrate', 'no-demo']);
 
 if (isset($opt['migrate'])) {
     if (!App\Core\Config::installed()) {
         exit("Not installed yet.\n");
     }
     App\Core\Schema::create(App\Core\DB::pdo());
-    echo "Schema up to date.\n";
+    App\Core\Demo::assignImages();
+    echo "Schema up to date; empty image slots filled.\n";
     exit(0);
 }
 
@@ -36,6 +37,7 @@ $errors = App\Core\Installer::install([
     'admin_password' => $opt['password'] ?? '',
     'base_url' => $opt['url'] ?? '',
     'admin_path' => $opt['admin-path'] ?? 'admin',
+    'demo_data' => !isset($opt['no-demo']),
 ]);
 if ($errors) {
     foreach ($errors as $k => $v) {

@@ -72,7 +72,7 @@ final class EnquiryController extends BaseController
         $page = max(1, (int) input('page', 1));
         $per = 25;
         $total = (int) DB::val("SELECT COUNT(*) FROM enquiries WHERE $where", $params);
-        $rows = DB::all("SELECT e.*, u.name AS assignee FROM enquiries e LEFT JOIN users u ON u.id = e.assigned_user_id WHERE $where ORDER BY e.id DESC LIMIT $per OFFSET " . (($page - 1) * $per), $params);
+        $rows = DB::all("SELECT e.*, u.name AS assignee FROM enquiries e LEFT JOIN users u ON u.id = e.assigned_user_id WHERE $where ORDER BY e.created_at DESC, e.id DESC LIMIT $per OFFSET " . (($page - 1) * $per), $params);
         $counts = [];
         foreach (DB::all('SELECT status, COUNT(*) AS n FROM enquiries GROUP BY status') as $c) {
             $counts[$c['status']] = (int) $c['n'];
@@ -103,6 +103,10 @@ final class EnquiryController extends BaseController
         $e = DB::one('SELECT * FROM enquiries WHERE id = ?', [(int) $id]);
         if (!$e) {
             redirect(admin_url('enquiries'));
+        }
+        if (input('action') === 'resend' && str_starts_with((string) $e['code'], 'DEMO-')) {
+            flash('error', 'Sample (DEMO-) enquiries are never emailed.');
+            redirect(admin_url('enquiries/' . $e['id']));
         }
         if (input('action') === 'resend') {
             ApiController::notify((int) $e['id'], $e['type'] ?: 'journey');
@@ -198,7 +202,7 @@ final class EnquiryController extends BaseController
     {
         $this->guard('enquiries');
         [$where, $params] = $this->filters();
-        $rows = DB::all("SELECT e.*, u.name AS assignee FROM enquiries e LEFT JOIN users u ON u.id = e.assigned_user_id WHERE $where ORDER BY e.id DESC", $params);
+        $rows = DB::all("SELECT e.*, u.name AS assignee FROM enquiries e LEFT JOIN users u ON u.id = e.assigned_user_id WHERE $where ORDER BY e.created_at DESC, e.id DESC", $params);
         Audit::log('export', 'enquiries', null, ['count' => count($rows)]);
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="enquiries-' . date('Y-m-d') . '.csv"');

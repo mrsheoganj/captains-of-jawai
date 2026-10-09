@@ -76,6 +76,7 @@ final class App
         $router->get('faq', [SiteController::class, 'faq']);
         $router->get('about', [SiteController::class, 'about']);
         $router->get('contact', [SiteController::class, 'contact']);
+        $router->get('photo-credits', [SiteController::class, 'credits']);
         $router->get('plan-your-journey', [SiteController::class, 'plan']);
         $router->get('sitemap.xml', [SiteController::class, 'sitemap']);
         $router->get('robots.txt', [SiteController::class, 'robots']);
@@ -118,6 +119,10 @@ final class App
 
         $r->get("$a/media", [Admin\MediaController::class, 'index']);
         $r->get("$a/media/picker", [Admin\MediaController::class, 'picker']);
+        $r->get("$a/media/find", [Admin\MediaController::class, 'find']);
+        $r->post("$a/media/find/import", [Admin\MediaController::class, 'importSelected']);
+        $r->post("$a/media/find/pack", [Admin\MediaController::class, 'pack']);
+        $r->post("$a/media/find/apply", [Admin\MediaController::class, 'apply']);
         $r->post("$a/media/upload", [Admin\MediaController::class, 'upload']);
         $r->post("$a/media/{id:\d+}", [Admin\MediaController::class, 'update']);
         $r->post("$a/media/{id:\d+}/delete", [Admin\MediaController::class, 'delete']);

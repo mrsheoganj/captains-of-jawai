@@ -7,6 +7,7 @@ use App\Core\Audit;
 use App\Core\Auth;
 use App\Core\DB;
 use App\Core\Media;
+use App\Core\PhotoImporter;
 
 final class MediaController extends BaseController
 {
@@ -114,5 +115,80 @@ final class MediaController extends BaseController
         Audit::log('delete', 'media', (int) $id);
         flash('success', 'Image deleted.');
         redirect(admin_url('media'));
+    }
+
+    /** Search Wikimedia Commons for freely-licensed photos. */
+    public function find(): string
+    {
+        $this->guard('media');
+        $q = str_input('q', 120);
+        $result = $q !== '' ? PhotoImporter::search($q, 50) : ['items' => [], 'error' => null];
+        $imported = (int) DB::val("SELECT COUNT(*) FROM media WHERE source_url <> ''");
+        $placeholders = (int) DB::val("SELECT COUNT(*) FROM media WHERE path LIKE 'assets/photos/%'");
+        return $this->render('media-find', [
+            'q' => $q, 'items' => $result['items'], 'error' => $result['error'], 'presets' => PhotoImporter::PRESETS,
+            'imported' => $imported, 'placeholders' => $placeholders, 'title' => 'Find Jawai photos', 'canEdit' => Auth::can('media', 'edit'),
+        ]);
+    }
+
+    /** Import the photos ticked in the search results. */
+    public function importSelected(): void
+    {
+        $this->guard('media', 'edit');
+        @set_time_limit(300);
+        $ok = 0;
+        $errors = [];
+        foreach ((array) input('items', []) as $raw) {
+            $item = json_decode((string) base64_decode((string) $raw, true), true);
+            if (!is_array($item)) {
+                continue;
+            }
+            $r = PhotoImporter::import($item, str_input('gallery_category', 100), (bool) input('in_gallery'));
+            if (is_int($r)) {
+                $ok++;
+                Audit::log('import', 'media', $r, ['source' => $item['page'] ?? '']);
+            } else {
+                $errors[] = ($item['title'] ?? 'Photo') . ': ' . $r;
+            }
+        }
+        if ($ok) {
+            flash('success', "$ok photo(s) imported with credit and licence filled in.");
+        }
+        foreach (array_slice($errors, 0, 5) as $err) {
+            flash('error', $err);
+        }
+        redirect(admin_url('media/find') . '?q=' . rawurlencode(str_input('q', 120)));
+    }
+
+    /** One step of the starter photo pack (called repeatedly by the page's JavaScript). */
+    public function pack(): void
+    {
+        $this->guard('media', 'edit');
+        @set_time_limit(300);
+        $step = (int) input('step', 0);
+        $per = max(1, min(6, (int) input('per', 3)));
+        [$ids, $msgs] = PhotoImporter::importPreset($step, $per);
+        foreach ($ids as $id) {
+            Audit::log('import', 'media', $id, ['preset' => PhotoImporter::PRESETS[$step][0] ?? '']);
+        }
+        $done = $step + 1 >= count(PhotoImporter::PRESETS);
+        $filled = 0;
+        if ($done && input('apply')) {
+            $filled = PhotoImporter::useAcrossSite();
+        }
+        json_out([
+            'success' => true, 'step' => $step, 'label' => PhotoImporter::PRESETS[$step][0] ?? '', 'imported' => count($ids),
+            'thumbs' => array_map(fn ($id) => Media::url($id, 'sm'), $ids), 'messages' => $msgs, 'done' => $done, 'filled' => $filled,
+        ]);
+    }
+
+    /** Replace placeholder images across the site with imported photos. */
+    public function apply(): void
+    {
+        $this->guard('media', 'edit');
+        $n = PhotoImporter::useAcrossSite();
+        Audit::log('apply_photos', 'media', null, ['slots' => $n]);
+        flash('success', $n ? "$n image slot(s) on the website now use imported photos. Fine-tune any of them in Settings → Homepage or each content item." : 'Nothing to replace — import some photos first, or all images were already chosen by your team.');
+        redirect(admin_url('media/find'));
     }
 }

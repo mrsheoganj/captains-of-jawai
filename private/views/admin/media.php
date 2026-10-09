@@ -11,6 +11,7 @@
 <?php endif; ?>
 
 <div class="page-actions">
+  <a class="btn btn-primary btn-sm" href="<?= e(admin_url('media/find')) ?>"><?= icon('search', 15) ?> Find Jawai photos (free licence)</a>
   <form class="search inline" method="get"><?= icon('search', 16) ?><input type="search" name="q" value="<?= e($q) ?>" placeholder="Search images…"><?php if ($filter): ?><input type="hidden" name="filter" value="<?= e($filter) ?>"><?php endif; ?></form>
   <div class="seg-links">
     <a class="<?= $filter === '' ? 'is-active' : '' ?>" href="?">All (<?= count($items) ?>)</a>

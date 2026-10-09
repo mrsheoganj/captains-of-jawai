@@ -43,7 +43,8 @@ $exact = fn (string $p) => rtrim($path, '/') === rtrim(admin_url($p), '/') ? ' i
     <?php foreach (Resources::all() as $key => $r): if ($r['area'] !== 'content') continue; ?>
     <a class="<?= $active('content/' . $key) ?>" href="<?= e(admin_url('content/' . $key)) ?>"><?= icon($r['icon'], 18) ?> <?= e($r['label']) ?></a>
     <?php endforeach; ?>
-    <a class="<?= $active('media') ?>" href="<?= e(admin_url('media')) ?>"><?= icon('image', 18) ?> Media library</a>
+    <a class="<?= $active('media') && !str_contains($path, '/media/find') ? ' is-active' : '' ?>" href="<?= e(admin_url('media')) ?>"><?= icon('image', 18) ?> Media library</a>
+    <a class="<?= $active('media/find') ?>" href="<?= e(admin_url('media/find')) ?>"><?= icon('download', 18) ?> Find Jawai photos</a>
     <a class="<?= $active('menu') ?>" href="<?= e(admin_url('menu')) ?>"><?= icon('list', 18) ?> Navigation menus</a>
     <?php endif; ?>
 

@@ -170,6 +170,8 @@ final class Media
             'in_gallery' => (int) ($meta['in_gallery'] ?? 0),
             'gallery_category' => $meta['gallery_category'] ?? '',
             'sort_order' => 0,
+            'source_url' => mb_substr((string) ($meta['source_url'] ?? ''), 0, 250),
+            'license_url' => mb_substr((string) ($meta['license_url'] ?? ''), 0, 250),
             'created_at' => now(),
         ]);
         return $id;

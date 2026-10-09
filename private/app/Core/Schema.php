@@ -28,7 +28,8 @@ final class Schema
             'media' => [
                 'id' => 'pk', 'path' => 'str', 'filename' => 'str', 'mime' => 'short', 'width' => 'int', 'height' => 'int',
                 'filesize' => 'int', 'alt_text' => 'str', 'caption' => 'text', 'credit' => 'str', 'license' => 'str',
-                'in_gallery' => 'bool', 'gallery_category' => 'short', 'sort_order' => 'int', 'created_at' => 'datetime',
+                'in_gallery' => 'bool', 'gallery_category' => 'short', 'sort_order' => 'int', 'source_url' => 'str',
+                'license_url' => 'str', 'created_at' => 'datetime',
             ],
             'safaris' => [
                 'id' => 'pk', 'title' => 'str', 'slug' => 'str', 'category' => 'short', 'tagline' => 'str', 'excerpt' => 'text',

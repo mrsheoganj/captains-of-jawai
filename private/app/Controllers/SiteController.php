@@ -226,6 +226,16 @@ final class SiteController
         ]);
     }
 
+    public function credits(): string
+    {
+        $items = DB::all("SELECT * FROM media WHERE (credit <> '' AND credit <> 'Placeholder') OR source_url <> '' ORDER BY gallery_category, id");
+        return $this->show('credits', ['items' => $items], [
+            'title' => 'Photo Credits',
+            'description' => 'Credits and licences for the photographs used on the Captains of Jawai website.',
+            'breadcrumbs' => [['Photo Credits', '/photo-credits/']],
+        ]);
+    }
+
     public function contact(): string
     {
         return $this->show('contact', [], [

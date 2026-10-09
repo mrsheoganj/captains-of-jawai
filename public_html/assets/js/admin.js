@@ -302,3 +302,51 @@
     });
   }
 })();
+
+/* Photo finder: selection counter + starter pack runner */
+(function () {
+  'use strict';
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+  const TOKEN = ($('meta[name="csrf-token"]') || {}).content || '';
+
+  const results = $('[data-find-results]');
+  if (results) {
+    const btn = $('[data-find-submit]', results); const count = $('[data-find-count]', results);
+    results.addEventListener('change', () => { const n = $$('[data-find-check]:checked', results).length; if (count) count.textContent = n; if (btn) btn.disabled = n === 0; });
+    results.addEventListener('submit', () => { if (btn) { btn.disabled = true; btn.textContent = 'Importing… please wait'; } });
+  }
+
+  const pack = $('[data-pack]');
+  if (!pack) return;
+  const start = $('[data-pack-start]', pack); const prog = $('[data-pack-progress]', pack);
+  const bar = $('[data-pack-bar]', pack); const status = $('[data-pack-status]', pack);
+  const thumbs = $('[data-pack-thumbs]', pack); const errors = $('[data-pack-errors]', pack);
+  const total = +pack.dataset.total;
+  start.addEventListener('click', async () => {
+    if (!confirm('Import the starter photo pack from Wikimedia Commons? This can take a few minutes.')) return;
+    start.disabled = true; prog.hidden = false; thumbs.innerHTML = ''; errors.innerHTML = '';
+    let imported = 0;
+    for (let step = 0; step < total; step++) {
+      status.textContent = 'Searching topic ' + (step + 1) + ' of ' + total + '…';
+      const fd = new FormData();
+      fd.append('_token', TOKEN); fd.append('step', step); fd.append('per', $('[data-pack-per]', pack).value);
+      if ($('[data-pack-apply]', pack).checked) fd.append('apply', '1');
+      try {
+        const res = await fetch(pack.dataset.url, { method: 'POST', body: fd, headers: { Accept: 'application/json', 'X-CSRF-Token': TOKEN }, credentials: 'same-origin' });
+        const data = await res.json();
+        imported += data.imported;
+        (data.thumbs || []).forEach((u) => { const i = document.createElement('img'); i.src = u; i.alt = ''; thumbs.appendChild(i); });
+        (data.messages || []).slice(0, 2).forEach((m) => { const li = document.createElement('li'); li.textContent = m; errors.appendChild(li); });
+        status.textContent = data.label + ': ' + data.imported + ' photo(s). Total ' + imported + '.';
+        if (data.done && data.filled) status.textContent += ' ' + data.filled + ' image slot(s) on the website updated.';
+      } catch (e) {
+        const li = document.createElement('li'); li.textContent = 'Topic ' + (step + 1) + ' failed (network or timeout) — continuing.'; errors.appendChild(li);
+      }
+      bar.style.width = ((step + 1) / total * 100) + '%';
+    }
+    status.textContent = 'Finished — ' + imported + ' photo(s) imported. ' + status.textContent.replace(/^.*?Total \d+\.\s*/, '');
+    start.disabled = false;
+    const a = document.createElement('a'); a.href = location.pathname.replace(/\/find$/, ''); a.className = 'btn btn-light btn-sm mt-sm'; a.textContent = 'Open the media library →'; prog.appendChild(a);
+  });
+})();

@@ -39,6 +39,10 @@ Other features:
   * Content uses a rich-text editor with an HTML view.
   * Items can be reordered by drag-and-drop, duplicated, saved as drafts and previewed.
 * **Media library:** drag-and-drop upload with automatic resizing (1600/800/400 px) and WebP conversion. Each image has alt text, caption, credit/licence and gallery fields.
+* **Find Jawai photos:** search Wikimedia Commons from the admin and import freely-licensed photos (CC BY, CC BY-SA, CC0, public domain; never non-commercial or no-derivatives).
+  * The photographer credit, licence and source link are saved automatically and shown in the gallery and on `/photo-credits/`.
+  * A one-click **Starter photo pack** imports about 3 photos for each of 19 Jawai topics: leopards, Jawai Dam, granite hills, flamingos, cranes, crocodiles, Rabari herders, Ranakpur and more.
+  * It then places them on the homepage, safaris, journeys, articles and pages wherever a placeholder is still used.
 * **Navigation menus:** a drag-and-drop editor for the header (with dropdowns) and the footer columns.
 * **SEO:**
   * Every content item gets a meta title and description, with a live Google preview and character counters.
@@ -124,7 +128,10 @@ Details/                 ← research, brand, UX, SEO and technical documentatio
       * Save, then **Send test email**.
       * Set **notification recipients** (To/CC/BCC) for journey enquiries, plus separate recipients for contact messages if wanted.
    2. **Settings → Contact & Social:** phone, WhatsApp number (digits with country code, e.g. `919876543210`), address and social links.
-   3. **Media library:** upload authentic Jawai photography and replace the placeholder photos. In **Settings → Homepage**, choose the hero slideshow and section images.
+   3. **Photos:**
+      * Go to **Media → Find Jawai photos → Import starter photo pack**. This fills the site with freely-licensed Jawai photos in a few minutes; it needs the server's internet access, which GoDaddy has.
+      * Later, upload your own photography in the **Media library**.
+      * Choose the hero slideshow and section images in **Settings → Homepage**, or pick an image on each content item.
    4. **Team / Captains:** add naturalist bios and portraits.
    5. **Settings → SEO & Tracking:** add the GA4 ID and Search Console verification, then submit `https://captainsofjawai.com/sitemap.xml` in Google Search Console.
 
@@ -164,7 +171,7 @@ These are deliberately **not invented** (see `Details/docs/CLIENT_INPUT_REQUIRED
 | --- | --- |
 | Phone, WhatsApp, address, legal name, GSTIN, social links | Settings → Contact & Social |
 | Naturalist names, bios and portraits | Content → Team / Captains |
-| Authentic photography (the starter photos are placeholders) | Media library → filter "Placeholders" |
+| Authentic photography (run "Find Jawai photos → Starter photo pack" first, then replace with your own over time) | Media library |
 | Genuine guest reviews only | Content → Testimonials |
 | Privacy, terms and cancellation policies (templates provided) | Content → Pages |
 | Pricing, fleet and partner lodges (if you want them published) | Content → Safaris / Journeys / Pages |

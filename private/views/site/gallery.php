@@ -11,8 +11,13 @@
     <div class="masonry" data-lightbox>
       <?php foreach ($items as $m): ?>
       <figure class="masonry-item" data-cat="<?= e($m['gallery_category']) ?>">
-        <a href="<?= e(media_url($m, 'lg')) ?>" data-caption="<?= e($m['caption'] ?: $m['alt_text']) ?>"><?= picture($m, $m['alt_text'], ['sizes' => '(min-width: 1024px) 33vw, 50vw']) ?></a>
-        <?php if ($m['caption'] || $m['credit']): ?><figcaption><?= e($m['caption']) ?><?php if ($m['credit'] && $m['credit'] !== 'Placeholder'): ?> <span class="mono">© <?= e($m['credit']) ?></span><?php endif; ?></figcaption><?php endif; ?>
+        <a href="<?= e(media_url($m, 'lg')) ?>" data-caption="<?= e(trim(($m['caption'] ?: $m['alt_text']) . (($m['credit'] && $m['credit'] !== 'Placeholder') ? ' — Photo: ' . $m['credit'] . ($m['license'] ? ', ' . $m['license'] : '') : ''))) ?>"><?= picture($m, $m['alt_text'], ['sizes' => '(min-width: 1024px) 33vw, 50vw']) ?></a>
+        <?php $hasCredit = $m['credit'] && $m['credit'] !== 'Placeholder'; if ($hasCredit): ?>
+        <figcaption>
+          <?= e(excerpt($m['caption'] ?: $m['alt_text'], 90)) ?>
+          <span class="photo-credit">Photo: <?= e($m['credit']) ?><?php if ($m['license']): ?> · <?php if ($m['license_url']): ?><a href="<?= e($m['license_url']) ?>" target="_blank" rel="noopener license"><?= e($m['license']) ?></a><?php else: ?><?= e($m['license']) ?><?php endif; ?><?php endif; ?></span>
+        </figcaption>
+        <?php endif; ?>
       </figure>
       <?php endforeach; ?>
     </div>

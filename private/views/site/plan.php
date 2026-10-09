@@ -11,15 +11,16 @@ for ($n = 0; $n < 15; $n++) {
 ?>
 <section class="plan">
   <div class="plan-visual">
-    <?= picture((int) setting('img_plan') ?: null, '', ['sizes' => '(min-width: 1024px) 42vw, 100vw', 'loading' => 'eager'], 'leopard-portrait') ?>
+    <?= View::partial('site/partials/topo', ['class' => 'topo-plan']) ?>
     <div class="plan-visual-inner">
       <div>
-        <span class="kicker kicker-light">Private consultation</span>
-        <h1 class="display-2">Plan your journey into the granite wilderness.</h1>
-        <ul class="trust">
+        <span class="kicker" data-anim="fade">Private consultation</span>
+        <h1 class="display-2" data-split>Plan your journey into the granite wilderness.</h1>
+        <ul class="trust" data-anim="fade" style="--d:.5s">
           <?php foreach (Settings::lines('form_trust_points') as $t): ?><li><?= icon('check', 16) ?><?= e($t) ?></li><?php endforeach; ?>
         </ul>
       </div>
+      <div class="arch arch-plan" data-anim="arch"><?= picture((int) setting('img_plan') ?: null, '', ['sizes' => '(min-width: 1024px) 34vw, 100vw', 'loading' => 'eager'], 'leopard-portrait') ?></div>
     </div>
   </div>
 

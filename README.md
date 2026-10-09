@@ -23,6 +23,19 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 | CMS pages, with nesting allowed (e.g. `experiences/rabari-culture`) | `/{any/path}/` |
 | Dynamic XML sitemap and robots.txt | `/sitemap.xml`, `/robots.txt` |
 
+**Design:** a full light theme ("Sunlit Granite"):
+* warm ivory and sand surfaces with ochre accents;
+* arch-shaped "granite dome" photo frames;
+* animated topographic line art and a floating sun motif.
+
+**Motion:**
+* a branded loading spinner, shown only when a page is slow to load;
+* word-by-word headline reveals, photo unmask reveals and staggered card entrances;
+* parallax, counting statistics, 3D card tilt and magnetic buttons;
+* a header that hides as you scroll down, a scroll-progress bar, a back-to-top ring and smooth page transitions.
+
+All of the motion respects the visitor's "reduce motion" setting.
+
 Other features:
 * Mobile sticky dock (WhatsApp + Plan Journey), a floating WhatsApp button and a full-screen mobile menu.
 * Responsive WebP images and scroll reveals, with reduced-motion support.

@@ -11,15 +11,17 @@ $socials = array_filter([
 $footerLogo = (int) setting('footer_logo_image');
 ?>
 <footer class="site-footer">
+  <svg class="footer-hills" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120 L0 70 C 120 30, 200 80, 300 55 C 380 35, 420 10, 520 30 C 600 46, 660 85, 760 70 C 860 55, 900 20, 1000 25 C 1100 30, 1160 75, 1260 60 C 1340 48, 1400 40, 1440 45 L1440 120 Z"/></svg>
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="/" class="footer-logo">
         <?php if ($footerLogo): ?>
           <img src="<?= e(media_url($footerLogo, 'sm')) ?>" alt="<?= e(setting('site_name')) ?>" loading="lazy">
         <?php else: ?>
-          <img src="/assets/img/logo-240.webp" width="120" height="180" alt="<?= e(setting('site_name')) ?> logo" loading="lazy">
+          <img src="/assets/img/emblem-192.webp" width="88" height="88" alt="<?= e(setting('site_name')) ?> logo" loading="lazy">
         <?php endif; ?>
       </a>
+      <p class="footer-name"><?= e(setting('site_name')) ?></p>
       <p><?= e(setting('site_description')) ?></p>
       <?php if ($socials): ?>
       <div class="socials">

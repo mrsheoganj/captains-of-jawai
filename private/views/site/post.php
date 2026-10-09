@@ -1,15 +1,20 @@
-<?php use App\Core\View; View::share('headerOverlay', true); ?>
+<?php use App\Core\View; ?>
 <article>
-  <header class="article-hero">
-    <div class="page-hero-bg"><?= picture($item['image_id'] ? (int) $item['image_id'] : null, '', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high'], 'landscape1') ?></div>
+  <header class="page-hero article-hero">
+    <?= View::partial('site/partials/topo', ['class' => 'topo-page']) ?>
     <div class="container narrow page-hero-inner">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/journal/">Field Journal</a></nav>
-      <div class="meta-line meta-light"><span><?= e($item['category'] ?: 'Journal') ?></span><span><?= e(fmt_date($item['published_at'])) ?></span><?php if ($item['reading_time']): ?><span><?= (int) $item['reading_time'] ?> min read</span><?php endif; ?></div>
-      <h1><?= e($item['title']) ?></h1>
-      <?php if ($item['author_name']): ?><p class="byline">By <?= e($item['author_name']) ?></p><?php endif; ?>
+      <nav class="crumbs" aria-label="Breadcrumb" data-anim="fade"><a href="/">Home</a><span>/</span><a href="/journal/">Field Journal</a></nav>
+      <div class="meta-line" data-anim="fade"><span><?= e($item['category'] ?: 'Journal') ?></span><span><?= e(fmt_date($item['published_at'])) ?></span><?php if ($item['reading_time']): ?><span><?= (int) $item['reading_time'] ?> min read</span><?php endif; ?></div>
+      <h1 data-split><?= e($item['title']) ?></h1>
+      <?php if ($item['author_name']): ?><p class="byline" data-anim="fade" style="--d:.4s">By <?= e($item['author_name']) ?></p><?php endif; ?>
+    </div>
+    <div class="container">
+      <div class="page-hero-media" data-anim="reveal-img">
+        <div class="page-hero-frame" data-parallax="0.12"><?= picture($item['image_id'] ? (int) $item['image_id'] : null, $item['title'], ['sizes' => '(min-width: 1280px) 1240px, 100vw', 'loading' => 'eager', 'fetchpriority' => 'high'], 'landscape1') ?></div>
+      </div>
     </div>
   </header>
-  <div class="section">
+  <div class="section section-tight">
     <div class="container narrow">
       <p class="lead"><?= e($item['excerpt']) ?></p>
       <div class="prose"><?= $item['body'] ?></div>

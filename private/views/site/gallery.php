@@ -27,6 +27,6 @@
 <div class="lightbox" hidden data-lightbox-view>
   <button type="button" class="lb-close" aria-label="Close" data-lb-close><?= icon('close', 28) ?></button>
   <button type="button" class="lb-prev" aria-label="Previous" data-lb-prev><?= icon('chevron-left', 32) ?></button>
-  <figure><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""><figcaption></figcaption></figure>
+  <figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt=""><figcaption></figcaption></figure>
   <button type="button" class="lb-next" aria-label="Next" data-lb-next><?= icon('chevron-right', 32) ?></button>
 </div>

@@ -4,7 +4,7 @@ use App\Core\Session;
 use App\Core\View;
 
 $siteName = (string) setting('site_name');
-$overlay = (bool) View::shared('headerOverlay', false);
+$overlay = false; // full light theme: the header is always the light glass bar
 $wa = whatsapp_link();
 $tel = tel_link();
 $headerMenu = Menu::tree('header');
@@ -15,6 +15,7 @@ $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyCl
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js','is-loading')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title><?= e($seo['title']) ?></title>
 <meta name="description" content="<?= e($seo['description']) ?>">
@@ -35,6 +36,7 @@ $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyCl
 <?php if (setting('google_verification')): ?><meta name="google-site-verification" content="<?= e(setting('google_verification')) ?>"><?php endif; ?>
 
 <meta name="theme-color" content="#FDFBF7">
+<meta name="color-scheme" content="light">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,6 +64,15 @@ foreach ($schema as $s): ?>
 <?= setting('head_code') ?>
 </head>
 <body class="<?= e($bodyClass) ?>">
+<div class="preloader" data-preloader aria-hidden="true">
+  <div class="preloader-inner">
+    <span class="preloader-ring"></span>
+    <img src="/assets/img/emblem-96.webp" width="64" height="64" alt="">
+  </div>
+  <span class="preloader-text">Captains of Jawai</span>
+</div>
+<noscript><style>.preloader{display:none!important}</style></noscript>
+<div class="scroll-progress" data-progress aria-hidden="true"></div>
 <?= View::partial('partials/icons') ?>
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -157,6 +168,10 @@ foreach ($schema as $s): ?>
 </div>
 <?php if ($wa): ?><a class="wa-float" href="<?= e($wa) ?>" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><?= icon('whatsapp', 28) ?></a><?php endif; ?>
 
+<button class="to-top" type="button" data-to-top aria-label="Back to top">
+  <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" pathLength="100" data-to-top-ring/></svg>
+  <?= icon('arrow-right', 16, 'to-top-arrow') ?>
+</button>
 <script src="<?= asset('js/site.js') ?>" defer></script>
 <?= setting('body_code') ?>
 </body>

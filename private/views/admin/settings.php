@@ -41,7 +41,7 @@ use App\Core\View;
   </form>
   <details class="help-box">
     <summary>Common SMTP settings</summary>
-    <table class="table compact">
+    <div class="table-wrap"><table class="table compact">
       <thead><tr><th>Provider</th><th>Host</th><th>Port / Encryption</th><th>Username</th></tr></thead>
       <tbody>
         <tr><td>GoDaddy cPanel mailbox</td><td>mail.yourdomain.com (or localhost)</td><td>465 / SSL</td><td>full email address</td></tr>
@@ -52,7 +52,7 @@ use App\Core\View;
         <tr><td>SendGrid</td><td>smtp.sendgrid.net</td><td>587 / TLS</td><td>apikey</td></tr>
         <tr><td>Amazon SES (Mumbai)</td><td>email-smtp.ap-south-1.amazonaws.com</td><td>587 / TLS</td><td>SMTP credentials</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p class="small muted">Tip: GoDaddy shared hosting may block outgoing SMTP to external servers on some plans — if external providers time out, use your cPanel mailbox with host <code>localhost</code>, port 25/465.</p>
   </details>
 </section>

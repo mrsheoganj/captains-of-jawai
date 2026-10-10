@@ -168,6 +168,8 @@ final class App
             'hero_subtitle' => ["we'll plan the rest"],
             'ticker_items' => ['Rabari village walks'],
             'coexist_body' => ['We arrange visits'],
+            'coexist_link' => ['/experiences/rabari-culture/'],
+            'coexist_kicker' => ['The Rabari'],
             'cta_body' => ['with options and prices'],
             'tpl_admin_subject' => ['journey enquiry'],
             'tpl_admin_body' => ['journey enquiry'],

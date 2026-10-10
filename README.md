@@ -19,7 +19,7 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 | About (story, values, team) | `/about/` |
 | Contact (AJAX form, map embed) | `/contact/` |
 | **Book a safari**, a 4-step safari request (safari, date and drive time, guests, contact) | `/book-a-safari/` |
-| **Jawai guide**: a pillar page plus six topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
+| **Jawai guide**: a pillar page plus seven topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit, culture and the Rabari), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
 | CMS pages, with nesting allowed (e.g. `experiences/rabari-culture`) | `/{any/path}/` |
 | Dynamic XML sitemap and robots.txt | `/sitemap.xml`, `/robots.txt` |
 

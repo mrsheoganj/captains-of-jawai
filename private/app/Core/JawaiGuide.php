@@ -26,6 +26,7 @@ final class JawaiGuide
         'jawai/best-time-to-visit' => 'Best time to visit',
         'jawai/how-to-reach' => 'How to reach Jawai',
         'jawai/places-to-visit' => 'Places to visit',
+        'jawai/culture' => 'Culture & the Rabari',
     ];
 
     /** Image (built-in photo name) for each guide page. */
@@ -37,6 +38,7 @@ final class JawaiGuide
         'jawai/best-time-to-visit' => 'sunset-valley',
         'jawai/how-to-reach' => 'ridge-sighting',
         'jawai/places-to-visit' => 'granite-dome-dusk',
+        'jawai/culture' => 'granite-boulders',
     ];
 
     public static function pages(callable $i): array
@@ -350,6 +352,73 @@ HTML,
                     'https://en.wikipedia.org/wiki/Ranakpur_Jain_temple | Wikipedia: Ranakpur Jain temple',
                     'https://en.wikipedia.org/wiki/Kumbhalgarh | Wikipedia: Kumbhalgarh',
                     'https://en.wikipedia.org/wiki/Hill_Forts_of_Rajasthan | Wikipedia: Hill Forts of Rajasthan',
+                ]),
+            ],
+            [
+                'slug' => 'jawai/culture', 'title' => 'Jawai culture: the Rabari, shrines, food and festivals', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/culture'), 'show_cta' => 1,
+                'intro' => 'Jawai is lived-in country. Herders, farmers, hill shrines and village festivals are as much a part of a safari here as the leopards.',
+                'meta_title' => 'Jawai Culture: Rabari Herders, Temples, Food & Festivals',
+                'meta_description' => 'The culture of Jawai, Rajasthan: the Rabari herders and their dress, the hill shrines leopards rest beside, local food like dal baati and ker sangri, fairs and festivals, and how to visit respectfully.',
+                'body' => <<<'HTML'
+<p>Jawai is not a fenced park with the people moved out. The leopard hills sit between working villages, fields of wheat and mustard, grazing land and small temples. On any drive you will pass herders moving their animals, women carrying water, and shrines painted on the rocks. This page is a short introduction to that world, so you know what you are looking at.</p>
+
+<h2>The Rabari</h2>
+<p>The Rabari are a pastoral community found across Rajasthan and Gujarat. Traditionally they were camel herders who moved with the seasons in search of grazing. Today most Rabari families around Jawai keep sheep, goats, cattle and buffalo, and many have settled homes in the villages while the herds still move across the hills each day.</p>
+<p>You will recognise them easily. The men wear white clothes and a large turban, often bright red, with gold or silver earrings. Rabari women traditionally dress in black: a long skirt, blouse and head cloth, sometimes embroidered, with heavy silver jewellery. Community stories link the black clothing to mourning for an ancestor or a legend from long ago; accounts differ, and it is best treated as tradition rather than fixed history.</p>
+
+<h2>Why the leopards are left alone</h2>
+<p>Many Rabari around Jawai are devotees of Shiva, who is often shown sitting on a leopard skin, and of the goddesses whose shrines stand on the granite hills. In local belief the leopards are guardians of these sacred hills. When a leopard takes a goat, the loss is often accepted as an offering rather than a reason for revenge. The state also pays compensation for livestock killed by leopards.</p>
+<p>This tolerance is the main reason Jawai's leopards are so relaxed in the open, and why attacks on people are so rare here. It is also under pressure: grazing land is shrinking as farms, hotels and land sales spread, and the balance depends on visitors and businesses respecting the herders who made it possible.</p>
+
+<h2>Temples and shrines</h2>
+<p>Nearly every big hill has a shrine, from a painted stone under an overhang to a whitewashed temple at the top of a long flight of steps. Above the village of Perwa, for example, a Shiva temple sits on the slope, and leopards have often been seen on the steps or the rocks beside it. In Bera, leopards regularly rest on outcrops close to the village temple. The temples are active places of worship: remove your shoes, keep your voice down and ask before taking photographs.</p>
+
+<h2>Village life</h2>
+<p>Water from the Jawai Dam and its canals feeds farms across Pali and Jalore districts. In winter you will see green fields of wheat and mustard between the rocky hills; in summer the land turns dry and dusty. Mornings start early, with herds leaving the villages at first light, the same time as the morning safari. Sumerpur, the nearest town, is known for ghee, made as a cottage industry, and for its sweets.</p>
+
+<h2>Food</h2>
+<p>The food of this part of Rajasthan is the food of Marwar: simple, filling and made for a dry climate.</p>
+<ul>
+<li><strong>Dal baati churma</strong>: baked wheat dumplings with lentils, and a sweet crumbled version with ghee and jaggery.</li>
+<li><strong>Bajra roti</strong>: millet flatbread, often eaten with garlic chutney, jaggery and white butter in winter.</li>
+<li><strong>Ker sangri</strong>: dried desert berries and beans cooked with spices.</li>
+<li><strong>Kadhi and chaach</strong>: yoghurt curry and buttermilk, everyday food in a herding area.</li>
+<li><strong>Moti pak and other sweets</strong> from Sumerpur's sweet shops.</li>
+</ul>
+
+<h2>Fairs and festivals</h2>
+<ul>
+<li><strong>Ranakpur Jawai Bandh Festival</strong>: an annual festival held by Rajasthan Tourism, usually over two days in December, with folk music and dance at Ranakpur, nature walks and events around Jawai. Dates change each year, so check the official listing.</li>
+<li><strong>Holi, Diwali, Dussehra and Navratri</strong> are celebrated across Pali district, along with Rajasthani festivals such as Gangaur and Teej.</li>
+<li><strong>Village fairs</strong>: Pali district has many local fairs, including the Parshuram Mahadev fair in the Aravalli hills and Sheetala Mata fairs held in several towns and villages.</li>
+</ul>
+
+<h2>Visiting respectfully</h2>
+<ul>
+<li>Ask before photographing people, especially women. A smile and a gesture are usually enough to ask.</li>
+<li>Keep a distance from herds, and never drive between a herder and their animals.</li>
+<li>Remove your shoes at temples and shrines, and do not climb on shrine rocks.</li>
+<li>Dress modestly in villages: covered shoulders and knees.</li>
+<li>Buy from local shops and stalls where you can.</li>
+</ul>
+<p>Our safaris pass through these villages every day. Your tracker is from the area and is happy to explain what you are seeing. See also <a href="/experiences/rabari-culture/">the Rabari and the leopard</a> and <a href="/jawai/places-to-visit/">places to visit</a>.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'Who are the Rabari of Jawai? | A pastoral community found across Rajasthan and Gujarat, traditionally camel herders. Around Jawai they keep sheep, goats, cattle and buffalo and graze them across the leopard hills.',
+                    'Why do the Rabari not harm the leopards? | Many are devotees of Shiva and of the goddesses whose shrines stand on the hills, and see the leopards as guardians of those sacred hills. Livestock losses are often accepted as an offering, and the state pays compensation.',
+                    'What do Rabari men and women wear? | Men usually wear white clothes with a large turban, often red, and gold or silver earrings. Women traditionally wear black, sometimes embroidered, with heavy silver jewellery.',
+                    'What food should I try in Jawai? | Dal baati churma, bajra roti with garlic chutney, ker sangri, kadhi and buttermilk, and sweets from Sumerpur such as moti pak.',
+                    'Is there a festival in Jawai? | Rajasthan Tourism holds the Ranakpur Jawai Bandh Festival, usually in December, with folk music and dance and nature events. Dates change each year.',
+                    'Can I photograph the Rabari? | Always ask first, especially before photographing women, and respect a no.',
+                ]),
+                'sources' => implode("\n", [
+                    'https://www.outlooktraveller.com/stay/in-leopard-country-exploring-the-wild-harmony-of-bera-rajasthan | Outlook Traveller: In leopard country, Bera',
+                    'https://roundglasssustain.com/photo-stories/leopards-of-rajasthan | Roundglass Sustain: The leopards of Jawai',
+                    'https://ignca.gov.in/?p=19067 | IGNCA: the Rabari',
+                    'https://gaatha.com/story-behind-black-clothes-adorned-by-rabaris/ | Gaatha: why Rabari women wear black',
+                    'https://en.wikipedia.org/wiki/Sumerpur | Wikipedia: Sumerpur',
+                    'https://utsav.gov.in/view-event/ranakpur-jawai-bandh-festival | Utsav (Government of India): Ranakpur Jawai Bandh Festival',
+                    'https://www.indianetzone.com/fairs_pali_district | Indianetzone: fairs in Pali district',
                 ]),
             ],
         ];

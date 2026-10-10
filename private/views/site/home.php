@@ -246,7 +246,7 @@ for ($n = 0; $n < 12; $n++) {
       <span class="kicker kicker-crimson"><?= e(setting('coexist_kicker')) ?></span>
       <h2 class="display-2"><?= e(setting('coexist_heading')) ?></h2>
       <?= paragraphs(setting('coexist_body')) ?>
-      <?php if (setting('coexist_link')): ?><a class="link-arrow" href="<?= e(setting('coexist_link')) ?>">More about the Rabari</a><?php endif; ?>
+      <?php if (setting('coexist_link')): ?><a class="link-arrow" href="<?= e(setting('coexist_link')) ?>">Read about Jawai culture</a><?php endif; ?>
     </div>
   </div>
 </section>

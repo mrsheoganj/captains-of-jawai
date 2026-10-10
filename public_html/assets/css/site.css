@@ -910,3 +910,32 @@ body { font-size: 1.08rem; }
   .home-label { font-size: 24px; }
   .map-rings text, .map-note { font-size: 14px; }
 }
+
+/* ===== Rounded everything: pill buttons, soft-cornered images ===== */
+:root { --img-radius: 10px; --img-radius-sm: 8px; }
+.btn, .btn-sm, .btn-lg, .btn-block, .chip, .icon-btn, .dock-plan, .slider-arrow,
+.link-arrow + .btn, .header .btn, .booking-card .btn { border-radius: 999px; }
+.btn { padding-left: 28px; padding-right: 28px; }
+.pill { border-radius: 999px; padding: 5px 12px; }
+.hero-dots, .hero-dots button, .wizard-progress, .wizard-progress span { border-radius: 999px; }
+.choice span, .choice { border-radius: 10px; }
+.stepper { border-radius: 999px; overflow: hidden; }
+.field input, .field select, .field textarea { border-radius: 10px; }
+
+/* image frames */
+.framed, .arch, .arch-sm, .arch-plan, .page-hero-media, .page-hero-frame, .feature-media, .split-media .framed,
+.exp-media, .post-media, .team-photo, .value-media, .value-photo, .cta-media, .article-hero,
+.photo-strip figure, .booking-photo, .masonry-item a, .home-gallery .masonry-item a, .hero-slide-thumb,
+.map-card, .booking-card, .aside-card, .form-card, .feature-card, .exp-card, .post-card, .team-card,
+.distance-list li, .guide-grid, .prose img, .prose figure, .lightbox figure img {
+  border-radius: var(--img-radius);
+}
+.framed, .page-hero-media, .feature-media, .exp-media, .post-media, .team-photo, .value-media, .value-photo,
+.cta-media, .article-hero, .photo-strip figure, .booking-photo, .masonry-item a, .exp-card, .post-card, .guide-grid {
+  overflow: hidden; isolation: isolate;
+}
+.exp-card .exp-media, .post-card .post-media { border-radius: var(--img-radius) var(--img-radius) 0 0; }
+.team-photo { border-radius: var(--img-radius); }
+.distance-list li { border-radius: var(--img-radius-sm); }
+.guide-grid a:first-child { border-top-left-radius: var(--img-radius); }
+.brand-mark, .brand img { border-radius: 50%; }

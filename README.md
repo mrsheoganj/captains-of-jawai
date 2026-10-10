@@ -177,7 +177,7 @@ Details/                 ← research, brand, UX, SEO and technical documentatio
       * Go to **Media → Find Jawai photos → Import starter photo pack**. This fills the site with freely-licensed Jawai photos in a few minutes; it needs the server's internet access, which GoDaddy has.
       * Later, upload your own photography in the **Media library**.
       * Choose the hero slideshow and section images in **Settings → Homepage**, or pick an image on each content item.
-   5. **Settings → SEO & Tracking:** add the GA4 ID and Search Console verification, then submit `https://captainsofjawai.com/sitemap.xml` in Google Search Console.
+   4. **Settings → SEO & Tracking:** add the GA4 ID and Search Console verification, then submit `https://captainsofjawai.com/sitemap.xml` in Google Search Console.
 
 **No SSH?** Everything above works through the browser. If you do have SSH, you can install from the command line instead:
 

@@ -47,7 +47,6 @@ final class SiteController
     {
         $safaris = $this->published('safaris');
         $posts = DB::all("SELECT * FROM posts WHERE status = 'published' AND published_at <= ? ORDER BY published_at DESC LIMIT 3", [now()]);
-        $team = $this->published('team');
         $testimonials = $this->published('testimonials');
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
         $guide = DB::all("SELECT slug, title, intro FROM pages WHERE status = 'published' AND slug LIKE 'jawai/%' ORDER BY slug");
@@ -55,7 +54,7 @@ final class SiteController
         $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 
-        return $this->show('home', compact('safaris', 'posts', 'team', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
+        return $this->show('home', compact('safaris', 'posts', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),
@@ -180,8 +179,7 @@ final class SiteController
     public function about(): string
     {
         $page = DB::one("SELECT * FROM pages WHERE slug = 'about' AND status = 'published'");
-        $team = $this->published('team');
-        return $this->show('about', compact('page', 'team'), [
+        return $this->show('about', compact('page'), [
             'title' => $page['meta_title'] ?? 'About Captains of Jawai — Masters of the Granite Sanctuary',
             'description' => $page['meta_description'] ?? 'Our master naturalists, Rabari heritage roots and strict commitment to ethical, low-impact wildlife exploration in Jawai.',
             'breadcrumbs' => [['About', '/about/']],

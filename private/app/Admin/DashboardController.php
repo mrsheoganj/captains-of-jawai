@@ -55,7 +55,6 @@ final class DashboardController extends BaseController
             !setting('whatsapp_number') ? ['Add your WhatsApp number', admin_url('settings/contact')] : null,
             !setting('contact_phone') ? ['Add your phone number', admin_url('settings/contact')] : null,
             (int) DB::val("SELECT COUNT(*) FROM media WHERE path LIKE 'assets/photos/%'") > 0 ? ['Replace the built-in demo photos with your own Jawai photography', admin_url('media/find')] : null,
-            !(int) DB::val('SELECT COUNT(*) FROM team') ? ['Introduce your Captains (team profiles)', admin_url('content/team/new')] : null,
             !setting('ga4_id') ? ['Connect Google Analytics', admin_url('settings/seo')] : null,
             Settings::bool('seo_noindex') ? ['Search engines are blocked (staging mode is on)', admin_url('settings/seo')] : null,
         ]);

@@ -11,12 +11,12 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 ### Public website
 | Page | URL |
 | --- | --- |
-| Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, booking section with an inline safari enquiry form, gallery, Jawai guide, team, journal | `/` |
+| Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, booking section with an inline safari enquiry form, gallery, Jawai guide, journal | `/` |
 | Expeditions hub and detail pages (facts strip, highlights, sticky enquiry card) | `/safaris/`, `/safaris/{slug}/` |
 | Field Journal (categories, pagination, related articles, share buttons) | `/journal/`, `/journal/{slug}/` |
 | Gallery (category filter and lightbox) | `/gallery/` |
 | FAQ (accordion and FAQPage schema) | `/faq/` |
-| About (story, values, team) | `/about/` |
+| About (story) | `/about/` |
 | Contact (AJAX form, map embed) | `/contact/` |
 | **Book a safari**, a 4-step safari request (safari, date and drive time, guests, contact) | `/book-a-safari/` |
 | **Jawai guide**: a pillar page plus seven topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit, culture and the Rabari), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
@@ -52,7 +52,7 @@ Other features:
   * one-click Email, WhatsApp and Call buttons;
   * search, filters, bulk actions and CSV export;
   * a "re-send notification" button.
-* **Content (CMS):** Safaris, Journeys, Field Journal articles (drafts and scheduled posts), Pages, FAQs, Team/Captains and Testimonials.
+* **Content (CMS):** Safaris, Field Journal articles (drafts and scheduled posts), Pages, FAQs and Testimonials.
   * Content uses a rich-text editor with an HTML view.
   * Items can be reordered by drag-and-drop, duplicated, saved as drafts and previewed.
 * **Media library:** drag-and-drop upload with automatic resizing (1600/800/400 px) and WebP conversion. Each image has alt text, caption, credit/licence and gallery fields.
@@ -111,7 +111,7 @@ php -S localhost:8080 -t public_html private/cli/dev-router.php
 * Start again from scratch with `php private/cli/demo.php --reset`.
 
 **What the demo includes:**
-* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, the value cards, all safaris and journal articles, every page (including legal pages), each listing page's header, the gallery, the Book a safari side image, the 404 page and the admin login.
+* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, all safaris and journal articles, every page (including legal pages), each listing page's header, the gallery, the Book a safari side image, the 404 page and the admin login.
 * If an image is ever deleted, the site falls back to a built-in photo, so no slot is ever empty.
 * **Sample CRM data.** 14 enquiries across the whole pipeline, with notes, owners and follow-ups, so the dashboard KPIs, chart and lists look alive.
   * They use codes starting `DEMO-` and are never emailed.
@@ -177,7 +177,6 @@ Details/                 ← research, brand, UX, SEO and technical documentatio
       * Go to **Media → Find Jawai photos → Import starter photo pack**. This fills the site with freely-licensed Jawai photos in a few minutes; it needs the server's internet access, which GoDaddy has.
       * Later, upload your own photography in the **Media library**.
       * Choose the hero slideshow and section images in **Settings → Homepage**, or pick an image on each content item.
-   4. **Team / Captains:** add naturalist bios and portraits.
    5. **Settings → SEO & Tracking:** add the GA4 ID and Search Console verification, then submit `https://captainsofjawai.com/sitemap.xml` in Google Search Console.
 
 **No SSH?** Everything above works through the browser. If you do have SSH, you can install from the command line instead:
@@ -215,7 +214,6 @@ These are deliberately **not invented** (see `Details/docs/CLIENT_INPUT_REQUIRED
 | Item | Where |
 | --- | --- |
 | Phone, WhatsApp, address, legal name, GSTIN, social links | Settings → Contact & Social |
-| Naturalist names, bios and portraits | Content → Team / Captains |
 | Photography: the site ships with 17 built-in demo photos (filter "Demo photos" in the media library). Swap in your own, or use "Find Jawai photos" to import freely-licensed ones | Media library / Settings → Homepage & Page Images |
 | Genuine guest reviews only | Content → Testimonials |
 | Privacy, terms and cancellation policies (templates provided) | Content → Pages |

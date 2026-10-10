@@ -252,44 +252,6 @@ for ($n = 0; $n < 12; $n++) {
 </section>
 <?php endif; ?>
 
-<!-- 6. The Captains -->
-<?php if (Settings::bool('team_enabled')): ?>
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-head section-head-center">
-      <span class="kicker reveal"><?= e(setting('team_kicker')) ?></span>
-      <h2 class="display-2 reveal"><?= e(setting('team_heading')) ?></h2>
-      <p class="lead-muted reveal"><?= e(setting('team_body')) ?></p>
-    </div>
-    <?php if ($team): ?>
-      <div class="grid grid-<?= min(4, max(2, count($team))) ?> team-grid" data-stagger>
-        <?php foreach (array_slice($team, 0, 4) as $t): ?>
-        <article class="team-card reveal">
-          <div class="team-photo"><?= picture($t['image_id'] ? (int) $t['image_id'] : null, $t['name'], ['sizes' => '(min-width: 1024px) 25vw, 50vw'], 'safari-guests') ?></div>
-          <h3><?= e($t['name']) ?></h3>
-          <p class="mono"><?= e($t['role']) ?></p>
-        </article>
-        <?php endforeach; ?>
-      </div>
-    <?php else: ?>
-      <?php
-      $valueImgs = array_values(array_filter(array_map('intval', explode(',', (string) setting('values_images')))));
-      $valueFallback = ['leopard-stalking', 'granite-boulders', 'safari-guests', 'leopard-basking'];
-      ?>
-      <div class="grid grid-4 values" data-stagger>
-        <?php foreach (Settings::lines('values_items') as $n => $line): [$vt, $vb] = array_pad(array_map('trim', explode('|', $line, 2)), 2, ''); ?>
-        <article class="value value-photo reveal">
-          <div class="value-media"><?= picture($valueImgs[$n] ?? null, $vt, ['sizes' => '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'], $valueFallback[$n % 4]) ?></div>
-          <div class="value-body"><h3><?= e($vt) ?></h3><p><?= e($vb) ?></p></div>
-        </article>
-        <?php endforeach; ?>
-      </div>
-    <?php endif; ?>
-    <div class="center reveal"><a class="btn btn-outline" href="/about/">About us</a></div>
-  </div>
-</section>
-<?php endif; ?>
-
 <!-- Guest words (only real testimonials entered in admin) -->
 <?php if (Settings::bool('testimonials_enabled') && $testimonials): ?>
 <section class="section">

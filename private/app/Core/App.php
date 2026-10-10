@@ -193,6 +193,7 @@ final class App
         }
         DB::delete('menu_items', "url LIKE '/journeys/%'");
         DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");
+        DB::q("UPDATE menu_items SET label = 'Our story' WHERE label = 'Our Story & Captains'");
         Settings::flush();
     }
 

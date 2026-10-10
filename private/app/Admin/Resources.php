@@ -89,21 +89,6 @@ final class Resources
                     'sort_order' => ['Sort order', 'number', ['side' => true]],
                 ],
             ],
-            'team' => [
-                'label' => 'Team / Captains', 'singular' => 'Team member', 'icon' => 'users', 'area' => 'content',
-                'table' => 'team', 'title' => 'name', 'order' => 'sort_order, id', 'sortable' => true, 'image' => 'image_id',
-                'search' => ['name', 'role'],
-                'columns' => ['name' => 'Name', 'role' => 'Role', 'status' => 'Status'],
-                'empty' => 'Add your naturalists and trackers here. Until someone is added, the homepage shows your brand values instead.',
-                'fields' => [
-                    'name' => ['Name', 'text', ['required' => true]],
-                    'role' => ['Role', 'text', ['placeholder' => 'Head Naturalist']],
-                    'bio' => ['Biography', 'textarea', ['rows' => 6]],
-                    'status' => ['Status', 'select', ['choices' => self::STATUS, 'side' => true]],
-                    'image_id' => ['Portrait', 'image', ['side' => true]],
-                    'sort_order' => ['Sort order', 'number', ['side' => true]],
-                ],
-            ],
             'testimonials' => [
                 'label' => 'Testimonials', 'singular' => 'Testimonial', 'icon' => 'star', 'area' => 'content',
                 'table' => 'testimonials', 'title' => 'author', 'order' => 'sort_order, id', 'sortable' => true,

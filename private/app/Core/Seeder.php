@@ -248,7 +248,7 @@ final class Seeder
         $add('header', 'Gallery', '/gallery/', 4, $wild);
         $add('header', 'Field Journal', '/journal/', 4);
         $about = $add('header', 'About', '/about/', 5);
-        $add('header', 'Our Story & Captains', '/about/', 1, $about);
+        $add('header', 'Our story', '/about/', 1, $about);
         $add('header', 'Conservation & Ethics', '/about/conservation-ethics/', 2, $about);
         $add('header', 'FAQ', '/faq/', 3, $about);
         $add('header', 'Contact', '/contact/', 4, $about);

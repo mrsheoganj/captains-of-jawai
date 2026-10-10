@@ -92,7 +92,7 @@ final class Demo
                 $filled++;
             }
         }
-        foreach (['hero_images' => ['leopard1', 'landscape1', 'leopard2', 'bird1'], 'values_images' => ['leopard-stalking', 'granite-boulders', 'safari-guests', 'leopard-basking'], 'jawai_images' => ['landscape1', 'granite-boulders', 'flamingo-flock', 'sunset-valley', 'lake-reflection']] as $key => $names) {
+        foreach (['hero_images' => ['leopard1', 'landscape1', 'leopard2', 'bird1'], 'jawai_images' => ['landscape1', 'granite-boulders', 'flamingo-flock', 'sunset-valley', 'lake-reflection']] as $key => $names) {
             $current = array_filter(array_map('intval', explode(',', (string) Settings::get($key))), fn ($v) => $exists($v));
             if ($force || !$current) {
                 Settings::set($key, implode(',', array_map($id, $names)));

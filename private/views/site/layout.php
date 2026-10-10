@@ -112,6 +112,7 @@ foreach ($schema as $s): ?>
     <div class="header-actions">
       <?php if ($wa): ?><a class="icon-btn hide-sm" href="<?= e($wa) ?>" target="_blank" rel="noopener" aria-label="WhatsApp us"><?= icon('whatsapp', 20) ?></a><?php endif; ?>
       <?php if ($tel): ?><a class="icon-btn hide-sm" href="<?= e($tel) ?>" aria-label="Call us"><?= icon('phone', 19) ?></a><?php endif; ?>
+      <a class="header-ask hide-md" href="/book-a-safari/#ask">Ask a question</a>
       <a class="btn btn-primary btn-sm hide-md" href="/book-a-safari/">Book a safari</a>
       <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><?= icon('menu', 24) ?></button>
     </div>
@@ -167,7 +168,7 @@ foreach ($schema as $s): ?>
 </div>
 <?php if ($wa): ?><a class="wa-float" href="<?= e($wa) ?>" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><?= icon('whatsapp', 28) ?></a><?php endif; ?>
 
-<button class="to-top" type="button" data-to-top aria-label="Back to top">Top</button>
+<button class="to-top" type="button" data-to-top aria-label="Back to top"><?= icon('arrow-up', 22) ?></button>
 <script src="<?= asset('js/site.js') ?>" defer></script>
 <?= setting('body_code') ?>
 </body>

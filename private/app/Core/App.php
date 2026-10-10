@@ -71,10 +71,9 @@ final class App
         // Multi-day journeys were retired: the business offers safaris only.
         $router->get('journeys', fn () => redirect('/safaris/', 301));
         $router->get('journeys/{slug}', fn (string $slug) => redirect('/safaris/', 301));
-        if (JOURNAL_PUBLIC) { // hidden for now, see bootstrap.php
-            $router->get('journal', [SiteController::class, 'journal']);
-            $router->get('journal/{slug}', [SiteController::class, 'post']);
-        }
+        // The Field Journal was removed; old links go to the Jawai guide.
+        $router->get('journal', fn () => redirect('/jawai/', 301));
+        $router->get('journal/{slug}', fn (string $slug) => redirect('/jawai/', 301));
         $router->get('gallery', [SiteController::class, 'gallery']);
         $router->get('faq', [SiteController::class, 'faq']);
         $router->get('about', [SiteController::class, 'about']);
@@ -171,6 +170,7 @@ final class App
             'ticker_items' => ['Rabari village walks'],
             'coexist_body' => ['We arrange visits'],
             'coexist_link' => ['/experiences/rabari-culture/'],
+            'booking_intro' => ['a date and a drive time'],
             'coexist_kicker' => ['The Rabari'],
             'cta_body' => ['with options and prices'],
             'tpl_admin_subject' => ['journey enquiry'],
@@ -190,15 +190,13 @@ final class App
                 }
             }
         }
-        foreach (['form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
+        foreach (['form_interests', 'form_drive_times', 'form_drives', 'journal_enabled', 'journal_heading', 'img_journal', 'team_enabled', 'team_kicker', 'team_heading', 'team_body', 'values_items', 'values_images', 'form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
             DB::delete('settings', 'skey = ?', [$key]);
         }
         DB::delete('menu_items', "url LIKE '/journeys/%'");
         DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");
         DB::q("UPDATE menu_items SET label = 'Our story' WHERE label = 'Our Story & Captains'");
-        if (!JOURNAL_PUBLIC) { // hide journal links; re-enable them in Admin → Menus when the journal returns
-            DB::q("UPDATE menu_items SET is_active = 0 WHERE url = '/journal/' OR url LIKE '/journal/%'");
-        }
+        DB::delete('menu_items', "url = '/journal/' OR url LIKE '/journal/%'"); // journal removed
         Settings::flush();
     }
 

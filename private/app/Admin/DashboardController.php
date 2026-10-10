@@ -45,7 +45,6 @@ final class DashboardController extends BaseController
         }
         $content = [
             'Safaris' => (int) DB::val("SELECT COUNT(*) FROM safaris WHERE status = 'published'"),
-            'Articles' => (int) DB::val("SELECT COUNT(*) FROM posts WHERE status = 'published'"),
             'Pages' => (int) DB::val("SELECT COUNT(*) FROM pages WHERE status = 'published'"),
             'Media' => (int) DB::val('SELECT COUNT(*) FROM media'),
         ];

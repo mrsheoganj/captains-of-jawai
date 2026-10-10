@@ -50,9 +50,7 @@
     const p = max > 0 ? Math.min(1, y / max) : 0;
     if (header) {
       header.classList.toggle('is-scrolled', y > 20);
-      const nav = $('.main-nav li:hover, .main-nav li:focus-within');
-      header.classList.toggle('is-hidden', y > 400 && y > lastY + 4 && !nav);
-      if (y < lastY - 4) header.classList.remove('is-hidden');
+      // Header stays visible at all times (no hide-on-scroll).
     }
     if (progress) progress.style.setProperty('--p', p.toFixed(4));
     if (toTop) { toTop.style.setProperty('--p', p.toFixed(4)); toTop.classList.toggle('is-visible', y > 700); }
@@ -116,10 +114,9 @@
     play();
   }
 
-  /* ---------------- Distance map (3D, interactive) ---------------- */
+  /* ---------------- Distance map (interactive) ---------------- */
   const map = $('[data-map]');
   if (map) {
-    const stage = $('[data-map-stage]', map);
     const routes = $$('[data-route]', map);
     const pins = $$('[data-place]', map);
     const items = $$('[data-dist]');
@@ -152,40 +149,6 @@
       li.addEventListener('click', () => user(+li.dataset.dist));
       li.addEventListener('mouseenter', () => { if (!touring) select(+li.dataset.dist); });
     });
-
-    // 3D / flat switch
-    $$('[data-map-view]', map).forEach((b) => b.addEventListener('click', () => {
-      const flat = b.dataset.mapView === 'flat';
-      map.classList.toggle('is-flat', flat);
-      map.style.removeProperty('--rx'); map.style.removeProperty('--rz');
-      $$('[data-map-view]', map).forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on); });
-    }));
-
-    // Tilt with the mouse, or drag (touch and mouse)
-    const base = () => (window.innerWidth < 768 ? [34, -6] : [42, -10]);
-    const tilt = (px, py) => {
-      if (map.classList.contains('is-flat')) return;
-      const [bx, bz] = base();
-      map.style.setProperty('--rx', (bx + (py - 0.5) * -16).toFixed(1) + 'deg');
-      map.style.setProperty('--rz', (bz + (px - 0.5) * 24).toFixed(1) + 'deg');
-    };
-    if (stage && !reduced) {
-      let drag = null;
-      stage.addEventListener('pointermove', (e) => {
-        const r = stage.getBoundingClientRect();
-        if (drag) { tilt(Math.min(1, Math.max(0, drag.px + (e.clientX - drag.x) / r.width)), Math.min(1, Math.max(0, drag.py + (e.clientY - drag.y) / r.height))); return; }
-        if (e.pointerType === 'mouse') tilt((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
-      });
-      stage.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('[data-place]')) return;
-        const r = stage.getBoundingClientRect();
-        drag = { x: e.clientX, y: e.clientY, px: (e.clientX - r.left) / r.width, py: (e.clientY - r.top) / r.height };
-        map.classList.add('is-dragging'); stopTour();
-      });
-      const end = () => { drag = null; map.classList.remove('is-dragging'); };
-      window.addEventListener('pointerup', end); window.addEventListener('pointercancel', end);
-      stage.addEventListener('mouseleave', () => { if (!drag) { map.style.removeProperty('--rx'); map.style.removeProperty('--rz'); } });
-    }
 
     // Auto tour once the map is on screen, until the visitor interacts
     if ('IntersectionObserver' in window) {
@@ -344,6 +307,32 @@
     }
   }
   $$('[data-ajax-form]').forEach((form) => form.addEventListener('submit', (e) => { e.preventDefault(); submitForm(form); }));
+
+  /* ---------------- Book / Ask tabs ---------------- */
+  $$('[data-tabs]').forEach((box) => {
+    const tabs = $$('[data-tab]', box);
+    const show = (name, focus) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === name;
+        t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      $$('[data-panel]', box).forEach((p) => { p.hidden = p.dataset.panel !== name; });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => show(t.dataset.tab));
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        show(n.dataset.tab, true);
+      });
+    });
+    if (location.hash === '#ask') show('ask');
+  });
+  // Links to "#ask" open the question tab of the nearest booking box
+  $$('a[href$="#ask"]').forEach((a) => a.addEventListener('click', () => {
+    const t = $('[data-tab="ask"]'); if (t) setTimeout(() => t.click(), 50);
+  }));
 
   /* ---------------- Multi-step wizard ---------------- */
   const wiz = $('[data-wizard]');

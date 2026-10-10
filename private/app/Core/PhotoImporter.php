@@ -18,6 +18,13 @@ final class PhotoImporter
         ['Rajasthan leopards', 'leopard Rajasthan', 'Leopards'],
         ['Jawai Dam', 'Jawai dam', 'Landscape'],
         ['Jawai Bandh', 'Jawai Bandh', 'Landscape'],
+        ['Jawai Dam in winter', 'Jawai dam winter', 'Jawai Dam: winter'],
+        ['Jawai Dam in summer', 'Jawai dam summer', 'Jawai Dam: summer'],
+        ['Jawai Dam in the monsoon', 'Jawai dam monsoon', 'Jawai Dam: monsoon'],
+        ['Jawai Dam overflow', 'Jawai dam overflow rain', 'Jawai Dam: monsoon'],
+        ['Jawai landscapes', 'Jawai Rajasthan', 'Landscape'],
+        ['Jawai sunset', 'Jawai sunset', 'Landscape'],
+        ['Sumerpur and Jawai river', 'Jawai river Sumerpur', 'Landscape'],
         ['Aravalli granite hills', 'Aravalli hills Rajasthan', 'Landscape'],
         ['Pali district', 'Pali district Rajasthan', 'Landscape'],
         ['Flamingos', 'Greater flamingo Rajasthan', 'Birds & Wetland'],
@@ -243,7 +250,7 @@ final class PhotoImporter
 
     /**
      * Put imported photos to work: replace placeholder/empty images in homepage settings, safaris,
-     * journeys, journal posts and pages. Never overwrites an image the team chose themselves.
+     * and pages. Never overwrites an image the team chose themselves.
      * Returns number of slots filled.
      */
     public static function useAcrossSite(): int
@@ -273,6 +280,19 @@ final class PhotoImporter
         $replaceable = fn ($v) => !$v || in_array((int) $v, $placeholderIds, true);
         $filled = 0;
 
+        // "Jawai in pictures" strip: the best Jawai views (dam in each season, landscapes)
+        $strip = array_filter(array_map('intval', explode(',', (string) Settings::get('jawai_images'))));
+        if (!$strip || !array_diff($strip, $placeholderIds)) {
+            $ids = array_values(array_unique(array_filter([
+                $pick(['Landscape']), $pick(['Jawai Dam: winter', 'Landscape']), $pick(['Jawai Dam: monsoon', 'Landscape']),
+                $pick(['Jawai Dam: summer', 'Landscape']), $pick(['Birds & Wetland', 'Landscape']),
+            ])));
+            if ($ids) {
+                Settings::set('jawai_images', implode(',', $ids));
+                $filled++;
+            }
+        }
+
         // Homepage settings
         $heroIds = array_filter(array_map('intval', explode(',', (string) Settings::get('hero_images'))));
         if (!$heroIds || !array_diff($heroIds, $placeholderIds)) {
@@ -282,7 +302,13 @@ final class PhotoImporter
                 $filled++;
             }
         }
-        foreach (['intro_image' => ['Leopards'], 'coexist_image' => ['Culture', 'Landscape'], 'cta_image' => ['Safari Life', 'Landscape'], 'seo_og_image' => ['Leopards']] as $key => $cats) {
+        foreach ([
+            'intro_image' => ['Leopards'], 'coexist_image' => ['Culture', 'Landscape'], 'cta_image' => ['Safari Life', 'Landscape'], 'seo_og_image' => ['Leopards'],
+            'season_winter_image' => ['Jawai Dam: winter', 'Birds & Wetland', 'Landscape'],
+            'season_summer_image' => ['Jawai Dam: summer', 'Landscape'],
+            'season_monsoon_image' => ['Jawai Dam: monsoon', 'Landscape'],
+            'booking_image' => ['Safari Life', 'Leopards'],
+        ] as $key => $cats) {
             if ($replaceable(Settings::get($key))) {
                 Settings::set($key, (string) $pick($cats));
                 $filled++;
@@ -290,18 +316,15 @@ final class PhotoImporter
         }
 
         $assign = function (string $table, array $map, string $default) use ($pick, $replaceable, &$filled): void {
-            foreach (DB::all("SELECT id, image_id, slug, " . ($table === 'posts' ? 'category' : "'' AS category") . " FROM $table") as $r) {
+            foreach (DB::all("SELECT id, image_id, slug FROM $table") as $r) {
                 if (!$replaceable($r['image_id'])) {
                     continue;
                 }
-                $key = $table === 'posts' ? (string) $r['category'] : (string) $r['slug'];
+                $key = (string) $r['slug'];
                 if (!isset($map[$key]) && $default === '') {
                     continue; // e.g. legal pages stay without a hero image
                 }
                 $cats = $map[$key] ?? [$default];
-                if ($table === 'posts' && preg_match('/flamingo|bird|bandh|crane/i', (string) $r['slug'])) {
-                    $cats = ['Birds & Wetland', 'Landscape'];
-                }
                 if ($id = $pick($cats)) {
                     DB::update($table, ['image_id' => $id], 'id = ?', [$r['id']]);
                     $filled++;
@@ -312,8 +335,6 @@ final class PhotoImporter
             'leopard-safari' => ['Leopards'], 'dam-birding-safari' => ['Birds & Wetland', 'Wildlife'],
             'private-safari' => ['Safari Life', 'Landscape'], 'photography-safari' => ['Leopards'],
         ], 'Leopards');
-        $assign('journeys', ['3-day-classic' => ['Leopards'], '4-day-photography' => ['Birds & Wetland', 'Leopards'], 'rajasthan-circuit' => ['Culture', 'Landscape']], 'Landscape');
-        $assign('posts', ['Wildlife' => ['Leopards', 'Wildlife'], 'Culture' => ['Culture'], 'Planning' => ['Landscape', 'Safari Life']], 'Landscape');
         $assign('pages', [
             'jawai' => ['Landscape'], 'experiences/rabari-culture' => ['Culture'], 'experiences/boulder-sundowners' => ['Landscape'],
             'about/conservation-ethics' => ['Leopards', 'Wildlife'], 'about' => ['Safari Life', 'Leopards'],

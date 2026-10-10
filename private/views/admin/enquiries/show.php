@@ -6,7 +6,7 @@ $wa = preg_replace('/\D+/', '', (string) $e['phone']);
 $first = explode(' ', trim($e['full_name']))[0];
 $details = array_filter([
     'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'], 'Country' => $e['country'],
-    'Safari' => $e['interests'], 'Dates' => $e['travel_window'], 'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
+    ($e['type'] === 'journey' ? 'Booking' : 'About') => $e['interests'], 'Dates' => $e['travel_window'], 'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
     'Party' => $e['type'] === 'journey' ? (int) $e['adults'] . ' adult(s), ' . (int) $e['children'] . ' child(ren)' : '',
     'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
     // Older enquiries (before safari-only) may still carry these:
@@ -27,7 +27,7 @@ $details = array_filter([
         <div class="avatar avatar-lg"><?= e(mb_strtoupper(mb_substr($e['full_name'], 0, 1))) ?></div>
         <div>
           <h2><?= e($e['full_name']) ?></h2>
-          <p class="muted"><span class="mono"><?= e($e['code']) ?></span> · <?= e($e['type'] === 'journey' ? 'Safari' : ucfirst($e['type'])) ?> enquiry · <?= e(fmt_date($e['created_at'], 'j M Y, H:i')) ?> (<?= e(time_ago($e['created_at'])) ?>)</p>
+          <p class="muted"><span class="mono"><?= e($e['code']) ?></span> · <?= e($e['type'] === 'journey' ? 'Booking request' : 'Inquiry') ?> · <?= e(fmt_date($e['created_at'], 'j M Y, H:i')) ?> (<?= e(time_ago($e['created_at'])) ?>)</p>
         </div>
         <?= status_badge($e['status']) ?>
       </div>

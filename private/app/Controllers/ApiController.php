@@ -27,14 +27,20 @@ final class ApiController
         if ($phone === '' || !preg_match('/^[+\d][\d\s().-]{5,}$/', $phone)) {
             $errors['phone'] = 'Please provide a valid phone / WhatsApp number with country code.';
         }
-        // Safaris on offer (published) plus the optional add-ons listed in Settings → Forms.
-        $allowed = array_merge(array_column(DB::all("SELECT title FROM safaris WHERE status = 'published'"), 'title'), Settings::lines('form_interests'));
-        $interests = array_values(array_intersect((array) input('interests', []), $allowed));
-        $driveTime = in_array($t = str_input('drive_time', 60), Settings::lines('form_drive_times'), true) ? $t : '';
-        $drives = in_array($d = str_input('drives', 60), Settings::lines('form_drives'), true) ? $d : '';
-        $window = trim(str_input('travel_month', 60) . ' ' . str_input('travel_dates', 100));
+        // Booking type: one of the types in Settings → Enquiry Form, or a published safari's name.
+        $allowed = array_merge(
+            array_map(fn ($l) => trim(explode('|', $l, 2)[0]), Settings::lines('booking_types')),
+            array_column(DB::all("SELECT title FROM safaris WHERE status = 'published'"), 'title')
+        );
+        $picked = array_merge([str_input('booking_type', 150)], (array) input('interests', []));
+        $interests = array_values(array_unique(array_intersect($picked, $allowed)));
+        if (!$interests) {
+            $errors['booking_type'] = 'Please choose a safari.';
+        }
+        $date = str_input('travel_date', 20);
+        $window = preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? date('D j M Y', strtotime($date)) : trim(str_input('travel_month', 60) . ' ' . str_input('travel_dates', 100));
         if ($window === '') {
-            $window = 'Flexible';
+            $window = 'Date not chosen yet';
         }
         if ($errors) {
             $this->fail($errors);
@@ -45,8 +51,7 @@ final class ApiController
             'full_name' => $name, 'email' => $email, 'phone' => $phone,
             'country' => str_input('country', 80) ?: 'India',
             'interests' => implode(', ', $interests),
-            'travel_window' => $window . (input('flexible') ? ' (flexible)' : ''),
-            'drive_time' => $driveTime, 'drives' => $drives,
+            'travel_window' => $window,
             'adults' => max(1, min(50, (int) input('adults', 2))),
             'children' => max(0, min(30, (int) input('children', 0))),
             'private_vehicle' => input('private_vehicle') ? 'Yes' : 'No preference',
@@ -62,6 +67,7 @@ final class ApiController
         $name = str_input('full_name', 100);
         $email = strtolower(str_input('email', 150));
         $message = str_input('message', 3000);
+        $topic = str_input('topic', 80);
         if (mb_strlen($name) < 2) {
             $errors['full_name'] = 'Please tell us your name.';
         }
@@ -76,7 +82,8 @@ final class ApiController
         }
         $id = $this->store([
             'type' => 'contact', 'full_name' => $name, 'email' => $email,
-            'phone' => str_input('phone', 40), 'country' => str_input('country', 80), 'message' => $message,
+            'phone' => str_input('phone', 40), 'country' => str_input('country', 80),
+            'interests' => $topic, 'message' => $message,
         ]);
         $this->done($id, 'contact');
     }
@@ -147,7 +154,7 @@ final class ApiController
         $party = (int) $e['adults'] . ' adult(s)' . ((int) $e['children'] ? ', ' . (int) $e['children'] . ' child(ren)' : '');
         $rows = array_filter([
             'Reference' => $e['code'], 'Name' => $e['full_name'], 'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'],
-            'Country' => $e['country'], 'Safari' => $e['interests'], 'Dates' => $e['travel_window'],
+            'Country' => $e['country'], 'Booking' => $e['interests'], 'Date' => $e['travel_window'],
             'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
             'Party' => $e['type'] === 'journey' ? $party : '', 'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
             'Message' => $e['message'],

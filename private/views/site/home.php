@@ -48,7 +48,9 @@ foreach (Settings::lines('stats') as $line) {
 <?php if (Settings::bool('ticker_enabled') && ($ticker = Settings::lines('ticker_items'))): ?>
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <?php for ($r = 0; $r < 2; $r++): foreach ($ticker as $t): ?><span><?= e($t) ?></span><i>·</i><?php endforeach; endfor; ?>
+    <?php // Two identical halves (each long enough to fill a wide screen), so the loop is seamless.
+    $reps = max(2, (int) ceil(12 / count($ticker)));
+    for ($half = 0; $half < 2; $half++): ?><div class="ticker-group"><?php for ($r = 0; $r < $reps; $r++): foreach ($ticker as $t): ?><span><?= e($t) ?></span><i>·</i><?php endforeach; endfor; ?></div><?php endfor; ?>
   </div>
 </div>
 <?php endif; ?>
@@ -117,16 +119,15 @@ if (Settings::bool('jawai_images_enabled')): ?>
 </section>
 <?php endif; ?>
 
+<!-- Jawai Dam through the seasons -->
+<?php if (Settings::bool('seasons_enabled')): ?><?= View::partial('site/partials/seasons') ?><?php endif; ?>
+
 <!-- Booking -->
 <?php if (Settings::bool('booking_enabled')):
 $details = [];
 foreach (Settings::lines('booking_details') as $line) {
     [$k, $v] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
     $details[] = [$k, $v];
-}
-$months = [];
-for ($n = 0; $n < 12; $n++) {
-    $months[] = date('F Y', strtotime("first day of +$n month"));
 }
 ?>
 <section class="section section-alt booking" id="booking">
@@ -143,44 +144,7 @@ for ($n = 0; $n < 12; $n++) {
       <div class="booking-photo reveal-img"><?= picture((int) setting('booking_image') ?: null, 'Open safari jeep in Jawai', ['sizes' => '(min-width: 1024px) 40vw, 100vw'], 'safari-jeep') ?></div>
     </div>
     <div class="booking-card reveal">
-      <form class="ajax-form" method="post" action="/api/enquiry" data-ajax-form novalidate>
-        <?= View::partial('site/partials/form-guard') ?>
-        <h3 class="booking-form-title">Safari enquiry</h3>
-        <label class="field"><span>Safari *</span>
-          <select name="interests[]"><?php foreach ($safaris as $sf): ?><option><?= e($sf['title']) ?></option><?php endforeach; ?><?php foreach (Settings::lines('form_interests') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
-        </label>
-        <div class="field-row">
-          <label class="field"><span>Month</span>
-            <select name="travel_month"><option value="">Not sure yet</option><?php foreach ($months as $m): ?><option><?= e($m) ?></option><?php endforeach; ?></select>
-          </label>
-          <label class="field"><span>Date(s)</span><input type="text" name="travel_dates" placeholder="e.g. 14 Dec"></label>
-        </div>
-        <div class="field-row">
-          <label class="field"><span>Drive time</span>
-            <select name="drive_time"><?php foreach (Settings::lines('form_drive_times') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
-          </label>
-          <label class="field"><span>Drives</span>
-            <select name="drives"><?php foreach (Settings::lines('form_drives') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
-          </label>
-        </div>
-        <div class="field-row">
-          <label class="field"><span>Adults</span><input type="number" name="adults" value="2" min="1" max="50" inputmode="numeric"></label>
-          <label class="field"><span>Children</span><input type="number" name="children" value="0" min="0" max="30" inputmode="numeric"></label>
-        </div>
-        <label class="field"><span>Full name *</span><input type="text" name="full_name" required autocomplete="name"></label>
-        <div class="field-row">
-          <label class="field"><span>Email *</span><input type="email" name="email" required autocomplete="email"></label>
-          <label class="field"><span>Phone / WhatsApp *</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+91"></label>
-        </div>
-        <label class="field"><span>Where are you staying? (optional)</span><input type="text" name="message" placeholder="Hotel or village, so we can plan the meeting point"></label>
-        <input type="hidden" name="private_vehicle" value="1">
-        <div class="form-error" data-form-error hidden></div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit"><span>Send safari request</span></button>
-        <p class="form-note"><?= e(setting('privacy_note')) ?> <a href="/privacy-policy/">Privacy policy</a>.</p>
-      </form>
-      <div class="form-success" data-form-success hidden>
-        <h3></h3><p></p><p class="mono" data-code></p>
-      </div>
+      <?= View::partial('site/partials/booking-tabs', ['id' => 'home']) ?>
     </div>
   </div>
 </section>
@@ -225,11 +189,15 @@ for ($n = 0; $n < 12; $n++) {
       </div>
       <a class="link-arrow reveal" href="/jawai/">About Jawai</a>
     </div>
-    <div class="guide-grid reveal">
-      <?php foreach ($guide as $g): ?>
-      <a href="/<?= e($g['slug']) ?>/">
-        <h3><?= e($g['title']) ?></h3>
-        <p><?= e(excerpt($g['intro'], 120)) ?></p>
+    <div class="guide-cards" data-stagger>
+      <?php foreach ($guide as $n => $g): ?>
+      <a class="guide-card reveal" href="/<?= e($g['slug']) ?>/">
+        <span class="guide-photo"><?= picture($g['image_id'] ? (int) $g['image_id'] : null, $g['label'], ['sizes' => '(min-width: 1024px) 25vw, 50vw'], \App\Core\JawaiGuide::IMAGES[$g['slug']] ?? 'landscape1') ?><span class="guide-num"><?= sprintf('%02d', $n + 1) ?></span></span>
+        <span class="guide-body">
+          <strong><?= e($g['label']) ?></strong>
+          <span class="guide-intro"><?= e(excerpt($g['intro'], 95)) ?></span>
+          <span class="guide-more">Read</span>
+        </span>
       </a>
       <?php endforeach; ?>
     </div>
@@ -268,23 +236,5 @@ for ($n = 0; $n < 12; $n++) {
 </section>
 <?php endif; ?>
 
-<?php /* Journal section: hidden for now (see JOURNAL_PUBLIC in app/bootstrap.php). Remove this comment wrapper to show it again.
-<?php if (Settings::bool('journal_enabled') && $posts): ?>
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="kicker reveal">Journal</span>
-        <h2 class="display-2 reveal"><?= e(setting('journal_heading')) ?></h2>
-      </div>
-      <a class="link-arrow reveal" href="/journal/">All articles</a>
-    </div>
-    <div class="grid grid-3" data-stagger>
-      <?php foreach ($posts as $p): ?><?= View::partial('site/partials/card-post', ['p' => $p]) ?><?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-*/ ?>
 
 

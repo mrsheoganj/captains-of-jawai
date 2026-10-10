@@ -36,7 +36,7 @@ $sortable = !empty($r['sortable']) && $q === '' && $status === '' && $canEdit;
           <td>
             <?php if ($firstCol): ?><a href="<?= e($edit) ?>"><strong><?= e(excerpt((string) $v, 90)) ?></strong></a>
               <?php if (!empty($r['public']) && isset($row['slug'])): ?><br><small class="muted mono"><?= e(str_replace('{slug}', $row['slug'], $r['public'])) ?></small><?php endif; ?>
-            <?php elseif ($c === 'status'): ?><?= status_badge((string) $v) ?><?php if ($r['key'] === 'posts' && $v === 'published' && ($row['published_at'] ?? '') > now()): ?> <small class="muted">scheduled</small><?php endif; ?>
+            <?php elseif ($c === 'status'): ?><?= status_badge((string) $v) ?>
             <?php elseif (str_starts_with($c, 'is_')): ?><?= $v ? '<span class="dot-yes">Yes</span>' : '<span class="muted">—</span>' ?>
             <?php elseif ($c === 'published_at'): ?><?= e(fmt_date((string) $v)) ?>
             <?php elseif ($c === 'slug'): ?><span class="mono">/<?= e($v) ?>/</span>

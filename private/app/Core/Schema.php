@@ -37,25 +37,12 @@ final class Schema
                 'group_size' => 'short', 'image_id' => 'int', 'is_featured' => 'bool', 'sort_order' => 'int', 'status' => 'short',
                 ...$seo, ...$ts, '_unique' => ['slug'],
             ],
-            'journeys' => [
-                'id' => 'pk', 'title' => 'str', 'slug' => 'str', 'duration_label' => 'short', 'tagline' => 'str', 'excerpt' => 'text',
-                'body' => 'long', 'itinerary' => 'long', 'inclusions' => 'text', 'image_id' => 'int', 'is_featured' => 'bool',
-                'sort_order' => 'int', 'status' => 'short', ...$seo, ...$ts, '_unique' => ['slug'],
-            ],
-            'posts' => [
-                'id' => 'pk', 'title' => 'str', 'slug' => 'str', 'category' => 'short', 'excerpt' => 'text', 'body' => 'long',
-                'image_id' => 'int', 'author_name' => 'str', 'reading_time' => 'int', 'status' => 'short',
-                'published_at' => 'datetime', ...$seo, ...$ts, '_unique' => ['slug'],
-            ],
             'pages' => [
                 'id' => 'pk', 'title' => 'str', 'slug' => 'str', 'kicker' => 'str', 'intro' => 'text', 'body' => 'long',
                 'image_id' => 'int', 'show_cta' => 'bool', 'faq' => 'long', 'sources' => 'text', 'status' => 'short', ...$seo, ...$ts, '_unique' => ['slug'],
             ],
             'faqs' => [
                 'id' => 'pk', 'question' => 'str', 'answer' => 'text', 'category' => 'short', 'sort_order' => 'int', 'status' => 'short',
-            ],
-            'team' => [
-                'id' => 'pk', 'name' => 'str', 'role' => 'str', 'bio' => 'text', 'image_id' => 'int', 'sort_order' => 'int', 'status' => 'short',
             ],
             'testimonials' => [
                 'id' => 'pk', 'author' => 'str', 'origin' => 'str', 'quote' => 'text', 'source' => 'str', 'sort_order' => 'int', 'status' => 'short',

@@ -53,10 +53,6 @@ final class ContentController extends BaseController
         if (array_key_exists('sort_order', Schema::tables()[$r['table']])) {
             $row['sort_order'] = (int) DB::val("SELECT COALESCE(MAX(sort_order), 0) + 1 FROM {$r['table']}");
         }
-        if ($res === 'posts') {
-            $row['published_at'] = now();
-            $row['author_name'] = Auth::user()['name'] ?? '';
-        }
         return $this->form($r, $row, null);
     }
 
@@ -162,12 +158,6 @@ final class ContentController extends BaseController
         if (!empty($r['seo'])) {
             $data['meta_title'] = mb_substr(str_input('meta_title', 255), 0, 255);
             $data['meta_description'] = mb_substr(str_input('meta_description', 500), 0, 500);
-        }
-        if ($r['table'] === 'posts') {
-            if (empty($data['reading_time'])) {
-                $data['reading_time'] = max(1, (int) round(str_word_count(strip_tags((string) $data['body'])) / 200));
-            }
-            $data['published_at'] ??= now();
         }
         if ($r['table'] === 'redirects') {
             $data['from_path'] = '/' . ltrim((string) parse_url($data['from_path'], PHP_URL_PATH), '/');

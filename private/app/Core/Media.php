@@ -210,7 +210,7 @@ final class Media
     public static function usages(int $id): array
     {
         $uses = [];
-        foreach (['safaris' => 'title', 'journeys' => 'title', 'posts' => 'title', 'pages' => 'title', 'team' => 'name'] as $t => $col) {
+        foreach (['safaris' => 'title', 'pages' => 'title'] as $t => $col) {
             foreach (DB::all("SELECT $col AS label FROM $t WHERE image_id = ?", [$id]) as $r) {
                 $uses[] = ucfirst($t) . ': ' . $r['label'];
             }

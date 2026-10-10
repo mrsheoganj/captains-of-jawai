@@ -31,6 +31,8 @@
   </div>
 </section>
 
+<?php if (in_array($item['slug'], ['jawai', 'jawai/jawai-dam', 'jawai/best-time-to-visit'], true) && \App\Core\Settings::bool('seasons_enabled')): ?><?= View::partial('site/partials/seasons') ?><?php endif; ?>
+
 <?php if (!empty($related) && explode('/', (string) $item['slug'])[0] === 'jawai'): ?>
 <section class="section section-alt">
   <div class="container">

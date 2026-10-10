@@ -11,14 +11,13 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 ### Public website
 | Page | URL |
 | --- | --- |
-| Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, booking section with an inline safari enquiry form, gallery, Jawai guide, journal | `/` |
+| Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, Jawai Dam through the seasons (winter, summer, monsoon), booking section with two tabs (Book a safari / Ask a question), gallery, "Before you come" guide cards | `/` |
 | Expeditions hub and detail pages (facts strip, highlights, sticky enquiry card) | `/safaris/`, `/safaris/{slug}/` |
-| Field Journal (categories, pagination, related articles, share buttons). **Hidden for now:** set `JOURNAL_PUBLIC = true` in `private/app/bootstrap.php`, then re-enable its menu links in Admin → Menus | `/journal/`, `/journal/{slug}/` |
 | Gallery (category filter and lightbox) | `/gallery/` |
 | FAQ (accordion and FAQPage schema) | `/faq/` |
 | About (story) | `/about/` |
 | Contact (AJAX form, map embed) | `/contact/` |
-| **Book a safari**, a 4-step safari request (safari, date and drive time, guests, contact) | `/book-a-safari/` |
+| **Book a safari**: one short form (booking type, date, guests, contact) plus an **Ask a question** tab. Booking types are editable in Settings → Enquiry Form | `/book-a-safari/` |
 | **Jawai guide**: a pillar page plus seven topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit, culture and the Rabari), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
 | CMS pages, with nesting allowed (e.g. `experiences/rabari-culture`) | `/{any/path}/` |
 | Dynamic XML sitemap and robots.txt | `/sitemap.xml`, `/robots.txt` |
@@ -36,7 +35,7 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 * an interactive 3D distance map: tilts with the mouse or by dragging; has standing pins, a 3D/flat switch and an automatic tour; tapping a place highlights its route and shows the distance with a Google Maps directions link; distances count up;
 * a moving ticker;
 * light parallax and a full-width slider with arrows, dots and swipe;
-* a header that hides as you scroll down, a scroll-progress bar and a back-to-top button.
+* a header that stays visible, a scroll-progress bar and a round back-to-top arrow button.
 
 All of the motion respects the visitor's "reduce motion" setting.
 
@@ -52,7 +51,7 @@ Other features:
   * one-click Email, WhatsApp and Call buttons;
   * search, filters, bulk actions and CSV export;
   * a "re-send notification" button.
-* **Content (CMS):** Safaris, Field Journal articles (drafts and scheduled posts), Pages, FAQs and Testimonials.
+* **Content (CMS):** Safaris, Pages, FAQs and Testimonials.
   * Content uses a rich-text editor with an HTML view.
   * Items can be reordered by drag-and-drop, duplicated, saved as drafts and previewed.
 * **Media library:** drag-and-drop upload with automatic resizing (1600/800/400 px) and WebP conversion. Each image has alt text, caption, credit/licence and gallery fields.

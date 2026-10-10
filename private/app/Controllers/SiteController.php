@@ -46,15 +46,22 @@ final class SiteController
     public function home(): string
     {
         $safaris = $this->published('safaris');
-        $posts = JOURNAL_PUBLIC ? DB::all("SELECT * FROM posts WHERE status = 'published' AND published_at <= ? ORDER BY published_at DESC LIMIT 3", [now()]) : [];
         $testimonials = $this->published('testimonials');
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
-        $guide = DB::all("SELECT slug, title, intro FROM pages WHERE status = 'published' AND slug LIKE 'jawai/%' ORDER BY slug");
+        // "Before you come": the Jawai overview plus each guide page, in reading order, with short labels.
+        $labels = ['jawai' => 'Jawai at a glance'] + \App\Core\JawaiGuide::MENU;
+        $order = array_flip(array_keys($labels));
+        $guide = DB::all("SELECT slug, title, intro, image_id FROM pages WHERE status = 'published' AND (slug = 'jawai' OR slug LIKE 'jawai/%')");
+        foreach ($guide as &$g) {
+            $g['label'] = $labels[$g['slug']] ?? $g['title'];
+        }
+        unset($g);
+        usort($guide, fn ($a, $b) => ($order[$a['slug']] ?? 99) <=> ($order[$b['slug']] ?? 99));
         $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1 ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
         $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 
-        return $this->show('home', compact('safaris', 'posts', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
+        return $this->show('home', compact('safaris', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),
@@ -95,54 +102,6 @@ final class SiteController
                 '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => $item['title'],
                 'description' => excerpt($item['excerpt'], 300), 'touristType' => ['Wildlife enthusiasts', 'Photographers', 'Luxury travellers'],
                 'provider' => ['@id' => abs_url('/#organization')], 'url' => abs_url('/safaris/' . $item['slug'] . '/'),
-            ]],
-        ]);
-    }
-
-    public function journal(): string
-    {
-        $cat = str_input('category', 100);
-        $page = max(1, (int) input('page', 1));
-        $per = 9;
-        $where = "status = 'published' AND published_at <= ?";
-        $params = [now()];
-        if ($cat !== '') {
-            $where .= ' AND category = ?';
-            $params[] = $cat;
-        }
-        $total = (int) DB::val("SELECT COUNT(*) FROM posts WHERE $where", $params);
-        $posts = DB::all("SELECT * FROM posts WHERE $where ORDER BY published_at DESC LIMIT $per OFFSET " . (($page - 1) * $per), $params);
-        $categories = DB::all("SELECT category, COUNT(*) AS n FROM posts WHERE status = 'published' AND category <> '' GROUP BY category ORDER BY category");
-        return $this->show('journal', compact('posts', 'categories', 'cat', 'page', 'total', 'per'), [
-            'title' => 'The Field Journal — Jawai Wildlife Stories & Guides' . ($page > 1 ? " (page $page)" : ''),
-            'description' => 'Stories, guides and field notes from Jawai: leopard behaviour, birding at Jawai Bandh, Rabari culture and practical safari planning.',
-            'breadcrumbs' => [['Field Journal', '/journal/']],
-            'noindex' => $cat !== '',
-        ]);
-    }
-
-    public function post(string $slug): string
-    {
-        $item = DB::one("SELECT * FROM posts WHERE slug = ? AND status = 'published' AND published_at <= ?", [$slug, now()]);
-        if (!$item) {
-            $this->notFound();
-        }
-        $related = DB::all("SELECT * FROM posts WHERE status = 'published' AND id <> ? AND published_at <= ? ORDER BY CASE WHEN category = ? THEN 0 ELSE 1 END, published_at DESC LIMIT 3", [$item['id'], now(), $item['category']]);
-        return $this->show('post', compact('item', 'related'), [
-            'title' => $item['meta_title'] ?: $item['title'],
-            'raw_title' => (bool) $item['meta_title'],
-            'description' => $item['meta_description'] ?: excerpt($item['excerpt']),
-            'image' => $item['image_id'] ? (int) $item['image_id'] : null,
-            'type' => 'article',
-            'breadcrumbs' => [['Field Journal', '/journal/'], [$item['title'], '/journal/' . $item['slug'] . '/']],
-            'schema' => [[
-                '@context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => $item['title'],
-                'description' => excerpt($item['excerpt'], 300), 'datePublished' => date('c', strtotime($item['published_at'])),
-                'dateModified' => date('c', strtotime($item['updated_at'] ?: $item['published_at'])),
-                'author' => ['@type' => 'Organization', 'name' => $item['author_name'] ?: setting('site_name')],
-                'publisher' => ['@id' => abs_url('/#organization')],
-                'image' => $item['image_id'] ? abs_url(Media::url((int) $item['image_id'])) : abs_url('/assets/img/og-image.jpg'),
-                'mainEntityOfPage' => abs_url('/journal/' . $item['slug'] . '/'),
             ]],
         ]);
     }
@@ -304,14 +263,11 @@ final class SiteController
     {
         header('Content-Type: application/xml; charset=utf-8');
         $urls = [['/', null, '1.0']];
-        foreach (array_merge(['/safaris/'], JOURNAL_PUBLIC ? ['/journal/'] : [], ['/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/']) as $p) {
+        foreach (array_merge(['/safaris/'], ['/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/']) as $p) {
             $urls[] = [$p, null, '0.8'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM safaris WHERE status = 'published'") as $r) {
             $urls[] = ['/safaris/' . $r['slug'] . '/', $r['updated_at'], '0.9'];
-        }
-        foreach (JOURNAL_PUBLIC ? DB::all("SELECT slug, updated_at FROM posts WHERE status = 'published' AND published_at <= ?", [now()]) : [] as $r) {
-            $urls[] = ['/journal/' . $r['slug'] . '/', $r['updated_at'], '0.7'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM pages WHERE status = 'published' AND slug <> 'about'") as $r) {
             $urls[] = ['/' . $r['slug'] . '/', $r['updated_at'], str_contains($r['slug'], 'policy') || $r['slug'] === 'terms' ? '0.3' : '0.7'];

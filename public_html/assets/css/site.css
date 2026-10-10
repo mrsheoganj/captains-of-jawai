@@ -275,7 +275,6 @@ html.is-loading .preloader { animation: preloaderIn .25s .3s forwards; } /* only
 /* ---------- Ticker ---------- */
 .ticker { background: var(--surface); color: var(--text); overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .ticker-track { display: flex; width: max-content; gap: 30px; padding: 18px 0; animation: ticker 55s linear infinite; font-family: var(--mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-.ticker:hover .ticker-track { animation-play-state: paused; }
 .ticker-track i { font-style: normal; color: var(--accent); }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
@@ -704,7 +703,7 @@ html.is-loading .preloader { animation: preloaderIn .25s .3s forwards; } /* only
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
   .js .reveal, .js .reveal-img, .js [data-anim] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .split-word > span { transform: none !important; }
-  .ticker-track, .topo g, .float-card, .sun-disc { animation: none !important; }
+  .topo g, .float-card, .sun-disc { animation: none !important; }
   .topo path, .topo ellipse { stroke-dashoffset: 0; }
 }
 
@@ -1023,3 +1022,101 @@ body { font-size: 1.08rem; }
 .map-info a { font-weight: 600; font-size: .9rem; }
 .map-info > * { animation: rise .5s var(--ease) both; }
 @media (prefers-reduced-motion: reduce) { .map-plane, .pin3d { transition: none; } .map-card.is-in .pin-body { transition: none; } }
+
+/* Map: flat view only */
+.map-card, .map-card.is-flat { --rx: 0deg; --rz: 0deg; }
+@media (max-width: 767px) { .map-card { --rx: 0deg; --rz: 0deg; } }
+.map-stage { cursor: default; perspective: none; padding-top: 64px; }
+.map-stage::after { display: none; }
+
+/* Ticker: continuous, seamless loop (never pauses) */
+.ticker-track { gap: 0; animation: ticker 40s linear infinite; will-change: transform; }
+.ticker-group { display: flex; flex: none; align-items: center; gap: 30px; padding-right: 30px; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation-duration: 40s !important; animation-iteration-count: infinite !important; }
+}
+
+/* ===== "Before you come" guide cards ===== */
+.guide-cards { display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 1024px) { .guide-cards { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+.guide-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: var(--img-radius, 10px); overflow: hidden; color: var(--text); transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s; }
+.guide-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--border-2); color: var(--text); }
+.guide-photo { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--sand); }
+.guide-photo picture, .guide-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.guide-photo img { transition: transform 1.2s var(--ease); }
+.guide-card:hover .guide-photo img { transform: scale(1.07); }
+.guide-num { position: absolute; left: 12px; top: 12px; font: 700 .75rem var(--sans); letter-spacing: .08em; color: #fff; background: rgba(23, 32, 28, .62); backdrop-filter: blur(4px); border-radius: 999px; padding: 4px 10px; }
+.guide-body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; flex: 1; }
+.guide-body strong { font-family: var(--serif); font-weight: 500; font-size: 1.22rem; line-height: 1.2; }
+.guide-intro { font-size: .92rem; color: var(--text-2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.guide-more { margin-top: auto; padding-top: 8px; font-weight: 700; font-size: .84rem; color: var(--accent); }
+.guide-more::after { content: ' \2192'; display: inline-block; transition: transform .3s var(--ease); }
+.guide-card:hover .guide-more::after { transform: translateX(4px); }
+@media (max-width: 639px) {
+  .guide-cards { gap: 12px; }
+  .guide-body { padding: 12px 12px 14px; }
+  .guide-body strong { font-size: 1.02rem; }
+  .guide-intro { display: none; }
+  .guide-more { font-size: .78rem; }
+}
+
+/* Header always visible */
+.site-header.is-hidden { transform: none; }
+
+/* Back-to-top: round up-arrow button */
+.to-top { font-size: 0; letter-spacing: 0; background: var(--accent); color: #fff; box-shadow: 0 10px 24px -10px rgba(180, 83, 42, .7); }
+.to-top .icon { width: 22px; height: 22px; transition: transform .3s var(--ease); }
+.to-top:hover { background: var(--accent-hover); color: #fff; }
+.to-top:hover .icon { transform: translateY(-3px); }
+
+/* ===== Simple booking form ===== */
+.booking-form .bk-label { display: block; font: 700 .78rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin: 6px 0 10px; padding: 0; }
+.bk-types { border: 0; margin: 0 0 14px; padding: 0; min-width: 0; }
+.bk-type-grid { display: grid; gap: 8px; grid-template-columns: 1fr; }
+@media (min-width: 520px) { .bk-type-grid { grid-template-columns: 1fr 1fr; } }
+.bk-type { position: relative; cursor: pointer; display: block; }
+.bk-type input { position: absolute; opacity: 0; pointer-events: none; }
+.bk-type-card { display: flex; flex-direction: column; gap: 2px; height: 100%; padding: 11px 14px 11px 38px; border: 1.5px solid var(--border-2); border-radius: 10px; background: #fff; position: relative; transition: border-color .25s, background .25s, box-shadow .25s; }
+.bk-type-card::before { content: ''; position: absolute; left: 13px; top: 14px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-2); background: #fff; transition: border-color .25s, box-shadow .25s; }
+.bk-type-card strong { font: 600 .95rem var(--sans); color: var(--text); line-height: 1.25; }
+.bk-type-card small { font-size: .8rem; color: var(--text-2); line-height: 1.35; }
+.bk-type-card em { font-style: normal; font-weight: 700; font-size: .82rem; color: var(--accent); margin-top: 2px; }
+.bk-type:hover .bk-type-card { border-color: var(--accent); }
+.bk-type input:checked + .bk-type-card { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 3px rgba(180, 83, 42, .12); }
+.bk-type input:checked + .bk-type-card::before { border-color: var(--accent); box-shadow: inset 0 0 0 3px #fff; background: var(--accent); }
+.bk-type input:focus-visible + .bk-type-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+.booking-form .field { margin-bottom: 12px; }
+.booking-form .form-note { font-size: .8rem; color: var(--text-3); margin-top: 10px; }
+.plan-form.booking-card { max-width: 640px; margin: 0 auto; }
+.to-top svg.icon { position: static; inset: auto; width: 22px; height: 22px; transform: none; }
+.to-top:hover svg.icon { transform: translateY(-3px); }
+@media (max-width: 1023px) { .page-plan .arch-plan { display: none; } }
+
+/* ===== Book / Ask tabs ===== */
+.bk-tablist { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-bottom: 20px; background: var(--subtle); border: 1px solid var(--border); border-radius: 999px; }
+.bk-tablist [role="tab"] { border: 0; background: transparent; padding: 11px 12px; border-radius: 999px; font: 700 .92rem var(--sans); color: var(--text-2); cursor: pointer; transition: background .3s, color .3s, box-shadow .3s; }
+.bk-tablist [role="tab"][aria-selected="true"] { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px rgba(180, 83, 42, .8); }
+.bk-tablist [role="tab"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bk-panel:not([hidden]) { animation: rise .45s var(--ease) both; }
+.bk-intro { font-size: .95rem; color: var(--text-2); margin: 0 0 14px; }
+.header-ask { font-weight: 600; font-size: .95rem; color: var(--text); margin-right: 18px; border-bottom: 1px solid transparent; transition: color .3s, border-color .3s; }
+.header-ask:hover { color: var(--accent); border-color: currentColor; }
+
+/* ===== Jawai Dam through the seasons ===== */
+.season-grid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .season-grid { grid-template-columns: repeat(3, 1fr); } }
+.season-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--img-radius, 10px); overflow: hidden; display: flex; flex-direction: column; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.season-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.season-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--sand); }
+.season-photo picture, .season-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.season-photo img { transition: transform 1.4s var(--ease); }
+.season-card:hover .season-photo img { transform: scale(1.06); }
+.season-tag { position: absolute; left: 14px; bottom: 14px; font: 700 .74rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #fff; padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(4px); }
+.season-winter .season-tag { background: rgba(46, 104, 140, .85); }
+.season-summer .season-tag { background: rgba(180, 83, 42, .88); }
+.season-monsoon .season-tag { background: rgba(47, 92, 62, .88); }
+.season-body { padding: 18px 20px 22px; }
+.season-body h3 { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; margin-bottom: 8px; }
+.season-body p { margin: 0; color: var(--text-2); font-size: .97rem; }
+.season-winter { border-top: 3px solid #2E688C; } .season-summer { border-top: 3px solid var(--accent); } .season-monsoon { border-top: 3px solid #2F5C3E; }
+.seasons .section-head h2 { max-width: 28ch; }

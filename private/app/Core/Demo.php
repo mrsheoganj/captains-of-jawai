@@ -82,7 +82,8 @@ final class Demo
         $settings = [
             'intro_image' => 'leopard-portrait', 'coexist_image' => 'granite-dome-dusk', 'cta_image' => 'safari1',
             'seo_og_image' => 'leopard1', 'img_safaris' => 'leopard2', 'booking_image' => 'safari-jeep',
-            'img_journal' => 'lake-reflection', 'img_gallery' => 'leopard-basking', 'img_faq' => 'safari-jeep',
+            'season_winter_image' => 'flamingo-flock', 'season_summer_image' => 'sunset-valley', 'season_monsoon_image' => 'lake-reflection',
+            'img_gallery' => 'leopard-basking', 'img_faq' => 'safari-jeep',
             'img_contact' => 'bandh-shoreline', 'img_plan' => 'leopard-portrait', 'img_about' => 'safari-guests',
             'img_404' => 'granite-boulders', 'img_login' => 'leopard2',
         ];
@@ -102,12 +103,6 @@ final class Demo
 
         $map = [
             'safaris' => ['leopard-safari' => 'leopard-basking', 'dam-birding-safari' => 'flamingo-flock', 'private-safari' => 'safari-jeep', 'photography-safari' => 'leopard2'],
-            'journeys' => ['3-day-classic' => 'ridge-sighting', '4-day-photography' => 'leopard-stalking', 'rajasthan-circuit' => 'lake-reflection'],
-            'posts' => [
-                'jawai-travel-guide' => 'landscape1', 'jawai-leopards-granite-caves' => 'leopard-portrait', 'rabari-leopard-coexistence' => 'granite-dome-dusk',
-                'birdwatching-jawai-bandh' => 'bird1', 'what-to-pack-jawai-safari' => 'safari-guests', 'jawai-vs-ranthambhore' => 'sunset-valley',
-                'monsoon-in-jawai' => 'granite-boulders', 'udaipur-to-jawai' => 'bandh-shoreline', 'code-of-the-captains' => 'leopard-stalking',
-            ],
             'pages' => [
                 'about' => 'safari-guests', 'experiences/rabari-culture' => 'granite-dome-dusk',
                 'experiences/boulder-sundowners' => 'sunset-valley', 'about/conservation-ethics' => 'leopard-portrait',
@@ -123,12 +118,6 @@ final class Demo
                 }
                 $name = $bySlug[$r['slug']] ?? $rotation[$i++ % count($rotation)];
                 DB::update($table, ['image_id' => $id($name)], 'id = ?', [$r['id']]);
-                $filled++;
-            }
-        }
-        foreach (DB::all('SELECT id, image_id FROM team') as $r) {
-            if ($force || !$exists($r['image_id'])) {
-                DB::update('team', ['image_id' => $id($rotation[$i++ % count($rotation)])], 'id = ?', [$r['id']]);
                 $filled++;
             }
         }

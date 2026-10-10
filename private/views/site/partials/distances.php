@@ -81,11 +81,6 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
     </div>
 
     <figure class="map-card reveal" data-map>
-      <div class="map-toolbar">
-        <button type="button" class="map-btn is-on" data-map-view="3d" aria-pressed="true">3D</button>
-        <button type="button" class="map-btn" data-map-view="flat" aria-pressed="false">Flat</button>
-        <span class="map-toolbar-hint">Drag or move your mouse to tilt</span>
-      </div>
       <div class="map-stage" data-map-stage>
         <div class="map-plane">
           <svg class="route-map" viewBox="0 0 <?= $W ?> <?= $H ?>" role="img" aria-label="Map of Jawai with routes to nearby airports, stations and cities">

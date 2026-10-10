@@ -47,9 +47,6 @@ final class SeoController extends BaseController
         foreach (DB::all('SELECT * FROM safaris ORDER BY sort_order') as $r) {
             $add('Safari', 'safaris', $r, '/safaris/' . $r['slug'] . '/', $r['meta_title'], $r['meta_description'], $r['image_id'] ? (int) $r['image_id'] : null);
         }
-        foreach (DB::all('SELECT * FROM posts ORDER BY published_at DESC') as $r) {
-            $add('Article', 'posts', $r, '/journal/' . $r['slug'] . '/', $r['meta_title'], $r['meta_description'], $r['image_id'] ? (int) $r['image_id'] : null);
-        }
         foreach (DB::all('SELECT * FROM pages ORDER BY slug') as $r) {
             $add('Page', 'pages', $r, '/' . $r['slug'] . '/', $r['meta_title'], $r['meta_description'], $r['image_id'] ? (int) $r['image_id'] : null);
         }

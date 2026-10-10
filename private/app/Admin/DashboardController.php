@@ -86,6 +86,31 @@ final class DashboardController extends BaseController
         back(admin_url('system'));
     }
 
+    /** Reset website: clear demo/test data and reload the real starter content. Super admin + password. */
+    public function resetSite(): void
+    {
+        $this->guard('settings', 'edit');
+        $user = \App\Core\Auth::user();
+        if (($user['role'] ?? '') !== 'super_admin') {
+            flash('error', 'Only a super admin can reset the website.');
+            back(admin_url('system'));
+        }
+        $row = DB::one('SELECT password_hash FROM users WHERE id = ?', [(int) $user['id']]);
+        if (!$row || !password_verify((string) ($_POST['password'] ?? ''), (string) $row['password_hash'])) {
+            \App\Core\Audit::log('site_reset_denied', 'system');
+            flash('error', 'Wrong password. Nothing was changed.');
+            back(admin_url('system'));
+        }
+        if (trim((string) ($_POST['confirm'] ?? '')) !== 'RESET') {
+            flash('error', 'Type RESET in the box to confirm. Nothing was changed.');
+            back(admin_url('system'));
+        }
+        $stats = \App\Core\SiteReset::run();
+        \App\Core\Audit::log('site_reset', 'system', null, $stats);
+        flash('success', 'Website reset. Demo and test data removed (' . (int) ($stats['enquiries'] ?? 0) . ' enquiries), real Jawai starter content loaded, images kept. The site is ready to go live.');
+        back(admin_url('system'));
+    }
+
     public function system(): string
     {
         $this->guard('settings');

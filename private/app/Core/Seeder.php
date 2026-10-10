@@ -10,7 +10,8 @@ namespace App\Core;
  */
 final class Seeder
 {
-    public static function run(bool $demoEnquiries = true): void
+    /** @param bool $resetImages on a fresh install, apply the full built-in image map (false: only fill empty slots) */
+    public static function run(bool $demoEnquiries = true, bool $resetImages = true): void
     {
         $now = now();
         $img = Demo::registerImages();
@@ -37,7 +38,7 @@ final class Seeder
         }
         JawaiGuide::ensure(); // the /jawai/ pillar page, guide pages and their menu links
         // Every image slot gets a photo, so the site is presentation-ready straight after install.
-        Demo::assignImages($fresh); // on a fresh install, apply the full curated image map
+        Demo::assignImages($fresh && $resetImages); // on a fresh install, apply the full curated image map
         if ($demoEnquiries) {
             Demo::loadEnquiries();
         }

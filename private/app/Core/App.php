@@ -153,6 +153,7 @@ final class App
         $r->get("$a/audit", [Admin\DashboardController::class, 'audit']);
         $r->get("$a/system", [Admin\DashboardController::class, 'system']);
         $r->post("$a/demo/{action}", [Admin\DashboardController::class, 'demo']);
+        $r->post("$a/system/reset", [Admin\DashboardController::class, 'resetSite']);
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */

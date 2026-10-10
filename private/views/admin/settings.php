@@ -6,6 +6,7 @@ use App\Core\View;
   <?php foreach ($groups as $key => $gg): if (!Auth::can(in_array($key, ['email', 'templates'], true) ? 'email' : 'settings')) continue; ?>
   <a class="tab<?= $key === $group ? ' is-active' : '' ?>" href="<?= e(admin_url('settings/' . $key)) ?>"><?= e($gg['title']) ?></a>
   <?php endforeach; ?>
+  <?php if (Auth::role() === 'super_admin'): ?><a class="tab tab-danger" href="<?= e(admin_url('system')) ?>#reset">Reset website</a><?php endif; ?>
 </div>
 
 <form method="post" action="<?= e(admin_url('settings/' . $group)) ?>" class="form" data-dirty>

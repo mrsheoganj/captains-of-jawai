@@ -185,6 +185,15 @@ php private/cli/install.php --driver=mysql --db=cpuser_jawai --user=cpuser_web -
   --email=you@captainsofjawai.com --password='…' --name="Your Name" --url=https://captainsofjawai.com
 ```
 
+### Going live: reset the website
+If the site was used for a demo or for testing, clear it before launch with **Admin → Settings → Reset website** (or **System → Reset website and go live**). Only a Super Admin can do this, and it asks for your admin password and for the word `RESET`.
+
+* **Removed:** all enquiries, bookings and questions with their notes, the email and activity logs, and failed-login records. Safaris, pages, FAQs, testimonials and menus are reloaded with the real Jawai starter content, and homepage text, form options, email templates and SEO titles go back to the defaults.
+* **Kept:** every image (and the photo chosen for each safari, page and homepage section), admin users, site name, logo, colours, contact details, email/SMTP settings and recipients, analytics and verification codes, and redirects.
+* **Afterwards:** maintenance mode is off, search engines are allowed, and real email sending is on.
+
+A fresh install already starts this way: the real Jawai content is always installed, and sample enquiries are added only if you tick the box.
+
 ### Updating later
 Upload the new files over the old ones. Keep `private/config.php`, `private/storage/` and `public_html/uploads/`. Any new database tables or columns are created automatically on the next page load. If you have SSH you can also run `php private/cli/install.php --migrate`. Back up the database (cPanel → Backup) and `public_html/uploads/` regularly.
 

@@ -110,7 +110,7 @@ php -S localhost:8080 -t public_html private/cli/dev-router.php
 * Start again from scratch with `php private/cli/demo.php --reset`.
 
 **What the demo includes:**
-* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, all safaris and journal articles, every page (including legal pages), each listing page's header, the gallery, the Book a safari side image, the 404 page and the admin login.
+* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, all safaris, every page (including legal pages), each listing page's header, the gallery, the Book a safari side image, the 404 page and the admin login.
 * If an image is ever deleted, the site falls back to a built-in photo, so no slot is ever empty.
 * **Sample CRM data.** 14 enquiries across the whole pipeline, with notes, owners and follow-ups, so the dashboard KPIs, chart and lists look alive.
   * They use codes starting `DEMO-` and are never emailed.

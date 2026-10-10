@@ -53,6 +53,16 @@ final class SiteReset
         foreach (['enquiry_notes', 'enquiries', 'email_log', 'audit_log', 'login_attempts', 'safaris', 'pages', 'faqs', 'testimonials', 'menu_items'] as $t) {
             $stats[$t] = (int) DB::val("SELECT COUNT(*) FROM $t");
             DB::q("DELETE FROM $t");
+            // Restart numbering so the first real booking is COJ-<year>-0001.
+            if (DB::driver() === 'sqlite') {
+                try {
+                    DB::q('DELETE FROM sqlite_sequence WHERE name = ?', [$t]);
+                } catch (\Throwable $e) {
+                    // no sqlite_sequence yet: nothing to reset
+                }
+            } else {
+                DB::q("ALTER TABLE $t AUTO_INCREMENT = 1");
+            }
         }
 
         $removed = 0;

@@ -109,10 +109,10 @@ final class Demo
                 'monsoon-in-jawai' => 'granite-boulders', 'udaipur-to-jawai' => 'bandh-shoreline', 'code-of-the-captains' => 'leopard-stalking',
             ],
             'pages' => [
-                'about' => 'safari-guests', 'jawai' => 'bandh-shoreline', 'experiences/rabari-culture' => 'granite-dome-dusk',
+                'about' => 'safari-guests', 'experiences/rabari-culture' => 'granite-dome-dusk',
                 'experiences/boulder-sundowners' => 'sunset-valley', 'about/conservation-ethics' => 'leopard-portrait',
                 'privacy-policy' => 'lake-reflection', 'terms' => 'granite-boulders', 'cookie-policy' => 'landscape1',
-            ],
+            ] + JawaiGuide::IMAGES,
         ];
         $rotation = array_keys(self::PHOTOS);
         $i = 0;

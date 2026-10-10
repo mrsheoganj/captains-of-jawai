@@ -16,7 +16,7 @@
     <details class="checks-box" <?= in_array(false, $checks, true) ? 'open' : '' ?>>
       <summary>Server check</summary>
       <ul class="syscheck">
-        <?php foreach ($checks as $label => $ok): ?><li class="<?= $ok ? 'ok' : 'bad' ?>"><?= $ok ? '✓' : '✕' ?> <?= e($label) ?></li><?php endforeach; ?>
+        <?php foreach ($checks as $label => $ok): ?><li class="<?= $ok ? 'ok' : 'bad' ?>"><?= $ok ? 'OK' : 'Missing' ?> — <?= e($label) ?></li><?php endforeach; ?>
       </ul>
     </details>
 

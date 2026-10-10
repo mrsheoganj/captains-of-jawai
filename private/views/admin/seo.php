@@ -14,21 +14,21 @@ $score = $rows ? round((1 - min(1, $issueCount / (count($rows) * 3))) * 100) : 1
     <div class="card-head"><h2>Site checklist</h2></div>
     <ul class="checklist">
       <?php foreach ($checks as [$label, $pass, $url]): ?>
-      <li class="<?= $pass ? 'pass' : 'fail' ?>"><span><?= $pass ? '✓' : '!' ?></span><a href="<?= e($url) ?>"><?= e($label) ?></a></li>
+      <li class="<?= $pass ? 'pass' : 'fail' ?>"><span><?= $pass ? 'OK' : 'Fix' ?></span><a href="<?= e($url) ?>"><?= e($label) ?></a></li>
       <?php endforeach; ?>
     </ul>
   </section>
   <section class="card">
     <div class="card-head"><h2>Built-in SEO features</h2></div>
     <ul class="plain-list feature-list">
-      <li>✓ Clean, canonical URLs with trailing slashes &amp; per-page canonical tags</li>
-      <li>✓ Automatic <a href="/sitemap.xml" target="_blank">XML sitemap</a> (updates when you publish)</li>
-      <li>✓ Editable <a href="<?= e(admin_url('seo/robots')) ?>">robots.txt</a> and 301 redirect manager</li>
-      <li>✓ Schema.org JSON-LD: TravelAgency, WebSite, TouristTrip, BlogPosting, FAQPage, BreadcrumbList</li>
-      <li>✓ Open Graph &amp; Twitter cards for social sharing</li>
-      <li>✓ Responsive WebP images with alt text, lazy loading &amp; width/height (no layout shift)</li>
-      <li>✓ Per-page meta title &amp; description with live Google preview</li>
-      <li>✓ Google Analytics 4 &amp; Search Console verification in <a href="<?= e(admin_url('settings/seo')) ?>">SEO &amp; Tracking</a></li>
+      <li>Clean, canonical URLs with trailing slashes &amp; per-page canonical tags</li>
+      <li>Automatic <a href="/sitemap.xml" target="_blank">XML sitemap</a> (updates when you publish)</li>
+      <li>Editable <a href="<?= e(admin_url('seo/robots')) ?>">robots.txt</a> and 301 redirect manager</li>
+      <li>Schema.org JSON-LD: TravelAgency, WebSite, TouristTrip, BlogPosting, FAQPage, BreadcrumbList</li>
+      <li>Open Graph &amp; Twitter cards for social sharing</li>
+      <li>Responsive WebP images with alt text, lazy loading &amp; width/height (no layout shift)</li>
+      <li>Per-page meta title &amp; description with live Google preview</li>
+      <li>Google Analytics 4 &amp; Search Console verification in <a href="<?= e(admin_url('settings/seo')) ?>">SEO &amp; Tracking</a></li>
     </ul>
   </section>
 </div>

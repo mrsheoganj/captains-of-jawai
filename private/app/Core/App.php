@@ -160,6 +160,7 @@ final class App
         }
         try {
             Schema::create(DB::pdo());
+            JawaiGuide::ensure(); // add new guide pages to existing sites
             Demo::assignImages(); // register new built-in photos and fill any empty image slots
             Settings::set('schema_version', APP_VERSION);
         } catch (\Throwable $e) {

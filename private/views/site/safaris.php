@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Signature Expeditions', 'kicker' => 'Private 4x4 safaris', 'intro' => 'Every drive is private, naturalist-led and shaped around you — from dawn leopard tracking to slow wetland mornings.', 'image' => (int) setting('img_safaris') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Jawai safaris', 'kicker' => 'What we offer', 'intro' => 'All our drives are private: your group, your jeep, your guide. Choose leopard tracking, birding at Jawai Dam, or a mix of both.', 'image' => (int) setting('img_safaris') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <div class="grid grid-2 grid-lg-2">
@@ -11,15 +11,15 @@
 <section class="section section-alt">
   <div class="container split">
     <div class="reveal">
-      <span class="kicker">How it works</span>
-      <h2 class="display-2">No instant checkout. A conversation.</h2>
-      <p class="lead-muted">Every journey is tailored. Tell us your dates, your party and what moves you — a Captain replies personally within 12 hours with ideas, availability and a written proposal.</p>
+      <span class="kicker">Booking</span>
+      <h2 class="display-2">How booking works</h2>
+      <p class="lead-muted">There's no online checkout. You send us your dates and interests, we reply personally with options and prices, and you confirm when you're happy.</p>
     </div>
     <ol class="steps reveal">
-      <li><strong>Share your wishes</strong><span>Dates, interests and travelling party.</span></li>
-      <li><strong>Personal reply in 12 hours</strong><span>From a senior Expedition Captain — never an automated quote.</span></li>
-      <li><strong>Tailored proposal</strong><span>Drives, stays and transfers designed around you.</span></li>
-      <li><strong>Confirm directly</strong><span>Simple, secure confirmation with our team.</span></li>
+      <li><strong>Send us your dates</strong><span>Plus who is travelling and what you would like to see.</span></li>
+      <li><strong>We reply</strong><span>Usually within 12 hours, from one of our team.</span></li>
+      <li><strong>You get a plan and a price</strong><span>Drives, hotels and transfers, all in writing.</span></li>
+      <li><strong>You confirm</strong><span>Directly with us, when you are ready.</span></li>
     </ol>
   </div>
 </section>

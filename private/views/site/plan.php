@@ -14,10 +14,10 @@ for ($n = 0; $n < 15; $n++) {
     <?= View::partial('site/partials/topo', ['class' => 'topo-plan']) ?>
     <div class="plan-visual-inner">
       <div>
-        <span class="kicker" data-anim="fade">Private consultation</span>
-        <h1 class="display-2" data-split>Plan your journey into the granite wilderness.</h1>
+        <span class="kicker" data-anim="fade">Enquiries</span>
+        <h1 class="display-2" data-anim="fade" style="--d:.2s">Plan your Jawai trip</h1>
         <ul class="trust" data-anim="fade" style="--d:.5s">
-          <?php foreach (Settings::lines('form_trust_points') as $t): ?><li><?= icon('check', 16) ?><?= e($t) ?></li><?php endforeach; ?>
+          <?php foreach (Settings::lines('form_trust_points') as $t): ?><li><?= e($t) ?></li><?php endforeach; ?>
         </ul>
       </div>
       <div class="arch arch-plan" data-anim="arch"><?= picture((int) setting('img_plan') ?: null, '', ['sizes' => '(min-width: 1024px) 34vw, 100vw', 'loading' => 'eager'], 'leopard-portrait') ?></div>
@@ -92,15 +92,14 @@ for ($n = 0; $n < 15; $n++) {
 
       <div class="form-error" data-form-error hidden></div>
       <div class="wizard-nav">
-        <button type="button" class="btn btn-text" data-prev hidden><?= icon('arrow-left', 16) ?> Back</button>
-        <button type="button" class="btn btn-primary btn-lg" data-next>Continue <?= icon('arrow-right', 16) ?></button>
-        <button type="submit" class="btn btn-primary btn-lg" data-submit hidden><span>Send my enquiry</span> <?= icon('send', 16) ?></button>
+        <button type="button" class="btn btn-text" data-prev hidden>Back</button>
+        <button type="button" class="btn btn-primary btn-lg" data-next>Continue</button>
+        <button type="submit" class="btn btn-primary btn-lg" data-submit hidden><span>Send my enquiry</span></button>
       </div>
     </form>
 
     <div class="form-success" data-form-success hidden>
-      <?= icon('check', 40) ?>
-      <h2 class="display-3"></h2>
+           <h2 class="display-3"></h2>
       <p></p>
       <p class="mono" data-code></p>
       <a class="btn btn-outline" href="/journal/">Read the Field Journal while you wait</a>

@@ -51,8 +51,9 @@ final class SiteController
         $team = $this->published('team');
         $testimonials = $this->published('testimonials');
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
+        $guide = DB::all("SELECT slug, title, intro FROM pages WHERE status = 'published' AND slug LIKE 'jawai/%' ORDER BY slug");
 
-        return $this->show('home', compact('safaris', 'journeys', 'posts', 'team', 'testimonials', 'heroIds'), [
+        return $this->show('home', compact('safaris', 'journeys', 'posts', 'team', 'testimonials', 'heroIds', 'guide'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),
@@ -271,16 +272,62 @@ final class SiteController
         }
         $crumbs = [];
         $acc = '';
-        foreach (explode('/', $slug) as $n => $seg) {
-            $acc .= '/' . $seg;
-            $crumbs[] = [$n === count(explode('/', $slug)) - 1 ? $item['title'] : ucwords(str_replace('-', ' ', $seg)), $acc . '/'];
+        $segs = explode('/', $slug);
+        foreach ($segs as $n => $seg) {
+            $acc .= ($acc === '' ? '' : '/') . $seg;
+            $label = $n === count($segs) - 1 ? $item['title'] : (DB::val("SELECT title FROM pages WHERE slug = ? AND status = 'published'", [$acc]) ?: ucwords(str_replace('-', ' ', $seg)));
+            $crumbs[] = [$label, '/' . $acc . '/'];
         }
-        return $this->show('page', compact('item'), [
+
+        // FAQ (Question | Answer per line) and sources (url | label per line), editable in Admin → Pages
+        $faq = [];
+        foreach (lines($item['faq'] ?? '') as $line) {
+            [$q, $a] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
+            if ($q !== '' && $a !== '') {
+                $faq[] = [$q, $a];
+            }
+        }
+        $sources = [];
+        foreach (lines($item['sources'] ?? '') as $line) {
+            [$u, $l] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
+            if (preg_match('~^https?://~', $u)) {
+                $sources[] = [$u, $l ?: $u];
+            }
+        }
+        // Related guide pages: siblings/children in the same section (e.g. everything under /jawai/)
+        $root = $segs[0];
+        $related = DB::all("SELECT slug, title, intro, image_id FROM pages WHERE status = 'published' AND (slug = ? OR slug LIKE ?) AND slug <> ? ORDER BY slug", [$root, $root . '/%', $slug]);
+
+        $schema = [];
+        if ($faq) {
+            $schema[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map(
+                fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]],
+                $faq
+            )];
+        }
+        if ($root === 'jawai') {
+            $schema[] = [
+                '@context' => 'https://schema.org', '@type' => 'TouristDestination', 'name' => $slug === 'jawai' ? 'Jawai' : $item['title'],
+                'description' => excerpt($item['intro'] ?: $item['body'], 300), 'url' => abs_url('/' . $slug . '/'),
+                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 25.1055, 'longitude' => 73.1722],
+                'containedInPlace' => ['@type' => 'AdministrativeArea', 'name' => 'Pali district, Rajasthan, India'],
+                'touristType' => ['Wildlife enthusiasts', 'Birdwatchers', 'Photographers', 'Families'],
+            ];
+            $schema[] = [
+                '@context' => 'https://schema.org', '@type' => 'Article', 'headline' => $item['title'], 'description' => excerpt($item['intro'] ?: $item['body'], 300),
+                'dateModified' => date('c', strtotime($item['updated_at'] ?: 'now')), 'author' => ['@type' => 'Organization', 'name' => setting('site_name')],
+                'publisher' => ['@id' => abs_url('/#organization')], 'mainEntityOfPage' => abs_url('/' . $slug . '/'),
+            ];
+        }
+
+        return $this->show('page', compact('item', 'faq', 'sources', 'related'), [
             'title' => $item['meta_title'] ?: $item['title'],
             'raw_title' => (bool) $item['meta_title'],
             'description' => $item['meta_description'] ?: excerpt($item['intro'] ?: $item['body']),
             'image' => $item['image_id'] ? (int) $item['image_id'] : null,
+            'type' => $root === 'jawai' ? 'article' : 'website',
             'breadcrumbs' => $crumbs,
+            'schema' => $schema,
             'noindex' => $item['status'] !== 'published',
         ]);
     }

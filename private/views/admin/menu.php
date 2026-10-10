@@ -18,7 +18,7 @@
           <input class="m-label" value="<?= e($it['label']) ?>" placeholder="Label" aria-label="Label">
           <input class="m-url" value="<?= e($it['url']) ?>" placeholder="/path/ or https://" list="menu-links" aria-label="Link">
           <span class="menu-opts">
-            <?php if ($loc === 'header'): ?><button type="button" class="icon-btn sm" data-indent title="Make child / parent">⇥</button><?php endif; ?>
+            <?php if ($loc === 'header'): ?><button type="button" class="icon-btn sm" data-indent title="Make child / parent">Indent</button><?php endif; ?>
             <label title="Open in new tab"><input type="checkbox" class="m-new" <?= $it['new_tab'] ? 'checked' : '' ?>> new tab</label>
             <label title="Hide"><input type="checkbox" class="m-hidden" <?= $it['is_active'] ? '' : 'checked' ?>> hidden</label>
             <button type="button" class="icon-btn sm" data-remove title="Remove"><?= icon('trash', 15) ?></button>
@@ -38,7 +38,7 @@
     <input class="m-label" placeholder="Label" aria-label="Label">
     <input class="m-url" placeholder="/path/ or https://" list="menu-links" aria-label="Link">
     <span class="menu-opts">
-      <button type="button" class="icon-btn sm" data-indent title="Make child / parent">⇥</button>
+      <button type="button" class="icon-btn sm" data-indent title="Make child / parent">Indent</button>
       <label><input type="checkbox" class="m-new"> new tab</label>
       <label><input type="checkbox" class="m-hidden"> hidden</label>
       <button type="button" class="icon-btn sm" data-remove title="Remove"><?= icon('trash', 15) ?></button>

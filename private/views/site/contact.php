@@ -1,20 +1,20 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Speak with a Captain', 'kicker' => 'Contact', 'intro' => 'Questions, ideas or a journey already taking shape — we would love to hear from you.', 'image' => (int) setting('img_contact') ?: null, 'fallback' => 'bandh-shoreline', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Contact us', 'kicker' => 'Contact', 'intro' => 'Questions about a trip, dates or prices? Write to us, call, or message us on WhatsApp.', 'image' => (int) setting('img_contact') ?: null, 'fallback' => 'bandh-shoreline', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container contact-grid">
     <div class="contact-info reveal">
-      <h2 class="display-3">Direct lines</h2>
+      <h2 class="display-3">Get in touch</h2>
       <ul class="contact-list">
-        <li><?= icon('mail', 20) ?><div><span class="mono">Email</span><a href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a></div></li>
+        <li><div><span class="mono">Email</span><a href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a></div></li>
         <?php if (setting('contact_phone')): ?><li><?= icon('phone', 20) ?><div><span class="mono">Phone</span><a href="<?= e(tel_link()) ?>"><?= e(setting('contact_phone')) ?></a></div></li><?php endif; ?>
-        <?php if (whatsapp_link()): ?><li><?= icon('whatsapp', 20) ?><div><span class="mono">WhatsApp</span><a href="<?= e(whatsapp_link()) ?>" target="_blank" rel="noopener">Chat with a Captain</a></div></li><?php endif; ?>
-        <?php if (setting('address')): ?><li><?= icon('map-pin', 20) ?><div><span class="mono">Base</span><span><?= nl2br(e(setting('address'))) ?></span></div></li><?php endif; ?>
-        <?php if (setting('office_hours')): ?><li><?= icon('clock', 20) ?><div><span class="mono">Hours</span><span><?= e(setting('office_hours')) ?></span></div></li><?php endif; ?>
+        <?php if (whatsapp_link()): ?><li><?= icon('whatsapp', 20) ?><div><span class="mono">WhatsApp</span><a href="<?= e(whatsapp_link()) ?>" target="_blank" rel="noopener">Message us on WhatsApp</a></div></li><?php endif; ?>
+        <?php if (setting('address')): ?><li><div><span class="mono">Base</span><span><?= nl2br(e(setting('address'))) ?></span></div></li><?php endif; ?>
+        <?php if (setting('office_hours')): ?><li><div><span class="mono">Hours</span><span><?= e(setting('office_hours')) ?></span></div></li><?php endif; ?>
       </ul>
       <div class="aside-card aside-cta">
         <h3>Planning a journey?</h3>
-        <p>Our short journey planner helps us prepare the perfect proposal.</p>
-        <a class="btn btn-primary btn-block" href="/plan-your-journey/">Plan Your Journey <?= icon('arrow-right', 16) ?></a>
+        <p>Our short planner form gives us everything we need to send you options.</p>
+        <a class="btn btn-primary btn-block" href="/plan-your-journey/">Plan your trip</a>
       </div>
     </div>
     <div class="form-card reveal">
@@ -32,10 +32,10 @@
         <label class="field"><span>Message *</span><textarea name="message" rows="6" required><?= e(old('message')) ?></textarea></label>
         <p class="form-note"><?= e(setting('privacy_note')) ?> <a href="/privacy-policy/">Privacy policy</a>.</p>
         <div class="form-error" data-form-error hidden></div>
-        <button class="btn btn-primary btn-lg" type="submit"><span>Send message</span> <?= icon('send', 16) ?></button>
+        <button class="btn btn-primary btn-lg" type="submit"><span>Send message</span></button>
       </form>
       <div class="form-success" data-form-success hidden>
-        <?= icon('check', 36) ?><h3></h3><p></p><p class="mono" data-code></p>
+       <h3></h3><p></p><p class="mono" data-code></p>
       </div>
     </div>
   </div>

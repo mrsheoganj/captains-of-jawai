@@ -5,7 +5,7 @@
 <title>Sign in · <?= e(setting('site_name')) ?></title>
 <link rel="icon" href="<?= e(favicon_url()) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
 </head>
 <body class="auth-body">

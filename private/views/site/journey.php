@@ -20,13 +20,13 @@
     <aside class="detail-aside">
       <?php if ($inc = lines($item['inclusions'])): ?>
       <div class="aside-card">
-        <h3>Typically included</h3>
-        <ul class="checks"><?php foreach ($inc as $h): ?><li><?= icon('check', 16) ?><?= e($h) ?></li><?php endforeach; ?></ul>
+        <h3>Usually included</h3>
+        <ul class="checks"><?php foreach ($inc as $h): ?><li><?= e($h) ?></li><?php endforeach; ?></ul>
       </div>
       <?php endif; ?>
       <div class="aside-card aside-cta">
-        <h3>Make it yours</h3>
-        <p>Tell us your dates and we will tailor this itinerary — pace, stays and transfers.</p>
+        <h3>Change anything</h3>
+        <p>Tell us your dates and we will adjust the days, hotels and transfers.</p>
         <a class="btn btn-primary btn-block" href="/plan-your-journey/?safari=<?= e(rawurlencode($item['title'])) ?>">Enquire about this journey</a>
       </div>
     </aside>

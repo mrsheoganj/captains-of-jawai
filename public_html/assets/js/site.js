@@ -6,7 +6,6 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------------- Preloader ---------------- */
   const preloader = $('[data-preloader]');
@@ -17,7 +16,6 @@
     root.classList.remove('is-loading');
     root.classList.add('is-loaded', 'is-ready');
     if (preloader) preloader.classList.remove('is-visible');
-    revealHeroSplits();
   };
   if (document.readyState === 'complete') markReady();
   else {
@@ -39,20 +37,6 @@
 
   // Page-load image unmask: drop the clip once finished so shadows show.
   $$('[data-anim="reveal-img"]').forEach((el) => el.addEventListener('animationend', () => el.classList.add('is-done')));
-
-  /* ---------------- Split headlines into animated words ---------------- */
-  $$('[data-split]').forEach((el) => {
-    if (el.dataset.splitDone) return;
-    const words = el.textContent.trim().split(/\s+/);
-    el.setAttribute('aria-label', el.textContent.trim());
-    el.innerHTML = words.map((w, i) => '<span class="split-word" aria-hidden="true"><span style="--i:' + i + '">' + w.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])) + '</span></span>').join(' ');
-    el.dataset.splitDone = '1';
-    el.classList.add('is-split');
-  });
-  function revealHeroSplits() {
-    // Headlines at the top of the page animate in right after load.
-    $$('[data-split]').forEach((el) => { if (!el.classList.contains('reveal') && el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in'); });
-  }
 
   /* ---------------- Header: shadow on scroll, hide on scroll down ---------------- */
   const header = $('[data-header]');
@@ -142,9 +126,6 @@
   const onIn = (el) => {
     el.classList.add('is-in');
     if (el.classList.contains('reveal-img')) setTimeout(() => el.classList.add('is-done'), 1600); // restore shadows once unmasked
-    if (el.matches('[data-split]')) el.classList.add('is-in');
-    $$('[data-count]', el).forEach(countUp);
-    if (el.matches('[data-count]')) countUp(el);
   };
   if ('IntersectionObserver' in window && !reduced) {
     // Clipped elements report zero visibility, so masked images are watched via their parent.
@@ -160,49 +141,6 @@
     targets.forEach((_, t) => io.observe(t));
   } else {
     revealEls.forEach(onIn);
-  }
-
-  /* ---------------- Number counters ---------------- */
-  function countUp(el) {
-    if (el.dataset.counted) return;
-    el.dataset.counted = '1';
-    const text = el.dataset.count || el.textContent;
-    const m = text.match(/^([^\d]*)(\d+(?:[.,]\d+)?)(.*)$/);
-    if (!m || reduced) return;
-    const [, pre, num, post] = m;
-    const target = parseFloat(num.replace(',', '.'));
-    const decimals = (num.split(/[.,]/)[1] || '').length;
-    const start = performance.now(); const dur = 1600;
-    const tick = (t) => {
-      const k = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - k, 3);
-      el.textContent = pre + (target * eased).toFixed(decimals) + post;
-      if (k < 1) requestAnimationFrame(tick); else el.textContent = text;
-    };
-    requestAnimationFrame(tick);
-  }
-
-  /* ---------------- 3D tilt & magnetic buttons (desktop) ---------------- */
-  if (finePointer && !reduced) {
-    $$('[data-tilt]').forEach((card) => {
-      let raf;
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        cancelAnimationFrame(raf);
-        card.style.transition = 'transform .15s ease-out, box-shadow .5s, border-color .3s';
-        raf = requestAnimationFrame(() => { card.style.transform = 'perspective(900px) rotateY(' + (x * 5).toFixed(2) + 'deg) rotateX(' + (-y * 5).toFixed(2) + 'deg) translateY(-6px)'; });
-      });
-      card.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); card.style.transition = 'transform .7s cubic-bezier(.16,1,.3,1), box-shadow .5s, border-color .3s'; card.style.transform = ''; });
-    });
-    $$('[data-magnetic]').forEach((btn) => {
-      btn.addEventListener('pointermove', (e) => {
-        const r = btn.getBoundingClientRect();
-        btn.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px,' + ((e.clientY - r.top - r.height / 2) * 0.3).toFixed(1) + 'px)';
-      });
-      btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
-    });
   }
 
   /* ---------------- UTM attribution ---------------- */

@@ -13,7 +13,7 @@ $fallback ??= 'landscape1';
     <div class="page-hero-text">
       <div>
         <?php if (!empty($kicker)): ?><span class="kicker" data-anim="fade"><?= e($kicker) ?></span><?php endif; ?>
-        <h1 data-split><?= e($title) ?></h1>
+        <h1 data-anim="fade" style="--d:.2s"><?= e($title) ?></h1>
       </div>
       <?php if (!empty($intro)): ?><p class="lead-muted" data-anim="fade" style="--d:.45s"><?= e($intro) ?></p><?php endif; ?>
     </div>

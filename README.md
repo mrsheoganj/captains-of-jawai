@@ -20,19 +20,20 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 | About (story, values, team) | `/about/` |
 | Contact (AJAX form, map embed) | `/contact/` |
 | **Plan Your Journey**, a 5-step enquiry wizard | `/plan-your-journey/` |
+| **Jawai guide**: a pillar page plus six topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
 | CMS pages, with nesting allowed (e.g. `experiences/rabari-culture`) | `/{any/path}/` |
 | Dynamic XML sitemap and robots.txt | `/sitemap.xml`, `/robots.txt` |
 
-**Design:** a full light theme ("Sunlit Granite"):
-* warm ivory and sand surfaces with ochre accents;
-* arch-shaped "granite dome" photo frames;
-* animated topographic line art and a floating sun motif.
+**Design:** a full light theme with an editorial feel:
+* Libre Caslon headings with Libre Franklin body text;
+* warm ivory and sand surfaces with ochre accents and square-cut photo frames;
+* no emoji or decorative icon sets; icons only where they do a job (menu, close, WhatsApp, phone, accordions).
 
 **Motion:**
-* a branded loading spinner, shown only when a page is slow to load;
-* word-by-word headline reveals, photo unmask reveals and staggered card entrances;
-* parallax, counting statistics, 3D card tilt and magnetic buttons;
-* a header that hides as you scroll down, a scroll-progress bar, a back-to-top ring and smooth page transitions.
+* a loading spinner, shown only when a page is slow to load;
+* photo unmask reveals, gentle fades and staggered card entrances;
+* light parallax and a hero slideshow;
+* a header that hides as you scroll down, a scroll-progress bar and a back-to-top button.
 
 All of the motion respects the visitor's "reduce motion" setting.
 
@@ -60,6 +61,7 @@ Other features:
 * **SEO:**
   * Every content item gets a meta title and description, with a live Google preview and character counters.
   * An **SEO overview** audits every URL, and a site checklist covers the rest.
+  * Every CMS page has **FAQ** lines (`Question | Answer`) and **Sources** lines (`https://link | Label`). The FAQ is shown as an accordion and output as FAQPage schema.
   * There's a 301/302 **redirect manager** and an editable **robots.txt**.
   * The XML sitemap updates automatically.
   * Google Analytics 4 and Search Console verification can be set, along with custom head/body code.

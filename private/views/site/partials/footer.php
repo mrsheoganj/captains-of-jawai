@@ -45,20 +45,20 @@ $footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
       </ul>
     </div>
     <div>
-      <h4 class="footer-title">Speak with a Captain</h4>
+      <h4 class="footer-title">Contact</h4>
       <ul class="footer-contact">
-        <li><?= icon('mail', 16) ?><a href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a></li>
+        <li><a href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a></li>
         <?php if (setting('contact_phone')): ?><li><?= icon('phone', 16) ?><a href="<?= e(tel_link()) ?>"><?= e(setting('contact_phone')) ?></a></li><?php endif; ?>
         <?php if (whatsapp_link()): ?><li><?= icon('whatsapp', 16) ?><a href="<?= e(whatsapp_link()) ?>" target="_blank" rel="noopener">WhatsApp us</a></li><?php endif; ?>
-        <?php if (setting('address')): ?><li><?= icon('map-pin', 16) ?><span><?= nl2br(e(setting('address'))) ?></span></li><?php endif; ?>
-        <?php if (setting('office_hours')): ?><li><?= icon('clock', 16) ?><span><?= e(setting('office_hours')) ?></span></li><?php endif; ?>
+        <?php if (setting('address')): ?><li><span><?= nl2br(e(setting('address'))) ?></span></li><?php endif; ?>
+        <?php if (setting('office_hours')): ?><li><span><?= e(setting('office_hours')) ?></span></li><?php endif; ?>
       </ul>
-      <a class="btn btn-primary btn-sm" href="/plan-your-journey/">Plan Your Journey</a>
+      <a class="btn btn-primary btn-sm" href="/plan-your-journey/">Plan your trip</a>
     </div>
   </div>
 
   <div class="container footer-ethics">
-    <p><?= icon('shield', 16) ?> Ethical tracking: engines off at sightings, respectful distances, no baiting — and never a guaranteed sighting. Enquiries only; no payment is taken online.</p>
+    <p>We switch engines off at sightings, keep our distance and never bait or call animals. Sightings are never guaranteed. No payment is taken on this website.</p>
   </div>
 
   <div class="footer-bottom">

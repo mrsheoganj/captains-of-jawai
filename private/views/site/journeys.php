@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Curated Journeys', 'kicker' => 'Multi-day itineraries', 'intro' => 'Starting points for your own journey — every day, drive and stay can be shaped around you.', 'image' => (int) setting('img_journeys') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'ridge-sighting', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Sample itineraries', 'kicker' => 'Trips of 2 to 7 days', 'intro' => 'Starting points, not fixed packages. We adjust the days, drives and hotels to suit you.', 'image' => (int) setting('img_journeys') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'ridge-sighting', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container stack-lg">
     <?php foreach ($items as $n => $j): ?>
@@ -10,7 +10,7 @@
         <h2 class="display-3"><a href="/journeys/<?= e($j['slug']) ?>/"><?= e($j['title']) ?></a></h2>
         <p class="lead-muted"><?= e($j['tagline']) ?></p>
         <p><?= e($j['excerpt']) ?></p>
-        <a class="btn btn-outline" href="/journeys/<?= e($j['slug']) ?>/">View day-by-day <?= icon('arrow-right', 16) ?></a>
+        <a class="btn btn-outline" href="/journeys/<?= e($j['slug']) ?>/">See the day-by-day plan</a>
       </div>
     </article>
     <?php endforeach; ?>

@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Gallery', 'kicker' => 'Moments from the field', 'intro' => 'Leopards on granite, wetland wings and the light of the Jawai hills.', 'image' => (int) setting('img_gallery') ?: null, 'fallback' => 'leopard-basking', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Gallery', 'kicker' => 'Photos', 'intro' => 'Leopards, birds and landscapes from around Jawai.', 'image' => (int) setting('img_gallery') ?: null, 'fallback' => 'leopard-basking', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <?php if (count($categories) > 1): ?>

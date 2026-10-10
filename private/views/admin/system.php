@@ -6,7 +6,7 @@
   </section>
   <section class="card">
     <div class="card-head"><h2>Recent PHP errors</h2></div>
-    <?php if ($log): ?><pre class="log"><?= e(implode('', $log)) ?></pre><?php else: ?><p class="muted">No errors logged. 🎉</p><?php endif; ?>
+    <?php if ($log): ?><pre class="log"><?= e(implode('', $log)) ?></pre><?php else: ?><p class="muted">No errors logged.</p><?php endif; ?>
   </section>
 </div>
 <section class="card">

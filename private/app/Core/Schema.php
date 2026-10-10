@@ -49,7 +49,7 @@ final class Schema
             ],
             'pages' => [
                 'id' => 'pk', 'title' => 'str', 'slug' => 'str', 'kicker' => 'str', 'intro' => 'text', 'body' => 'long',
-                'image_id' => 'int', 'show_cta' => 'bool', 'status' => 'short', ...$seo, ...$ts, '_unique' => ['slug'],
+                'image_id' => 'int', 'show_cta' => 'bool', 'faq' => 'long', 'sources' => 'text', 'status' => 'short', ...$seo, ...$ts, '_unique' => ['slug'],
             ],
             'faqs' => [
                 'id' => 'pk', 'question' => 'str', 'answer' => 'text', 'category' => 'short', 'sort_order' => 'int', 'status' => 'short',

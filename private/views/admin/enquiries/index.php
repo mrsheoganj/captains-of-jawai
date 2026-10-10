@@ -50,7 +50,7 @@ $qs = fn (array $over) => '?' . http_build_query(array_filter(array_merge($f, $o
         <td class="clip"><?= e(excerpt($e['interests'] ?: $e['message'], 70)) ?></td>
         <td><?= e($e['travel_window']) ?><?php if ($e['nights']): ?><br><small class="muted"><?= e($e['nights']) ?></small><?php endif; ?></td>
         <td><?= $e['type'] === 'journey' ? (int) $e['adults'] . 'A' . ((int) $e['children'] ? ' ' . (int) $e['children'] . 'C' : '') : '—' ?></td>
-        <td><?= status_badge($e['status']) ?><?php if ($e['follow_up_date']): ?><br><small class="<?= $e['follow_up_date'] <= date('Y-m-d') ? 'text-danger' : 'muted' ?>">↻ <?= e(fmt_date($e['follow_up_date'], 'j M')) ?></small><?php endif; ?></td>
+        <td><?= status_badge($e['status']) ?><?php if ($e['follow_up_date']): ?><br><small class="<?= $e['follow_up_date'] <= date('Y-m-d') ? 'text-danger' : 'muted' ?>">Follow-up <?= e(fmt_date($e['follow_up_date'], 'j M')) ?></small><?php endif; ?></td>
         <td><?= e($e['assignee'] ?? '—') ?></td>
         <td title="<?= e($e['created_at']) ?>"><?= e(time_ago($e['created_at'])) ?></td>
       </tr>

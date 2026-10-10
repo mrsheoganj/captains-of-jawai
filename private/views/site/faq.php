@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Expedition FAQ', 'kicker' => 'Good to know', 'intro' => 'Honest answers about wildlife, seasons, logistics and how we work.', 'image' => (int) setting('img_faq') ?: null, 'fallback' => 'safari-jeep', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Frequently asked questions', 'kicker' => 'FAQ', 'intro' => 'Wildlife, seasons, getting here and how booking works.', 'image' => (int) setting('img_faq') ?: null, 'fallback' => 'safari-jeep', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container narrow">
     <?php foreach ($groups as $cat => $faqs): ?>
@@ -14,8 +14,8 @@
     </div>
     <?php endforeach; ?>
     <div class="inline-cta">
-      <h3>Still have a question?</h3>
-      <p>Write to us — a Captain will answer personally.</p>
+      <h3>Have another question?</h3>
+      <p>Write to us and we will answer personally.</p>
       <a class="btn btn-primary" href="/contact/">Contact us</a>
     </div>
   </div>

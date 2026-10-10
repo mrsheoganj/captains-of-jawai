@@ -116,15 +116,91 @@
     play();
   }
 
-  /* ---------------- Distance map ---------------- */
+  /* ---------------- Distance map (3D, interactive) ---------------- */
   const map = $('[data-map]');
   if (map) {
-    const routes = $$('.map-route', map);
-    $$('[data-dist]').forEach((li) => {
-      const r = routes.find((g) => g.style.getPropertyValue('--i').trim() === li.dataset.dist);
-      const on = (v) => { li.classList.toggle('is-hot', v); if (r) r.classList.toggle('is-hot', v); };
-      li.addEventListener('mouseenter', () => on(true)); li.addEventListener('mouseleave', () => on(false));
+    const stage = $('[data-map-stage]', map);
+    const routes = $$('[data-route]', map);
+    const pins = $$('[data-place]', map);
+    const items = $$('[data-dist]');
+    const info = $('[data-map-info]', map);
+    const hint = info ? info.innerHTML : '';
+    let active = null; let touring = !reduced; let tourTimer;
+    const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    const select = (i) => {
+      active = i;
+      map.classList.toggle('has-active', i !== null);
+      routes.forEach((r) => r.classList.toggle('is-hot', r.dataset.route === String(i)));
+      pins.forEach((p) => p.classList.toggle('is-active', p.dataset.place === String(i)));
+      items.forEach((li) => li.classList.toggle('is-hot', li.dataset.dist === String(i)));
+      const pin = pins.find((p) => p.dataset.place === String(i));
+      if (!info) return;
+      if (!pin) { info.innerHTML = hint; return; }
+      const d = pin.dataset;
+      info.innerHTML = '<div><span class="info-kind">' + esc(d.kind) + '</span><span class="info-name">' + esc(d.name) + '</span></div>'
+        + (d.time ? '<span class="info-time">' + esc(d.time) + ' by road</span>' : '')
+        + '<a href="' + esc(d.gmaps) + '" target="_blank" rel="noopener">Directions</a>'
+        + '<span class="info-km">' + esc(d.km) + '</span>';
+    };
+    const stopTour = () => { touring = false; clearInterval(tourTimer); };
+    const user = (i) => { stopTour(); select(active === i ? null : i); };
+
+    pins.forEach((p) => p.addEventListener('click', () => user(+p.dataset.place)));
+    items.forEach((li) => {
+      li.style.cursor = 'pointer';
+      li.addEventListener('click', () => user(+li.dataset.dist));
+      li.addEventListener('mouseenter', () => { if (!touring) select(+li.dataset.dist); });
     });
+
+    // 3D / flat switch
+    $$('[data-map-view]', map).forEach((b) => b.addEventListener('click', () => {
+      const flat = b.dataset.mapView === 'flat';
+      map.classList.toggle('is-flat', flat);
+      map.style.removeProperty('--rx'); map.style.removeProperty('--rz');
+      $$('[data-map-view]', map).forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on); });
+    }));
+
+    // Tilt with the mouse, or drag (touch and mouse)
+    const base = () => (window.innerWidth < 768 ? [34, -6] : [42, -10]);
+    const tilt = (px, py) => {
+      if (map.classList.contains('is-flat')) return;
+      const [bx, bz] = base();
+      map.style.setProperty('--rx', (bx + (py - 0.5) * -16).toFixed(1) + 'deg');
+      map.style.setProperty('--rz', (bz + (px - 0.5) * 24).toFixed(1) + 'deg');
+    };
+    if (stage && !reduced) {
+      let drag = null;
+      stage.addEventListener('pointermove', (e) => {
+        const r = stage.getBoundingClientRect();
+        if (drag) { tilt(Math.min(1, Math.max(0, drag.px + (e.clientX - drag.x) / r.width)), Math.min(1, Math.max(0, drag.py + (e.clientY - drag.y) / r.height))); return; }
+        if (e.pointerType === 'mouse') tilt((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
+      });
+      stage.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('[data-place]')) return;
+        const r = stage.getBoundingClientRect();
+        drag = { x: e.clientX, y: e.clientY, px: (e.clientX - r.left) / r.width, py: (e.clientY - r.top) / r.height };
+        map.classList.add('is-dragging'); stopTour();
+      });
+      const end = () => { drag = null; map.classList.remove('is-dragging'); };
+      window.addEventListener('pointerup', end); window.addEventListener('pointercancel', end);
+      stage.addEventListener('mouseleave', () => { if (!drag) { map.style.removeProperty('--rx'); map.style.removeProperty('--rz'); } });
+    }
+
+    // Auto tour once the map is on screen, until the visitor interacts
+    if ('IntersectionObserver' in window) {
+      const tio = new IntersectionObserver((es) => es.forEach((e) => {
+        if (!e.isIntersecting || !touring || tourTimer) return;
+        let k = -1;
+        setTimeout(() => {
+          if (!touring) return;
+          tourTimer = setInterval(() => { if (!touring) return; k = (k + 1) % pins.length; select(+pins[k].dataset.place); }, 2600);
+        }, 2600);
+        tio.disconnect();
+      }), { threshold: .4 });
+      tio.observe(map);
+    }
+
     // Count the distances up when they scroll into view ("155 km" -> 0..155 km)
     const counters = $$('[data-count]');
     const run = (el) => {

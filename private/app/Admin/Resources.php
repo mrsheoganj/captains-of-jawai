@@ -41,7 +41,7 @@ final class Resources
                 ],
             ],
             'posts' => [
-                'label' => 'Field Journal', 'singular' => 'Article', 'icon' => 'file', 'area' => 'content',
+                'label' => 'Field Journal (hidden)', 'singular' => 'Article', 'icon' => 'file', 'area' => 'content',
                 'table' => 'posts', 'title' => 'title', 'order' => 'published_at DESC, id DESC', 'seo' => true,
                 'public' => '/journal/{slug}/', 'image' => 'image_id', 'search' => ['title', 'excerpt', 'category'],
                 'columns' => ['title' => 'Title', 'category' => 'Category', 'published_at' => 'Published', 'status' => 'Status'],

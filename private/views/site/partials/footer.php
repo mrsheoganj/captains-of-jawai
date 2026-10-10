@@ -18,7 +18,7 @@ $footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
         <?php if ($footerLogo): ?>
           <img class="footer-custom<?= \App\Core\Settings::bool('logo_dark_badge') && !(int) setting('footer_logo_image') ? ' brand-badge' : '' ?>" src="<?= e(media_url($footerLogo, 'sm')) ?>" alt="<?= e(setting('site_name')) ?>" loading="lazy">
         <?php else: ?>
-          <img src="/assets/img/emblem-192.webp" width="88" height="88" alt="<?= e(setting('site_name')) ?> logo" loading="lazy">
+          <img src="/assets/img/logo-full-320.webp" width="122" height="160" alt="<?= e(setting('site_name')) ?> logo" loading="lazy">
         <?php endif; ?>
       </a>
       <p class="footer-name"><?= e(setting('site_name')) ?></p>

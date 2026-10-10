@@ -194,7 +194,7 @@ function picture(int|array|null $media, string $alt = '', array $attrs = [], str
 function brand_logo_url(string $size = 'sm'): string
 {
     $id = (int) setting('logo_image');
-    return $id && \App\Core\Media::find($id) ? media_url($id, $size) : '/assets/img/emblem-' . ($size === 'sm' ? '96' : '192') . '.webp';
+    return $id && \App\Core\Media::find($id) ? media_url($id, $size) : '/assets/img/logo-full-' . ($size === 'sm' ? '120' : '320') . '.webp';
 }
 
 function favicon_url(): string

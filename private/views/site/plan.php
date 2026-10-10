@@ -98,7 +98,7 @@ for ($n = 0; $n < 15; $n++) {
            <h2 class="display-3"></h2>
       <p></p>
       <p class="mono" data-code></p>
-      <a class="btn btn-outline" href="/journal/">Read the Field Journal while you wait</a>
+      <a class="btn btn-outline" href="/gallery/">See the gallery while you wait</a>
     </div>
   </div>
 </section>

@@ -938,4 +938,88 @@ body { font-size: 1.08rem; }
 .team-photo { border-radius: var(--img-radius); }
 .distance-list li { border-radius: var(--img-radius-sm); }
 .guide-grid a:first-child { border-top-left-radius: var(--img-radius); }
-.brand-mark, .brand img { border-radius: 50%; }
+
+/* ===== Logo: full artwork, no circle ===== */
+.brand-mark, .brand-custom, .brand-badge, .footer-logo img, .preloader-inner img, .mobile-nav .brand img {
+  border-radius: 0 !important; box-shadow: none !important; aspect-ratio: auto !important; padding: 0 !important; object-fit: contain;
+}
+.brand-mark { width: auto !important; height: 60px !important; }
+.brand:hover .brand-mark, .footer-logo:hover img { transform: none; }
+.brand-custom, .brand-custom.brand-badge { width: auto !important; height: 60px !important; max-width: 200px; }
+.footer-logo img, .footer-logo .footer-custom, .footer-logo .footer-custom.brand-badge { width: auto !important; height: 160px !important; max-width: 240px; }
+.preloader-inner img { width: auto !important; height: 120px !important; }
+@media (max-width: 639px) { .brand-mark, .brand-custom, .brand-custom.brand-badge { height: 50px !important; } }
+@media (max-width: 359px) { .brand-mark, .brand-custom { height: 44px !important; } }
+
+/* ===== Distance map: 3D, interactive ===== */
+.map-card { --rx: 42deg; --rz: -10deg; background: linear-gradient(180deg, #FFFFFF 0%, #F3F6F4 100%); }
+.map-card.is-flat { --rx: 0deg; --rz: 0deg; }
+.map-toolbar { position: absolute; z-index: 30; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; gap: 6px; pointer-events: none; }
+.map-btn { pointer-events: auto; border: 1px solid var(--border-2); background: rgba(255, 255, 255, .9); color: var(--text-2); font: 700 .78rem var(--sans); letter-spacing: .08em; padding: 7px 14px; border-radius: 999px; cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
+.map-btn.is-on { background: var(--dark); color: #fff; border-color: var(--dark); }
+.map-toolbar-hint { margin-left: auto; font-size: .78rem; color: var(--text-3); }
+@media (hover: none) { .map-toolbar-hint { display: none; } }
+.map-stage { position: relative; perspective: 1500px; perspective-origin: 50% 20%; padding: 74px 18px 6px; touch-action: pan-y; cursor: grab; }
+.map-stage:active { cursor: grabbing; }
+.map-stage::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 2%; height: 38px; background: radial-gradient(closest-side, rgba(23, 32, 28, .22), transparent); filter: blur(6px); pointer-events: none; transition: opacity .8s; }
+.map-card.is-flat .map-stage::after { opacity: 0; }
+.map-plane { position: relative; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateZ(var(--rz)); transform-origin: 50% 60%; transition: transform .9s var(--ease); will-change: transform; }
+.map-card.is-dragging .map-plane { transition: transform .12s linear; }
+.map-plane .route-map { border-radius: 14px; box-shadow: 0 1px 0 #fff inset, 0 30px 50px -30px rgba(23, 32, 28, .45); }
+.map-hills ellipse { transform-box: fill-box; transform-origin: center; }
+
+/* standing pins: each pin undoes the plane's rotation so it stays upright */
+.pin3d { position: absolute; width: 0; height: 0; padding: 0; border: 0; background: none; transform-style: preserve-3d; transform: rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--rx))); transition: transform .9s var(--ease); cursor: pointer; z-index: 2; font: inherit; color: inherit; }
+.map-card.is-dragging .pin3d { transition: transform .12s linear; }
+.pin-body { --bx: -50%; position: absolute; left: 0; bottom: 0; transform: translateX(var(--bx)); display: flex; flex-direction: column; align-items: center; transition: transform .45s var(--ease); opacity: 0; }
+.map-card.is-in .pin-body { opacity: 1; transition: transform .45s var(--ease), opacity .6s ease; transition-delay: 0s, calc(1.4s + var(--i, 0) * .25s); }
+.pin-stem { width: 2px; height: 30px; background: linear-gradient(var(--accent), rgba(180, 83, 42, .15)); }
+.pin-card { display: flex; align-items: center; gap: 8px; white-space: nowrap; background: #fff; border: 1px solid var(--border); border-bottom: 3px solid var(--accent); border-radius: 10px; padding: 6px 10px 5px 6px; box-shadow: 0 10px 22px -12px rgba(23, 32, 28, .5); }
+.pin-code { font: 700 .72rem var(--sans); letter-spacing: .06em; color: #fff; background: var(--accent); border-radius: 6px; padding: 4px 6px; }
+.pin-text { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+.pin-text strong { font: 600 .86rem var(--sans); color: var(--text); }
+.pin-text small, .pin-home small { font-size: .74rem; color: var(--text-2); }
+.pin-rail .pin-card { border-bottom-color: var(--olive); } .pin-rail .pin-code { background: var(--olive); } .pin-rail .pin-stem { background: linear-gradient(var(--olive), rgba(47, 74, 62, .15)); }
+.pin-city .pin-card { border-bottom-color: #C68A2E; } .pin-city .pin-code { background: #C68A2E; } .pin-city .pin-stem { background: linear-gradient(#C68A2E, rgba(198, 138, 46, .15)); }
+.pin-home { z-index: 3; cursor: default; }
+.pin-home .pin-card { background: var(--dark); border-color: var(--dark); border-bottom-color: var(--accent); padding: 7px 12px; flex-direction: column; gap: 0; }
+.pin-home .pin-code { background: none; padding: 0; font-family: var(--serif); font-size: 1.05rem; letter-spacing: .16em; }
+.pin-home small { color: rgba(255, 255, 255, .7); text-transform: uppercase; letter-spacing: .12em; font-size: .64rem; }
+.pin-home .pin-stem { height: 40px; background: linear-gradient(var(--dark), rgba(24, 34, 30, .1)); }
+.pin3d:hover .pin-body, .pin3d:focus-visible .pin-body, .pin3d.is-active .pin-body { transform: translateX(var(--bx)) translateY(-10px) scale(1.08); }
+.pin-west .pin-body { --bx: calc(-100% + 14px); align-items: flex-end; transform-origin: right bottom; }
+.pin-west .pin-stem { margin-right: 13px; }
+.pin-east .pin-body { --bx: -14px; align-items: flex-start; transform-origin: left bottom; }
+.pin-east .pin-stem { margin-left: 13px; }
+.pin3d.is-active { z-index: 5; }
+.pin3d.is-active .pin-card { box-shadow: 0 16px 28px -12px rgba(23, 32, 28, .6), 0 0 0 3px rgba(180, 83, 42, .25); }
+.pin3d:focus-visible { outline: none; }
+.pin3d:focus-visible .pin-card { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 767px) {
+  .pin-text { display: none; }
+  .pin-card { padding: 4px; gap: 0; border-radius: 8px; }
+  .pin-code { font-size: .66rem; padding: 3px 5px; }
+  .pin-stem { height: 30px; }
+  .pin-home .pin-card { padding: 4px 8px; }
+  .pin-home .pin-code { font-size: .8rem; letter-spacing: .1em; }
+  .pin-home small { display: none; }
+  .pin-home .pin-stem { height: 8px; }
+  .pin-west .pin-body { --bx: calc(-100% + 8px); } .pin-west .pin-stem { margin-right: 7px; }
+  .pin-east .pin-body { --bx: -8px; } .pin-east .pin-stem { margin-left: 7px; }
+  .map-stage { padding-top: 64px; }
+  .map-card { --rx: 34deg; --rz: -6deg; }
+}
+
+/* selection */
+.map-card.has-active .map-route { opacity: .22; transition: opacity .4s; }
+.map-card.has-active .map-route.is-hot { opacity: 1; }
+.map-route.is-hot .route-line { stroke-width: 5; }
+.map-info { min-height: 64px; padding: 12px 18px; border-top: 1px solid var(--border); background: #fff; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.map-hint { margin: 0; color: var(--text-3); font-size: .92rem; }
+.map-info .info-kind { font: 700 .7rem var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); display: block; }
+.map-info .info-name { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; }
+.map-info .info-km { font-family: var(--serif); font-weight: 700; font-size: 1.5rem; color: var(--accent); margin-left: auto; }
+.map-info .info-time { color: var(--text-2); font-size: .9rem; }
+.map-info a { font-weight: 600; font-size: .9rem; }
+.map-info > * { animation: rise .5s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) { .map-plane, .pin3d { transition: none; } .map-card.is-in .pin-body { transition: none; } }

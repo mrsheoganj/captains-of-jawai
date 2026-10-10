@@ -71,8 +71,10 @@ final class App
         // Multi-day journeys were retired: the business offers safaris only.
         $router->get('journeys', fn () => redirect('/safaris/', 301));
         $router->get('journeys/{slug}', fn (string $slug) => redirect('/safaris/', 301));
-        $router->get('journal', [SiteController::class, 'journal']);
-        $router->get('journal/{slug}', [SiteController::class, 'post']);
+        if (JOURNAL_PUBLIC) { // hidden for now, see bootstrap.php
+            $router->get('journal', [SiteController::class, 'journal']);
+            $router->get('journal/{slug}', [SiteController::class, 'post']);
+        }
         $router->get('gallery', [SiteController::class, 'gallery']);
         $router->get('faq', [SiteController::class, 'faq']);
         $router->get('about', [SiteController::class, 'about']);
@@ -194,6 +196,9 @@ final class App
         DB::delete('menu_items', "url LIKE '/journeys/%'");
         DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");
         DB::q("UPDATE menu_items SET label = 'Our story' WHERE label = 'Our Story & Captains'");
+        if (!JOURNAL_PUBLIC) { // hide journal links; re-enable them in Admin → Menus when the journal returns
+            DB::q("UPDATE menu_items SET is_active = 0 WHERE url = '/journal/' OR url LIKE '/journal/%'");
+        }
         Settings::flush();
     }
 

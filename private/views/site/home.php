@@ -268,7 +268,7 @@ for ($n = 0; $n < 12; $n++) {
 </section>
 <?php endif; ?>
 
-<!-- 8. Journal -->
+<?php /* Journal section: hidden for now (see JOURNAL_PUBLIC in app/bootstrap.php). Remove this comment wrapper to show it again.
 <?php if (Settings::bool('journal_enabled') && $posts): ?>
 <section class="section">
   <div class="container">
@@ -285,5 +285,6 @@ for ($n = 0; $n < 12; $n++) {
   </div>
 </section>
 <?php endif; ?>
+*/ ?>
 
 

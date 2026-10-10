@@ -15,7 +15,7 @@
     <div class="auth-quote"><span>Captains of Jawai</span><p>Mastering the granite wilderness.</p></div>
   </div>
   <main class="auth-wrap">
-    <div class="auth-brand"><img src="<?= e(brand_logo_url()) ?>" width="56" height="56" alt=""><div><strong><?= e(setting('site_name')) ?></strong><span>Admin &amp; CRM</span></div></div>
+    <div class="auth-brand"><img src="<?= e(brand_logo_url()) ?>" alt=""><div><strong><?= e(setting('site_name')) ?></strong><span>Admin &amp; CRM</span></div></div>
     <h1>Welcome back</h1>
     <p class="muted">Sign in to manage enquiries, content and settings.</p>
     <?php foreach ($messages as $m): ?><div class="alert alert-<?= e($m['type']) ?>"><?= e($m['message']) ?></div><?php endforeach; ?>

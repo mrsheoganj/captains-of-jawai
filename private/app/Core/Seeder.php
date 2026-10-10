@@ -246,7 +246,7 @@ final class Seeder
         $add('header', 'Rabari Heritage', '/experiences/rabari-culture/', 2, $wild);
         $add('header', 'Boulder Sundowners', '/experiences/boulder-sundowners/', 3, $wild);
         $add('header', 'Gallery', '/gallery/', 4, $wild);
-        $add('header', 'Field Journal', '/journal/', 4);
+        // $add('header', 'Field Journal', '/journal/', 4); // journal hidden for now (JOURNAL_PUBLIC)
         $about = $add('header', 'About', '/about/', 5);
         $add('header', 'Our story', '/about/', 1, $about);
         $add('header', 'Conservation & Ethics', '/about/conservation-ethics/', 2, $about);
@@ -256,7 +256,7 @@ final class Seeder
         foreach ([['Expeditions', '/safaris/'], ['Jawai guide', '/jawai/'], ['Rabari Heritage', '/experiences/rabari-culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
             $add('footer', $l, $u, $n + 1);
         }
-        foreach ([['About Us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['Field Journal', '/journal/'], ['FAQ', '/faq/'], ['Contact', '/contact/']] as $n => [$l, $u]) {
+        foreach ([['About Us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/']] as $n => [$l, $u]) {
             $add('footer2', $l, $u, $n + 1);
         }
         foreach ([['Privacy Policy', '/privacy-policy/'], ['Terms', '/terms/'], ['Cookies', '/cookie-policy/'], ['Sitemap', '/sitemap.xml']] as $n => [$l, $u]) {

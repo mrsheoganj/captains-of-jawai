@@ -13,7 +13,7 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 | --- | --- |
 | Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, booking section with an inline safari enquiry form, gallery, Jawai guide, journal | `/` |
 | Expeditions hub and detail pages (facts strip, highlights, sticky enquiry card) | `/safaris/`, `/safaris/{slug}/` |
-| Field Journal (categories, pagination, related articles, share buttons) | `/journal/`, `/journal/{slug}/` |
+| Field Journal (categories, pagination, related articles, share buttons). **Hidden for now:** set `JOURNAL_PUBLIC = true` in `private/app/bootstrap.php`, then re-enable its menu links in Admin → Menus | `/journal/`, `/journal/{slug}/` |
 | Gallery (category filter and lightbox) | `/gallery/` |
 | FAQ (accordion and FAQPage schema) | `/faq/` |
 | About (story) | `/about/` |
@@ -33,7 +33,7 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 **Motion:**
 * a loading spinner, shown only when a page is slow to load;
 * photo unmask reveals, fades, staggered card entrances and card hover lifts;
-* an animated route map: routes draw in, markers pulse, distances count up;
+* an interactive 3D distance map: tilts with the mouse or by dragging; has standing pins, a 3D/flat switch and an automatic tour; tapping a place highlights its route and shows the distance with a Google Maps directions link; distances count up;
 * a moving ticker;
 * light parallax and a full-width slider with arrows, dots and swipe;
 * a header that hides as you scroll down, a scroll-progress bar and a back-to-top button.

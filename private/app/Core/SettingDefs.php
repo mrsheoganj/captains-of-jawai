@@ -107,8 +107,9 @@ final class SettingDefs
                     ['coexist_image', 'Coexistence image', 'image', ''],
                     ['coexist_link', 'Coexistence link', 'text', '/jawai/culture/'],
                     ['testimonials_enabled', 'Show guest words (only if testimonials exist)', 'bool', '1'],
-                    ['journal_enabled', 'Show journal section', 'bool', '1'],
-                    ['journal_heading', 'Journal heading', 'text', "From our journal"],
+                    // Journal is hidden for now (JOURNAL_PUBLIC in app/bootstrap.php); restore these two lines with it.
+                    // ['journal_enabled', 'Show journal section', 'bool', '1'],
+                    // ['journal_heading', 'Journal heading', 'text', "From our journal"],
                     ['cta_heading', 'Closing call-to-action heading', 'text', "Ask us about dates"],
                     ['cta_body', 'Closing call-to-action text', 'textarea', "Tell us which safari, the date and how many of you. We confirm availability and the price, usually within 12 hours. Nothing is charged until you confirm."],
                     ['cta_image', 'Closing call-to-action background image', 'image', ''],
@@ -120,7 +121,7 @@ final class SettingDefs
                 'intro' => 'Header images for the listing and utility pages. (Safaris, articles and pages each choose their own image in Content.)',
                 'fields' => [
                     ['img_safaris', 'Expeditions page (/safaris/)', 'image', ''],
-                    ['img_journal', 'Field Journal page (/journal/)', 'image', ''],
+                    // ['img_journal', 'Field Journal page (/journal/)', 'image', ''], // journal hidden for now
                     ['img_gallery', 'Gallery page (/gallery/)', 'image', ''],
                     ['img_faq', 'FAQ page (/faq/)', 'image', ''],
                     ['img_contact', 'Contact page (/contact/)', 'image', ''],

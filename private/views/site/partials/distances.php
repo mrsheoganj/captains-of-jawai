@@ -81,58 +81,86 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
     </div>
 
     <figure class="map-card reveal" data-map>
-      <svg class="route-map" viewBox="0 0 <?= $W ?> <?= $H ?>" role="img" aria-label="Map of Jawai with routes to nearby airports, stations and cities">
-        <defs>
-          <pattern id="mapgrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="currentColor" stroke-width=".5" opacity=".12"/></pattern>
-          <radialGradient id="mapglow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="var(--accent)" stop-opacity=".22"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
-        </defs>
-        <rect width="<?= $W ?>" height="<?= $H ?>" fill="url(#mapgrid)"/>
-        <!-- range rings -->
-        <g class="map-rings">
-          <?php foreach ($rings as [$km, $txt]): $r = round($rFor($km), 1); ?>
-          <circle cx="<?= $hx ?>" cy="<?= $hy ?>" r="<?= $r ?>"/>
-          <text x="<?= $hx - 6 ?>" y="<?= round($hy + $r - 6, 1) ?>" text-anchor="end"><?= $txt ?></text>
-          <?php endforeach; ?>
-        </g>
-        <g class="map-axes"><path d="M<?= $hx ?> <?= $hy - 268 ?>V<?= $hy + 268 ?>M<?= $hx - 330 ?> <?= $hy ?>H<?= $hx + 400 ?>"/></g>
-        <!-- Aravalli hills: an arc to the east, between Jawai and Udaipur -->
-        <path class="map-ridge" d="M<?= $hx + 150 ?> <?= $hy - 170 ?> Q <?= $hx + 205 ?> <?= $hy - 10 ?> <?= $hx + 120 ?> <?= $hy + 175 ?>" fill="none"/>
-        <text class="map-note" x="<?= $hx + 196 ?>" y="<?= $hy - 70 ?>" transform="rotate(80 <?= $hx + 196 ?> <?= $hy - 70 ?>)">ARAVALLI HILLS</text>
-        <!-- Jawai Dam reservoir, just west of Bera -->
-        <path class="map-water" d="M<?= $hx - 96 ?> <?= $hy + 14 ?> c 10 -16 34 -20 46 -10 c 12 10 26 4 28 16 c 2 14 -18 20 -34 16 c -16 -4 -26 6 -38 0 c -10 -6 -8 -14 -2 -22 z"/>
-        <text class="map-note" x="<?= $hx - 100 ?>" y="<?= $hy + 56 ?>">JAWAI DAM</text>
-        <circle cx="<?= $hx ?>" cy="<?= $hy ?>" r="90" fill="url(#mapglow)"/>
-        <?php foreach ($pts as $p): $x = $p['x']; $y = $p['y'];
-            $mx = ($hx + $x) / 2 + ($y - $hy) * .14; $my = ($hy + $y) / 2 - ($x - $hx) * .14; ?>
-        <g class="map-route route-<?= e($p['type']) ?>" style="--i:<?= $p['i'] ?>">
-          <path class="route-line" d="M<?= $hx ?> <?= $hy ?> Q <?= round($mx, 1) ?> <?= round($my, 1) ?> <?= $x ?> <?= $y ?>" pathLength="100"/>
-          <path class="route-flow" d="M<?= $hx ?> <?= $hy ?> Q <?= round($mx, 1) ?> <?= round($my, 1) ?> <?= $x ?> <?= $y ?>" pathLength="100"/>
-          <g class="map-pin" transform="translate(<?= $x ?> <?= $y ?>)">
-            <circle r="16" class="pin-halo"/>
-            <circle r="7" class="pin-dot"/>
-            <?php $right = sin($p['ang']) >= -0.2 && $x < $W - 170; $up = cos($p['ang']) > 0.5; ?>
-            <g transform="translate(<?= $right ? 16 : -16 ?> <?= $up ? -14 : 4 ?>)">
-              <text class="pin-name" text-anchor="<?= $right ? 'start' : 'end' ?>"><?= e(preg_replace('/\s*\(.*\)$/', '', $p['name'])) ?></text>
-              <text class="pin-km" y="20" text-anchor="<?= $right ? 'start' : 'end' ?>"><?= e($p['km']) ?><?= $p['time'] !== '' ? ' · ' . e($p['time']) : '' ?></text>
+      <div class="map-toolbar">
+        <button type="button" class="map-btn is-on" data-map-view="3d" aria-pressed="true">3D</button>
+        <button type="button" class="map-btn" data-map-view="flat" aria-pressed="false">Flat</button>
+        <span class="map-toolbar-hint">Drag or move your mouse to tilt</span>
+      </div>
+      <div class="map-stage" data-map-stage>
+        <div class="map-plane">
+          <svg class="route-map" viewBox="0 0 <?= $W ?> <?= $H ?>" role="img" aria-label="Map of Jawai with routes to nearby airports, stations and cities">
+            <defs>
+              <pattern id="mapgrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="currentColor" stroke-width=".5" opacity=".12"/></pattern>
+              <radialGradient id="mapglow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="var(--accent)" stop-opacity=".22"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+              <radialGradient id="hill" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#E9D9BF"/><stop offset=".55" stop-color="#C9A97F"/><stop offset="1" stop-color="#9C7A55"/></radialGradient>
+              <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F3EC"/><stop offset="1" stop-color="#EEF2EC"/></linearGradient>
+              <filter id="lift" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="3" dy="5" stdDeviation="3" flood-color="#3a2a14" flood-opacity=".28"/></filter>
+            </defs>
+            <rect width="<?= $W ?>" height="<?= $H ?>" rx="14" fill="url(#ground)"/>
+            <rect width="<?= $W ?>" height="<?= $H ?>" fill="url(#mapgrid)"/>
+            <g class="map-rings">
+              <?php foreach ($rings as [$km, $txt]): $r = round($rFor($km), 1); ?>
+              <circle cx="<?= $hx ?>" cy="<?= $hy ?>" r="<?= $r ?>"/>
+              <text x="<?= $hx - 6 ?>" y="<?= round($hy + $r - 6, 1) ?>" text-anchor="end"><?= $txt ?></text>
+              <?php endforeach; ?>
             </g>
-          </g>
-        </g>
-        <?php endforeach; ?>
+            <g class="map-axes"><path d="M<?= $hx ?> <?= $hy - 300 ?>V<?= $hy + 300 ?>M<?= $hx - 330 ?> <?= $hy ?>H<?= $hx + 400 ?>"/></g>
+            <!-- Aravalli hills: a chain of raised hills on an arc to the east -->
+            <g class="map-hills" filter="url(#lift)">
+              <?php
+              $p0 = [$hx + 150, $hy - 190]; $p1 = [$hx + 215, $hy - 10]; $p2 = [$hx + 125, $hy + 190];
+              for ($t = 0; $t <= 1.0001; $t += 0.09) {
+                  $bx = (1 - $t) ** 2 * $p0[0] + 2 * (1 - $t) * $t * $p1[0] + $t * $t * $p2[0];
+                  $by = (1 - $t) ** 2 * $p0[1] + 2 * (1 - $t) * $t * $p1[1] + $t * $t * $p2[1];
+                  $rw = 13 + 7 * sin($t * 9.3); ?>
+              <ellipse cx="<?= round($bx, 1) ?>" cy="<?= round($by, 1) ?>" rx="<?= round($rw, 1) ?>" ry="<?= round($rw * .72, 1) ?>" fill="url(#hill)"/>
+              <?php } ?>
+            </g>
+            <text class="map-note" x="<?= $hx + 228 ?>" y="<?= $hy - 80 ?>" transform="rotate(80 <?= $hx + 228 ?> <?= $hy - 80 ?>)">ARAVALLI HILLS</text>
+            <!-- Granite leopard hills around Bera -->
+            <g class="map-hills" filter="url(#lift)">
+              <?php foreach ([[-34, -34, 15], [30, -40, 12], [44, 18, 14], [-14, 40, 11], [16, 46, 9], [-48, -6, 9]] as [$ox, $oy, $rr]): ?>
+              <ellipse cx="<?= $hx + $ox ?>" cy="<?= $hy + $oy ?>" rx="<?= $rr ?>" ry="<?= round($rr * .75, 1) ?>" fill="url(#hill)"/>
+              <?php endforeach; ?>
+            </g>
+            <!-- Jawai Dam reservoir, just west of Bera -->
+            <path class="map-water" d="M<?= $hx - 110 ?> <?= $hy + 14 ?> c 10 -16 34 -20 46 -10 c 12 10 26 4 28 16 c 2 14 -18 20 -34 16 c -16 -4 -26 6 -38 0 c -10 -6 -8 -14 -2 -22 z"/>
+            <text class="map-note" x="<?= $hx - 116 ?>" y="<?= $hy + 58 ?>">JAWAI DAM</text>
+            <circle cx="<?= $hx ?>" cy="<?= $hy ?>" r="90" fill="url(#mapglow)"/>
+            <?php foreach ($pts as $p): $x = $p['x']; $y = $p['y'];
+                $mx = ($hx + $x) / 2 + ($y - $hy) * .14; $my = ($hy + $y) / 2 - ($x - $hx) * .14; ?>
+            <g class="map-route route-<?= e($p['type']) ?>" style="--i:<?= $p['i'] ?>" data-route="<?= $p['i'] ?>">
+              <path class="route-line" d="M<?= $hx ?> <?= $hy ?> Q <?= round($mx, 1) ?> <?= round($my, 1) ?> <?= $x ?> <?= $y ?>" pathLength="100"/>
+              <path class="route-flow" d="M<?= $hx ?> <?= $hy ?> Q <?= round($mx, 1) ?> <?= round($my, 1) ?> <?= $x ?> <?= $y ?>" pathLength="100"/>
+              <g class="map-pin" transform="translate(<?= $x ?> <?= $y ?>)"><circle r="16" class="pin-halo"/><circle r="6" class="pin-dot"/></g>
+            </g>
+            <?php endforeach; ?>
+            <g class="map-home" transform="translate(<?= $hx ?> <?= $hy ?>)">
+              <circle r="26" class="home-ring"/><circle r="26" class="home-ring home-ring-2"/><circle r="8" class="home-dot"/>
+            </g>
+            <g class="map-compass" transform="translate(<?= $W - 44 ?> 44)"><circle r="20"/><path d="M0 -15 L5 0 L0 -3 L-5 0 Z"/><text y="-24" text-anchor="middle">N</text></g>
+          </svg>
 
-        <g class="map-home" transform="translate(<?= $hx ?> <?= $hy ?>)">
-          <circle r="26" class="home-ring"/>
-          <circle r="26" class="home-ring home-ring-2"/>
-          <circle r="10" class="home-dot"/>
-          <text class="home-label" y="-24" text-anchor="middle">JAWAI</text>
-          <text class="home-sub" y="34" text-anchor="middle">Bera</text>
-        </g>
-
-        <g class="map-compass" transform="translate(<?= $W - 44 ?> 44)">
-          <circle r="20"/>
-          <path d="M0 -15 L5 0 L0 -3 L-5 0 Z"/>
-          <text y="-24" text-anchor="middle">N</text>
-        </g>
-      </svg>
+          <!-- Standing 3D pins (HTML, so they stay sharp and clickable) -->
+          <div class="pin3d pin-home" style="left:<?= round($hx / $W * 100, 2) ?>%;top:<?= round($hy / $H * 100, 2) ?>%">
+            <span class="pin-body"><span class="pin-card"><b class="pin-code">JAWAI</b><small>Bera</small></span><span class="pin-stem"></span></span>
+          </div>
+          <?php foreach ($pts as $p):
+              $code = preg_match('/\(([^)]+)\)/', $p['name'], $m) ? $m[1] : strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $p['name']), 0, 3));
+              $short = preg_replace('/\s*\(.*\)$/', '', $p['name']);
+              $gmaps = 'https://www.google.com/maps/dir/?api=1&origin=' . $home[0] . ',' . $home[1] . '&destination=' . $p['lat'] . ',' . $p['lng'] . '&travelmode=driving'; ?>
+          <?php $side = $p['x'] < $hx - 20 ? ' pin-west' : ($p['x'] > $hx + 20 ? ' pin-east' : ''); ?>
+          <button type="button" class="pin3d pin-<?= e($p['type']) ?><?= $side ?>" style="left:<?= round($p['x'] / $W * 100, 2) ?>%;top:<?= round($p['y'] / $H * 100, 2) ?>%;--i:<?= $p['i'] ?>"
+            data-place="<?= $p['i'] ?>" data-name="<?= e($p['name']) ?>" data-km="<?= e($p['km']) ?>" data-time="<?= e($p['time']) ?>" data-kind="<?= e($label[$p['type']]) ?>" data-gmaps="<?= e($gmaps) ?>"
+            aria-label="<?= e($p['name'] . ', ' . $p['km'] . ($p['time'] !== '' ? ', ' . $p['time'] . ' by road' : '')) ?>">
+            <span class="pin-body"><span class="pin-card"><b class="pin-code"><?= e($code) ?></b><span class="pin-text"><strong><?= e($short) ?></strong><small><?= e($p['km']) ?></small></span></span><span class="pin-stem"></span></span>
+          </button>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <div class="map-info" data-map-info aria-live="polite">
+        <p class="map-hint">Tap a place on the map or in the list to see its route.</p>
+      </div>
       <figcaption>Directions are true; distances are drawn on a compressed scale. Road distances are approximate, measured from Bera.</figcaption>
     </figure>
   </div>

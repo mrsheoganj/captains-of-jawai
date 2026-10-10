@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-const APP_VERSION = '2.6.0';
+const APP_VERSION = '2.7.0';
+
+// The Field Journal (blog) is hidden for now: no menu links, homepage section, sitemap entries
+// or public URLs. Articles can still be written in Admin → Field Journal. Set to true to bring it back.
+const JOURNAL_PUBLIC = false;
 
 if (!defined('PUBLIC_PATH')) {
     define('PUBLIC_PATH', dirname(__DIR__, 2) . '/public_html');

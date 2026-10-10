@@ -46,7 +46,7 @@ final class SiteController
     public function home(): string
     {
         $safaris = $this->published('safaris');
-        $posts = DB::all("SELECT * FROM posts WHERE status = 'published' AND published_at <= ? ORDER BY published_at DESC LIMIT 3", [now()]);
+        $posts = JOURNAL_PUBLIC ? DB::all("SELECT * FROM posts WHERE status = 'published' AND published_at <= ? ORDER BY published_at DESC LIMIT 3", [now()]) : [];
         $testimonials = $this->published('testimonials');
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
         $guide = DB::all("SELECT slug, title, intro FROM pages WHERE status = 'published' AND slug LIKE 'jawai/%' ORDER BY slug");
@@ -304,13 +304,13 @@ final class SiteController
     {
         header('Content-Type: application/xml; charset=utf-8');
         $urls = [['/', null, '1.0']];
-        foreach (['/safaris/', '/journal/', '/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/'] as $p) {
+        foreach (array_merge(['/safaris/'], JOURNAL_PUBLIC ? ['/journal/'] : [], ['/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/']) as $p) {
             $urls[] = [$p, null, '0.8'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM safaris WHERE status = 'published'") as $r) {
             $urls[] = ['/safaris/' . $r['slug'] . '/', $r['updated_at'], '0.9'];
         }
-        foreach (DB::all("SELECT slug, updated_at FROM posts WHERE status = 'published' AND published_at <= ?", [now()]) as $r) {
+        foreach (JOURNAL_PUBLIC ? DB::all("SELECT slug, updated_at FROM posts WHERE status = 'published' AND published_at <= ?", [now()]) : [] as $r) {
             $urls[] = ['/journal/' . $r['slug'] . '/', $r['updated_at'], '0.7'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM pages WHERE status = 'published' AND slug <> 'about'") as $r) {

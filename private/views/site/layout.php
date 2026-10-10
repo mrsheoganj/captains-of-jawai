@@ -68,7 +68,7 @@ foreach ($schema as $s): ?>
 <div class="preloader" data-preloader aria-hidden="true">
   <div class="preloader-inner">
     <span class="preloader-ring"></span>
-    <img class="<?= $logoId && \App\Core\Settings::bool('logo_dark_badge') ? 'brand-badge' : '' ?>" src="<?= e(brand_logo_url()) ?>" width="64" height="64" alt="">
+    <img class="<?= $logoId && \App\Core\Settings::bool('logo_dark_badge') ? 'brand-badge' : '' ?>" src="<?= e(brand_logo_url('md')) ?>" alt="">
   </div>
   <span class="preloader-text">Captains of Jawai</span>
 </div>
@@ -86,7 +86,7 @@ foreach ($schema as $s): ?>
 <header class="site-header<?= $overlay ? ' is-overlay' : '' ?>" data-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="<?= e($siteName) ?> — home">
-      <img class="<?= e($logoClass) ?>" src="<?= e(brand_logo_url()) ?>"<?= $logoId ? '' : ' width="48" height="48"' ?> alt="<?= e($siteName) ?>">
+      <img class="<?= e($logoClass) ?>" src="<?= e(brand_logo_url()) ?>"<?= $logoId ? '' : ' width="46" height="60"' ?> alt="<?= e($siteName) ?>">
       <?php if (\App\Core\Settings::bool('logo_show_name')): ?>
         <span class="brand-text"><span class="brand-name"><?= e($siteName) ?></span><span class="brand-sub"><?= e(setting('site_tagline')) ?></span></span>
       <?php endif; ?>

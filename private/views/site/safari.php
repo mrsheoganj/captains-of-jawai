@@ -23,7 +23,7 @@
       <div class="aside-card aside-cta">
         <h3>Ask about this safari</h3>
         <p>Send us your dates and we will reply, usually within 12 hours. No payment is taken online.</p>
-        <a class="btn btn-primary btn-block" href="/plan-your-journey/?safari=<?= e(rawurlencode($item['title'])) ?>">Enquire about dates</a>
+        <a class="btn btn-primary btn-block" href="/book-a-safari/?safari=<?= e(rawurlencode($item['title'])) ?>">Enquire about dates</a>
         <?php if (whatsapp_link()): ?><a class="btn btn-outline btn-block" href="<?= e(whatsapp_link('Hello, I am interested in the ' . $item['title'] . '.')) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 16) ?> Ask on WhatsApp</a><?php endif; ?>
       </div>
     </aside>

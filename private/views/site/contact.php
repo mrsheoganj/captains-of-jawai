@@ -12,9 +12,9 @@
         <?php if (setting('office_hours')): ?><li><div><span class="mono">Hours</span><span><?= e(setting('office_hours')) ?></span></div></li><?php endif; ?>
       </ul>
       <div class="aside-card aside-cta">
-        <h3>Planning a journey?</h3>
+        <h3>Want to book a safari?</h3>
         <p>Our short planner form gives us everything we need to send you options.</p>
-        <a class="btn btn-primary btn-block" href="/plan-your-journey/">Plan your trip</a>
+        <a class="btn btn-primary btn-block" href="/book-a-safari/">Book a safari</a>
       </div>
     </div>
     <div class="form-card reveal">

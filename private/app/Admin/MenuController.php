@@ -75,12 +75,9 @@ final class MenuController extends BaseController
 
     private function linkSuggestions(): array
     {
-        $links = ['/' => 'Home', '/safaris/' => 'Expeditions (all)', '/journeys/' => 'Journeys (all)', '/journal/' => 'Field Journal', '/gallery/' => 'Gallery', '/faq/' => 'FAQ', '/about/' => 'About', '/contact/' => 'Contact', '/plan-your-journey/' => 'Plan Your Journey'];
+        $links = ['/' => 'Home', '/safaris/' => 'Expeditions (all)', '/journal/' => 'Field Journal', '/gallery/' => 'Gallery', '/faq/' => 'FAQ', '/about/' => 'About', '/contact/' => 'Contact', '/book-a-safari/' => 'Book a safari (enquiry form)'];
         foreach (DB::all('SELECT title, slug FROM safaris ORDER BY sort_order') as $r) {
             $links['/safaris/' . $r['slug'] . '/'] = 'Safari: ' . $r['title'];
-        }
-        foreach (DB::all('SELECT title, slug FROM journeys ORDER BY sort_order') as $r) {
-            $links['/journeys/' . $r['slug'] . '/'] = 'Journey: ' . $r['title'];
         }
         foreach (DB::all('SELECT title, slug FROM pages ORDER BY slug') as $r) {
             $links['/' . $r['slug'] . '/'] = 'Page: ' . $r['title'];

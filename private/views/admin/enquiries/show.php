@@ -6,10 +6,11 @@ $wa = preg_replace('/\D+/', '', (string) $e['phone']);
 $first = explode(' ', trim($e['full_name']))[0];
 $details = array_filter([
     'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'], 'Country' => $e['country'],
-    'Interests' => $e['interests'], 'Travel window' => $e['travel_window'], 'Length of stay' => $e['nights'],
+    'Safari' => $e['interests'], 'Dates' => $e['travel_window'], 'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
     'Party' => $e['type'] === 'journey' ? (int) $e['adults'] . ' adult(s), ' . (int) $e['children'] . ' child(ren)' : '',
     'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
-    'Accommodation' => $e['accommodation'], 'Transfer' => $e['transfer'],
+    // Older enquiries (before safari-only) may still carry these:
+    'Length of stay' => $e['nights'], 'Accommodation' => $e['accommodation'], 'Transfer' => $e['transfer'],
 ], fn ($v) => $v !== null && $v !== '');
 ?>
 <div class="page-actions">
@@ -26,12 +27,12 @@ $details = array_filter([
         <div class="avatar avatar-lg"><?= e(mb_strtoupper(mb_substr($e['full_name'], 0, 1))) ?></div>
         <div>
           <h2><?= e($e['full_name']) ?></h2>
-          <p class="muted"><span class="mono"><?= e($e['code']) ?></span> · <?= e(ucfirst($e['type'])) ?> enquiry · <?= e(fmt_date($e['created_at'], 'j M Y, H:i')) ?> (<?= e(time_ago($e['created_at'])) ?>)</p>
+          <p class="muted"><span class="mono"><?= e($e['code']) ?></span> · <?= e($e['type'] === 'journey' ? 'Safari' : ucfirst($e['type'])) ?> enquiry · <?= e(fmt_date($e['created_at'], 'j M Y, H:i')) ?> (<?= e(time_ago($e['created_at'])) ?>)</p>
         </div>
         <?= status_badge($e['status']) ?>
       </div>
       <div class="quick-actions">
-        <a class="btn btn-light" href="mailto:<?= e($e['email']) ?>?subject=<?= e(rawurlencode('Your Jawai journey — ' . $e['code'])) ?>&body=<?= e(rawurlencode("Dear $first,\n\n")) ?>"><?= icon('mail', 16) ?> Email</a>
+        <a class="btn btn-light" href="mailto:<?= e($e['email']) ?>?subject=<?= e(rawurlencode('Your Jawai safari: ' . $e['code'])) ?>&body=<?= e(rawurlencode("Dear $first,\n\n")) ?>"><?= icon('mail', 16) ?> Email</a>
         <?php if ($wa): ?><a class="btn btn-whatsapp" href="https://wa.me/<?= e($wa) ?>?text=<?= e(rawurlencode("Hello $first, this is " . (Auth::user()['name'] ?? '') . ' from ' . setting('site_name') . ' regarding your enquiry ' . $e['code'] . '.')) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 16) ?> WhatsApp</a>
         <a class="btn btn-light" href="tel:<?= e(preg_replace('/[^\d+]/', '', $e['phone'])) ?>"><?= icon('phone', 16) ?> Call</a><?php endif; ?>
       </div>

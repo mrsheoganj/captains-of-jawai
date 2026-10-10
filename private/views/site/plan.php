@@ -15,7 +15,7 @@ for ($n = 0; $n < 15; $n++) {
     <div class="plan-visual-inner">
       <div>
         <span class="kicker" data-anim="fade">Enquiries</span>
-        <h1 class="display-2" data-anim="fade" style="--d:.2s">Plan your Jawai trip</h1>
+        <h1 class="display-2" data-anim="fade" style="--d:.2s">Book a Jawai safari</h1>
         <ul class="trust" data-anim="fade" style="--d:.5s">
           <?php foreach (Settings::lines('form_trust_points') as $t): ?><li><?= e($t) ?></li><?php endforeach; ?>
         </ul>
@@ -28,52 +28,48 @@ for ($n = 0; $n < 15; $n++) {
     <form class="plan-form" method="post" action="/api/enquiry" data-wizard novalidate>
       <?= View::partial('site/partials/form-guard') ?>
       <div class="wizard-progress" aria-hidden="true"><span data-progress></span></div>
-      <p class="mono wizard-count">Step <b data-step-num>1</b> of 5</p>
+      <p class="mono wizard-count">Step <b data-step-num>1</b> of 4</p>
 
       <fieldset class="step is-active" data-step>
-        <legend class="display-3">What draws you to Jawai?</legend>
-        <p class="help">Choose as many as you like.</p>
+        <legend class="display-3">Which safari?</legend>
+        <p class="help">Choose one or more. Not sure? Pick the classic leopard safari and we will advise.</p>
         <div class="choice-grid">
-          <?php foreach ($interests as $n => $opt): ?>
-          <label class="choice"><input type="checkbox" name="interests[]" value="<?= e($opt) ?>"<?= ($preselect !== '' && stripos($preselect, explode(' ', $opt)[0]) !== false) || ($preselect === '' && $n === 0) ? ' checked' : '' ?>><span><?= e($opt) ?></span></label>
+          <?php foreach ($safaris as $n => $s): $on = $preselect !== '' ? strcasecmp($preselect, $s['title']) === 0 : $n === 0; ?>
+          <label class="choice"><input type="checkbox" name="interests[]" value="<?= e($s['title']) ?>"<?= $on ? ' checked' : '' ?>><span><?= e($s['title']) ?></span></label>
+          <?php endforeach; ?>
+          <?php foreach ($interests as $opt): ?>
+          <label class="choice"><input type="checkbox" name="interests[]" value="<?= e($opt) ?>"><span><?= e($opt) ?></span></label>
           <?php endforeach; ?>
         </div>
-        <?php if ($preselect !== ''): ?><p class="help">You are enquiring about: <strong><?= e($preselect) ?></strong></p><?php endif; ?>
       </fieldset>
 
       <fieldset class="step" data-step hidden>
-        <legend class="display-3">When would you like to travel?</legend>
+        <legend class="display-3">When?</legend>
         <div class="field-row">
           <label class="field"><span>Preferred month</span>
             <select name="travel_month"><option value="">Not sure yet</option><?php foreach ($months as $m): ?><option><?= e($m) ?></option><?php endforeach; ?></select>
           </label>
-          <label class="field"><span>Specific dates (optional)</span><input type="text" name="travel_dates" placeholder="e.g. 14–17 December"></label>
+          <label class="field"><span>Safari date(s) (optional)</span><input type="text" name="travel_dates" placeholder="e.g. 14 and 15 December"></label>
         </div>
-        <label class="field"><span>Length of stay</span>
-          <select name="nights"><?php foreach (Settings::lines('form_nights') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
-        </label>
+        <div class="field-row">
+          <label class="field"><span>Drive time</span>
+            <select name="drive_time"><?php foreach (Settings::lines('form_drive_times') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
+          </label>
+          <label class="field"><span>Number of drives</span>
+            <select name="drives"><?php foreach (Settings::lines('form_drives') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
+          </label>
+        </div>
         <label class="check"><input type="checkbox" name="flexible" value="1" checked> My dates are flexible</label>
       </fieldset>
 
       <fieldset class="step" data-step hidden>
-        <legend class="display-3">Who is travelling?</legend>
+        <legend class="display-3">How many guests?</legend>
         <div class="field-row">
           <div class="field"><span>Adults</span><div class="stepper" data-stepper><button type="button" data-dec aria-label="Fewer adults"><?= icon('minus', 16) ?></button><input type="number" name="adults" value="2" min="1" max="50" inputmode="numeric"><button type="button" data-inc aria-label="More adults"><?= icon('plus', 16) ?></button></div></div>
           <div class="field"><span>Children (under 12)</span><div class="stepper" data-stepper><button type="button" data-dec aria-label="Fewer children"><?= icon('minus', 16) ?></button><input type="number" name="children" value="0" min="0" max="30" inputmode="numeric"><button type="button" data-inc aria-label="More children"><?= icon('plus', 16) ?></button></div></div>
         </div>
-        <label class="check"><input type="checkbox" name="private_vehicle" value="1" checked> We would like a private vehicle exclusively for our party</label>
-      </fieldset>
-
-      <fieldset class="step" data-step hidden>
-        <legend class="display-3">Where would you like to stay?</legend>
-        <div class="choice-grid choice-grid-1">
-          <?php foreach (Settings::lines('form_accommodation') as $n => $o): ?>
-          <label class="choice"><input type="radio" name="accommodation" value="<?= e($o) ?>"<?= $n === 0 ? ' checked' : '' ?>><span><?= e($o) ?></span></label>
-          <?php endforeach; ?>
-        </div>
-        <label class="field"><span>Transfers</span>
-          <select name="transfer"><?php foreach (Settings::lines('form_transfers') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
-        </label>
+        <label class="check"><input type="checkbox" name="private_vehicle" value="1" checked> We would like a private vehicle just for our group</label>
+        <p class="help"><?= e(setting('form_scope_note')) ?></p>
       </fieldset>
 
       <fieldset class="step" data-step hidden>
@@ -86,7 +82,7 @@ for ($n = 0; $n < 15; $n++) {
           <label class="field"><span>Phone / WhatsApp (with country code) *</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+91 …"></label>
           <label class="field"><span>Country of residence</span><input type="text" name="country" autocomplete="country-name" value="India"></label>
         </div>
-        <label class="field"><span>Anything else? (special occasions, photography goals, dietary needs)</span><textarea name="message" rows="4"><?= $preselect !== '' ? e('Interested in: ' . $preselect . "\n") : '' ?></textarea></label>
+        <label class="field"><span>Anything else? (where you are staying in Jawai, photography goals, children's ages)</span><textarea name="message" rows="4"></textarea></label>
         <p class="form-note"><?= e(setting('privacy_note')) ?> <a href="/privacy-policy/">Privacy policy</a>.</p>
       </fieldset>
 
@@ -94,7 +90,7 @@ for ($n = 0; $n < 15; $n++) {
       <div class="wizard-nav">
         <button type="button" class="btn btn-text" data-prev hidden>Back</button>
         <button type="button" class="btn btn-primary btn-lg" data-next>Continue</button>
-        <button type="submit" class="btn btn-primary btn-lg" data-submit hidden><span>Send my enquiry</span></button>
+        <button type="submit" class="btn btn-primary btn-lg" data-submit hidden><span>Send safari request</span></button>
       </div>
     </form>
 

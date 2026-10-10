@@ -68,8 +68,9 @@ final class App
         $router->get('', [SiteController::class, 'home']);
         $router->get('safaris', [SiteController::class, 'safaris']);
         $router->get('safaris/{slug}', [SiteController::class, 'safari']);
-        $router->get('journeys', [SiteController::class, 'journeys']);
-        $router->get('journeys/{slug}', [SiteController::class, 'journey']);
+        // Multi-day journeys were retired: the business offers safaris only.
+        $router->get('journeys', fn () => redirect('/safaris/', 301));
+        $router->get('journeys/{slug}', fn (string $slug) => redirect('/safaris/', 301));
         $router->get('journal', [SiteController::class, 'journal']);
         $router->get('journal/{slug}', [SiteController::class, 'post']);
         $router->get('gallery', [SiteController::class, 'gallery']);
@@ -77,7 +78,8 @@ final class App
         $router->get('about', [SiteController::class, 'about']);
         $router->get('contact', [SiteController::class, 'contact']);
         $router->get('photo-credits', [SiteController::class, 'credits']);
-        $router->get('plan-your-journey', [SiteController::class, 'plan']);
+        $router->get('book-a-safari', [SiteController::class, 'plan']);
+        $router->get('plan-your-journey', fn () => redirect('/book-a-safari/', 301));
         $router->get('sitemap.xml', [SiteController::class, 'sitemap']);
         $router->get('robots.txt', [SiteController::class, 'robots']);
         $router->post('api/enquiry', [ApiController::class, 'enquiry']);
@@ -153,6 +155,45 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /**
+     * 2.4: the business offers safaris only (no stays, transfers or multi-day journeys).
+     * Saved settings that still hold the old stay/transfer wording go back to the new defaults,
+     * and menu links to the retired journeys section are removed.
+     */
+    private static function safariOnlyUpgrade(): void
+    {
+        $old = [
+            'form_interests' => ['Family Journey', 'Rabari Cultural Walk'],
+            'hero_cta_primary' => ['Plan your trip'],
+            'hero_subtitle' => ["we'll plan the rest"],
+            'ticker_items' => ['Rabari village walks'],
+            'coexist_body' => ['We arrange visits'],
+            'cta_body' => ['with options and prices'],
+            'tpl_admin_subject' => ['journey enquiry'],
+            'tpl_admin_body' => ['journey enquiry'],
+            'tpl_guest_body' => ['tailored proposal'],
+            'announcement_link' => ['/plan-your-journey/'],
+            'color_accent' => ['#B8822B'],
+            'color_accent_hover' => ['#9E6B1D'],
+            'color_dark' => ['#121416'],
+        ];
+        foreach ($old as $key => $needles) {
+            $v = (string) DB::val('SELECT svalue FROM settings WHERE skey = ?', [$key]);
+            foreach ($needles as $n) {
+                if ($v !== '' && str_contains($v, $n)) {
+                    DB::delete('settings', 'skey = ?', [$key]);
+                    break;
+                }
+            }
+        }
+        foreach (['form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
+            DB::delete('settings', 'skey = ?', [$key]);
+        }
+        DB::delete('menu_items', "url LIKE '/journeys/%'");
+        DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");
+        Settings::flush();
+    }
+
     private static function migrateIfUpdated(): void
     {
         if (Settings::get('schema_version') === APP_VERSION) {
@@ -161,6 +202,7 @@ final class App
         try {
             Schema::create(DB::pdo());
             JawaiGuide::ensure(); // add new guide pages to existing sites
+            self::safariOnlyUpgrade();
             Demo::assignImages(); // register new built-in photos and fill any empty image slots
             Settings::set('schema_version', APP_VERSION);
         } catch (\Throwable $e) {

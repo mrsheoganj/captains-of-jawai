@@ -18,7 +18,7 @@
     <ol class="steps reveal">
       <li><strong>Send us your dates</strong><span>Plus who is travelling and what you would like to see.</span></li>
       <li><strong>We reply</strong><span>Usually within 12 hours, from one of our team.</span></li>
-      <li><strong>You get a plan and a price</strong><span>Drives, hotels and transfers, all in writing.</span></li>
+      <li><strong>You get a plan and a price</strong><span>Safari, date, drive time and price, in writing.</span></li>
       <li><strong>You confirm</strong><span>Directly with us, when you are ready.</span></li>
     </ol>
   </div>

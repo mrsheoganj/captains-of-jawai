@@ -63,7 +63,7 @@ final class Schema
             'enquiries' => [
                 'id' => 'pk', 'code' => 'short', 'type' => 'short', 'full_name' => 'str', 'email' => 'str', 'phone' => 'short',
                 'country' => 'short', 'interests' => 'text', 'travel_window' => 'str', 'nights' => 'short', 'adults' => 'int', 'children' => 'int',
-                'private_vehicle' => 'short', 'accommodation' => 'str', 'transfer' => 'str', 'message' => 'text', 'source_page' => 'str',
+                'private_vehicle' => 'short', 'drive_time' => 'short', 'drives' => 'short', 'accommodation' => 'str', 'transfer' => 'str', 'message' => 'text', 'source_page' => 'str',
                 'utm_source' => 'str', 'utm_medium' => 'str', 'utm_campaign' => 'str', 'ip' => 'short', 'user_agent' => 'str',
                 'status' => 'short', 'assigned_user_id' => 'int', 'follow_up_date' => 'date', 'first_contacted_at' => 'datetime',
                 ...$ts, '_index' => ['status', 'created_at', 'email'],

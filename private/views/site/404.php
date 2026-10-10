@@ -4,7 +4,7 @@
     <div class="btn-row btn-row-center">
       <a class="btn btn-primary" href="/">Return home</a>
       <a class="btn btn-outline" href="/safaris/">See the safaris</a>
-      <a class="btn btn-outline" href="/plan-your-journey/">Plan your journey</a>
+      <a class="btn btn-outline" href="/book-a-safari/">Book a safari</a>
     </div>
   </div>
 </section>

@@ -70,7 +70,7 @@ final class JawaiGuide
 <p>October to March is the main season, with cool mornings and leopards out on the rocks. December and January are the coldest months and best for winter birds. April to June is very hot, and July to September brings the monsoon, green hills and rough tracks. <a href="/jawai/best-time-to-visit/">Month-by-month guide</a>.</p>
 
 <h2>Getting there</h2>
-<p>Udaipur airport is the usual way in, a drive of roughly three hours. Jodhpur is a similar distance to the north. By train, Jawai Bandh and Falna stations are on the line between Ahmedabad and Jaipur. <a href="/jawai/how-to-reach/">How to reach Jawai</a>.</p>
+<p>Udaipur airport is the usual way in: about 155 km, or three and a half hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 15 km from Bera and Falna about 34 km, both on the line between Ahmedabad and Jaipur. <a href="/jawai/how-to-reach/">How to reach Jawai</a>.</p>
 
 <h2>Quick facts</h2>
 <table>
@@ -82,7 +82,8 @@ final class JawaiGuide
 <tr><th>Leopards</th><td>Estimated 50 to 60 in the wider area</td></tr>
 <tr><th>Dam</th><td>Jawai Dam, on the Jawai River, completed 1957</td></tr>
 <tr><th>Best season</th><td>October to March</td></tr>
-<tr><th>Nearest airport</th><td>Udaipur (about 3 hours by road)</td></tr>
+<tr><th>Nearest airport</th><td>Udaipur (about 155 km, 3.5 hours by road)</td></tr>
+<tr><th>Nearest railway station</th><td>Sumerpur Jawai Bandh, JWB (about 15 km)</td></tr>
 </tbody>
 </table>
 HTML,
@@ -144,8 +145,24 @@ HTML,
 <h2>History</h2>
 <p>The dam was the idea of <strong>Maharaja Umaid Singh</strong> of the princely state of Jodhpur, after repeated droughts and floods in the region. Construction started in 1946 and the dam was completed in 1957, after Indian independence, by which time the project had passed to the new state of Rajasthan.</p>
 
+<h2>Jawai Dam in numbers</h2>
+<table>
+<tbody>
+<tr><th>River</th><td>Jawai, a tributary of the Luni</td></tr>
+<tr><th>Location</th><td>Near Sumerpur, Pali district, Rajasthan</td></tr>
+<tr><th>Work started</th><td>12 May 1946</td></tr>
+<tr><th>Completed</th><td>1957</td></tr>
+<tr><th>Catchment area</th><td>About 720 km²</td></tr>
+<tr><th>Gross storage</th><td>About 207.5 million m³ (active storage about 193.5 million m³)</td></tr>
+<tr><th>Reservoir surface</th><td>About 13 km² when full</td></tr>
+<tr><th>Feeder dams</th><td>Sei Dam and Kalibor Dam divert extra water into Jawai</td></tr>
+<tr><th>Irrigation</th><td>A command area of roughly 100,000 acres across Pali and Jalore districts</td></tr>
+</tbody>
+</table>
+<p>Figures are as published; some sources differ slightly.</p>
+
 <h2>What the dam does</h2>
-<p>The reservoir provides drinking water to Pali and nearby towns and villages, and irrigation water to farms downstream in the Jawai command area. In years of poor rain the water level drops a long way, which shows how much the area depends on it. The Jawai River is a tributary of the Luni, the main river of western Rajasthan.</p>
+<p>The reservoir provides drinking water to Pali and nearby towns and villages, and irrigation water to farms downstream in Pali and Jalore. A hydro-power plant was part of the early plan but was dropped, because the water level could not give enough pressure all year. In years of poor rain the water level drops a long way, which shows how much the area depends on it. The Jawai River is a tributary of the Luni, the main river of western Rajasthan.</p>
 
 <h2>Wildlife on the reservoir</h2>
 <p>The shallows and sandbanks are home to <strong>mugger (marsh) crocodiles</strong>, which are easy to see basking on sunny winter days. From November to February the water fills with migratory birds: bar-headed geese, demoiselle cranes, greater flamingos, ruddy shelducks, pintails and many waders. Ospreys and other raptors hunt over the water. See <a href="/jawai/wildlife/">birds and wildlife</a>.</p>
@@ -154,7 +171,8 @@ HTML,
 <p>The dam wall and the shoreline are easy to reach by road from Sumerpur and Bera. Sunset over the reservoir, with granite hills behind, is one of the best views in the area. Stay back from the water's edge: the crocodiles are wild. A wetland drive with a spotting scope is the best way to see the birds; ours is described on the <a href="/safaris/dam-birding-safari/">wetland safari</a> page.</p>
 HTML,
                 'faq' => implode("\n", [
-                    'Who built the Jawai Dam? | It was planned by Maharaja Umaid Singh of Jodhpur. Work started in 1946 and it was completed in 1957.',
+                    'Who built the Jawai Dam? | It was planned by Maharaja Umaid Singh of Jodhpur. Work started on 12 May 1946 and it was completed in 1957.',
+                    'How big is the Jawai Dam reservoir? | Published figures give a gross storage of about 207.5 million cubic metres, a catchment of about 720 km² and a reservoir surface of about 13 km² when full.',
                     'Which river is the Jawai Dam on? | The Jawai River, a tributary of the Luni, in Pali district, Rajasthan.',
                     'Are there crocodiles in Jawai Dam? | Yes. Mugger (marsh) crocodiles live in the reservoir and are often seen basking on the banks in winter.',
                     'Is Jawai Dam the largest dam in Rajasthan? | It is usually described as the largest dam in western Rajasthan.',
@@ -249,24 +267,27 @@ HTML,
             ],
             [
                 'slug' => 'jawai/how-to-reach', 'title' => 'How to reach Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/how-to-reach'), 'show_cta' => 1,
-                'intro' => 'By air, rail and road, from Udaipur, Jodhpur, Ahmedabad, Jaipur and Delhi.',
+                'intro' => 'Udaipur Airport is about 155 km away and Sumerpur Jawai Bandh railway station about 15 km. Routes by air, rail and road.',
                 'meta_title' => 'How to Reach Jawai: Flights, Trains & Road from Udaipur',
                 'meta_description' => 'How to get to Jawai in Rajasthan: nearest airport (Udaipur), nearest railway stations (Jawai Bandh and Falna), and driving times from Udaipur, Jodhpur and Ahmedabad.',
                 'body' => <<<'HTML'
 <p>Jawai has no airport of its own, but it is well placed between Udaipur and Jodhpur and has a railway station on a main line.</p>
 
 <h2>By air</h2>
-<p><strong>Udaipur (Maharana Pratap Airport)</strong> is the usual choice, with flights from Delhi, Mumbai, Bengaluru and other cities. The drive to Jawai takes around three hours. <strong>Jodhpur Airport</strong> is a similar drive from the north. Ahmedabad has more international connections and is about five to six hours by road.</p>
+<p><strong>Udaipur (Maharana Pratap Airport, UDR)</strong> is the usual choice, with flights from Delhi, Mumbai, Bengaluru and other cities. It is about 155 km from Bera, around three and a half hours by road. <strong>Jodhpur Airport (JDH)</strong> is about 175 km, around four hours. Ahmedabad has more international connections and is about five to six hours by road.</p>
 
 <h2>By train</h2>
-<p><strong>Jawai Bandh</strong> station (also called Sumerpur Jawai Bandh) and <strong>Falna</strong> are both on the line between Ahmedabad and Jaipur, with trains to and from Delhi, Jaipur, Ajmer, Abu Road and Ahmedabad. Falna gets more express trains. From either station it is a short drive to the camps and lodges around Bera.</p>
+<p><strong>Sumerpur Jawai Bandh</strong> (station code JWB) sits right by the dam, about 15 km from Bera. <strong>Falna</strong> (FA) is about 34 km away. Both are on the line between Ahmedabad and Jaipur, with trains to and from Delhi, Jaipur, Ajmer, Abu Road and Ahmedabad; Falna gets more express trains. The small Mori Bera halt, about 5 km from Bera, has only a few local trains.</p>
 
 <h2>By road</h2>
 <table>
 <thead><tr><th>From</th><th>Approx. time by car</th></tr></thead>
 <tbody>
-<tr><td>Udaipur</td><td>3 hours</td></tr>
-<tr><td>Jodhpur</td><td>3 to 3.5 hours</td></tr>
+<tr><td>Sumerpur Jawai Bandh station (15 km)</td><td>25 minutes</td></tr>
+<tr><td>Falna station (34 km)</td><td>45 minutes</td></tr>
+<tr><td>Udaipur city (141 km via Ranakpur)</td><td>3 to 3.5 hours</td></tr>
+<tr><td>Udaipur Airport (155 km)</td><td>3.5 hours</td></tr>
+<tr><td>Jodhpur Airport (175 km)</td><td>4 hours</td></tr>
 <tr><td>Kumbhalgarh</td><td>2 to 2.5 hours</td></tr>
 <tr><td>Ranakpur</td><td>1.5 to 2 hours</td></tr>
 <tr><td>Mount Abu</td><td>2.5 to 3 hours</td></tr>
@@ -276,17 +297,17 @@ HTML,
 </table>
 <p>Times depend on traffic and the route. The last part of the journey is on smaller country roads, so allow time and avoid arriving late at night if you can.</p>
 
-<h2>Transfers</h2>
-<p>We can arrange a car from Udaipur or Jodhpur airport, or from Falna or Jawai Bandh station. Mention it in your <a href="/plan-your-journey/">enquiry</a>.</p>
+<h2>Getting to your safari</h2>
+<p>We run safaris only and do not arrange transfers or hotels. Most hotels in Jawai can send a car to the airport or station. Once you are here, tell us where you are staying when you <a href="/book-a-safari/">book a safari</a> and we will arrange where to meet.</p>
 
 <h2>Combining Jawai with other places</h2>
-<p>Jawai fits neatly into a Rajasthan route: Udaipur, then Kumbhalgarh and Ranakpur, then Jawai, then on to Jodhpur. See <a href="/jawai/places-to-visit/">places to visit near Jawai</a> and our <a href="/journeys/">journeys</a>.</p>
+<p>Jawai fits neatly into a Rajasthan route: Udaipur, then Kumbhalgarh and Ranakpur, then Jawai, then on to Jodhpur. See <a href="/jawai/places-to-visit/">places to visit near Jawai</a>.</p>
 HTML,
                 'faq' => implode("\n", [
-                    'What is the nearest airport to Jawai? | Udaipur (Maharana Pratap Airport), about three hours away by road. Jodhpur Airport is a similar distance.',
-                    'What is the nearest railway station to Jawai? | Jawai Bandh station, also called Sumerpur Jawai Bandh. Falna, a little further away, has more express trains.',
-                    'How far is Jawai from Udaipur? | Around three hours by car.',
-                    'How far is Jawai from Jodhpur? | Around three to three and a half hours by car.',
+                    'What is the nearest airport to Jawai? | Udaipur (Maharana Pratap Airport), about 155 km or three and a half hours by road. Jodhpur Airport is about 175 km away.',
+                    'What is the nearest railway station to Jawai? | Sumerpur Jawai Bandh (station code JWB), about 15 km from Bera. Falna, about 34 km away, has more express trains.',
+                    'How far is Jawai from Udaipur? | About 141 km via Ranakpur, three to three and a half hours by car. Udaipur airport is about 155 km away.',
+                    'How far is Jawai from Jodhpur? | Jodhpur airport is about 175 km away, around four hours by car.',
                 ]),
                 'sources' => implode("\n", [self::WIKI_STATION, self::WIKI_PALI]),
             ],
@@ -323,7 +344,7 @@ HTML,
                 'faq' => implode("\n", [
                     'What can you do in Jawai apart from a leopard safari? | Visit the Jawai Dam for crocodiles and birds, walk the village lanes of Bera, meet Rabari herders, climb to a hill shrine and watch sunset from a granite outcrop.',
                     'Can I visit Ranakpur and Kumbhalgarh from Jawai? | Yes. Ranakpur is about two hours away and Kumbhalgarh a little further, so both fit in a long day trip.',
-                    'Is Jawai good for families? | Yes. Shorter drives, the dam, birds and village visits work well for children. Tell us their ages when you enquire.',
+                    'Is Jawai good for families? | Yes. Shorter drives and the wetland drive at the dam work well for children. Tell us their ages when you book a safari.',
                 ]),
                 'sources' => implode("\n", [
                     'https://en.wikipedia.org/wiki/Ranakpur_Jain_temple | Wikipedia: Ranakpur Jain temple',

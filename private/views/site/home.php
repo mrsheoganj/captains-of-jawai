@@ -11,39 +11,40 @@ foreach (Settings::lines('stats') as $line) {
     $stats[] = [$parts[0], $parts[1] ?? ''];
 }
 ?>
-<!-- 1. Hero -->
-<section class="hero" data-hero>
-  <?= View::partial('site/partials/topo', ['class' => 'topo-hero']) ?>
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <span class="kicker hero-kicker" data-anim="fade"><?= e(setting('hero_kicker')) ?></span>
-      <h1 class="hero-title" data-anim="fade" style="--d:.2s"><?= e(setting('hero_title')) ?></h1>
-      <p class="hero-sub" data-anim="fade" style="--d:.55s"><?= e(setting('hero_subtitle')) ?></p>
-      <div class="btn-row" data-anim="fade" style="--d:.7s">
-        <a class="btn btn-primary btn-lg" href="/plan-your-journey/"><?= e(setting('hero_cta_primary')) ?></a>
-        <a class="btn btn-outline btn-lg" href="#expeditions"><?= e(setting('hero_cta_secondary')) ?></a>
-      </div>
+<!-- 1. Full-width slider -->
+<section class="slider" data-hero aria-roledescription="carousel" aria-label="Jawai">
+  <div class="hero-slides">
+    <?php foreach ($heroIds as $n => $id): $cap = $id && isset($heroSlides[$id]) ? ($heroSlides[$id]['caption'] ?: '') : ''; ?>
+    <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>" aria-roledescription="slide" aria-label="<?= $n + 1 ?> of <?= count($heroIds) ?>">
+      <?= picture($id, $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : 'Jawai, Rajasthan', ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
+      <?php if ($cap !== ''): ?><p class="slide-caption"><?= e($cap) ?></p><?php endif; ?>
     </div>
-    <div class="hero-visual" data-anim="arch">
-      <div class="arch">
-        <div class="hero-slides">
-          <?php foreach ($heroIds as $n => $id): ?>
-            <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>">
-              <?= picture($id, '', ['sizes' => '(min-width: 1024px) 45vw, 100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
-            </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <?php if (count($heroIds) > 1): ?>
-      <div class="hero-dots" role="tablist" aria-label="Hero images">
-        <?php foreach ($heroIds as $n => $id): ?><button type="button" class="<?= $n === 0 ? 'is-active' : '' ?>" aria-label="Show image <?= $n + 1 ?>" data-hero-dot="<?= $n ?>"></button><?php endforeach; ?>
-      </div>
-      <?php endif; ?>
+    <?php endforeach; ?>
+  </div>
+  <div class="container slider-content">
+    <span class="kicker" data-anim="fade"><?= e(setting('hero_kicker')) ?></span>
+    <h1 class="hero-title" data-anim="fade" style="--d:.15s"><?= e(setting('hero_title')) ?></h1>
+    <p class="hero-sub" data-anim="fade" style="--d:.3s"><?= e(setting('hero_subtitle')) ?></p>
+    <div class="btn-row" data-anim="fade" style="--d:.45s">
+      <a class="btn btn-primary btn-lg" href="#booking"><?= e(setting('hero_cta_primary')) ?></a>
+      <a class="btn btn-ghost-light btn-lg" href="#expeditions"><?= e(setting('hero_cta_secondary')) ?></a>
     </div>
   </div>
+  <?php if (count($heroIds) > 1): ?>
+  <div class="slider-nav">
+    <button type="button" class="slider-arrow" data-hero-prev aria-label="Previous photo"><?= icon('chevron-left', 22) ?></button>
+    <div class="hero-dots" role="tablist" aria-label="Choose photo">
+      <?php foreach ($heroIds as $n => $id): ?><button type="button" class="<?= $n === 0 ? 'is-active' : '' ?>" aria-label="Show photo <?= $n + 1 ?>" data-hero-dot="<?= $n ?>"></button><?php endforeach; ?>
+    </div>
+    <button type="button" class="slider-arrow" data-hero-next aria-label="Next photo"><?= icon('chevron-right', 22) ?></button>
+  </div>
+  <?php endif; ?>
 </section>
 
-<!-- 2. Field ticker -->
+<!-- 2. Distance map -->
+<?php if (Settings::bool('distances_enabled')): ?><?= View::partial('site/partials/distances') ?><?php endif; ?>
+
+<!-- Ticker -->
 <?php if (Settings::bool('ticker_enabled') && ($ticker = Settings::lines('ticker_items'))): ?>
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
@@ -52,7 +53,7 @@ foreach (Settings::lines('stats') as $line) {
 </div>
 <?php endif; ?>
 
-<!-- 3. Narrative hook -->
+<!-- 3. Jawai details -->
 <section class="section" id="intro">
   <div class="container split split-60">
     <div class="split-text">
@@ -86,11 +87,131 @@ foreach (Settings::lines('stats') as $line) {
       </div>
       <a class="link-arrow reveal" href="/safaris/">All safaris</a>
     </div>
-    <div class="grid grid-3" data-stagger>
+    <div class="grid grid-<?= count($safaris) === 4 || count($safaris) === 2 ? 2 : 3 ?>" data-stagger>
       <?php foreach ($safaris as $s): ?><?= View::partial('site/partials/card-safari', ['s' => $s]) ?><?php endforeach; ?>
     </div>
   </div>
 </section>
+<?php endif; ?>
+
+<!-- Jawai in pictures -->
+<?php
+$stripIds = array_values(array_filter(array_map('intval', explode(',', (string) setting('jawai_images')))));
+$stripFallback = ['landscape1', 'granite-boulders', 'flamingo-flock', 'sunset-valley', 'lake-reflection'];
+if (Settings::bool('jawai_images_enabled')): ?>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker reveal">Jawai</span>
+        <h2 class="display-2 reveal"><?= e(setting('jawai_images_heading')) ?></h2>
+      </div>
+      <a class="link-arrow reveal" href="/jawai/">About Jawai</a>
+    </div>
+    <div class="photo-strip">
+      <?php for ($n = 0; $n < 5; $n++): $mid = $stripIds[$n] ?? null; ?>
+      <figure class="reveal-img"><?= picture($mid, 'Jawai, Rajasthan', ['sizes' => $n === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'], $stripFallback[$n]) ?></figure>
+      <?php endfor; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- Booking -->
+<?php if (Settings::bool('booking_enabled')):
+$details = [];
+foreach (Settings::lines('booking_details') as $line) {
+    [$k, $v] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
+    $details[] = [$k, $v];
+}
+$months = [];
+for ($n = 0; $n < 12; $n++) {
+    $months[] = date('F Y', strtotime("first day of +$n month"));
+}
+?>
+<section class="section section-alt booking" id="booking">
+  <div class="container booking-grid">
+    <div class="booking-info">
+      <span class="kicker reveal"><?= e(setting('booking_kicker')) ?></span>
+      <h2 class="display-2 reveal"><?= e(setting('booking_heading')) ?></h2>
+      <p class="lead-muted reveal"><?= e(setting('booking_intro')) ?></p>
+      <?php if ($details): ?>
+      <dl class="booking-details reveal">
+        <?php foreach ($details as [$k, $v]): ?><div><dt><?= e($k) ?></dt><dd><?= e($v) ?></dd></div><?php endforeach; ?>
+      </dl>
+      <?php endif; ?>
+      <div class="booking-photo reveal-img"><?= picture((int) setting('booking_image') ?: null, 'Open safari jeep in Jawai', ['sizes' => '(min-width: 1024px) 40vw, 100vw'], 'safari-jeep') ?></div>
+    </div>
+    <div class="booking-card reveal">
+      <form class="ajax-form" method="post" action="/api/enquiry" data-ajax-form novalidate>
+        <?= View::partial('site/partials/form-guard') ?>
+        <h3 class="booking-form-title">Safari enquiry</h3>
+        <label class="field"><span>Safari *</span>
+          <select name="interests[]"><?php foreach ($safaris as $sf): ?><option><?= e($sf['title']) ?></option><?php endforeach; ?><?php foreach (Settings::lines('form_interests') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
+        </label>
+        <div class="field-row">
+          <label class="field"><span>Month</span>
+            <select name="travel_month"><option value="">Not sure yet</option><?php foreach ($months as $m): ?><option><?= e($m) ?></option><?php endforeach; ?></select>
+          </label>
+          <label class="field"><span>Date(s)</span><input type="text" name="travel_dates" placeholder="e.g. 14 Dec"></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span>Drive time</span>
+            <select name="drive_time"><?php foreach (Settings::lines('form_drive_times') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
+          </label>
+          <label class="field"><span>Drives</span>
+            <select name="drives"><?php foreach (Settings::lines('form_drives') as $o): ?><option><?= e($o) ?></option><?php endforeach; ?></select>
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span>Adults</span><input type="number" name="adults" value="2" min="1" max="50" inputmode="numeric"></label>
+          <label class="field"><span>Children</span><input type="number" name="children" value="0" min="0" max="30" inputmode="numeric"></label>
+        </div>
+        <label class="field"><span>Full name *</span><input type="text" name="full_name" required autocomplete="name"></label>
+        <div class="field-row">
+          <label class="field"><span>Email *</span><input type="email" name="email" required autocomplete="email"></label>
+          <label class="field"><span>Phone / WhatsApp *</span><input type="tel" name="phone" required autocomplete="tel" placeholder="+91"></label>
+        </div>
+        <label class="field"><span>Where are you staying? (optional)</span><input type="text" name="message" placeholder="Hotel or village, so we can plan the meeting point"></label>
+        <input type="hidden" name="private_vehicle" value="1">
+        <div class="form-error" data-form-error hidden></div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit"><span>Send safari request</span></button>
+        <p class="form-note"><?= e(setting('privacy_note')) ?> <a href="/privacy-policy/">Privacy policy</a>.</p>
+      </form>
+      <div class="form-success" data-form-success hidden>
+        <h3></h3><p></p><p class="mono" data-code></p>
+      </div>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- Gallery -->
+<?php if (Settings::bool('home_gallery_enabled') && $gallery): ?>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker reveal">Gallery</span>
+        <h2 class="display-2 reveal"><?= e(setting('home_gallery_heading')) ?></h2>
+      </div>
+      <a class="link-arrow reveal" href="/gallery/">Full gallery</a>
+    </div>
+    <div class="home-gallery masonry" data-lightbox>
+      <?php foreach ($gallery as $m): ?>
+      <figure class="masonry-item reveal">
+        <a href="<?= e(media_url($m, 'lg')) ?>" data-caption="<?= e($m['caption'] ?: $m['alt_text']) ?>"><?= picture($m, $m['alt_text'], ['sizes' => '(min-width: 1024px) 25vw, 50vw']) ?></a>
+      </figure>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<div class="lightbox" hidden data-lightbox-view>
+  <button type="button" class="lb-close" aria-label="Close" data-lb-close><?= icon('close', 28) ?></button>
+  <button type="button" class="lb-prev" aria-label="Previous" data-lb-prev><?= icon('chevron-left', 32) ?></button>
+  <figure><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt=""><figcaption></figcaption></figure>
+  <button type="button" class="lb-next" aria-label="Next" data-lb-next><?= icon('chevron-right', 32) ?></button>
+</div>
 <?php endif; ?>
 
 <!-- Jawai guide -->
@@ -169,25 +290,6 @@ foreach (Settings::lines('stats') as $line) {
 </section>
 <?php endif; ?>
 
-<!-- 7. Curated journeys -->
-<?php if (Settings::bool('journeys_enabled') && $journeys): ?>
-<section class="section section-sand">
-  <?= View::partial('site/partials/topo', ['class' => 'topo-band']) ?>
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="kicker reveal">Itineraries</span>
-        <h2 class="display-2 reveal"><?= e(setting('journeys_heading')) ?></h2>
-      </div>
-      <a class="link-arrow reveal" href="/journeys/">All journeys</a>
-    </div>
-    <div class="h-scroll" data-stagger>
-      <?php foreach ($journeys as $j): ?><?= View::partial('site/partials/card-journey', ['j' => $j]) ?><?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
 <!-- Guest words (only real testimonials entered in admin) -->
 <?php if (Settings::bool('testimonials_enabled') && $testimonials): ?>
 <section class="section">
@@ -222,5 +324,4 @@ foreach (Settings::lines('stats') as $line) {
 </section>
 <?php endif; ?>
 
-<!-- 9. Consultation -->
-<?= View::partial('site/partials/cta') ?>
+

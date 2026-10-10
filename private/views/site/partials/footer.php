@@ -53,7 +53,7 @@ $footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
         <?php if (setting('address')): ?><li><span><?= nl2br(e(setting('address'))) ?></span></li><?php endif; ?>
         <?php if (setting('office_hours')): ?><li><span><?= e(setting('office_hours')) ?></span></li><?php endif; ?>
       </ul>
-      <a class="btn btn-primary btn-sm" href="/plan-your-journey/">Plan your trip</a>
+      <a class="btn btn-primary btn-sm" href="/book-a-safari/">Book a safari</a>
     </div>
   </div>
 

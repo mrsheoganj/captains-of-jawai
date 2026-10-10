@@ -100,8 +100,43 @@
       slides[i].classList.add('is-active'); if (dots[i]) dots[i].classList.add('is-active');
     };
     const play = () => { if (slides.length > 1 && !reduced) timer = setInterval(() => show(i + 1), 6500); };
-    dots.forEach((d) => d.addEventListener('click', () => { clearInterval(timer); show(+d.dataset.heroDot); play(); }));
+    const go = (n) => { clearInterval(timer); show(n); play(); };
+    dots.forEach((d) => d.addEventListener('click', () => go(+d.dataset.heroDot)));
+    const prev = $('[data-hero-prev]', hero); const next = $('[data-hero-next]', hero);
+    if (prev) prev.addEventListener('click', () => go(i - 1));
+    if (next) next.addEventListener('click', () => go(i + 1));
+    // Swipe on touch screens
+    let x0 = null;
+    hero.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', (e) => {
+      if (x0 === null || slides.length < 2) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) go(dx < 0 ? i + 1 : i - 1);
+    });
     play();
+  }
+
+  /* ---------------- Distance map ---------------- */
+  const map = $('[data-map]');
+  if (map) {
+    const routes = $$('.map-route', map);
+    $$('[data-dist]').forEach((li) => {
+      const r = routes.find((g) => g.style.getPropertyValue('--i').trim() === li.dataset.dist);
+      const on = (v) => { li.classList.toggle('is-hot', v); if (r) r.classList.toggle('is-hot', v); };
+      li.addEventListener('mouseenter', () => on(true)); li.addEventListener('mouseleave', () => on(false));
+    });
+    // Count the distances up when they scroll into view ("155 km" -> 0..155 km)
+    const counters = $$('[data-count]');
+    const run = (el) => {
+      const m = el.textContent.match(/^(\D*)(\d+)(.*)$/); if (!m || reduced) return;
+      const end = +m[2]; const t0 = performance.now(); const dur = 1400;
+      const step = (t) => { const p = Math.min(1, (t - t0) / dur); el.textContent = m[1] + Math.round(end * (1 - Math.pow(1 - p, 3))) + m[3]; if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: .6 });
+      counters.forEach((c) => io.observe(c));
+    }
   }
 
   /* ---------------- Testimonials ---------------- */

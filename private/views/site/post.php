@@ -21,7 +21,7 @@
       <aside class="inline-cta">
         <h3>Thinking of visiting Jawai?</h3>
         <p>Send us your dates and we will reply personally, usually within 12 hours.</p>
-        <a class="btn btn-primary" href="/plan-your-journey/">Plan your trip</a>
+        <a class="btn btn-primary" href="/book-a-safari/">Book a safari</a>
       </aside>
       <div class="share">
         <span class="mono">Share</span>

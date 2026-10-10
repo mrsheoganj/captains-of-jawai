@@ -45,15 +45,17 @@ final class SiteController
 
     public function home(): string
     {
-        $safaris = DB::all("SELECT * FROM safaris WHERE status = 'published' ORDER BY is_featured DESC, sort_order, id LIMIT 3");
-        $journeys = DB::all("SELECT * FROM journeys WHERE status = 'published' ORDER BY is_featured DESC, sort_order, id LIMIT 3");
+        $safaris = $this->published('safaris');
         $posts = DB::all("SELECT * FROM posts WHERE status = 'published' AND published_at <= ? ORDER BY published_at DESC LIMIT 3", [now()]);
         $team = $this->published('team');
         $testimonials = $this->published('testimonials');
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
         $guide = DB::all("SELECT slug, title, intro FROM pages WHERE status = 'published' AND slug LIKE 'jawai/%' ORDER BY slug");
+        $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1 ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
+        $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
+        $heroSlides = array_column($heroSlides, null, 'id');
 
-        return $this->show('home', compact('safaris', 'journeys', 'posts', 'team', 'testimonials', 'heroIds', 'guide'), [
+        return $this->show('home', compact('safaris', 'posts', 'team', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),
@@ -94,46 +96,6 @@ final class SiteController
                 '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => $item['title'],
                 'description' => excerpt($item['excerpt'], 300), 'touristType' => ['Wildlife enthusiasts', 'Photographers', 'Luxury travellers'],
                 'provider' => ['@id' => abs_url('/#organization')], 'url' => abs_url('/safaris/' . $item['slug'] . '/'),
-            ]],
-        ]);
-    }
-
-    public function journeys(): string
-    {
-        $items = $this->published('journeys');
-        return $this->show('journeys', ['items' => $items], [
-            'title' => 'Curated Jawai Journeys & Itineraries',
-            'description' => 'Multi-day Jawai safari itineraries: the essential 2-night expedition, photography immersions and Rajasthan wildlife & heritage circuits.',
-            'breadcrumbs' => [['Journeys', '/journeys/']],
-            'image' => $items[0]['image_id'] ?? null,
-        ]);
-    }
-
-    public function journey(string $slug): string
-    {
-        $item = DB::one("SELECT * FROM journeys WHERE slug = ? AND status = 'published'", [$slug]);
-        if (!$item) {
-            $this->notFound();
-        }
-        $days = [];
-        foreach (lines($item['itinerary']) as $line) {
-            $parts = array_map('trim', explode('|', $line, 3));
-            $days[] = ['label' => $parts[0] ?? '', 'title' => $parts[1] ?? '', 'text' => $parts[2] ?? ($parts[1] ?? '')];
-        }
-        $others = DB::all("SELECT * FROM journeys WHERE status = 'published' AND id <> ? ORDER BY sort_order LIMIT 2", [$item['id']]);
-        return $this->show('journey', compact('item', 'days', 'others'), [
-            'title' => $item['meta_title'] ?: $item['title'],
-            'raw_title' => (bool) $item['meta_title'],
-            'description' => $item['meta_description'] ?: excerpt($item['excerpt']),
-            'image' => $item['image_id'] ? (int) $item['image_id'] : null,
-            'breadcrumbs' => [['Journeys', '/journeys/'], [$item['title'], '/journeys/' . $item['slug'] . '/']],
-            'schema' => [[
-                '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => $item['title'], 'description' => excerpt($item['excerpt'], 300),
-                'provider' => ['@id' => abs_url('/#organization')],
-                'itinerary' => ['@type' => 'ItemList', 'numberOfItems' => count($days), 'itemListElement' => array_map(
-                    fn ($d, $n) => ['@type' => 'ListItem', 'position' => $n + 1, 'name' => trim($d['label'] . ' — ' . $d['title'], ' —'), 'description' => $d['text']],
-                    $days, array_keys($days)
-                )],
             ]],
         ]);
     }
@@ -250,10 +212,11 @@ final class SiteController
     public function plan(): string
     {
         $safari = str_input('safari', 120);
-        return $this->show('plan', ['preselect' => $safari], [
-            'title' => 'Plan Your Jawai Safari — Bespoke Journey Consultation',
-            'description' => 'Plan your private wildlife expedition in Jawai, Rajasthan. Share your dates and interests and an Expedition Captain will reply within 12 hours.',
-            'breadcrumbs' => [['Plan Your Journey', '/plan-your-journey/']],
+        $safaris = DB::all("SELECT title, slug FROM safaris WHERE status = 'published' ORDER BY sort_order, id");
+        return $this->show('plan', ['preselect' => $safari, 'safaris' => $safaris], [
+            'title' => 'Book a Jawai Safari | Leopard Safari Enquiry',
+            'description' => 'Request a leopard safari in Jawai, Rajasthan. Choose your safari, date and drive time and we will confirm availability, usually within 12 hours.',
+            'breadcrumbs' => [['Book a safari', '/book-a-safari/']],
         ]);
     }
 
@@ -343,14 +306,11 @@ final class SiteController
     {
         header('Content-Type: application/xml; charset=utf-8');
         $urls = [['/', null, '1.0']];
-        foreach (['/safaris/', '/journeys/', '/journal/', '/gallery/', '/faq/', '/about/', '/contact/', '/plan-your-journey/'] as $p) {
+        foreach (['/safaris/', '/journal/', '/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/'] as $p) {
             $urls[] = [$p, null, '0.8'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM safaris WHERE status = 'published'") as $r) {
             $urls[] = ['/safaris/' . $r['slug'] . '/', $r['updated_at'], '0.9'];
-        }
-        foreach (DB::all("SELECT slug, updated_at FROM journeys WHERE status = 'published'") as $r) {
-            $urls[] = ['/journeys/' . $r['slug'] . '/', $r['updated_at'], '0.8'];
         }
         foreach (DB::all("SELECT slug, updated_at FROM posts WHERE status = 'published' AND published_at <= ?", [now()]) as $r) {
             $urls[] = ['/journal/' . $r['slug'] . '/', $r['updated_at'], '0.7'];

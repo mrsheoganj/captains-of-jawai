@@ -16,7 +16,7 @@ $qs = fn (array $over) => '?' . http_build_query(array_filter(array_merge($f, $o
 <form class="toolbar card" method="get">
   <input type="hidden" name="status" value="<?= e($f['status']) ?>">
   <div class="search"><?= icon('search', 16) ?><input type="search" name="q" value="<?= e($f['q']) ?>" placeholder="Search name, email, phone, reference…"></div>
-  <select name="type"><option value="">All types</option><option value="journey"<?= $f['type'] === 'journey' ? ' selected' : '' ?>>Journey enquiries</option><option value="contact"<?= $f['type'] === 'contact' ? ' selected' : '' ?>>Contact messages</option></select>
+  <select name="type"><option value="">All types</option><option value="journey"<?= $f['type'] === 'journey' ? ' selected' : '' ?>>Safari enquiries</option><option value="contact"<?= $f['type'] === 'contact' ? ' selected' : '' ?>>Contact messages</option></select>
   <select name="assigned"><option value="">Anyone</option><option value="me"<?= $f['assigned'] === 'me' ? ' selected' : '' ?>>Assigned to me</option><option value="none"<?= $f['assigned'] === 'none' ? ' selected' : '' ?>>Unassigned</option></select>
   <input type="date" name="from" value="<?= e($f['from']) ?>" aria-label="From date">
   <input type="date" name="to" value="<?= e($f['to']) ?>" aria-label="To date">
@@ -46,9 +46,9 @@ $qs = fn (array $over) => '?' . http_build_query(array_filter(array_merge($f, $o
       <tr class="<?= $e['status'] === 'new' ? 'is-new' : '' ?>" data-href="<?= e(admin_url('enquiries/' . $e['id'])) ?>">
         <td class="w-check"><input type="checkbox" name="ids[]" value="<?= (int) $e['id'] ?>" data-check aria-label="Select"></td>
         <td><a href="<?= e(admin_url('enquiries/' . $e['id'])) ?>"><strong><?= e($e['full_name']) ?></strong></a><br><small class="muted"><?= e($e['email']) ?></small></td>
-        <td><span class="mono"><?= e($e['code']) ?></span><br><small class="muted"><?= e(ucfirst($e['type'])) ?></small></td>
+        <td><span class="mono"><?= e($e['code']) ?></span><br><small class="muted"><?= e($e['type'] === 'journey' ? 'Safari' : ucfirst($e['type'])) ?></small></td>
         <td class="clip"><?= e(excerpt($e['interests'] ?: $e['message'], 70)) ?></td>
-        <td><?= e($e['travel_window']) ?><?php if ($e['nights']): ?><br><small class="muted"><?= e($e['nights']) ?></small><?php endif; ?></td>
+        <td><?= e($e['travel_window']) ?><?php if ($e['drive_time'] ?? ''): ?><br><small class="muted"><?= e($e['drive_time']) ?></small><?php endif; ?></td>
         <td><?= $e['type'] === 'journey' ? (int) $e['adults'] . 'A' . ((int) $e['children'] ? ' ' . (int) $e['children'] . 'C' : '') : '—' ?></td>
         <td><?= status_badge($e['status']) ?><?php if ($e['follow_up_date']): ?><br><small class="<?= $e['follow_up_date'] <= date('Y-m-d') ? 'text-danger' : 'muted' ?>">Follow-up <?= e(fmt_date($e['follow_up_date'], 'j M')) ?></small><?php endif; ?></td>
         <td><?= e($e['assignee'] ?? '—') ?></td>

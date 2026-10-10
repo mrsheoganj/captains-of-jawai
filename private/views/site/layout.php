@@ -36,13 +36,13 @@ $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyCl
 <meta name="twitter:image" content="<?= e($seo['image']) ?>">
 <?php if (setting('google_verification')): ?><meta name="google-site-verification" content="<?= e(setting('google_verification')) ?>"><?php endif; ?>
 
-<meta name="theme-color" content="#FDFBF7">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="<?= e(favicon_url()) ?>">
 <link rel="apple-touch-icon" href="<?= e((int) setting('favicon_image') ? favicon_url() : '/assets/img/apple-touch-icon.png') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="<?= asset('css/site.css') ?>">
 <style>:root{--accent:<?= e(setting('color_accent')) ?>;--accent-hover:<?= e(setting('color_accent_hover')) ?>;--dark:<?= e(setting('color_dark')) ?>;--crimson:<?= e(setting('color_crimson')) ?>}</style>
 <?php
@@ -112,7 +112,7 @@ foreach ($schema as $s): ?>
     <div class="header-actions">
       <?php if ($wa): ?><a class="icon-btn hide-sm" href="<?= e($wa) ?>" target="_blank" rel="noopener" aria-label="WhatsApp us"><?= icon('whatsapp', 20) ?></a><?php endif; ?>
       <?php if ($tel): ?><a class="icon-btn hide-sm" href="<?= e($tel) ?>" aria-label="Call us"><?= icon('phone', 19) ?></a><?php endif; ?>
-      <a class="btn btn-primary btn-sm hide-md" href="/plan-your-journey/">Plan your trip</a>
+      <a class="btn btn-primary btn-sm hide-md" href="/book-a-safari/">Book a safari</a>
       <button class="icon-btn nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><?= icon('menu', 24) ?></button>
     </div>
   </div>
@@ -142,7 +142,7 @@ foreach ($schema as $s): ?>
     </ul>
   </nav>
   <div class="mobile-nav-foot">
-    <a class="btn btn-primary btn-block" href="/plan-your-journey/">Plan your trip</a>
+    <a class="btn btn-primary btn-block" href="/book-a-safari/">Book a safari</a>
     <?php if ($wa): ?><a class="btn btn-ghost-dark btn-block" href="<?= e($wa) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 18) ?> WhatsApp us</a><?php endif; ?>
     <?php if (setting('contact_phone')): ?><a class="mobile-contact" href="<?= e($tel) ?>"><?= icon('phone', 16) ?> <?= e(setting('contact_phone')) ?></a><?php endif; ?>
     <a class="mobile-contact" href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a>
@@ -163,7 +163,7 @@ foreach ($schema as $s): ?>
 
 <div class="mobile-dock" data-dock>
   <?php if ($wa): ?><a class="dock-wa" href="<?= e($wa) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 18) ?> WhatsApp</a><?php elseif ($tel): ?><a class="dock-wa" href="<?= e($tel) ?>"><?= icon('phone', 18) ?> Call</a><?php endif; ?>
-  <a class="dock-plan" href="/plan-your-journey/">Plan Journey</a>
+  <a class="dock-plan" href="/book-a-safari/">Book a safari</a>
 </div>
 <?php if ($wa): ?><a class="wa-float" href="<?= e($wa) ?>" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><?= icon('whatsapp', 28) ?></a><?php endif; ?>
 

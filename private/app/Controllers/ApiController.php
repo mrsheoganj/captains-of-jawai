@@ -27,10 +27,11 @@ final class ApiController
         if ($phone === '' || !preg_match('/^[+\d][\d\s().-]{5,}$/', $phone)) {
             $errors['phone'] = 'Please provide a valid phone / WhatsApp number with country code.';
         }
-        $interests = array_values(array_intersect((array) input('interests', []), Settings::lines('form_interests')));
-        $accommodation = str_input('accommodation', 150);
-        $transfer = str_input('transfer', 150);
-        $nights = str_input('nights', 50);
+        // Safaris on offer (published) plus the optional add-ons listed in Settings → Forms.
+        $allowed = array_merge(array_column(DB::all("SELECT title FROM safaris WHERE status = 'published'"), 'title'), Settings::lines('form_interests'));
+        $interests = array_values(array_intersect((array) input('interests', []), $allowed));
+        $driveTime = in_array($t = str_input('drive_time', 60), Settings::lines('form_drive_times'), true) ? $t : '';
+        $drives = in_array($d = str_input('drives', 60), Settings::lines('form_drives'), true) ? $d : '';
         $window = trim(str_input('travel_month', 60) . ' ' . str_input('travel_dates', 100));
         if ($window === '') {
             $window = 'Flexible';
@@ -45,11 +46,10 @@ final class ApiController
             'country' => str_input('country', 80) ?: 'India',
             'interests' => implode(', ', $interests),
             'travel_window' => $window . (input('flexible') ? ' (flexible)' : ''),
-            'nights' => $nights,
+            'drive_time' => $driveTime, 'drives' => $drives,
             'adults' => max(1, min(50, (int) input('adults', 2))),
             'children' => max(0, min(30, (int) input('children', 0))),
             'private_vehicle' => input('private_vehicle') ? 'Yes' : 'No preference',
-            'accommodation' => $accommodation, 'transfer' => $transfer,
             'message' => str_input('message', 3000),
         ];
         $this->done($this->store($data), 'journey');
@@ -147,15 +147,16 @@ final class ApiController
         $party = (int) $e['adults'] . ' adult(s)' . ((int) $e['children'] ? ', ' . (int) $e['children'] . ' child(ren)' : '');
         $rows = array_filter([
             'Reference' => $e['code'], 'Name' => $e['full_name'], 'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'],
-            'Country' => $e['country'], 'Interests' => $e['interests'], 'Travel window' => $e['travel_window'], 'Stay' => $e['nights'],
+            'Country' => $e['country'], 'Safari' => $e['interests'], 'Dates' => $e['travel_window'],
+            'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
             'Party' => $e['type'] === 'journey' ? $party : '', 'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
-            'Accommodation' => $e['accommodation'], 'Transfer' => $e['transfer'], 'Message' => $e['message'],
+            'Message' => $e['message'],
         ], fn ($v) => $v !== null && $v !== '');
         $details = implode("\n", array_map(fn ($k, $v) => "$k: $v", array_keys($rows), $rows));
         return [
             'name' => $e['full_name'], 'first_name' => explode(' ', trim((string) $e['full_name']))[0], 'code' => $e['code'],
             'email' => $e['email'], 'phone' => $e['phone'], 'country' => $e['country'], 'travel_window' => $e['travel_window'],
-            'interests' => $e['interests'], 'party' => $party, 'accommodation' => $e['accommodation'], 'message' => $e['message'],
+            'interests' => $e['interests'], 'party' => $party, 'drive_time' => $e['drive_time'] ?? '', 'drives' => $e['drives'] ?? '', 'message' => $e['message'],
             'details' => $details, 'admin_link' => abs_url(admin_url('enquiries/' . $e['id'])),
         ];
     }

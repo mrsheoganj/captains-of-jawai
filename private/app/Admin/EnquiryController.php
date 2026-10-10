@@ -208,7 +208,7 @@ final class EnquiryController extends BaseController
         header('Content-Disposition: attachment; filename="enquiries-' . date('Y-m-d') . '.csv"');
         $out = fopen('php://output', 'w');
         fwrite($out, "\xEF\xBB\xBF");
-        $cols = ['code', 'created_at', 'type', 'status', 'full_name', 'email', 'phone', 'country', 'interests', 'travel_window', 'nights', 'adults', 'children', 'private_vehicle', 'accommodation', 'transfer', 'message', 'assignee', 'follow_up_date', 'source_page', 'utm_source', 'utm_medium', 'utm_campaign'];
+        $cols = ['code', 'created_at', 'type', 'status', 'full_name', 'email', 'phone', 'country', 'interests', 'travel_window', 'drive_time', 'drives', 'adults', 'children', 'private_vehicle', 'message', 'assignee', 'follow_up_date', 'source_page', 'utm_source', 'utm_medium', 'utm_campaign'];
         fputcsv($out, $cols);
         foreach ($rows as $r) {
             // Prevent spreadsheet formula injection

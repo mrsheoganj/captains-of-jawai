@@ -72,7 +72,7 @@ $max = max(1, ...array_values($daily));
       <?php endforeach; ?>
       </tbody>
     </table></div>
-    <?php else: ?><p class="muted">No enquiries yet. Test the form on <a href="/plan-your-journey/" target="_blank">Plan Your Journey</a>.</p><?php endif; ?>
+    <?php else: ?><p class="muted">No enquiries yet. Test the form on <a href="/book-a-safari/" target="_blank">Book a safari</a>.</p><?php endif; ?>
   </section>
 
   <?php if ($setup): ?>

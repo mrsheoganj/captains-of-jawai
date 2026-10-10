@@ -11,28 +11,31 @@ Built from the project blueprint in [`Details/docs`](Details/docs/PROJECT_MASTER
 ### Public website
 | Page | URL |
 | --- | --- |
-| Homepage: cinematic hero slideshow, field ticker, story, key facts, expeditions, Rabari coexistence, the Captains, curated journeys, guest words, journal, consultation CTA | `/` |
+| Homepage: full-width photo slider, animated distance map (airports, Udaipur, Jawai Bandh station), Jawai details and key facts, safaris, Jawai photo strip, booking section with an inline safari enquiry form, gallery, Jawai guide, team, journal | `/` |
 | Expeditions hub and detail pages (facts strip, highlights, sticky enquiry card) | `/safaris/`, `/safaris/{slug}/` |
-| Curated journeys with a day-by-day timeline | `/journeys/`, `/journeys/{slug}/` |
 | Field Journal (categories, pagination, related articles, share buttons) | `/journal/`, `/journal/{slug}/` |
 | Gallery (category filter and lightbox) | `/gallery/` |
 | FAQ (accordion and FAQPage schema) | `/faq/` |
 | About (story, values, team) | `/about/` |
 | Contact (AJAX form, map embed) | `/contact/` |
-| **Plan Your Journey**, a 5-step enquiry wizard | `/plan-your-journey/` |
+| **Book a safari**, a 4-step safari request (safari, date and drive time, guests, contact) | `/book-a-safari/` |
 | **Jawai guide**: a pillar page plus six topic pages (leopards, Jawai Dam, wildlife, best time to visit, how to reach, places to visit), each with an FAQ, sources and TouristDestination/FAQPage/Article schema | `/jawai/`, `/jawai/{topic}/` |
 | CMS pages, with nesting allowed (e.g. `experiences/rabari-culture`) | `/{any/path}/` |
 | Dynamic XML sitemap and robots.txt | `/sitemap.xml`, `/robots.txt` |
 
-**Design:** a full light theme with an editorial feel:
-* Libre Caslon headings with Libre Franklin body text;
-* warm ivory and sand surfaces with ochre accents and square-cut photo frames;
+**Safaris only.** The business sells safari drives. There are no hotel, stay, transfer or multi-day package options anywhere on the site or in the admin. Old `/journeys/` and `/plan-your-journey/` links redirect.
+
+**Design:** a white light theme:
+* Alegreya headings with Alegreya Sans body text;
+* white and cool stone surfaces with a sandstone-red accent;
 * no emoji or decorative icon sets; icons only where they do a job (menu, close, WhatsApp, phone, accordions).
 
 **Motion:**
 * a loading spinner, shown only when a page is slow to load;
-* photo unmask reveals, gentle fades and staggered card entrances;
-* light parallax and a hero slideshow;
+* photo unmask reveals, fades, staggered card entrances and card hover lifts;
+* an animated route map: routes draw in, markers pulse, distances count up;
+* a moving ticker;
+* light parallax and a full-width slider with arrows, dots and swipe;
 * a header that hides as you scroll down, a scroll-progress bar and a back-to-top button.
 
 All of the motion respects the visitor's "reduce motion" setting.

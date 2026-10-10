@@ -22,11 +22,6 @@ final class Seeder
                 DB::insert('safaris', $s + ['sort_order' => $n + 1, 'status' => 'published', 'created_at' => $now, 'updated_at' => $now]);
             }
         }
-        if (!(int) DB::val('SELECT COUNT(*) FROM journeys')) {
-            foreach (self::journeys($i) as $n => $s) {
-                DB::insert('journeys', $s + ['sort_order' => $n + 1, 'status' => 'published', 'created_at' => $now, 'updated_at' => $now]);
-            }
-        }
         if (!(int) DB::val('SELECT COUNT(*) FROM posts')) {
             foreach (self::posts($i) as $n => $s) {
                 $date = date('Y-m-d H:i:s', strtotime('-' . ($n * 9 + 2) . ' days'));
@@ -61,7 +56,7 @@ final class Seeder
                 'title' => 'Classic Leopard Tracking Safari', 'slug' => 'leopard-safari', 'category' => 'Apex Predator',
                 'tagline' => 'Dawn and dusk among the granite caves of the leopard hills.',
                 'excerpt' => 'Follow alarm calls, pugmarks and the warmth of sun-struck granite with a master tracker, as resident leopards surface on the rocks at first and last light.',
-                'duration' => '3–3.5 hours', 'timing' => 'Morning 05:45–09:15 · Evening 16:15–19:30 (seasonal)', 'best_season' => 'October – March',
+                'duration' => 'About 3 hours', 'timing' => 'Winter 6:00–9:00 and 15:30–18:30 · Summer 5:00–8:00 and 16:30–19:30', 'best_season' => 'October – March',
                 'group_size' => 'Private vehicle, up to 6 guests', 'image_id' => $i('leopard1'), 'is_featured' => 1,
                 'highlights' => "Private open 4x4 with an experienced local tracker\nTracking by langur and peafowl alarm calls\nEngine-off observation at ethical distances\nBinoculars on board, beanbags for photographers\nHot tea or coffee served in the field",
                 'body' => '<h2>The anatomy of a tracking drive</h2><p>Long before sunrise, your Captain is already listening. In Jawai the leopards do not hide in dense forest. They rest on and inside the great granite domes, and the land itself tells you where they are. A langur barking from a ridge, a peacock\'s sharp alarm, fresh pugmarks in a sandy riverbed: each sign is read and weighed.</p><p>As the sun warms the rock, leopards often emerge onto ledges and cave mouths to bask. We position the vehicle quietly, switch off the engine and simply wait. Patience is the whole art.</p><h2>Ethical distance standards</h2><p>We never block an animal\'s path, never crowd a sighting and never use calls or bait. Engines are switched off during observation and we leave before the animal is disturbed. A leopard sighting is never guaranteed (any operator who promises one is misleading you), but the open granite terrain gives Jawai one of the highest daytime observation probabilities anywhere.</p><h2>What to bring</h2><ul><li>Neutral clothing: khaki, olive, stone. Warm layers for winter mornings (it can be 8–12°C at dawn).</li><li>A 100–400mm or 70–200mm lens for photographers; we carry beanbags.</li><li>Hat, sunscreen, and a scarf for dusty tracks.</li></ul>',
@@ -86,7 +81,7 @@ final class Seeder
                 'duration' => 'Half day or full day', 'timing' => 'Fully flexible', 'best_season' => 'All year (October – March is prime)',
                 'group_size' => 'Exclusive to your party', 'image_id' => $i('safari1'), 'is_featured' => 1,
                 'highlights' => "Exclusive vehicle and senior Captain for your party\nFlexible start times and unhurried sightings\nOptional private sundowner on a granite crest\nIdeal for families, honeymooners and photographers",
-                'body' => '<h2>Exclusivity changes everything</h2><p>On a shared drive you follow the group. On a private expedition, the day bends around you: linger with a basking leopard for an hour, chase the best light for photographs, or pause for a picnic breakfast on the rocks.</p><h2>Who it is for</h2><p>Families with young children who need a gentler pace, couples celebrating something special, and serious photographers who want angles and patience a standard drive cannot offer.</p><h2>Add-ons</h2><ul><li>Private sundowner on a secluded granite summit</li><li>Rabari pastoral heritage walk</li><li>Jawai Bandh wetland session</li><li>Transfers from Udaipur, Jodhpur or Falna station</li></ul>',
+                'body' => '<h2>Exclusivity changes everything</h2><p>On a shared drive you follow the group. On a private expedition, the day bends around you: linger with a basking leopard for an hour, chase the best light for photographs, or pause for a picnic breakfast on the rocks.</p><h2>Who it is for</h2><p>Families with young children who need a gentler pace, couples celebrating something special, and serious photographers who want angles and patience a standard drive cannot offer.</p><h2>Add-ons</h2><ul><li>Private sundowner on a secluded granite summit</li><li>Jawai Bandh wetland drive on the same day</li></ul><p>We run safaris only. Hotels and transfers are not part of the service: tell us where you are staying and we will meet you there or at an agreed point.</p>',
                 'meta_title' => 'Private 4x4 Safari in Jawai | Bespoke Naturalist Expedition',
                 'meta_description' => 'A fully private Jawai safari with your own vehicle and senior naturalist. Flexible timings, sundowners and unhurried leopard sightings.',
             ],
@@ -104,48 +99,15 @@ final class Seeder
         ];
     }
 
-    private static function journeys(callable $i): array
-    {
-        return [
-            [
-                'title' => 'The Essential Jawai Expedition', 'slug' => '3-day-classic', 'duration_label' => '3 days · 2 nights',
-                'tagline' => 'The quintessential introduction to the leopard hills.', 'image_id' => $i('leopard1'), 'is_featured' => 1,
-                'excerpt' => 'Two leopard tracking drives, a wetland session at Jawai Bandh and a respectful Rabari village walk, the classic Jawai rhythm.',
-                'itinerary' => "Day 1 | Arrival & first light on the rocks | Private transfer from Udaipur or Jodhpur (about 2.5 hours), with an optional stop at the Ranakpur Jain temples. Settle in, then head out for an evening leopard tracking drive and a sundowner.\nDay 2 | Dawn tracking & the great reservoir | Pre-dawn leopard drive. After breakfast, a slow wetland session at Jawai Bandh for crocodiles and winter birds. Late afternoon Rabari pastoral heritage walk.\nDay 3 | Last light and departure | An optional final dawn drive, breakfast, and your onward transfer.",
-                'inclusions' => "Private 4x4 drives with a dedicated Captain\nWetland & birding session\nRabari heritage walk\nAccommodation of your choice (on request)\nTransfers on request",
-                'body' => '<p>Ideal for first-time visitors and families. Every element can be adjusted. Tell us your dates and how you like to travel.</p>',
-                'meta_title' => '3-Day Jawai Leopard Safari Itinerary', 'meta_description' => 'A 2-night Jawai itinerary: two leopard drives, Jawai Bandh wetland birding and a Rabari heritage walk, fully tailored by our Captains.',
-            ],
-            [
-                'title' => 'Photographer & Naturalist Immersion', 'slug' => '4-day-photography', 'duration_label' => '4 days · 3 nights',
-                'tagline' => 'Unhurried, light-led and deeply rewarding.', 'image_id' => $i('leopard2'), 'is_featured' => 1,
-                'excerpt' => 'Five to six drives timed around golden hour, a dedicated birding morning and private boulder-top sundowners.',
-                'itinerary' => "Day 1 | Arrival | Transfer and an evening orientation drive among the kopjes.\nDay 2 | Granite & light | Dawn and dusk tracking drives positioned for backlight and rim light.\nDay 3 | Water & wings | Morning on Jawai Bandh for flamingos, cranes and raptors; evening leopard drive and private sundowner.\nDay 4 | Final light | Last dawn session, breakfast and departure.",
-                'inclusions' => "5–6 private photography drives (max 3 photographers per vehicle)\nBeanbags and on-board charging\nDedicated birding session\nPrivate sundowner",
-                'body' => '<p>Designed for photographers and keen naturalists who want time, space and patience.</p>',
-                'meta_title' => '4-Day Jawai Photography Safari Itinerary', 'meta_description' => 'A 3-night Jawai photography immersion: golden-hour leopard drives, wetland birding and private sundowners with expert trackers.',
-            ],
-            [
-                'title' => 'Rajasthan Wildlife & Heritage Circuit', 'slug' => 'rajasthan-circuit', 'duration_label' => '7+ days',
-                'tagline' => 'Palaces, temples and the wild heart of Rajasthan.', 'image_id' => $i('landscape1'), 'is_featured' => 0,
-                'excerpt' => 'Combine Jawai with Udaipur, Ranakpur and Jodhpur for a journey that balances heritage and wilderness.',
-                'itinerary' => "Days 1–2 | Udaipur | Lakes, palaces and the old city.\nDay 3 | Ranakpur to Jawai | The marble Jain temples of Ranakpur en route (about 1 hour 15 minutes from Jawai). Evening drive.\nDays 4–5 | Jawai | Leopard tracking, wetland birding, Rabari culture and sundowners.\nDays 6–7 | Jodhpur | Mehrangarh Fort and the blue city.",
-                'inclusions' => "Jawai expedition programme\nRoute planning and private transfers\nHotel recommendations across the circuit",
-                'body' => '<p>We plan the Jawai portion in depth and can coordinate the wider route with your preferred hotels.</p>',
-                'meta_title' => 'Rajasthan Wildlife & Heritage Circuit with Jawai', 'meta_description' => 'Combine Udaipur, Ranakpur and Jodhpur with leopard safaris in Jawai on a tailored Rajasthan wildlife and heritage journey.',
-            ],
-        ];
-    }
-
     private static function posts(callable $i): array
     {
         return [
             [
                 'title' => 'The Complete Jawai Travel Guide: Best Time, Safari Timings and Access', 'slug' => 'jawai-travel-guide', 'category' => 'Planning',
                 'image_id' => $i('landscape1'), 'reading_time' => 7,
-                'excerpt' => 'Everything you need to plan a first visit to Jawai: seasons, safari timings, how to get there and how many nights to stay.',
-                'body' => '<p>Jawai sits in the Pali district of southern Rajasthan, roughly midway between Udaipur and Jodhpur. Its signature is the granite: smooth, ancient domes rising from scrub plains, riddled with caves that leopards use as dens and lookouts.</p><h2>When to go</h2><p><strong>October to March</strong> is prime season. Mornings are crisp (often 8–12°C in mid-winter), leopards bask on the warm rock well into the morning, and tens of thousands of migratory birds arrive at Jawai Bandh. <strong>April to June</strong> is hot but wildlife concentrates around water. The <strong>monsoon (July–September)</strong> turns the hills green and dramatic, wonderful for landscape photography, though tracks can be challenging.</p><h2>Safari timings</h2><p>Drives follow the light: roughly 05:45–09:15 in the morning and 16:15–19:30 in the evening, shifting with the season.</p><h2>Getting there</h2><ul><li><strong>Udaipur (UDR)</strong>, about 2.5 hours by road, via the Ranakpur temples.</li><li><strong>Jodhpur (JDH)</strong>, about 2.5 hours by road.</li><li><strong>Falna (FA)</strong> railway station, about 35 minutes, with trains from Delhi, Mumbai and Jaipur.</li></ul><h2>How long to stay</h2><p>Two nights gives you three to four drives and a cultural walk; three nights is our recommendation for photographers and anyone who wants an unhurried pace.</p>',
-                'meta_title' => 'Jawai Travel Guide: Best Time, Safari Timings & How to Reach', 'meta_description' => 'Plan your Jawai leopard safari: best season, drive timings, routes from Udaipur, Jodhpur and Falna, and how many nights to stay.',
+                'excerpt' => 'Everything you need to plan a first visit to Jawai: seasons, safari timings, how to get there and how many drives to book.',
+                'body' => '<p>Jawai sits in the Pali district of southern Rajasthan, roughly midway between Udaipur and Jodhpur. Its signature is the granite: smooth, ancient domes rising from scrub plains, riddled with caves that leopards use as dens and lookouts.</p><h2>When to go</h2><p><strong>October to March</strong> is prime season. Mornings are crisp (often 8–12°C in mid-winter), leopards bask on the warm rock well into the morning, and tens of thousands of migratory birds arrive at Jawai Bandh. <strong>April to June</strong> is hot but wildlife concentrates around water. The <strong>monsoon (July–September)</strong> turns the hills green and dramatic, wonderful for landscape photography, though tracks can be challenging.</p><h2>Safari timings</h2><p>Drives follow the light and last about three hours. In winter they run roughly 6:00 to 9:00 and 15:30 to 18:30; in summer about 5:00 to 8:00 and 16:30 to 19:30.</p><h2>Getting there</h2><ul><li><strong>Udaipur Airport (UDR)</strong>, about 155 km, three and a half hours by road (Udaipur city is about 141 km via Ranakpur).</li><li><strong>Jodhpur Airport (JDH)</strong>, about 175 km, around four hours.</li><li><strong>Sumerpur Jawai Bandh (JWB)</strong> railway station, about 15 km, and <strong>Falna (FA)</strong>, about 34 km, with trains from Delhi, Jaipur and Ahmedabad.</li></ul><h2>How many drives?</h2><p>Three or four drives (a morning and an evening on two days) give you a fair chance of good leopard sightings. Photographers often book more.</p>',
+                'meta_title' => 'Jawai Travel Guide: Best Time, Safari Timings & How to Reach', 'meta_description' => 'Plan your Jawai leopard safari: best season, drive timings, routes from Udaipur, Jodhpur and Falna, and how many drives to book.',
             ],
             [
                 'title' => 'The Granite Cave Dwellers: How Jawai\'s Leopards Adapted to Rock', 'slug' => 'jawai-leopards-granite-caves', 'category' => 'Wildlife',
@@ -192,9 +154,9 @@ final class Seeder
             [
                 'title' => 'How to Reach Jawai from Udaipur', 'slug' => 'udaipur-to-jawai', 'category' => 'Planning',
                 'image_id' => $i('bandh-shoreline'), 'reading_time' => 4,
-                'excerpt' => 'The scenic 2.5-hour drive from Udaipur, with a perfect stop at the marble temples of Ranakpur.',
-                'body' => '<p>Udaipur is the most popular gateway to Jawai. The drive takes about two and a half hours through the Aravalli hills.</p><h2>The route</h2><p>Head north-west via the hill roads towards Ranakpur, then continue through Sadri and Desuri towards Bera and the Jawai Bandh area.</p><h2>Stop at Ranakpur</h2><p>The 15th-century Jain temple at Ranakpur, about an hour and a quarter from Jawai, is one of the great marble monuments of India. Allow an hour, and dress modestly.</p><h2>Transfers</h2><p>We arrange private air-conditioned transfers from Udaipur airport or your hotel, timed so you arrive for an evening drive.</p>',
-                'meta_title' => 'Udaipur to Jawai: Route, Time & Ranakpur Stop', 'meta_description' => 'How to reach Jawai from Udaipur: the 2.5-hour scenic drive, a stop at Ranakpur temple, and private transfer options for safari guests.',
+                'excerpt' => 'The 141 km drive from Udaipur, about three hours, with a stop at the marble temples of Ranakpur.',
+                'body' => '<p>Udaipur is the most popular gateway to Jawai. The drive is about 141 km and takes three to three and a half hours through the Aravalli hills. From Udaipur Airport it is about 155 km.</p><h2>The route</h2><p>Head north-west via the hill roads towards Ranakpur, then continue through Sadri and Desuri towards Bera and the Jawai Bandh area.</p><h2>Stop at Ranakpur</h2><p>The 15th-century Jain temple at Ranakpur, about an hour and a quarter from Jawai, is one of the great marble monuments of India. Allow an hour, and dress modestly.</p><h2>Timing your arrival</h2><p>Leave Udaipur by late morning and you will be in Jawai in time for an evening drive. We do not run transfers ourselves; your hotel or a local taxi can bring you, and we meet you for the safari.</p>',
+                'meta_title' => 'Udaipur to Jawai: Route, Time & Ranakpur Stop', 'meta_description' => 'How to reach Jawai from Udaipur: the 141 km, 3-hour drive, a stop at Ranakpur temple, and timing your arrival for an evening safari.',
             ],
             [
                 'title' => 'The Code of the Captains: How We Watch Wildlife', 'slug' => 'code-of-the-captains', 'category' => 'Conservation',
@@ -213,14 +175,14 @@ final class Seeder
             [
                 'title' => 'Masters of the Granite Sanctuary', 'slug' => 'about', 'kicker' => 'Our Story', 'image_id' => $i('safari1'), 'show_cta' => 1,
                 'intro' => 'We do not believe in mass-market safari convoys, frantic chases or noisy tourism.',
-                'body' => '<p>At Captains of Jawai, an expedition is a masterclass in reading nature: interpreting the sudden alarm call of a peacock echoing off the boulders, waiting patiently as the afternoon light turns granite into molten bronze, and watching a wild leopard emerge with regal stillness from her den.</p><h2>What we believe</h2><ul><li><strong>Mastery in the field.</strong> True tracking is an art of patience, acoustics, wind and animal behaviour.</li><li><strong>Reverent coexistence.</strong> We honour the bond between the leopards and the Rabari community.</li><li><strong>Uncompromising exclusivity.</strong> Small private groups, dedicated vehicles, no convoys.</li><li><strong>Quiet luxury.</strong> Sophistication through authenticity, thoughtful details and warmth.</li></ul><h2>How a journey with us works</h2><ol><li>You send an enquiry with your dates and interests.</li><li>A senior Captain replies personally within 12 hours.</li><li>We craft a tailored itinerary and proposal.</li><li>You confirm directly with us. No online payments, no pressure.</li></ol>',
+                'body' => '<p>At Captains of Jawai, an expedition is a masterclass in reading nature: interpreting the sudden alarm call of a peacock echoing off the boulders, waiting patiently as the afternoon light turns granite into molten bronze, and watching a wild leopard emerge with regal stillness from her den.</p><h2>What we believe</h2><ul><li><strong>Mastery in the field.</strong> True tracking is an art of patience, acoustics, wind and animal behaviour.</li><li><strong>Reverent coexistence.</strong> We honour the bond between the leopards and the Rabari community.</li><li><strong>Uncompromising exclusivity.</strong> Small private groups, dedicated vehicles, no convoys.</li></ul><h2>How booking works</h2><ol><li>Send a safari request with your date, drive time and number of guests.</li><li>We reply personally, usually within 12 hours, with availability and the price.</li><li>You confirm directly with us. No online payments, no pressure.</li><li>We meet you at your stay or an agreed point in Jawai for the drive.</li></ol><p>We run safaris only. We do not book hotels or arrange transfers.</p>',
                 'meta_title' => 'About Captains of Jawai | Masters of the Granite Sanctuary', 'meta_description' => 'Learn about Captains of Jawai: our master naturalists, Rabari heritage roots and strict commitment to ethical, low-impact wildlife exploration.',
             ],
             [
                 'title' => 'Rabari Pastoral Heritage', 'slug' => 'experiences/rabari-culture', 'kicker' => 'The Living Pact', 'image_id' => $i('landscape1'), 'show_cta' => 1,
-                'intro' => 'Meet the red-turbaned herders whose reverence for the leopard shaped this land.',
-                'body' => '<p>The Rabari are semi-nomadic pastoralists who have grazed their herds across these hills for generations. Their faith, centred on hill shrines and the goddess, extends a remarkable tolerance to the leopards that share their land.</p><h2>The heritage walk</h2><p>Arranged with local families, our walks introduce you to pastoral life: morning herding, traditional dress and silver jewellery, and the stories that bind people and leopards here.</p><h2>Our principles</h2><ul><li>Small groups and genuine conversation, never a staged show.</li><li>Always ask before photographing people.</li><li>Fair, direct benefit to the families who host us.</li></ul>',
-                'meta_title' => 'Rabari Pastoral Heritage | Human–Leopard Coexistence', 'meta_description' => 'Discover the bond between wild leopards and Rabari herders on a respectful guided pastoral heritage walk in Jawai.',
+                'intro' => 'The red-turbaned herders whose tolerance of the leopard shaped this land.',
+                'body' => '<p>The Rabari are semi-nomadic pastoralists who have grazed their herds across these hills for generations. Their faith, centred on hill shrines and the goddess, extends a remarkable tolerance to the leopards that share their land.</p><h2>What you will see on safari</h2><p>On morning and evening drives you pass Rabari herds moving between the hills and the water, red turbans in the fields, and small shrines on the rocks where leopards often rest. Your tracker will explain how herders and leopards share the same ground.</p><h2>Be a good guest</h2><ul><li>Keep a respectful distance from homes, herds and shrines.</li><li>Always ask before photographing people.</li><li>Stay on the tracks agreed with the village.</li></ul>',
+                'meta_title' => 'Rabari Pastoral Heritage | Human–Leopard Coexistence', 'meta_description' => 'Discover the bond between wild leopards and Rabari herders and what you will see of Rabari life on a Jawai safari.',
             ],
             [
                 'title' => 'Granite Boulder Sundowners', 'slug' => 'experiences/boulder-sundowners', 'kicker' => 'Curated Moments', 'image_id' => $i('leopard2'), 'show_cta' => 1,
@@ -241,7 +203,7 @@ final class Seeder
             ],
             [
                 'title' => 'Terms & Safari Conditions', 'slug' => 'terms', 'kicker' => 'Legal', 'image_id' => null, 'show_cta' => 0, 'intro' => '',
-                'body' => $legal . '<h2>Enquiries are not bookings</h2><p>Submitting a form on this website is a request for information. A journey is confirmed only after you receive and accept a written proposal from us.</p><h2>Wildlife</h2><p>Wildlife sightings cannot be guaranteed. Itineraries may change due to weather, animal welfare or safety.</p><h2>Cancellations</h2><p>Cancellation and refund terms are provided with each proposal.</p>',
+                'body' => $legal . '<h2>Enquiries are not bookings</h2><p>Submitting a form on this website is a request for information. A safari is confirmed only after you receive and accept our written confirmation from us.</p><h2>Wildlife</h2><p>Wildlife sightings cannot be guaranteed. Itineraries may change due to weather, animal welfare or safety.</p><h2>Cancellations</h2><p>Cancellation and refund terms are provided with each proposal.</p>',
                 'meta_title' => 'Terms & Safari Conditions', 'meta_description' => 'Terms and conditions for enquiries and safari expeditions with Captains of Jawai.',
             ],
             [
@@ -260,10 +222,10 @@ final class Seeder
             ['Safaris & Wildlife', 'Is it safe to be near leopards in an open vehicle?', 'Yes. Jawai\'s leopards are habituated to people and vehicles. Our Captains keep respectful distances, never block an animal\'s path and switch off engines during observation.'],
             ['Safaris & Wildlife', 'What else will I see besides leopards?', 'Striped hyena, nilgai, chinkara, jungle cat, Indian grey wolf and desert fox are possible, along with mugger crocodiles and over 300 bird species, including winter flamingos and cranes.'],
             ['Planning', 'When is the best time to visit?', 'October to March is prime season with cool mornings, basking leopards and migratory birds. April to June is hot but rewarding; the monsoon (July–September) is lush and dramatic.'],
-            ['Planning', 'How many days should we stay?', 'Two nights is the classic stay (3–4 drives plus a cultural walk). Three nights suits photographers and anyone who wants a relaxed pace.'],
-            ['Planning', 'How do we reach Jawai?', 'Udaipur and Jodhpur airports are each about 2.5 hours by road. Falna railway station is about 35 minutes away. We can arrange private transfers from all of them.'],
-            ['Planning', 'Do you arrange accommodation?', 'Yes. We can recommend and coordinate stays from luxury tented camps to boutique villas and heritage properties, or work around a stay you have already booked.'],
-            ['Booking', 'Can I book and pay online?', 'No, and that is deliberate. Every journey is tailored. Send an enquiry and a Captain will reply personally within 12 hours with ideas, availability and a proposal.'],
+            ['Planning', 'How many drives should we book?', 'Three or four drives (morning and evening on two days) give a fair chance of good leopard sightings. Photographers often book more.'],
+            ['Planning', 'How do we reach Jawai?', 'Udaipur Airport is about 155 km (3.5 hours by road) and Jodhpur Airport about 175 km (4 hours). The nearest railway station, Sumerpur Jawai Bandh, is about 15 km away, and Falna about 34 km. We run safaris only and do not arrange transfers, but we are happy to suggest options.'],
+            ['Booking', 'Do you book hotels or transfers?', 'No. Captains of Jawai runs safaris only. You book your own stay; tell us where you are staying and we will arrange where to meet for each drive.'],
+            ['Booking', 'Can I book and pay online?', 'No. Send a safari request with your date and drive time and we will confirm availability and the price personally, usually within 12 hours. Nothing is charged until you confirm.'],
             ['Booking', 'Is Jawai suitable for children and older travellers?', 'Very much so. Private vehicles let us set a gentle pace, shorten drives and plan comfortable breaks.'],
             ['Booking', 'What should I wear?', 'Neutral colours, warm layers for winter mornings, a hat and closed shoes. Modest clothing is appreciated on village visits.'],
         ];
@@ -284,7 +246,6 @@ final class Seeder
         $add('header', 'Rabari Heritage', '/experiences/rabari-culture/', 2, $wild);
         $add('header', 'Boulder Sundowners', '/experiences/boulder-sundowners/', 3, $wild);
         $add('header', 'Gallery', '/gallery/', 4, $wild);
-        $add('header', 'Journeys', '/journeys/', 3);
         $add('header', 'Field Journal', '/journal/', 4);
         $about = $add('header', 'About', '/about/', 5);
         $add('header', 'Our Story & Captains', '/about/', 1, $about);
@@ -292,7 +253,7 @@ final class Seeder
         $add('header', 'FAQ', '/faq/', 3, $about);
         $add('header', 'Contact', '/contact/', 4, $about);
 
-        foreach ([['Expeditions', '/safaris/'], ['Curated Journeys', '/journeys/'], ['Jawai guide', '/jawai/'], ['Rabari Heritage', '/experiences/rabari-culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
+        foreach ([['Expeditions', '/safaris/'], ['Jawai guide', '/jawai/'], ['Rabari Heritage', '/experiences/rabari-culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
             $add('footer', $l, $u, $n + 1);
         }
         foreach ([['About Us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['Field Journal', '/journal/'], ['FAQ', '/faq/'], ['Contact', '/contact/']] as $n => [$l, $u]) {

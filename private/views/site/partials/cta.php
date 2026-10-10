@@ -11,7 +11,7 @@ $image ??= (int) setting('cta_image') ?: null;
       <h2 class="display-2 reveal"><?= e($heading) ?></h2>
       <p class="reveal"><?= e($body) ?></p>
       <div class="btn-row reveal">
-        <a class="btn btn-primary btn-lg" href="/plan-your-journey/">Plan your trip</a>
+        <a class="btn btn-primary btn-lg" href="/book-a-safari/">Book a safari</a>
         <?php if (whatsapp_link()): ?><a class="btn btn-outline btn-lg" href="<?= e(whatsapp_link()) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 18) ?> WhatsApp us</a><?php endif; ?>
       </div>
       <ul class="cta-points reveal">

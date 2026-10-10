@@ -59,7 +59,7 @@ Other features:
 * **Find Jawai photos:** search Wikimedia Commons from the admin and import freely-licensed photos (CC BY, CC BY-SA, CC0, public domain; never non-commercial or no-derivatives).
   * The photographer credit, licence and source link are saved automatically and shown in the gallery and on `/photo-credits/`.
   * A one-click **Starter photo pack** imports about 3 photos for each of 19 Jawai topics: leopards, Jawai Dam, granite hills, flamingos, cranes, crocodiles, Rabari herders, Ranakpur and more.
-  * It then places them on the homepage, safaris, journeys, articles and pages wherever a placeholder is still used.
+  * It then places them on the homepage, safaris, articles and pages wherever a placeholder is still used.
 * **Navigation menus:** a drag-and-drop editor for the header (with dropdowns) and the footer columns.
 * **SEO:**
   * Every content item gets a meta title and description, with a live Google preview and character counters.
@@ -111,7 +111,7 @@ php -S localhost:8080 -t public_html private/cli/dev-router.php
 * Start again from scratch with `php private/cli/demo.php --reset`.
 
 **What the demo includes:**
-* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, the value cards, all safaris, journeys and journal articles, every page (including legal pages), each listing page's header, the gallery, the Plan Your Journey side image, the 404 page and the admin login.
+* **Images everywhere.** The site ships with a built-in set of 17 photos in `public_html/assets/photos/`. Every image slot gets one: the homepage slideshow and sections, the value cards, all safaris and journal articles, every page (including legal pages), each listing page's header, the gallery, the Book a safari side image, the 404 page and the admin login.
 * If an image is ever deleted, the site falls back to a built-in photo, so no slot is ever empty.
 * **Sample CRM data.** 14 enquiries across the whole pipeline, with notes, owners and follow-ups, so the dashboard KPIs, chart and lists look alive.
   * They use codes starting `DEMO-` and are never emailed.
@@ -171,7 +171,7 @@ Details/                 ← research, brand, UX, SEO and technical documentatio
    1. **Settings → Email & SMTP.**
       * Enter your mailbox details. For a cPanel mailbox use host `mail.captainsofjawai.com` (or `localhost`), port **465**, SSL, the full email address as username, and the mailbox password.
       * Save, then **Send test email**.
-      * Set **notification recipients** (To/CC/BCC) for journey enquiries, plus separate recipients for contact messages if wanted.
+      * Set **notification recipients** (To/CC/BCC) for safari enquiries, plus separate recipients for contact messages if wanted.
    2. **Settings → Contact & Social:** phone, WhatsApp number (digits with country code, e.g. `919876543210`), address and social links.
    3. **Photos:**
       * Go to **Media → Find Jawai photos → Import starter photo pack**. This fills the site with freely-licensed Jawai photos in a few minutes; it needs the server's internet access, which GoDaddy has.

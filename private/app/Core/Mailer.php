@@ -108,7 +108,7 @@ final class Mailer
             'title' => $title,
             'body' => $body,
             'accent' => $accent,
-            'logo' => abs_url('/assets/img/emblem-96.png'),
+            'logo' => abs_url((int) Settings::get('logo_image') ? Media::url((int) Settings::get('logo_image'), 'sm') : '/assets/img/emblem-96.png'),
             'siteName' => (string) Settings::get('site_name'),
             'footer' => (string) Settings::get('email_footer'),
         ]);

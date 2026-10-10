@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
 <title>Sign in · <?= e(setting('site_name')) ?></title>
-<link rel="icon" href="/assets/img/favicon-32.png">
+<link rel="icon" href="<?= e(favicon_url()) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap">
 <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
@@ -15,7 +15,7 @@
     <div class="auth-quote"><span>Captains of Jawai</span><p>Mastering the granite wilderness.</p></div>
   </div>
   <main class="auth-wrap">
-    <div class="auth-brand"><img src="/assets/img/emblem-96.webp" width="56" height="56" alt=""><div><strong><?= e(setting('site_name')) ?></strong><span>Admin &amp; CRM</span></div></div>
+    <div class="auth-brand"><img src="<?= e(brand_logo_url()) ?>" width="56" height="56" alt=""><div><strong><?= e(setting('site_name')) ?></strong><span>Admin &amp; CRM</span></div></div>
     <h1>Welcome back</h1>
     <p class="muted">Sign in to manage enquiries, content and settings.</p>
     <?php foreach ($messages as $m): ?><div class="alert alert-<?= e($m['type']) ?>"><?= e($m['message']) ?></div><?php endforeach; ?>

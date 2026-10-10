@@ -190,6 +190,19 @@ function picture(int|array|null $media, string $alt = '', array $attrs = [], str
     return Media::picture($media, $alt, $attrs, $fallback);
 }
 
+/** Logo/emblem URL: admin-uploaded logo if set, otherwise the built-in emblem. */
+function brand_logo_url(string $size = 'sm'): string
+{
+    $id = (int) setting('logo_image');
+    return $id && \App\Core\Media::find($id) ? media_url($id, $size) : '/assets/img/emblem-' . ($size === 'sm' ? '96' : '192') . '.webp';
+}
+
+function favicon_url(): string
+{
+    $id = (int) setting('favicon_image');
+    return $id && \App\Core\Media::find($id) ? media_url($id, 'sm') : '/assets/img/favicon-32.png';
+}
+
 function whatsapp_link(?string $message = null): string
 {
     $num = preg_replace('/\D+/', '', (string) setting('whatsapp_number', ''));

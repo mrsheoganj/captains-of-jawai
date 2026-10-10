@@ -9,6 +9,7 @@ $wa = whatsapp_link();
 $tel = tel_link();
 $headerMenu = Menu::tree('header');
 $logoId = (int) setting('logo_image');
+$logoClass = $logoId ? 'brand-custom' . (\App\Core\Settings::bool('logo_dark_badge') ? ' brand-badge' : '') : 'brand-mark';
 $messages = Session::messages();
 $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyClass', ''));
 ?><!doctype html>
@@ -37,8 +38,8 @@ $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyCl
 
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" href="<?= e(favicon_url()) ?>">
+<link rel="apple-touch-icon" href="<?= e((int) setting('favicon_image') ? favicon_url() : '/assets/img/apple-touch-icon.png') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono&display=swap">
@@ -67,7 +68,7 @@ foreach ($schema as $s): ?>
 <div class="preloader" data-preloader aria-hidden="true">
   <div class="preloader-inner">
     <span class="preloader-ring"></span>
-    <img src="/assets/img/emblem-96.webp" width="64" height="64" alt="">
+    <img class="<?= $logoId && \App\Core\Settings::bool('logo_dark_badge') ? 'brand-badge' : '' ?>" src="<?= e(brand_logo_url()) ?>" width="64" height="64" alt="">
   </div>
   <span class="preloader-text">Captains of Jawai</span>
 </div>
@@ -85,10 +86,8 @@ foreach ($schema as $s): ?>
 <header class="site-header<?= $overlay ? ' is-overlay' : '' ?>" data-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="<?= e($siteName) ?> — home">
-      <?php if ($logoId): ?>
-        <img class="brand-custom" src="<?= e(media_url($logoId, 'sm')) ?>" alt="<?= e($siteName) ?>" height="52">
-      <?php else: ?>
-        <img class="brand-mark" src="/assets/img/emblem-96.webp" width="48" height="48" alt="">
+      <img class="<?= e($logoClass) ?>" src="<?= e(brand_logo_url()) ?>"<?= $logoId ? '' : ' width="48" height="48"' ?> alt="<?= e($siteName) ?>">
+      <?php if (\App\Core\Settings::bool('logo_show_name')): ?>
         <span class="brand-text"><span class="brand-name"><?= e($siteName) ?></span><span class="brand-sub"><?= e(setting('site_tagline')) ?></span></span>
       <?php endif; ?>
     </a>
@@ -121,7 +120,7 @@ foreach ($schema as $s): ?>
 
 <div class="mobile-nav" id="mobile-nav" hidden data-mobile-nav>
   <div class="mobile-nav-head">
-    <a class="brand" href="/"><img class="brand-mark" src="/assets/img/emblem-96.webp" width="44" height="44" alt=""><span class="brand-name"><?= e($siteName) ?></span></a>
+    <a class="brand" href="/"><img class="<?= e($logoClass) ?>" src="<?= e(brand_logo_url()) ?>" alt=""><span class="brand-name"><?= e($siteName) ?></span></a>
     <button class="icon-btn" type="button" aria-label="Close menu" data-nav-close><?= icon('close', 26) ?></button>
   </div>
   <nav aria-label="Mobile">

@@ -8,7 +8,7 @@ $socials = array_filter([
     'globe' => setting('social_tripadvisor'),
     'map-pin' => setting('social_google'),
 ]);
-$footerLogo = (int) setting('footer_logo_image');
+$footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
 ?>
 <footer class="site-footer">
   <svg class="footer-hills" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120 L0 70 C 120 30, 200 80, 300 55 C 380 35, 420 10, 520 30 C 600 46, 660 85, 760 70 C 860 55, 900 20, 1000 25 C 1100 30, 1160 75, 1260 60 C 1340 48, 1400 40, 1440 45 L1440 120 Z"/></svg>
@@ -16,7 +16,7 @@ $footerLogo = (int) setting('footer_logo_image');
     <div class="footer-brand">
       <a href="/" class="footer-logo">
         <?php if ($footerLogo): ?>
-          <img src="<?= e(media_url($footerLogo, 'sm')) ?>" alt="<?= e(setting('site_name')) ?>" loading="lazy">
+          <img class="footer-custom<?= \App\Core\Settings::bool('logo_dark_badge') && !(int) setting('footer_logo_image') ? ' brand-badge' : '' ?>" src="<?= e(media_url($footerLogo, 'sm')) ?>" alt="<?= e(setting('site_name')) ?>" loading="lazy">
         <?php else: ?>
           <img src="/assets/img/emblem-192.webp" width="88" height="88" alt="<?= e(setting('site_name')) ?> logo" loading="lazy">
         <?php endif; ?>

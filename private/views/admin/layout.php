@@ -22,7 +22,7 @@ $exact = fn (string $p) => rtrim($path, '/') === rtrim(admin_url($p), '/') ? ' i
 <meta name="robots" content="noindex, nofollow">
 <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
 <title><?= e($title ?? 'Admin') ?> · <?= e(setting('site_name')) ?> Admin</title>
-<link rel="icon" href="/assets/img/favicon-32.png">
+<link rel="icon" href="<?= e(favicon_url()) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap">
 <link rel="stylesheet" href="<?= asset('css/admin.css') ?>">
@@ -31,7 +31,7 @@ $exact = fn (string $p) => rtrim($path, '/') === rtrim(admin_url($p), '/') ? ' i
 <?= View::partial('partials/icons') ?>
 <?php if ($u): ?>
 <aside class="sidebar" data-sidebar>
-  <a class="side-brand" href="<?= e(admin_url()) ?>"><img src="/assets/img/emblem-96.webp" width="38" height="38" alt=""><span><?= e(setting('site_name')) ?><small>Admin</small></span></a>
+  <a class="side-brand" href="<?= e(admin_url()) ?>"><img src="<?= e(brand_logo_url()) ?>" width="38" height="38" alt=""><span><?= e(setting('site_name')) ?><small>Admin</small></span></a>
   <nav class="side-nav">
     <a class="<?= $exact('') ?>" href="<?= e(admin_url()) ?>"><?= icon('home', 18) ?> Dashboard</a>
     <?php if (Auth::can('enquiries')): ?>

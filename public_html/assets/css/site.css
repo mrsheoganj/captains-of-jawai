@@ -726,3 +726,10 @@ html.is-loading .preloader { animation: preloaderIn .25s .3s forwards; } /* only
 @media (max-width: 359px) { :root { --gutter: 14px; } .brand-name { font-size: 1.1rem; } .brand-mark { width: 36px; height: 36px; } }
 @media print { .site-header, .mobile-dock, .wa-float, .site-footer, .cta-band, .preloader, .scroll-progress, .to-top { display: none !important; } }
 .plan-form-wrap { overflow-x: clip; }
+.brand-custom { max-height: 54px; max-width: 200px; width: auto; height: auto; object-fit: contain; }
+.mobile-nav .brand-custom { max-height: 44px; }
+.footer-logo .footer-custom { width: auto; height: auto; max-width: 180px; max-height: 120px; border-radius: 0; box-shadow: none; object-fit: contain; }
+.brand-badge { background: #141618; border-radius: 50%; padding: 5px; aspect-ratio: 1; object-fit: contain; box-shadow: 0 0 0 2px rgba(184, 130, 43, .35); }
+.brand-custom.brand-badge { width: 52px; height: 52px; max-height: none; }
+.footer-logo .footer-custom.brand-badge { width: 96px; height: 96px; max-height: none; border-radius: 50%; padding: 8px; }
+.preloader-inner img.brand-badge { padding: 6px; }

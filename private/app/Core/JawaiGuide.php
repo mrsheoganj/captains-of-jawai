@@ -49,7 +49,7 @@ final class JawaiGuide
                 'slug' => 'jawai', 'title' => 'Jawai, Rajasthan', 'kicker' => 'A guide to the leopard hills', 'image_id' => $img('jawai'), 'show_cta' => 1,
                 'intro' => 'Jawai is a stretch of granite hills, farmland and villages around the Jawai Dam in Pali district, Rajasthan. It is best known for leopards that live in the rocks, close to people.',
                 'meta_title' => 'Jawai, Rajasthan: Leopards, Jawai Dam & Travel Guide',
-                'meta_description' => 'Everything about Jawai in Rajasthan: where it is, the Jawai Dam, the leopards of the granite hills, birds, the Rabari herders, the best time to visit and how to get there.',
+                'meta_description' => 'A guide to Jawai, Rajasthan: where it is, the Jawai Dam, leopards of the granite hills, birds, the Rabari herders, when to visit and how to get there.',
                 'body' => <<<'HTML'
 <p>Most people hear about Jawai because of its leopards. They live in the caves and cracks of the granite hills around the villages of Bera, Sena, Perwa and their neighbours, and on a good morning you can watch one sitting on a rock in the open sun. The rest of Jawai is just as interesting: a large reservoir built in the 1940s and 50s, winter birds on the water, crocodiles on the banks, and the Rabari herders who have shared these hills with leopards for a very long time.</p>
 
@@ -103,7 +103,7 @@ HTML,
                 'slug' => 'jawai/leopards', 'title' => 'The leopards of Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/leopards'), 'show_cta' => 1,
                 'intro' => 'Why leopards live so close to people in Jawai, how they use the granite caves, and what a sighting is really like.',
                 'meta_title' => 'Jawai Leopards: How & Where to See Leopards in Jawai',
-                'meta_description' => 'About the leopards of Jawai, Rajasthan: the granite caves they live in, how many there are, their relationship with the Rabari people and how to watch them responsibly.',
+                'meta_description' => 'The leopards of Jawai, Rajasthan: the granite caves they live in, how many there are, life alongside the Rabari and how to watch them responsibly.',
                 'body' => <<<'HTML'
 <p>In most of India a leopard is a shadow at the edge of the forest. In Jawai it is often a spotted shape on a bare rock, sometimes a few hundred metres from a village temple. That is what makes the place unusual.</p>
 
@@ -358,7 +358,7 @@ HTML,
                 'slug' => 'jawai/culture', 'title' => 'Jawai culture: the Rabari, shrines, food and festivals', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/culture'), 'show_cta' => 1,
                 'intro' => 'Jawai is lived-in country. Herders, farmers, hill shrines and village festivals are as much a part of a safari here as the leopards.',
                 'meta_title' => 'Jawai Culture: Rabari Herders, Temples, Food & Festivals',
-                'meta_description' => 'The culture of Jawai, Rajasthan: the Rabari herders and their dress, the hill shrines leopards rest beside, local food like dal baati and ker sangri, fairs and festivals, and how to visit respectfully.',
+                'meta_description' => 'Jawai culture: Rabari herders and their dress, hill shrines where leopards rest, local food like dal baati and ker sangri, and fairs and festivals.',
                 'body' => <<<'HTML'
 <p>Jawai is not a fenced park with the people moved out. The leopard hills sit between working villages, fields of wheat and mustard, grazing land and small temples. On any drive you will pass herders moving their animals, women carrying water, and shrines painted on the rocks. This page is a short introduction to that world, so you know what you are looking at.</p>
 

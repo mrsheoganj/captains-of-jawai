@@ -1,3 +1,4 @@
+<?php \App\Core\View::share('bodyClass', 'page-404'); ?>
 <?= \App\Core\View::partial('site/partials/page-hero', ['title' => 'Page not found', 'kicker' => 'Error 404', 'intro' => 'The page you were looking for has moved or does not exist.', 'image' => (int) setting('img_404') ?: null, 'fallback' => 'granite-boulders', 'crumbs' => []]) ?>
 <section class="section section-tight">
   <div class="container narrow center">

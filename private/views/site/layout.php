@@ -38,7 +38,8 @@ $bodyClass = trim(($overlay ? 'has-overlay-header ' : '') . View::shared('bodyCl
 
 <meta name="theme-color" content="#FFFFFF">
 <meta name="color-scheme" content="light">
-<link rel="icon" href="<?= e(favicon_url()) ?>">
+<link rel="icon" href="<?= e(favicon_url()) ?>" sizes="32x32">
+<?php if (!(int) setting('favicon_image')): ?><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png"><?php endif; ?>
 <link rel="apple-touch-icon" href="<?= e((int) setting('favicon_image') ? favicon_url() : '/assets/img/apple-touch-icon.png') ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,6 +145,7 @@ foreach ($schema as $s): ?>
   </nav>
   <div class="mobile-nav-foot">
     <a class="btn btn-primary btn-block" href="/book-a-safari/">Book a safari</a>
+    <a class="btn btn-outline btn-block" href="/book-a-safari/#ask">Ask a question</a>
     <?php if ($wa): ?><a class="btn btn-ghost-dark btn-block" href="<?= e($wa) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 18) ?> WhatsApp us</a><?php endif; ?>
     <?php if (setting('contact_phone')): ?><a class="mobile-contact" href="<?= e($tel) ?>"><?= icon('phone', 16) ?> <?= e(setting('contact_phone')) ?></a><?php endif; ?>
     <a class="mobile-contact" href="mailto:<?= e(setting('contact_email')) ?>"><?= e(setting('contact_email')) ?></a>

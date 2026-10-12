@@ -78,9 +78,9 @@ final class SiteController
     {
         $items = $this->published('safaris');
         return $this->show('safaris', ['items' => $items], [
-            'title' => 'Jawai Safari Expeditions — Private 4x4 Wildlife Journeys',
+            'title' => 'Jawai Safaris: Private Leopard Jeep Safaris',
             'description' => 'Explore bespoke safari experiences in Jawai and Bera: private leopard tracking, Jawai Dam wetland drives and photography expeditions.',
-            'breadcrumbs' => [['Expeditions', '/safaris/']],
+            'breadcrumbs' => [['Safaris', '/safaris/']],
             'image' => $items[0]['image_id'] ?? null,
         ]);
     }
@@ -97,7 +97,7 @@ final class SiteController
             'raw_title' => (bool) $item['meta_title'],
             'description' => $item['meta_description'] ?: excerpt($item['excerpt']),
             'image' => $item['image_id'] ? (int) $item['image_id'] : null,
-            'breadcrumbs' => [['Expeditions', '/safaris/'], [$item['title'], '/safaris/' . $item['slug'] . '/']],
+            'breadcrumbs' => [['Safaris', '/safaris/'], [$item['title'], '/safaris/' . $item['slug'] . '/']],
             'schema' => [[
                 '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => $item['title'],
                 'description' => excerpt($item['excerpt'], 300), 'touristType' => ['Wildlife enthusiasts', 'Photographers', 'Luxury travellers'],
@@ -111,7 +111,7 @@ final class SiteController
         $items = DB::all('SELECT * FROM media WHERE in_gallery = 1 ORDER BY sort_order, id DESC');
         $categories = array_values(array_unique(array_filter(array_column($items, 'gallery_category'))));
         return $this->show('gallery', compact('items', 'categories'), [
-            'title' => 'Gallery — Leopards, Landscapes & Life in Jawai',
+            'title' => 'Jawai Photo Gallery: Leopards & Landscapes',
             'description' => 'Photographs from the Jawai wilderness: leopards on granite, Jawai Bandh wetland birds, landscapes and safari life.',
             'breadcrumbs' => [['Gallery', '/gallery/']],
         ]);
@@ -125,7 +125,7 @@ final class SiteController
             $groups[$f['category'] ?: 'General'][] = $f;
         }
         return $this->show('faq', compact('groups'), [
-            'title' => 'Jawai Safari FAQ — Planning, Wildlife & Booking',
+            'title' => 'Jawai Safari FAQ: Wildlife, Timings & Booking',
             'description' => 'Answers to common questions about Jawai leopard safaris: sightings, best season, how to get there, safety, children and booking.',
             'breadcrumbs' => [['FAQ', '/faq/']],
             'schema' => [[
@@ -195,8 +195,11 @@ final class SiteController
         $segs = explode('/', $slug);
         foreach ($segs as $n => $seg) {
             $acc .= ($acc === '' ? '' : '/') . $seg;
-            $label = $n === count($segs) - 1 ? $item['title'] : (DB::val("SELECT title FROM pages WHERE slug = ? AND status = 'published'", [$acc]) ?: ucwords(str_replace('-', ' ', $seg)));
-            $crumbs[] = [$label, '/' . $acc . '/'];
+            if ($n === count($segs) - 1) {
+                $crumbs[] = [$item['title'], '/' . $acc . '/'];
+            } elseif ($parent = DB::val("SELECT title FROM pages WHERE slug = ? AND status = 'published'", [$acc])) {
+                $crumbs[] = [$parent, '/' . $acc . '/']; // only link parents that exist (no 404 breadcrumbs)
+            }
         }
 
         // FAQ (Question | Answer per line) and sources (url | label per line), editable in Admin → Pages

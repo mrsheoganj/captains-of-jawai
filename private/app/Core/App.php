@@ -80,6 +80,7 @@ final class App
         $router->get('contact', [SiteController::class, 'contact']);
         $router->get('photo-credits', [SiteController::class, 'credits']);
         $router->get('book-a-safari', [SiteController::class, 'plan']);
+        $router->get('experiences', fn () => redirect('/safaris/', 301)); // no index page for /experiences/
         $router->get('plan-your-journey', fn () => redirect('/book-a-safari/', 301));
         $router->get('sitemap.xml', [SiteController::class, 'sitemap']);
         $router->get('robots.txt', [SiteController::class, 'robots']);
@@ -198,6 +199,14 @@ final class App
         DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");
         DB::q("UPDATE menu_items SET label = 'Our story' WHERE label = 'Our Story & Captains'");
         DB::delete('menu_items', "url = '/journal/' OR url LIKE '/journal/%'"); // journal removed
+        // 2.9: no "starting template" note on the public legal pages.
+        DB::q("UPDATE pages SET body = REPLACE(body, ?, '')", ['<p><em>This page is a starting template. Please review it with your legal adviser and update it in Admin → Pages before launch.</em></p>']);
+        // 2.9: tidy navigation. If the menus are still the old defaults (they link to /experiences/), rebuild them.
+        if ((int) DB::val("SELECT COUNT(*) FROM menu_items WHERE url LIKE '/experiences/%' AND location IN ('header', 'footer')")) {
+            DB::q("DELETE FROM menu_items");
+            Seeder::menus();
+            JawaiGuide::ensure();
+        }
         Settings::flush();
     }
 

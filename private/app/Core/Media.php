@@ -149,9 +149,14 @@ final class Media
             }
             imagecopyresampled($dst, $src, 0, 0, 0, 0, $tw, $th, $w, $h);
             $out = PUBLIC_PATH . "/$base-$target";
-            $hasAlpha ? imagepng($dst, "$out.png", 8) : imagejpeg($dst, "$out.jpg", 82);
+            if ($hasAlpha) {
+                imagepng($dst, "$out.png", 8);
+            } else {
+                imageinterlace($dst, true); // progressive JPEG
+                imagejpeg($dst, "$out.jpg", 78);
+            }
             if (function_exists('imagewebp')) {
-                imagewebp($dst, "$out.webp", 80);
+                imagewebp($dst, "$out.webp", 76);
             }
             imagedestroy($dst);
         }

@@ -1120,3 +1120,21 @@ body { font-size: 1.08rem; }
 .season-body p { margin: 0; color: var(--text-2); font-size: .97rem; }
 .season-winter { border-top: 3px solid #2E688C; } .season-summer { border-top: 3px solid var(--accent); } .season-monsoon { border-top: 3px solid #2F5C3E; }
 .seasons .section-head h2 { max-width: 28ch; }
+
+/* ===== Mobile: no sideways scroll, comfortable tap targets ===== */
+html, body { overflow-x: clip; max-width: 100%; }
+img, svg, video, iframe { max-width: 100%; }
+.topo { pointer-events: none; }
+@media (max-width: 767px) {
+  .footer-links a, .footer-bottom a, .footer-contact a { display: inline-block; padding: 10px 0; }
+  .footer-links li { margin: 0; }
+  .breadcrumbs a { display: inline-block; padding: 10px 0; }
+  .hero-dots button { position: relative; height: 24px; background: transparent !important; }
+  .hero-dots button::before { content: ''; position: absolute; left: 0; right: 0; top: 10px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .45); transition: background .3s; }
+  .hero-dots button.is-active::before { background: #fff; }
+  .form-note a, .prose a, .contact-list a, .mobile-contact { display: inline-block; padding: 6px 0; }
+}
+@media (max-width: 767px) { .crumbs a { display: inline-block; padding: 12px 0; } }
+.page-404 .page-hero-media { aspect-ratio: 32 / 9; }
+.page-404 .section-tight { padding-top: 28px; }
+@media (max-width: 767px) { .page-404 .page-hero-media { aspect-ratio: 16 / 9; } }

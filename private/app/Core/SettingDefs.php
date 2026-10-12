@@ -199,7 +199,7 @@ final class SettingDefs
                 'fields' => [
                     ['seo_title_suffix', 'Title suffix', 'text', " | Captains of Jawai"],
                     ['seo_home_title', 'Homepage title', 'text', "Jawai Leopard Safari | Private Safaris in Jawai, Rajasthan"],
-                    ['seo_home_description', 'Homepage meta description', 'textarea', "Private leopard safaris in Jawai (Jawai Bandh), Pali district, Rajasthan. Local trackers, small groups, dawn and dusk drives, birding at Jawai Dam and Rabari village visits."],
+                    ['seo_home_description', 'Homepage meta description', 'textarea', "Private leopard safaris in Jawai, Rajasthan. Open-jeep drives at dawn and dusk with local trackers, Jawai Dam birding and village safaris. Book online."],
                     ['seo_og_image', 'Default social share image', 'image', ''],
                     ['seo_noindex', 'Hide entire site from search engines (staging)', 'bool', '0'],
                     ['google_verification', 'Google Search Console verification code', 'text', ''],

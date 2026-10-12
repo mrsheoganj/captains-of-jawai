@@ -96,7 +96,7 @@ final class Seeder
 
     private static function pages(callable $i): array
     {
-        $legal = '<p><em>This page is a starting template. Please review it with your legal adviser and update it in Admin → Pages before launch.</em></p>';
+        $legal = ''; // legal pages: have them reviewed by your adviser and edit them in Admin → Pages
         return [
             [
                 'title' => 'Masters of the Granite Sanctuary', 'slug' => 'about', 'kicker' => 'Our Story', 'image_id' => $i('safari1'), 'show_cta' => 1,
@@ -135,7 +135,7 @@ final class Seeder
             [
                 'title' => 'Cookie Policy', 'slug' => 'cookie-policy', 'kicker' => 'Legal', 'image_id' => null, 'show_cta' => 0, 'intro' => '',
                 'body' => $legal . '<p>This website uses a strictly necessary session cookie to protect forms against abuse. If analytics is enabled, Google Analytics may set cookies to help us understand how the site is used.</p>',
-                'meta_title' => 'Cookie Policy', 'meta_description' => 'How cookies are used on the Captains of Jawai website.',
+                'meta_title' => 'Cookie Policy', 'meta_description' => 'How the Captains of Jawai website uses cookies: one essential session cookie for forms, plus optional analytics if enabled.',
             ],
         ];
     }
@@ -157,31 +157,31 @@ final class Seeder
         ];
     }
 
-    private static function menus(): void
+    /** Default menus for a safari-only site. The Jawai guide pages are added under "Jawai" by JawaiGuide::ensure(). */
+    public static function menus(): void
     {
         $add = function (string $loc, string $label, string $url, int $sort, ?int $parent = null): int {
             return DB::insert('menu_items', ['location' => $loc, 'label' => $label, 'url' => $url, 'parent_id' => $parent, 'sort_order' => $sort, 'is_active' => 1, 'new_tab' => 0]);
         };
-        $exp = $add('header', 'Expeditions', '/safaris/', 1);
-        $add('header', 'Classic Leopard Safari', '/safaris/leopard-safari/', 1, $exp);
-        $add('header', 'Private 4x4 Expedition', '/safaris/private-safari/', 2, $exp);
-        $add('header', 'Wetland & Birding', '/safaris/dam-birding-safari/', 3, $exp);
-        $add('header', 'Photography Expedition', '/safaris/photography-safari/', 4, $exp);
+        $saf = $add('header', 'Safaris', '/safaris/', 1);
+        $add('header', 'All safaris', '/safaris/', 1, $saf);
+        $add('header', 'Classic Leopard Safari', '/safaris/leopard-safari/', 2, $saf);
+        $add('header', 'Private 4x4 Safari', '/safaris/private-safari/', 3, $saf);
+        $add('header', 'Wetland & Birding', '/safaris/dam-birding-safari/', 4, $saf);
+        $add('header', 'Photography Safari', '/safaris/photography-safari/', 5, $saf);
         $wild = $add('header', 'Jawai', '/jawai/', 2);
-        $add('header', 'About Jawai', '/jawai/', 1, $wild);
-        $add('header', 'Rabari Heritage', '/experiences/rabari-culture/', 2, $wild);
-        $add('header', 'Boulder Sundowners', '/experiences/boulder-sundowners/', 3, $wild);
-        $add('header', 'Gallery', '/gallery/', 4, $wild);
-        $about = $add('header', 'About', '/about/', 5);
+        $add('header', 'Jawai at a glance', '/jawai/', 1, $wild);
+        $add('header', 'Gallery', '/gallery/', 3);
+        $about = $add('header', 'About', '/about/', 4);
         $add('header', 'Our story', '/about/', 1, $about);
         $add('header', 'Conservation & Ethics', '/about/conservation-ethics/', 2, $about);
         $add('header', 'FAQ', '/faq/', 3, $about);
         $add('header', 'Contact', '/contact/', 4, $about);
 
-        foreach ([['Expeditions', '/safaris/'], ['Jawai guide', '/jawai/'], ['Rabari Heritage', '/experiences/rabari-culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
+        foreach ([['Safaris', '/safaris/'], ['Book a safari', '/book-a-safari/'], ['Jawai guide', '/jawai/'], ['Jawai culture', '/jawai/culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
             $add('footer', $l, $u, $n + 1);
         }
-        foreach ([['About Us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/']] as $n => [$l, $u]) {
+        foreach ([['About us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/'], ['Ask a question', '/book-a-safari/#ask']] as $n => [$l, $u]) {
             $add('footer2', $l, $u, $n + 1);
         }
         foreach ([['Privacy Policy', '/privacy-policy/'], ['Terms', '/terms/'], ['Cookies', '/cookie-policy/'], ['Sitemap', '/sitemap.xml']] as $n => [$l, $u]) {

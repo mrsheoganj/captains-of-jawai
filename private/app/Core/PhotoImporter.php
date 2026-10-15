@@ -158,7 +158,7 @@ final class PhotoImporter
     private static function allowedHost(string $url): bool
     {
         $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $hosts = (array) Config::get('photo_hosts', ['upload.wikimedia.org', 'commons.wikimedia.org']);
+        $hosts = (array) Config::get('photo_hosts', ['upload.wikimedia.org', 'thumb.wikimedia.org', 'commons.wikimedia.org']);
         return in_array($host, $hosts, true) && in_array(parse_url($url, PHP_URL_SCHEME), ['https', 'http'], true);
     }
 

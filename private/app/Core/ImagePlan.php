@@ -14,7 +14,7 @@ namespace App\Core;
  */
 final class ImagePlan
 {
-    public const PLAN_VERSION = 2;
+    public const PLAN_VERSION = 3;
 
     /** Photos imported per call (each one is downloaded and resized into 3 sizes x 2 formats). */
     private const BATCH = 12;

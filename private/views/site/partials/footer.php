@@ -65,8 +65,8 @@ $footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
     <div class="container footer-bottom-inner">
       <p><?= e(str_replace('{year}', date('Y'), (string) setting('copyright_text'))) ?><?php if (setting('legal_name')): ?> · <?= e(setting('legal_name')) ?><?php endif; ?><?php if (setting('gstin')): ?> · GSTIN <?= e(setting('gstin')) ?><?php endif; ?></p>
       <ul>
-        <?php foreach (Menu::tree('legal') as $l): ?><li><a href="<?= e($l['url']) ?>"><?= e($l['label']) ?></a></li><?php endforeach; ?>
-        <?php if (\App\Core\DB::val("SELECT COUNT(*) FROM media WHERE source_url <> ''")): ?><li><a href="/photo-credits/">Photo credits</a></li><?php endif; ?>
+        <?php $legal = Menu::tree('legal'); foreach ($legal as $l): ?><li><a href="<?= e($l['url']) ?>"><?= e($l['label']) ?></a></li><?php endforeach; ?>
+        <?php if (!in_array('/photo-credits/', array_column($legal, 'url'), true) && \App\Core\DB::val("SELECT COUNT(*) FROM media WHERE source_url <> ''")): ?><li><a href="/photo-credits/">Photo credits</a></li><?php endif; ?>
       </ul>
     </div>
   </div>

@@ -67,7 +67,13 @@ final class SiteController
         }
         $used = array_merge($used, array_map('intval', array_column($safaris, 'image_id')), array_map('intval', array_column($guide, 'image_id')));
         $used = array_values(array_filter(array_unique($used)));
-        $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1' . ($used ? ' AND id NOT IN (' . implode(',', $used) . ')' : '') . ' ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
+        $picked = array_values(array_diff(array_filter(array_map('intval', explode(',', (string) setting('home_gallery_images')))), $used));
+        if ($picked) {
+            $rows = array_column(DB::all('SELECT * FROM media WHERE id IN (' . implode(',', $picked) . ')'), null, 'id');
+            $gallery = array_values(array_filter(array_map(fn ($id) => $rows[$id] ?? null, $picked)));
+        } else {
+            $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1' . ($used ? ' AND id NOT IN (' . implode(',', $used) . ')' : '') . ' ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
+        }
         $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 

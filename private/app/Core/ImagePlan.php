@@ -14,7 +14,7 @@ namespace App\Core;
  */
 final class ImagePlan
 {
-    public const PLAN_VERSION = 3;
+    public const PLAN_VERSION = 4;
 
     /** Photos imported per call (each one is downloaded and resized into 3 sizes x 2 formats). */
     private const BATCH = 12;
@@ -59,13 +59,13 @@ final class ImagePlan
         ['JAWAI_BERA_AUTO_RIDE.jpg', 'Village women sharing an auto ride in Bera, Jawai', 'Village life', ['village_images']],
         ['JAWAI_BERA.23.jpg', 'A villager with his bicycle on a lane in Bera', 'Village life', ['village_images']],
         // Page banners
-        ['JAWAI_BERA_LEOPARD.2.jpg', 'Leopard lying in dry grass in Bera, Jawai', 'Leopards', ['img_safaris']],
-        ['JawaiLeopards.jpg', 'Female leopard of Sena resting in a red granite cave', 'Leopards', ['img_gallery']],
-        ['JAWAI_BERA.11.jpg', 'Granite cliff and a bare tree in Bera, Jawai', 'Landscape', ['img_faq']],
+        ['JAWAI_BERA_LEOPARD.2.jpg', 'Leopard lying in dry grass in Bera, Jawai', 'Leopards', ['img_safaris', 'home_gallery_images']],
+        ['JawaiLeopards.jpg', 'Female leopard of Sena resting in a red granite cave', 'Leopards', ['img_gallery', 'home_gallery_images']],
+        ['JAWAI_BERA.11.jpg', 'Granite cliff and a bare tree in Bera, Jawai', 'Landscape', ['img_faq', 'home_gallery_images']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_43.jpg', 'Granite islands in the Jawai reservoir under monsoon clouds', 'Landscape', ['img_contact']],
-        ['On_the_rocks,_its_refreshing.jpg', 'Leopard on a granite rock near Bera', 'Leopards', ['img_plan']],
+        ['On_the_rocks,_its_refreshing.jpg', 'Leopard on a granite rock near Bera', 'Leopards', ['img_plan', 'home_gallery_images']],
         ['Shepherd_from_Rajasthan_03.jpg', 'Shepherd in a red turban waving at sunset, Jawai Bandh', 'Village life', ['img_about', 'page:about']],
-        ['JAWAI_BERA.31.jpg', 'Granite hill and scrub near Bera, Jawai', 'Landscape', ['img_404']],
+        ['JAWAI_BERA.31.jpg', 'Granite hill and scrub near Bera, Jawai', 'Landscape', ['img_404', 'home_gallery_images']],
         ['JAWAI_BERA_LEOPARD.jpg', 'Leopard on a rock at night in Bera, Jawai', 'Leopards', ['img_login']],
         // Jawai guide (also the "Before you come" cards on the homepage)
         ['JAWAI_BERA.9.jpg', 'Granite hills around Bera, Jawai', 'Landscape', ['page:jawai']],
@@ -76,9 +76,9 @@ final class ImagePlan
         ['JAWAI_BERA.7.jpg', 'Dirt road through the open country of Bera, Jawai', 'Landscape', ['page:jawai/how-to-reach']],
         ['RANAKPUR_JAIN_TEMPLE.JPG', 'Ranakpur Jain temple in Pali district, Rajasthan', 'Places', ['page:jawai/places-to-visit']],
         ['JAWAI_BERA.25.jpg', 'Village women in Bera, Jawai, carrying water pots', 'Village life', ['page:jawai/culture']],
-        ['A_Flame_of_the_forest_in_bloom_and_a_Leopard_on_the_background_at_Jawai_Hills_during_early_morning.jpg', 'Flame of the forest in bloom with a leopard on the Jawai hills behind', 'Leopards', ['page:about/conservation-ethics']],
+        ['A_Flame_of_the_forest_in_bloom_and_a_Leopard_on_the_background_at_Jawai_Hills_during_early_morning.jpg', 'Flame of the forest in bloom with a leopard on the Jawai hills behind', 'Leopards', ['page:about/conservation-ethics', 'home_gallery_images']],
         ['Jawai_more_than_a_dam.jpg', 'Sheep grazing on the shore of Jawai Dam', 'Village life', ['page:experiences/rabari-culture']],
-        ['JAWAI_BANDH_SUNSET.jpg', 'Sun setting over Jawai Bandh', 'Landscape', ['page:experiences/boulder-sundowners']],
+        ['JAWAI_BANDH_SUNSET.jpg', 'Sun setting over Jawai Bandh', 'Landscape', ['page:experiences/boulder-sundowners', 'home_gallery_images']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_82.jpg', 'Granite hill above green monsoon fields in Jawai', 'Landscape', ['page:privacy-policy']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_71.jpg', 'Granite boulders and green scrub in Jawai', 'Landscape', ['page:terms']],
         ['JAWAI_BERA.5.jpg', 'Smooth granite slabs under a big sky in Bera, Jawai', 'Landscape', ['page:cookie-policy']],
@@ -92,7 +92,7 @@ final class ImagePlan
         ['Greater_Flamingo_by_Tisha_Mukherjee_07.jpg', 'Greater flamingos spreading their wings in Jawai Bandh', 'Birds & Wetland', []],
         ['Greater_Flamingo_by_Tisha_Mukherjee_14.jpg', 'Greater flamingos taking off over Jawai Bandh', 'Birds & Wetland', []],
         ['FLEMINGO_JAWAI_BERA.jpg', 'A flamingo stepping through the shallows at Jawai', 'Birds & Wetland', []],
-        ['Asian_green_bee-eater_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_03.jpg', 'Green bee-eater with its catch in Jawai Bandh', 'Birds & Wetland', []],
+        ['Asian_green_bee-eater_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_03.jpg', 'Green bee-eater with its catch in Jawai Bandh', 'Birds & Wetland', ['home_gallery_images']],
         ['Crocodile_of_jawai.jpg', 'Mugger crocodile on the shore of Jawai Dam', 'Wildlife', []],
         ['Golden_jackal_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_01.jpg', 'Golden jackal running along a track in Jawai Bandh', 'Wildlife', []],
     ];

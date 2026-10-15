@@ -109,6 +109,7 @@ final class SettingDefs
                     ['home_gallery_enabled', 'Show gallery section', 'bool', '1'],
                     ['home_gallery_heading', 'Gallery section heading', 'text', "From the gallery"],
                     ['home_gallery_count', 'Number of gallery photos on the homepage', 'number', '8'],
+                    ['home_gallery_images', 'Gallery section photos (optional; pick up to 8 different photos)', 'images', '', 'Leave empty to show the newest gallery photos that are not already on the homepage.'],
                     ['safaris_kicker', 'Safaris section kicker', 'text', "What we offer"],
                     ['safaris_heading', 'Safaris section heading', 'text', "Jawai safaris"],
                     ['coexist_enabled', 'Show coexistence feature', 'bool', '1'],

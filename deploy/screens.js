@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
   for (const [w, tag] of [[1366, 'desktop'], [390, 'mobile']]) {
     const p = await b.newPage({ viewport: { width: w, height: 900 } });
     for (const path of pages) {
-      await p.goto(process.argv[2] + path, { waitUntil: 'networkidle' });
+      try { await p.goto(process.argv[2] + path, { waitUntil: 'load', timeout: 60000 }); } catch (e) { console.log('slow', path); }
       await p.addStyleTag({ content: '.reveal,.reveal-img,[data-stagger]>*{opacity:1!important;transform:none!important} .site-header{position:absolute!important}' });
       for (let y = 0; y < 30000; y += 700) { await p.evaluate(v => scrollTo(0, v), y); await p.waitForTimeout(120); }
       await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(800);

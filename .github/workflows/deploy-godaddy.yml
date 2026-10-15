@@ -9,7 +9,8 @@
 #   SSH_PORT      optional, defaults to 22
 #   DEPLOY_PATH   the folder that contains public_html, e.g. /home/<cpanel-username>
 #
-# What it copies: public_html/ and private/ from this repository.
+# What it copies: public_html/ and private/ from this repository (as a tar archive over SSH,
+# so it works on shared hosting without rsync).
 # What it never touches: private/config.php (database, admin path), private/storage/ (sessions, logs,
 # SQLite) and public_html/uploads/ (your uploaded photos). Nothing on the server is deleted.
 name: Deploy to GoDaddy
@@ -51,21 +52,41 @@ jobs:
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p "${SSH_PORT:-22}" "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Upload files
+      - name: Check the server
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          DRY: ${{ inputs.dry_run && '--dry-run' || '' }}
         run: |
-          SSH="ssh -i ~/.ssh/deploy_key -p ${SSH_PORT:-22} -o BatchMode=yes"
-          rsync -rltvz --checksum $DRY -e "$SSH" \
-            --exclude 'config.php' --exclude 'storage/' \
-            private/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/private/"
-          rsync -rltvz --checksum $DRY -e "$SSH" \
-            --exclude 'uploads/' \
-            public_html/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/public_html/"
+          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" "
+            cd '$DEPLOY_PATH' || { echo 'DEPLOY_PATH not found: $DEPLOY_PATH'; exit 1; }
+            echo '--- server folder:'; pwd
+            echo '--- public_html:'; ls -d public_html || exit 1
+            echo '--- private folder next to public_html:'; ls -d private 2>/dev/null || echo 'no private/ folder yet (will be created)'
+            echo '--- existing config:'; ls private/config.php 2>/dev/null || echo 'no private/config.php here'
+            echo '--- PHP:'; (php -v || /usr/local/bin/php -v) 2>/dev/null | head -1
+          " | tee server-check.txt
+
+      - name: Show files that will be uploaded
+        run: |
+          tar -czf site.tgz \
+            --exclude='private/config.php' --exclude='private/storage' --exclude='public_html/uploads' \
+            private public_html
+          echo "Files in the upload: $(tar -tzf site.tgz | grep -vc '/$')"
+          tar -tzf site.tgz | grep -v '/$' | head -400
+
+      - name: Upload files
+        if: ${{ !inputs.dry_run }}
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # tar over SSH: works on shared hosting without rsync. Overwrites files, never deletes any.
+          ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
+            "cd '$DEPLOY_PATH' && tar -xzf - --no-same-owner && echo 'Upload complete'" < site.tgz
 
       - name: Run database updates
         if: ${{ !inputs.dry_run }}

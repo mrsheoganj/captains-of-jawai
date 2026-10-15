@@ -75,7 +75,7 @@ final class PhotoImporter
             $titles = implode('|', array_map(fn ($f) => 'File:' . str_replace('_', ' ', $f), $chunk));
             $params = [
                 'action' => 'query', 'format' => 'json', 'formatversion' => '2', 'titles' => $titles,
-                'prop' => 'imageinfo', 'iiprop' => 'url|size|mime|extmetadata', 'iiurlwidth' => '1600',
+                'prop' => 'imageinfo', 'iiprop' => 'url|size|mime|extmetadata', 'iiurlwidth' => '1920', // a standard Commons thumbnail width (others can be rate-limited)
                 'iiextmetadatafilter' => 'LicenseShortName|LicenseUrl|Artist|ImageDescription|ObjectName',
             ];
             [$code, $body, $err] = self::http(self::api() . '?' . http_build_query($params));
@@ -281,7 +281,10 @@ final class PhotoImporter
         if (!self::licenseOk((string) ($item['license'] ?? ''))) {
             return 'Licence not allowed for commercial use: ' . ($item['license'] ?? 'unknown');
         }
-        $urls = array_values(array_unique(array_filter([(string) ($item['download'] ?? ''), (string) ($item['original'] ?? '')])));
+        // Very large originals: try smaller Commons thumbnails before the original file.
+        $thumb = (string) ($item['download'] ?? '');
+        $smaller = preg_match('#/\d+px-#', $thumb) ? [preg_replace('#/\d+px-#', '/1280px-', $thumb), preg_replace('#/\d+px-#', '/960px-', $thumb)] : [];
+        $urls = array_values(array_unique(array_filter([$thumb, ...$smaller, (string) ($item['original'] ?? '')])));
         $body = '';
         $lastErr = 'No download URL';
         foreach ($urls as $url) {
@@ -293,7 +296,7 @@ final class PhotoImporter
             if ($code === 200 && strlen($body) > 1000) {
                 break;
             }
-            $lastErr = $err ?: "HTTP $code";
+            $lastErr = ($err ?: "HTTP $code") . ' (' . basename((string) parse_url($url, PHP_URL_PATH)) . ')';
             $body = '';
         }
         if ($body === '') {

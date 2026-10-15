@@ -1,0 +1,26 @@
+# Checks what is live on captainsofjawai.com (run from Actions -> "Site check").
+name: Site check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check live pages
+        run: |
+          SITE=https://captainsofjawai.com
+          for p in / /book-a-safari/ /jawai/places-to-visit/ /photo-credits/ /sitemap.xml /pk-admin/login; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$SITE$p")
+            echo "$code  $p"
+          done
+          curl -sL "$SITE/" -o home.html
+          curl -sL "$SITE/book-a-safari/" -o book.html
+          echo "--- version markers"
+          echo "asset version: $(grep -o 'site.css?v=[^"]*' home.html | head -1)"
+          for m in 'bk-vehicle' 'Shared gypsy' 'data-wa-book' 'seasons' 'distances' 'Ask a question' 'tel:' 'wa.me/'; do
+            if grep -q "$m" home.html book.html; then echo "YES  $m"; else echo "no   $m"; fi
+          done
+          echo "--- title: $(grep -o '<title>[^<]*' home.html)"
+          echo "--- www redirect: $(curl -s -o /dev/null -w '%{http_code} -> %{redirect_url}' http://www.captainsofjawai.com/)"

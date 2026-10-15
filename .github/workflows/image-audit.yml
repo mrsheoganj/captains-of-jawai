@@ -1,0 +1,28 @@
+# Read-only audit of the images shown on captainsofjawai.com (run from Actions -> "Image audit").
+# Lists every image per page, images repeated on the same page or across pages, and photos that look
+# the same even though they are different files (perceptual hash). Also lists freely-licensed
+# Jawai photos on Wikimedia Commons as candidates. Changes nothing on the website.
+name: Image audit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: pip install -q pillow imagehash requests
+      - name: Audit live images
+        run: python3 deploy/image_audit.py https://captainsofjawai.com | tee image-audit.txt
+      - name: Find candidate photos on Wikimedia Commons
+        run: python3 deploy/commons_candidates.py | tee commons-candidates.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: image-audit
+          path: |
+            image-audit.txt
+            image-audit.json
+            commons-candidates.txt
+            commons-candidates.json

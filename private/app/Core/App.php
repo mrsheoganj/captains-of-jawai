@@ -225,14 +225,20 @@ final class App
             return;
         }
         try {
-            Schema::create(DB::pdo());
-            JawaiGuide::ensure(); // add new guide pages to existing sites
-            self::safariOnlyUpgrade();
-            Demo::assignImages(); // register new built-in photos and fill any empty image slots
-            Settings::set('schema_version', APP_VERSION);
+            self::upgradeNow();
         } catch (\Throwable $e) {
             error_log('Auto-migration failed: ' . $e->getMessage());
         }
+    }
+
+    /** Run every upgrade step now (also used by private/cli/apply-update.php). */
+    public static function upgradeNow(): void
+    {
+        Schema::create(DB::pdo());
+        JawaiGuide::ensure(); // add new guide pages to existing sites
+        self::safariOnlyUpgrade();
+        Demo::assignImages(); // register new built-in photos and fill any empty image slots
+        Settings::set('schema_version', APP_VERSION);
     }
 
     private static function applyRedirects(string $path): void

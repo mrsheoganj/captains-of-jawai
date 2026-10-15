@@ -19,9 +19,17 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run: list what would change without uploading"
+        description: "Dry run: only check the connection and list files, change nothing"
         type: boolean
         default: false
+      refresh_text:
+        description: "Load the latest website text (safaris, Jawai guide, FAQs, menus). Keeps enquiries, settings and photos"
+        type: boolean
+        default: true
+      import_photos:
+        description: "Import the recommended Jawai photos and place them on the site"
+        type: boolean
+        default: true
 
 concurrency: deploy-production
 
@@ -59,7 +67,9 @@ jobs:
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
+          set -o pipefail
           ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" "
+            echo 'SSH-SHELL-OK'
             cd '$DEPLOY_PATH' || { echo 'DEPLOY_PATH not found: $DEPLOY_PATH'; exit 1; }
             echo '--- server folder:'; pwd
             echo '--- public_html:'; ls -d public_html || exit 1
@@ -67,6 +77,10 @@ jobs:
             echo '--- existing config:'; ls private/config.php 2>/dev/null || echo 'no private/config.php here'
             echo '--- PHP:'; (php -v || /usr/local/bin/php -v) 2>/dev/null | head -1
           " | tee server-check.txt
+          if ! grep -q SSH-SHELL-OK server-check.txt; then
+            echo "::error::Logged in, but the server refused to run commands. On GoDaddy: My Products -> Web Hosting -> Manage -> Settings -> Server -> SSH access: turn it ON, then run this workflow again."
+            exit 1
+          fi
 
       - name: Show files that will be uploaded
         run: |
@@ -88,16 +102,19 @@ jobs:
           ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
             "cd '$DEPLOY_PATH' && tar -xzf - --no-same-owner && echo 'Upload complete'" < site.tgz
 
-      - name: Run database updates
+      - name: Backup, update database, load new text and photos
         if: ${{ !inputs.dry_run }}
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          FLAGS: --backup --migrate ${{ inputs.refresh_text && '--refresh-text' || '' }} ${{ inputs.import_photos && '--import-photos' || '' }}
         run: |
+          # Email/SMTP settings are never touched by apply-update.php. A full database backup is saved first
+          # in private/storage/backups/ on the server.
           ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
-            "cd '$DEPLOY_PATH' && (php private/cli/install.php --migrate || /usr/local/bin/php private/cli/install.php --migrate)"
+            "cd '$DEPLOY_PATH' && (command -v php >/dev/null && PHP=php || PHP=/usr/local/bin/php; \$PHP private/cli/apply-update.php $FLAGS)"
 
       - name: Remove key
         if: always()

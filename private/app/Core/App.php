@@ -192,6 +192,9 @@ final class App
             'color_accent' => ['#B8822B'],
             'color_accent_hover' => ['#9E6B1D'],
             'color_dark' => ['#121416'],
+            // 2.10.1: report's homepage title and description replace the earlier defaults
+            'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai'],
+            'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across'],
         ];
         foreach ($old as $key => $needles) {
             $v = (string) DB::val('SELECT svalue FROM settings WHERE skey = ?', [$key]);

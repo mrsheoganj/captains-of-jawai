@@ -147,6 +147,7 @@ final class DashboardController extends BaseController
             'Installed at' => (string) Config::get('installed_at'),
         ];
         $log = is_file(STORAGE_PATH . '/logs/php-error.log') ? array_slice(file(STORAGE_PATH . '/logs/php-error.log') ?: [], -40) : [];
-        return $this->render('system', ['info' => $info, 'log' => $log, 'title' => 'System']);
+        $deployLog = is_file(STORAGE_PATH . '/logs/deploy.log') ? array_slice(file(STORAGE_PATH . '/logs/deploy.log') ?: [], -30) : [];
+        return $this->render('system', ['info' => $info, 'log' => $log, 'deployLog' => $deployLog, 'title' => 'System']);
     }
 }

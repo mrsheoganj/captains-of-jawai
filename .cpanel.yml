@@ -1,0 +1,6 @@
+---
+# cPanel -> Git Version Control -> Manage -> Pull or Deploy -> "Deploy HEAD Commit"
+# runs this. The script copies the site into place and updates the database (with a backup first).
+deployment:
+  tasks:
+    - /bin/bash deploy/cpanel-deploy.sh

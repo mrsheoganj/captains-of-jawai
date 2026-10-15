@@ -9,6 +9,12 @@
     <?php if ($log): ?><pre class="log"><?= e(implode('', $log)) ?></pre><?php else: ?><p class="muted">No errors logged.</p><?php endif; ?>
   </section>
 </div>
+<?php if (!empty($deployLog)): ?>
+<section class="card">
+  <div class="card-head"><h2><?= icon('download', 18) ?> Last website update (deploy log)</h2></div>
+  <pre class="log"><?= e(implode('', $deployLog)) ?></pre>
+</section>
+<?php endif; ?>
 <section class="card">
   <div class="card-head"><h2><?= icon('image', 18) ?> Demo content</h2></div>
   <p class="muted">Use these for presentations. Sample enquiries are marked with codes starting <span class="mono">DEMO-</span> and are never emailed to anyone.</p>

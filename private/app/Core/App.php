@@ -52,6 +52,11 @@ final class App
             return;
         }
 
+        // One-time deploy hook (FTP deploys without shell access); closed unless a fresh token file exists.
+        if ($method === 'POST' && $path === '/_deploy') {
+            (new \App\Controllers\DeployController())->run();
+        }
+
         // Public site ------------------------------------------------------
         self::applyRedirects($path);
 

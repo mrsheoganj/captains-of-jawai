@@ -204,6 +204,13 @@ The workflow `.github/workflows/deploy-godaddy.yml` copies `public_html/` and `p
 
 Never paste a private key into chat, email or the repository. After deploying, follow `ADMIN_CHECKLIST.md`.
 
+### Deploying by FTP (when SSH shell access is off)
+GoDaddy accounts often have SSH shell access switched off. The workflow `.github/workflows/deploy-ftp.yml` uploads by FTP instead and then calls a one-time deploy hook on the website (a random token is uploaded by FTP, used once and deleted) to back up and update the database, load new text once per version, import the recommended photos and set contact numbers.
+
+1. cPanel → **FTP Accounts** → create an account, e.g. `deploy`, with a strong password and **Directory: `/`** (your home folder, the one that contains `public_html`).
+2. GitHub → **Settings → Secrets and variables → Actions**: add `FTP_USER` (the full login shown in cPanel, e.g. `deploy@captainsofjawai.com`) and `FTP_PASSWORD`. `FTP_HOST` is optional.
+3. GitHub → **Actions → Deploy to GoDaddy (FTP) → Run workflow**.
+
 ### Updating later
 Upload the new files over the old ones. Keep `private/config.php`, `private/storage/` and `public_html/uploads/`. Any new database tables or columns are created automatically on the next page load. If you have SSH you can also run `php private/cli/install.php --migrate`. Back up the database (cPanel → Backup) and `public_html/uploads/` regularly.
 

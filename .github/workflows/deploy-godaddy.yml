@@ -117,7 +117,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          FLAGS: --backup --migrate ${{ inputs.refresh_text && '--refresh-text' || '' }} ${{ inputs.import_photos && '--import-photos' || '' }}
+          FLAGS: --backup --migrate --once ${{ inputs.refresh_text && '--refresh-text' || '' }} ${{ inputs.import_photos && '--import-photos' || '' }}
           PHONE: ${{ inputs.phone }}
           WHATSAPP: ${{ inputs.whatsapp }}
         run: |

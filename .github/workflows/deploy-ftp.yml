@@ -1,0 +1,124 @@
+# Deploy to GoDaddy by FTP (works when SSH shell access is switched off).
+# Run it from GitHub: Actions -> "Deploy to GoDaddy (FTP)" -> Run workflow.
+#
+# One-time setup (repo Settings -> Secrets and variables -> Actions -> New repository secret):
+#   FTP_USER      an FTP login whose folder is your HOME folder (/home/<cpanel-user>), see README
+#   FTP_PASSWORD  its password
+#   FTP_HOST      optional; defaults to the SSH_HOST secret, then to captainsofjawai.com
+#
+# What it does: uploads private/ and public_html/ (never config.php, storage/ or uploads/, never
+# deletes), then calls a one-time deploy hook on the website that backs up the database, updates it,
+# loads the new text (once per version), imports the recommended photos and sets contact numbers.
+name: Deploy to GoDaddy (FTP)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: only connect and show the server folders, upload nothing"
+        type: boolean
+        default: false
+      refresh_text:
+        description: "Load the latest website text (once per version; keeps enquiries, settings, photos)"
+        type: boolean
+        default: true
+      import_photos:
+        description: "Import the recommended Jawai photos"
+        type: boolean
+        default: true
+      phone:
+        description: "Optional public phone number, e.g. +91 79756 89308"
+        type: string
+        default: "+91 79756 89308"
+      whatsapp:
+        description: "Optional WhatsApp number, digits with country code"
+        type: string
+        default: "917975689308"
+      verify_tls:
+        description: "Verify the FTP server's TLS certificate (turn off only if the connection fails because of it)"
+        type: boolean
+        default: true
+
+concurrency: deploy-production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      FTP_HOST: ${{ secrets.FTP_HOST || secrets.SSH_HOST || 'captainsofjawai.com' }}
+      SITE: https://captainsofjawai.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check secrets
+        run: |
+          [ -n "$FTP_USER" ] || { echo "::error::Missing repository secret FTP_USER"; exit 1; }
+          [ -n "$FTP_PASSWORD" ] || { echo "::error::Missing repository secret FTP_PASSWORD"; exit 1; }
+          sudo apt-get install -y -qq lftp >/dev/null
+
+      - name: Connect and find the website folders
+        id: find
+        env:
+          VERIFY: ${{ inputs.verify_tls && 'yes' || 'no' }}
+        run: |
+          cat > ~/.lftprc <<EOF
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate $VERIFY
+          set net:max-retries 2
+          set net:timeout 30
+          set cmd:fail-exit true
+          EOF
+          lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "cls -1; bye" | tee root.txt
+          if lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "cls -1 public_html/private/config.php; bye" >/dev/null 2>&1; then
+            PRIV=public_html/private
+          elif lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "cls -1 private/config.php; bye" >/dev/null 2>&1; then
+            PRIV=private
+          elif grep -qx 'public_html' root.txt; then
+            PRIV=private
+          else
+            echo "::error::This FTP login does not start in your home folder (no public_html here). Create the FTP account with Directory '/' (see README)."
+            exit 1
+          fi
+          echo "Website app folder: $PRIV  (public folder: public_html)"
+          echo "priv=$PRIV" >> "$GITHUB_OUTPUT"
+
+      - name: Upload files
+        if: ${{ !inputs.dry_run }}
+        env:
+          PRIV: ${{ steps.find.outputs.priv }}
+        run: |
+          lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "
+            mirror -R --no-perms --parallel=4 --exclude-glob config.php --exclude storage/ private $PRIV;
+            mirror -R --no-perms --parallel=4 --exclude uploads/ public_html public_html;
+            bye"
+          echo "Upload complete."
+
+      - name: Update the database, text, photos and contact numbers
+        if: ${{ !inputs.dry_run }}
+        env:
+          PRIV: ${{ steps.find.outputs.priv }}
+          REFRESH: ${{ inputs.refresh_text && '1' || '0' }}
+          PHOTOS: ${{ inputs.import_photos && '1' || '0' }}
+          PHONE: ${{ inputs.phone }}
+          WHATSAPP: ${{ inputs.whatsapp }}
+        run: |
+          TOKEN=$(openssl rand -hex 32)
+          printf '%s' "$TOKEN" > deploy-token
+          lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "put deploy-token -o $PRIV/storage/deploy-token; bye"
+          rm -f deploy-token
+          curl -sS --max-time 900 -X POST "$SITE/_deploy" -H "X-Deploy-Token: $TOKEN" \
+            --data-urlencode "refresh_text=$REFRESH" --data-urlencode "import_photos=$PHOTOS" \
+            --data-urlencode "phone=$PHONE" --data-urlencode "whatsapp=$WHATSAPP" | tee hook.txt
+          grep -q 'Done\.' hook.txt || { echo "::error::The website did not finish the update (see output above)."; exit 1; }
+
+      - name: Check the live site
+        if: ${{ !inputs.dry_run }}
+        run: |
+          curl -sL "$SITE/book-a-safari/" -o book.html
+          for m in 'bk-vehicle' 'data-wa-book' 'Shared gypsy'; do
+            if grep -q "$m" book.html; then echo "YES  $m"; else echo "no   $m"; fi
+          done
+          echo "title: $(curl -sL "$SITE/" | grep -o '<title>[^<]*')"

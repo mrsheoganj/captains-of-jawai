@@ -29,12 +29,6 @@ if [ ! -f "$PRIV/config.php" ]; then
   echo "No private/config.php yet: open the website to run the installer, then deploy again."
   exit 0
 fi
-MARK="$PRIV/storage/.content-applied-2.10.0"
-if [ -f "$MARK" ]; then
-  "$PHP" "$PRIV/cli/apply-update.php" --backup --migrate --import-photos
-else
-  "$PHP" "$PRIV/cli/apply-update.php" --backup --migrate --refresh-text --import-photos \
-    "--phone=+91 79756 89308" "--whatsapp=917975689308"
-  date > "$MARK"
-fi
+"$PHP" "$PRIV/cli/apply-update.php" --backup --migrate --once --refresh-text --import-photos \
+  "--phone=+91 79756 89308" "--whatsapp=917975689308"
 echo "=== Deploy finished ==="

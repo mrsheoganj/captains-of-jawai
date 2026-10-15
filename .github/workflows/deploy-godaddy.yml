@@ -30,6 +30,14 @@ on:
         description: "Import the recommended Jawai photos and place them on the site"
         type: boolean
         default: true
+      phone:
+        description: "Optional: public phone number, e.g. +91 79756 89308 (leave empty to keep the current one)"
+        type: string
+        default: ""
+      whatsapp:
+        description: "Optional: WhatsApp number with country code, digits only, e.g. 917975689308"
+        type: string
+        default: ""
 
 concurrency: deploy-production
 
@@ -110,11 +118,13 @@ jobs:
           SSH_PORT: ${{ secrets.SSH_PORT }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           FLAGS: --backup --migrate ${{ inputs.refresh_text && '--refresh-text' || '' }} ${{ inputs.import_photos && '--import-photos' || '' }}
+          PHONE: ${{ inputs.phone }}
+          WHATSAPP: ${{ inputs.whatsapp }}
         run: |
           # Email/SMTP settings are never touched by apply-update.php. A full database backup is saved first
           # in private/storage/backups/ on the server.
           ssh -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" -o BatchMode=yes "$SSH_USER@$SSH_HOST" \
-            "cd '$DEPLOY_PATH' && (command -v php >/dev/null && PHP=php || PHP=/usr/local/bin/php; \$PHP private/cli/apply-update.php $FLAGS)"
+            "cd '$DEPLOY_PATH' && (command -v php >/dev/null && PHP=php || PHP=/usr/local/bin/php; \$PHP private/cli/apply-update.php $FLAGS ${PHONE:+--phone=\"$PHONE\"} ${WHATSAPP:+--whatsapp=$WHATSAPP})"
 
       - name: Remove key
         if: always()

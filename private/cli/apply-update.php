@@ -8,6 +8,8 @@
  *   --refresh-text   load the latest safaris, Jawai guide pages, FAQs and menus
  *                    (keeps enquiries, settings, email/SMTP, users and images)
  *   --import-photos  import the recommended Wikimedia Commons photos and place them
+ *   --phone="+91 …"  set the public phone number (call buttons)
+ *   --whatsapp=91…   set the WhatsApp number (digits with country code)
  *
  * Email/SMTP settings are never read or changed by this script.
  */
@@ -22,7 +24,7 @@ require PRIVATE_PATH . '/app/bootstrap.php';
 
 use App\Core\{App, Config, DB, PhotoImporter, Schema, Settings, SiteReset};
 
-$opt = getopt('', ['backup', 'migrate', 'refresh-text', 'import-photos']);
+$opt = getopt('', ['backup', 'migrate', 'refresh-text', 'import-photos', 'phone:', 'whatsapp:']);
 if (!Config::installed()) {
     fwrite(STDERR, "Website is not installed on this server (private/config.php missing).\n");
     exit(1);
@@ -78,6 +80,17 @@ if (isset($opt['import-photos'])) {
     foreach ($msgs as $m) {
         $say('  note: ' . $m);
     }
+}
+
+if (!empty($opt['phone'])) {
+    $phone = trim(preg_replace('/[^\d+ ]/', '', (string) $opt['phone']));
+    Settings::set('contact_phone', $phone);
+    $say("Phone number set: $phone");
+}
+if (!empty($opt['whatsapp'])) {
+    $wa = preg_replace('/\D+/', '', (string) $opt['whatsapp']);
+    Settings::set('whatsapp_number', $wa);
+    $say("WhatsApp number set: $wa");
 }
 
 Settings::flush();

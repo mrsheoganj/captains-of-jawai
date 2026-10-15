@@ -24,6 +24,7 @@ jobs:
       - name: Contact sheets of the candidates (pushed to the image-research branch)
         run: |
           python3 deploy/contact_sheets.py
+          npm i -s playwright@1.47.2 >/dev/null 2>&1 && npx -y playwright@1.47.2 install --with-deps chromium >/dev/null 2>&1 && node deploy/screens.js https://captainsofjawai.com || echo "screenshots skipped"
           cp image-audit.txt image-audit.json commons-candidates.txt sheets/
           cd sheets && git init -q && git checkout -q -b image-research && git add -A
           git -c user.name=github-actions -c user.email=actions@github.com commit -qm "Image research $(date -u +%F)"

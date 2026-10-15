@@ -57,7 +57,17 @@ final class SiteController
         }
         unset($g);
         usort($guide, fn ($a, $b) => ($order[$a['slug']] ?? 99) <=> ($order[$b['slug']] ?? 99));
-        $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1 ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
+        // Gallery preview: only photos that are not already shown elsewhere on the homepage.
+        $used = $heroIds;
+        foreach (['jawai_images', 'village_images'] as $k) {
+            $used = array_merge($used, array_map('intval', explode(',', (string) setting($k))));
+        }
+        foreach (['intro_image', 'season_winter_image', 'season_summer_image', 'season_monsoon_image', 'booking_image', 'coexist_image', 'cta_image'] as $k) {
+            $used[] = (int) setting($k);
+        }
+        $used = array_merge($used, array_map('intval', array_column($safaris, 'image_id')), array_map('intval', array_column($guide, 'image_id')));
+        $used = array_values(array_filter(array_unique($used)));
+        $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1' . ($used ? ' AND id NOT IN (' . implode(',', $used) . ')' : '') . ' ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
         $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 
@@ -109,7 +119,7 @@ final class SiteController
 
     public function gallery(): string
     {
-        $items = DB::all('SELECT * FROM media WHERE in_gallery = 1 ORDER BY sort_order, id DESC');
+        $items = DB::all('SELECT * FROM media WHERE in_gallery = 1 AND id <> ? ORDER BY sort_order, id DESC', [(int) setting('img_gallery')]); // the banner photo is not repeated below it
         $categories = array_values(array_unique(array_filter(array_column($items, 'gallery_category'))));
         return $this->show('gallery', compact('items', 'categories'), [
             'title' => 'Jawai Photo Gallery: Leopards & Landscapes',

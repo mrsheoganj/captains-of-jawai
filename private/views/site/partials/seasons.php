@@ -19,7 +19,7 @@ $seasons = [
       <?php foreach ($seasons as $key => [$fallback, $tag]): ?>
       <article class="season-card season-<?= $key ?> reveal">
         <div class="season-photo">
-          <?= picture((int) setting("season_{$key}_image") ?: null, 'Jawai Dam in ' . $key, ['sizes' => '(min-width: 1024px) 33vw, 100vw'], $fallback) ?>
+          <?= picture((int) setting("season_{$key}_image") ?: null, '', ['sizes' => '(min-width: 1024px) 33vw, 100vw'], $fallback) ?>
           <span class="season-tag"><?= e($tag) ?></span>
         </div>
         <div class="season-body">

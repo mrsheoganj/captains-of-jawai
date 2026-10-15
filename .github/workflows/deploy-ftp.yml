@@ -105,14 +105,20 @@ jobs:
           PHONE: ${{ inputs.phone }}
           WHATSAPP: ${{ inputs.whatsapp }}
         run: |
-          TOKEN=$(openssl rand -hex 32)
-          printf '%s' "$TOKEN" > deploy-token
-          lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "put deploy-token -o $PRIV/storage/deploy-token; bye"
-          rm -f deploy-token
-          curl -sS --max-time 900 -X POST "$SITE/_deploy" -H "X-Deploy-Token: $TOKEN" \
-            --data-urlencode "refresh_text=$REFRESH" --data-urlencode "import_photos=$PHOTOS" \
-            --data-urlencode "phone=$PHONE" --data-urlencode "whatsapp=$WHATSAPP" | tee hook.txt
-          grep -q 'Done\.' hook.txt || { echo "::error::The website did not finish the update (see output above)."; exit 1; }
+          # The website imports photos in small batches, so call it until nothing is pending.
+          for round in 1 2 3 4 5 6 7 8; do
+            TOKEN=$(openssl rand -hex 32)
+            printf '%s' "$TOKEN" > deploy-token
+            lftp -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "put deploy-token -o $PRIV/storage/deploy-token; bye"
+            rm -f deploy-token
+            echo "--- round $round"
+            curl -sS --max-time 900 -X POST "$SITE/_deploy" -H "X-Deploy-Token: $TOKEN" \
+              --data-urlencode "backup=$([ $round = 1 ] && echo 1 || echo 0)" --data-urlencode "refresh_text=$REFRESH" --data-urlencode "import_photos=$PHOTOS" \
+              --data-urlencode "phone=$PHONE" --data-urlencode "whatsapp=$WHATSAPP" | tee hook.txt
+            grep -q 'Done\.' hook.txt || { echo "::error::The website did not finish the update (see output above)."; exit 1; }
+            grep -q 'PHOTOS-PENDING' hook.txt || exit 0
+          done
+          echo "::warning::Some photos are still waiting to be imported; run the deploy again to finish."
 
       - name: Check the live site
         if: ${{ !inputs.dry_run }}

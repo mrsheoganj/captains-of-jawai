@@ -29,7 +29,7 @@ final class DeployController
         header('Content-Type: text/plain; charset=utf-8');
         header('Cache-Control: no-store');
         $lines = (new Updater())->run([
-            'backup' => true, 'migrate' => true, 'once' => true,
+            'backup' => ($_POST['backup'] ?? '1') === '1', 'migrate' => true, 'once' => true,
             'refresh_text' => ($_POST['refresh_text'] ?? '1') === '1',
             'import_photos' => ($_POST['import_photos'] ?? '1') === '1',
             'phone' => (string) ($_POST['phone'] ?? ''), 'whatsapp' => (string) ($_POST['whatsapp'] ?? ''),

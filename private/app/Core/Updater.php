@@ -47,11 +47,13 @@ final class Updater
             $this->say('Website text updated (safaris, Jawai guide pages, FAQs, menus). Enquiries, settings and images kept.');
         }
         if (!empty($o['import_photos'])) {
-            @set_time_limit(900);
-            [$n, $filled, $msgs] = PhotoImporter::importRecommended();
-            $this->say("Recommended photos: $n ready, placed in $filled spot(s).");
-            foreach ($msgs as $m) {
-                $this->say('  note: ' . $m);
+            if (ImagePlan::done()) {
+                $this->say('Photo layout already applied; your own photo choices are kept.');
+            } else {
+                [$lines, $finished] = ImagePlan::apply();
+                foreach ($lines as $l) {
+                    $this->say($l);
+                }
             }
         }
         if (!empty($o['phone'])) {

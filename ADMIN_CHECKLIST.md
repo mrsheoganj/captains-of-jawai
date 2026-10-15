@@ -22,9 +22,14 @@ This loads everything from the October 2026 content report:
 
 Your enquiries, settings, users and photos are kept. Text you typed yourself into Safaris, Pages or FAQs is replaced, so redo any personal edits afterwards.
 
-## 3. Load the recommended photos (one click)
-**Media → Find Jawai photos → Import recommended photos**.
-Imports the 18 hand-picked Wikimedia Commons photos from the report and places them in the homepage slider, "Jawai in pictures", the season cards, safaris and guide pages. Photographer and licence are saved automatically and shown only on the **Photo credits** page (linked in the footer), which the CC BY / BY-SA licences require.
+## 3. Photos (done automatically by the deploy)
+The deploy imports 62 hand-picked photos taken in Jawai (Wikimedia Commons) and gives every spot on the website its own photo:
+slider, intro, safaris, "Jawai in pictures", seasons, the new **Village life** section, the Jawai guide pages and the page banners.
+Similar shots (more frames of the same leopard, more flamingos) are in the **Gallery** only, never in a second spot on the site.
+Exact duplicate files in the media library are merged into one (removed copies are kept in `private/storage/removed-media/`).
+Photos taken outside Jawai stay in the media library but are not shown in the Gallery.
+Photographer and licence are shown on the **Photo credits** page (linked in the footer), as the CC BY / BY-SA licences require.
+This runs once; after that, any photo you pick in the admin stays. To change a spot: Settings → Homepage (or the page/safari) → pick another photo.
 
 ## 4. Settings to fill in (Settings → …)
 | Where | What | Why |

@@ -65,7 +65,7 @@ foreach (Settings::lines('stats') as $line) {
       <a class="link-arrow reveal" href="/jawai/">Read our guide to Jawai</a>
     </div>
     <div class="split-media">
-      <div class="framed reveal-img" data-parallax="0.06"><?= picture((int) setting('intro_image') ?: null, 'Leopard on the granite hills of Jawai', ['sizes' => '(min-width: 1024px) 45vw, 100vw'], 'leopard-portrait') ?></div>
+      <div class="framed reveal-img" data-parallax="0.06"><?= picture((int) setting('intro_image') ?: null, '', ['sizes' => '(min-width: 1024px) 45vw, 100vw'], 'leopard-portrait') ?></div>
       <p class="photo-caption reveal">Granite country near Bera, Pali district</p>
     </div>
   </div>
@@ -141,7 +141,7 @@ foreach (Settings::lines('booking_details') as $line) {
         <?php foreach ($details as [$k, $v]): ?><div><dt><?= e($k) ?></dt><dd><?= e($v) ?></dd></div><?php endforeach; ?>
       </dl>
       <?php endif; ?>
-      <div class="booking-photo reveal-img"><?= picture((int) setting('booking_image') ?: null, 'Open safari jeep in Jawai', ['sizes' => '(min-width: 1024px) 40vw, 100vw'], 'safari-jeep') ?></div>
+      <div class="booking-photo reveal-img"><?= picture((int) setting('booking_image') ?: null, '', ['sizes' => '(min-width: 1024px) 40vw, 100vw'], 'safari-jeep') ?></div>
     </div>
     <div class="booking-card reveal">
       <?= View::partial('site/partials/booking-tabs', ['id' => 'home']) ?>
@@ -209,7 +209,7 @@ foreach (Settings::lines('booking_details') as $line) {
 <?php if (Settings::bool('coexist_enabled')): ?>
 <section class="section feature">
   <div class="container feature-grid">
-    <div class="feature-media reveal-img" data-parallax="0.08"><?= picture((int) setting('coexist_image') ?: null, 'The granite hills of Jawai at dusk', ['sizes' => '(min-width: 1024px) 60vw, 100vw'], 'granite-dome-dusk') ?></div>
+    <div class="feature-media reveal-img" data-parallax="0.08"><?= picture((int) setting('coexist_image') ?: null, '', ['sizes' => '(min-width: 1024px) 60vw, 100vw'], 'granite-dome-dusk') ?></div>
     <div class="feature-card reveal" style="--d:.15s">
       <span class="kicker kicker-crimson"><?= e(setting('coexist_kicker')) ?></span>
       <h2 class="display-2"><?= e(setting('coexist_heading')) ?></h2>
@@ -219,6 +219,9 @@ foreach (Settings::lines('booking_details') as $line) {
   </div>
 </section>
 <?php endif; ?>
+
+<!-- Village life -->
+<?= View::partial('site/partials/village') ?>
 
 <!-- Guest words (only real testimonials entered in admin) -->
 <?php if (Settings::bool('testimonials_enabled') && $testimonials): ?>

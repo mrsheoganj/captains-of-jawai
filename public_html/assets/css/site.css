@@ -794,6 +794,17 @@ html.is-loading .preloader { animation: preloaderIn .25s .3s forwards; } /* only
   .photo-strip figure:first-child { grid-column: 1; grid-row: 1 / 3; }
 }
 
+/* ===== Village life ===== */
+.village-intro { max-width: 68ch; color: var(--text-2); margin: -8px 0 28px; }
+.village-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 1024px) { .village-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+.village-item { margin: 0; }
+.village-item picture { display: block; overflow: hidden; border-radius: var(--radius-lg); aspect-ratio: 4 / 3; }
+.village-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.village-item:hover img { transform: scale(1.05); }
+.village-item figcaption { font-size: .85rem; line-height: 1.4; color: var(--text-3); padding: 8px 2px 0; }
+.village-compact { padding-top: 0; }
+
 /* ===== Booking section ===== */
 .booking-grid { display: grid; gap: clamp(32px, 5vw, 64px); align-items: start; }
 @media (min-width: 1024px) { .booking-grid { grid-template-columns: 1fr 1fr; } }

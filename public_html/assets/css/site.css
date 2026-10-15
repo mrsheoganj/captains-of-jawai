@@ -1159,3 +1159,52 @@ img, svg, video, iframe { max-width: 100%; }
 
 .btn-whatsapp { margin-top: 10px; background: #fff; color: #128C4A; border: 1.5px solid #25D366; justify-content: center; gap: 8px; }
 .btn-whatsapp:hover { background: #E9FBF0; color: #0E7A3F; }
+
+/* ===== Phones: swipe sliders and tighter layout ===== */
+.m-dots { display: none; }
+@media (max-width: 767px) {
+  .section { padding: 60px 0; }
+  .section-head { margin-bottom: 22px; gap: 10px 16px; }
+
+  /* Long stacks of cards become swipeable rows (with a peek at the next card) */
+  [data-m-slider] {
+    display: flex !important; flex-wrap: nowrap; gap: 14px !important; columns: auto;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 14px; scroll-padding-inline: var(--gutter);
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  [data-m-slider]::-webkit-scrollbar { display: none; }
+  [data-m-slider] > * { flex: 0 0 84%; max-width: 360px; scroll-snap-align: start; margin: 0 !important; min-width: 0; }
+  .guide-cards[data-m-slider] > *, .village-grid[data-m-slider] > * { flex-basis: 72%; max-width: 300px; }
+  .home-gallery[data-m-slider] > * { flex-basis: 66%; max-width: 280px; }
+  /* Off-screen slides never cross the viewport, so show them without the scroll-in animation */
+  .js [data-m-slider] > .reveal, .js [data-m-slider] .reveal, .js [data-m-slider] .reveal-img { opacity: 1; transform: none; clip-path: none; }
+  .js [data-m-slider] .reveal-img img { transform: none; }
+  .m-dots { display: flex; justify-content: center; gap: 2px; margin-top: 4px; }
+  .m-dots button { width: 28px; height: 28px; border: 0; background: none; padding: 0; display: grid; place-items: center; cursor: pointer; }
+  .m-dots button::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--border-2); transition: width .3s var(--ease), background .3s; }
+  .m-dots button.is-active::before { width: 22px; border-radius: 4px; background: var(--accent); }
+
+  /* Main slider: fill the screen without hiding the buttons behind browser bars */
+  .slider { height: min(88svh, 720px); min-height: 520px; }
+  .slider-content { padding-bottom: 96px; }
+  .slider .hero-sub { font-size: 1rem; margin-bottom: 22px; }
+  .slider .btn-row { gap: 10px; }
+  .slider .btn-row .btn { flex: 1 1 0; padding-inline: 14px; }
+  .slider-nav { left: var(--gutter); right: var(--gutter); bottom: 22px; justify-content: space-between; }
+  .slide-caption { display: none; }
+
+  /* Booking: safari types two to a row */
+  .bk-type-grid { grid-template-columns: 1fr 1fr; }
+  .bk-type-card { padding: 10px 10px 10px 32px; }
+  .bk-type-card::before { left: 10px; top: 12px; width: 14px; height: 14px; }
+  .bk-type-card strong { font-size: .86rem; }
+  .bk-type-card small { font-size: .74rem; }
+
+  /* Footer: link lists side by side */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer-grid > .footer-brand, .footer-grid > div:last-child { grid-column: 1 / -1; }
+  .footer-bottom ul { gap: 4px 16px; }
+  .footer-bottom a { display: inline-block; padding: 6px 0; }
+}
+@media (max-width: 359px) { .bk-type-grid { grid-template-columns: 1fr; } }

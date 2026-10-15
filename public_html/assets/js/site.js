@@ -114,6 +114,33 @@
     play();
   }
 
+  /* ---------------- Phone sliders (swipeable card rows, CSS scroll-snap) ---------------- */
+  $$('[data-m-slider]').forEach((track) => {
+    const items = Array.from(track.children);
+    if (items.length < 2) return;
+    const dots = document.createElement('div');
+    dots.className = 'm-dots';
+    dots.setAttribute('aria-hidden', 'true'); // swipe or scroll is the real control; dots only show position
+    const btns = items.map((_, n) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.tabIndex = -1;
+      b.addEventListener('click', () => track.scrollTo({ left: items[n].offsetLeft - items[0].offsetLeft, behavior: reduced ? 'auto' : 'smooth' }));
+      dots.appendChild(b);
+      return b;
+    });
+    track.after(dots);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const step = items[1].offsetLeft - items[0].offsetLeft || 1;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      const n = atEnd ? items.length - 1 : Math.round(track.scrollLeft / step);
+      btns.forEach((b, k) => b.classList.toggle('is-active', k === n));
+    };
+    track.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    update();
+  });
+
   /* ---------------- Distance map (interactive) ---------------- */
   const map = $('[data-map]');
   if (map) {

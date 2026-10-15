@@ -15,7 +15,7 @@ $seasons = [
       </div>
       <a class="link-arrow reveal" href="/jawai/best-time-to-visit/">Best time to visit</a>
     </div>
-    <div class="season-grid" data-stagger>
+    <div class="season-grid" data-stagger data-m-slider aria-label="Seasons">
       <?php foreach ($seasons as $key => [$fallback, $tag]): ?>
       <article class="season-card season-<?= $key ?> reveal">
         <div class="season-photo">

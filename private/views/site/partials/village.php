@@ -26,7 +26,7 @@ $photos = array_slice($photos, 0, count($photos) >= 4 ? intdiv(min(count($photos
       <?php if (!$compact): ?><a class="link-arrow reveal" href="/jawai/culture/">Jawai culture</a><?php endif; ?>
     </div>
     <?php if (!$compact && setting('village_body')): ?><div class="village-intro reveal"><?= paragraphs(setting('village_body')) ?></div><?php endif; ?>
-    <div class="village-grid" data-stagger>
+    <div class="village-grid" data-stagger data-m-slider aria-label="Village life photos">
       <?php foreach ($photos as $m): ?>
       <figure class="village-item reveal">
         <?= picture($m, (string) $m['alt_text'], ['sizes' => '(min-width: 1024px) 25vw, 50vw']) ?>

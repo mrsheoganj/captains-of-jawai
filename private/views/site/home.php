@@ -89,7 +89,7 @@ foreach (Settings::lines('stats') as $line) {
       </div>
       <a class="link-arrow reveal" href="/safaris/">All safaris</a>
     </div>
-    <div class="grid grid-<?= count($safaris) === 4 || count($safaris) === 2 ? 2 : 3 ?>" data-stagger>
+    <div class="grid grid-<?= count($safaris) === 4 || count($safaris) === 2 ? 2 : 3 ?>" data-stagger data-m-slider aria-label="Safaris">
       <?php foreach ($safaris as $s): ?><?= View::partial('site/partials/card-safari', ['s' => $s]) ?><?php endforeach; ?>
     </div>
   </div>
@@ -161,7 +161,7 @@ foreach (Settings::lines('booking_details') as $line) {
       </div>
       <a class="link-arrow reveal" href="/gallery/">Full gallery</a>
     </div>
-    <div class="home-gallery masonry" data-lightbox>
+    <div class="home-gallery masonry" data-lightbox data-m-slider aria-label="Gallery photos">
       <?php foreach ($gallery as $m): ?>
       <figure class="masonry-item reveal">
         <a href="<?= e(media_url($m, 'lg')) ?>" data-caption="<?= e($m['caption'] ?: $m['alt_text']) ?>"><?= picture($m, $m['alt_text'], ['sizes' => '(min-width: 1024px) 25vw, 50vw']) ?></a>
@@ -189,7 +189,7 @@ foreach (Settings::lines('booking_details') as $line) {
       </div>
       <a class="link-arrow reveal" href="/jawai/">About Jawai</a>
     </div>
-    <div class="guide-cards" data-stagger>
+    <div class="guide-cards" data-stagger data-m-slider aria-label="Jawai guide">
       <?php foreach ($guide as $n => $g): ?>
       <a class="guide-card reveal" href="/<?= e($g['slug']) ?>/">
         <span class="guide-photo"><?= picture($g['image_id'] ? (int) $g['image_id'] : null, $g['label'], ['sizes' => '(min-width: 1024px) 25vw, 50vw'], \App\Core\JawaiGuide::IMAGES[$g['slug']] ?? 'landscape1') ?><span class="guide-num"><?= sprintf('%02d', $n + 1) ?></span></span>

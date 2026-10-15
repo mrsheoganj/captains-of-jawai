@@ -308,6 +308,18 @@
   }
   $$('[data-ajax-form]').forEach((form) => form.addEventListener('submit', (e) => { e.preventDefault(); submitForm(form); }));
 
+  /* ---------------- Book on WhatsApp: pre-fill the message from the form ---------------- */
+  $$('[data-wa-book]').forEach((a) => a.addEventListener('click', () => {
+    const f = a.closest('form'); if (!f) return;
+    const val = (n) => { const el = f.querySelector('[name="' + n + '"]:checked') || f.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+    const lines = ['Hello Captains of Jawai, I would like to book a safari.', 'Safari: ' + val('booking_type'), 'Vehicle: ' + val('vehicle')];
+    if (val('travel_date')) lines.push('Date: ' + val('travel_date'));
+    lines.push('Guests: ' + val('adults'));
+    if (val('full_name')) lines.push('Name: ' + val('full_name'));
+    if (val('message')) lines.push('Note: ' + val('message'));
+    a.href = 'https://wa.me/' + a.dataset.waBook + '?text=' + encodeURIComponent(lines.join('\n'));
+  }));
+
   /* ---------------- Book / Ask tabs ---------------- */
   $$('[data-tabs]').forEach((box) => {
     const tabs = $$('[data-tab]', box);

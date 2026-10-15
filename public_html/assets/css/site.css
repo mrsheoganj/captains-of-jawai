@@ -1138,3 +1138,13 @@ img, svg, video, iframe { max-width: 100%; }
 .page-404 .page-hero-media { aspect-ratio: 32 / 9; }
 .page-404 .section-tight { padding-top: 28px; }
 @media (max-width: 767px) { .page-404 .page-hero-media { aspect-ratio: 16 / 9; } }
+.bk-vehicle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 14px; }
+.bk-pill { position: relative; cursor: pointer; }
+.bk-pill input { position: absolute; opacity: 0; pointer-events: none; }
+.bk-pill span { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 8px; border: 1.5px solid var(--border-2); border-radius: 999px; font: 600 .9rem var(--sans); color: var(--text); background: #fff; transition: border-color .25s, background .25s; line-height: 1.2; }
+.bk-pill small { font-weight: 400; font-size: .74rem; color: var(--text-2); }
+.bk-pill input:checked + span { border-color: var(--accent); background: var(--accent-soft); }
+.bk-pill input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.btn-whatsapp { margin-top: 10px; background: #fff; color: #128C4A; border: 1.5px solid #25D366; justify-content: center; gap: 8px; }
+.btn-whatsapp:hover { background: #E9FBF0; color: #0E7A3F; }

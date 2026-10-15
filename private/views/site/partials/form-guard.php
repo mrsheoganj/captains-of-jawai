@@ -4,4 +4,4 @@
 <input type="hidden" name="utm_source" value="<?= e(str_input('utm_source', 100)) ?>" data-utm="utm_source">
 <input type="hidden" name="utm_medium" value="<?= e(str_input('utm_medium', 100)) ?>" data-utm="utm_medium">
 <input type="hidden" name="utm_campaign" value="<?= e(str_input('utm_campaign', 100)) ?>" data-utm="utm_campaign">
-<div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>

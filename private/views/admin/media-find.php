@@ -7,6 +7,11 @@ $cats = ['Leopards', 'Landscape', 'Birds & Wetland', 'Wildlife', 'Culture', 'Saf
 </div>
 
 <?php if ($canEdit): ?>
+<section class="card">
+  <div class="card-head"><h2><?= icon('star', 18) ?> Recommended Jawai photos</h2><span class="muted small"><?= count(\App\Core\PhotoImporter::RECOMMENDED) ?> hand-picked photos</span></div>
+  <p>Imports the hand-picked, freely licensed photos (Jawai leopards, Jawai Dam at sunset, the Rabari, crocodiles, flamingos, sarus cranes, hyena, sloth bear, chinkara, safari gypsy) and puts each one where it belongs: the homepage slider, "Jawai in pictures", the seasons, the safaris and the guide pages. Only empty spots and built-in demo photos are replaced; photos you chose yourself stay. Photographer and licence are saved automatically and listed on the Photo credits page.</p>
+  <form method="post" action="<?= e(admin_url('media/find/recommended')) ?>"><?= csrf_field() ?><button class="btn btn-primary" type="submit"><?= icon('download', 16) ?> Import recommended photos</button> <span class="muted small">Takes 1 to 3 minutes.</span></form>
+</section>
 <section class="card pack-card" data-pack data-url="<?= e(admin_url('media/find/pack')) ?>" data-total="<?= count($presets) ?>">
   <div class="card-head"><h2><?= icon('image', 18) ?> Starter photo pack</h2><span class="muted small"><?= $imported ?> imported so far · <?= $placeholders ?> built-in demo photo(s)</span></div>
   <p>One click: finds about 3 photos for each of <?= count($presets) ?> Jawai-related topics (leopards, Jawai Dam, granite hills, flamingos, cranes, crocodiles, Rabari herders, Ranakpur…), imports them into the gallery, and then puts them on the homepage, safaris, articles and pages <em>wherever a built-in demo photo is still used</em>. Anything your team already chose is never overwritten.</p>

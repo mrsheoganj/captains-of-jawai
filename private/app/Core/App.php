@@ -35,6 +35,9 @@ final class App
 
         header('X-Content-Type-Options: nosniff');
         self::migrateIfUpdated();
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https')) {
+            header('Strict-Transport-Security: max-age=31536000; includeSubDomains'); // browsers stay on HTTPS
+        }
         $admin = trim(admin_path(), '/');
 
         if ($path === '/' . $admin || str_starts_with($path, '/' . $admin . '/')) {
@@ -126,6 +129,7 @@ final class App
         $r->get("$a/media/find", [Admin\MediaController::class, 'find']);
         $r->post("$a/media/find/import", [Admin\MediaController::class, 'importSelected']);
         $r->post("$a/media/find/pack", [Admin\MediaController::class, 'pack']);
+        $r->post("$a/media/find/recommended", [Admin\MediaController::class, 'recommended']);
         $r->post("$a/media/find/apply", [Admin\MediaController::class, 'apply']);
         $r->post("$a/media/upload", [Admin\MediaController::class, 'upload']);
         $r->post("$a/media/{id:\d+}", [Admin\MediaController::class, 'update']);
@@ -155,6 +159,7 @@ final class App
         $r->get("$a/system", [Admin\DashboardController::class, 'system']);
         $r->post("$a/demo/{action}", [Admin\DashboardController::class, 'demo']);
         $r->post("$a/system/reset", [Admin\DashboardController::class, 'resetSite']);
+        $r->post("$a/system/refresh-content", [Admin\DashboardController::class, 'refreshContent']);
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
@@ -201,6 +206,10 @@ final class App
         DB::delete('menu_items', "url = '/journal/' OR url LIKE '/journal/%'"); // journal removed
         // 2.9: no "starting template" note on the public legal pages.
         DB::q("UPDATE pages SET body = REPLACE(body, ?, '')", ['<p><em>This page is a starting template. Please review it with your legal adviser and update it in Admin → Pages before launch.</em></p>']);
+        // 2.10: photo credits live on their own page, linked from the footer (CC BY / BY-SA attribution).
+        if (!DB::val("SELECT COUNT(*) FROM menu_items WHERE url = '/photo-credits/'")) {
+            DB::insert('menu_items', ['location' => 'legal', 'label' => 'Photo credits', 'url' => '/photo-credits/', 'parent_id' => null, 'sort_order' => 4, 'is_active' => 1, 'new_tab' => 0]);
+        }
         // 2.9: tidy navigation. If the menus are still the old defaults (they link to /experiences/), rebuild them.
         if ((int) DB::val("SELECT COUNT(*) FROM menu_items WHERE url LIKE '/experiences/%' AND location IN ('header', 'footer')")) {
             DB::q("DELETE FROM menu_items");

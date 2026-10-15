@@ -78,8 +78,9 @@ final class SiteController
     {
         $items = $this->published('safaris');
         return $this->show('safaris', ['items' => $items], [
-            'title' => 'Jawai Safaris: Private Leopard Jeep Safaris',
-            'description' => 'Explore bespoke safari experiences in Jawai and Bera: private leopard tracking, Jawai Dam wetland drives and photography expeditions.',
+            'title' => 'Best Safari in Jawai Bandh | 4x4 Wildlife Safaris',
+            'raw_title' => true,
+            'description' => 'Rajasthan wildlife safaris with Captains of Jawai: 6 AM and 4 PM Bera leopard safaris, Jawai Dam bird watching, village and photography safaris.',
             'breadcrumbs' => [['Safaris', '/safaris/']],
             'image' => $items[0]['image_id'] ?? null,
         ]);
@@ -151,7 +152,7 @@ final class SiteController
         $items = DB::all("SELECT * FROM media WHERE (credit <> '' AND credit <> 'Placeholder') OR source_url <> '' ORDER BY gallery_category, id");
         return $this->show('credits', ['items' => $items], [
             'title' => 'Photo Credits',
-            'description' => 'Credits and licences for the photographs used on the Captains of Jawai website.',
+            'description' => 'Photographers and Creative Commons licences for the photographs of leopards, birds, the Rabari and Jawai Dam used on the Captains of Jawai website.',
             'breadcrumbs' => [['Photo Credits', '/photo-credits/']],
         ]);
     }
@@ -171,8 +172,9 @@ final class SiteController
         $safari = str_input('safari', 120);
         $safaris = DB::all("SELECT title, slug FROM safaris WHERE status = 'published' ORDER BY sort_order, id");
         return $this->show('plan', ['preselect' => $safari, 'safaris' => $safaris], [
-            'title' => 'Book a Jawai Safari | Leopard Safari Enquiry',
-            'description' => 'Request a leopard safari in Jawai, Rajasthan. Choose your safari, date and drive time and we will confirm availability, usually within 12 hours.',
+            'title' => 'Bera Leopard Safari Booking | Captains of Jawai',
+            'raw_title' => true,
+            'description' => 'Reserve a morning (6–9 AM) or evening (4–7 PM) Jawai leopard safari, a Jawai Dam birding drive or a photography jeep with Captains of Jawai.',
             'breadcrumbs' => [['Book a safari', '/book-a-safari/']],
         ]);
     }
@@ -227,6 +229,16 @@ final class SiteController
                 fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]],
                 $faq
             )];
+        }
+        if ($slug === 'jawai/places-to-visit') {
+            foreach ([
+                ['dev-giri-temple', 'Dev Giri Temple (Ashapura Mata cave temple)', 'Cave shrine halfway up a granite hill near Perwa and Bera, Jawai, where leopards are often seen on the rocks and steps.'],
+                ['kambeshwar-mahadev-temple', 'Kambeshwar Mahadev Temple', 'Old Shiva temple in the Aravalli foothills near Sheoganj, about 11 km from Jawai Dam, with natural springs and granite boulders.'],
+                ['khodiyar-mata-tankeshwar-mahadev', 'Khodiyar Mata and Tankeshwar Mahadev temples', 'Shrines on the high ground by Jawai Dam with views over the reservoir and its granite hills.'],
+            ] as [$anchor, $name, $desc]) {
+                $schema[] = ['@context' => 'https://schema.org', '@type' => 'TouristAttraction', '@id' => abs_url('/jawai/places-to-visit/#' . $anchor), 'name' => $name, 'description' => $desc,
+                    'isAccessibleForFree' => true, 'containedInPlace' => ['@type' => 'Place', 'name' => 'Jawai, Pali district, Rajasthan']];
+            }
         }
         if ($root === 'jawai') {
             $schema[] = [
@@ -314,6 +326,13 @@ final class SiteController
         ];
         if (setting('contact_phone')) {
             $org['telephone'] = setting('contact_phone');
+        }
+        $offers = [];
+        foreach (DB::all("SELECT title, slug, excerpt FROM safaris WHERE status = 'published' ORDER BY sort_order, id") as $s) {
+            $offers[] = ['@type' => 'Offer', 'itemOffered' => ['@type' => 'TouristTrip', 'name' => $s['title'], 'description' => excerpt($s['excerpt'], 200), 'url' => abs_url('/safaris/' . $s['slug'] . '/')]];
+        }
+        if ($offers) {
+            $org['makesOffer'] = $offers;
         }
         if ($same) {
             $org['sameAs'] = $same;

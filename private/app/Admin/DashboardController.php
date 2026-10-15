@@ -111,6 +111,22 @@ final class DashboardController extends BaseController
         back(admin_url('system'));
     }
 
+    /** Reload the latest starter text (safaris, guide pages, FAQs, menus). Super admin + password. */
+    public function refreshContent(): void
+    {
+        $this->guard('settings', 'edit');
+        $user = \App\Core\Auth::user();
+        $row = DB::one('SELECT password_hash FROM users WHERE id = ?', [(int) $user['id']]);
+        if (($user['role'] ?? '') !== 'super_admin' || !$row || !password_verify((string) ($_POST['password'] ?? ''), (string) $row['password_hash'])) {
+            flash('error', 'Wrong password (or not a super admin). Nothing was changed.');
+            back(admin_url('system'));
+        }
+        $stats = \App\Core\SiteReset::refreshContent();
+        \App\Core\Audit::log('content_refresh', 'system', null, $stats);
+        flash('success', 'Website text updated: safaris, Jawai guide pages, FAQs and menus now have the latest content. Enquiries, settings, users and images were kept.');
+        back(admin_url('system'));
+    }
+
     public function system(): string
     {
         $this->guard('settings');

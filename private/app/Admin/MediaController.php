@@ -161,6 +161,22 @@ final class MediaController extends BaseController
     }
 
     /** One step of the starter photo pack (called repeatedly by the page's JavaScript). */
+    /** One click: import the hand-picked Jawai photos and place them in their slots. */
+    public function recommended(): void
+    {
+        $this->guard('media', 'edit');
+        @set_time_limit(600);
+        [$n, $filled, $msgs] = PhotoImporter::importRecommended();
+        Audit::log('import_recommended', 'media', null, ['imported' => $n, 'filled' => $filled]);
+        flash($n ? 'success' : 'error', $n
+            ? "$n recommended photo(s) ready and placed in $filled spot(s) across the website. Photographer credits are on the Photo credits page."
+            : 'No photos were imported. ' . implode(' ', array_slice($msgs, 0, 2)));
+        foreach (array_slice($msgs, 0, 5) as $m) {
+            flash('warning', $m);
+        }
+        redirect(admin_url('media/find'));
+    }
+
     public function pack(): void
     {
         $this->guard('media', 'edit');

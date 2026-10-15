@@ -6,7 +6,11 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Force HTTPS (disable these two lines while testing on a server without SSL)
+    # One canonical address: https://captainsofjawai.com (www and http redirect in a single 301 hop)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+    # Force HTTPS (disable these lines while testing on a server without SSL)
     RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)

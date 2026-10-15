@@ -16,7 +16,7 @@ foreach (Settings::lines('stats') as $line) {
   <div class="hero-slides">
     <?php foreach ($heroIds as $n => $id): $cap = $id && isset($heroSlides[$id]) ? ($heroSlides[$id]['caption'] ?: '') : ''; ?>
     <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>" aria-roledescription="slide" aria-label="<?= $n + 1 ?> of <?= count($heroIds) ?>">
-      <?= picture($id, $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : 'Jawai, Rajasthan', ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
+      <?= picture($id, $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : '', ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
       <?php if ($cap !== ''): ?><p class="slide-caption"><?= e($cap) ?></p><?php endif; ?>
     </div>
     <?php endforeach; ?>
@@ -112,7 +112,7 @@ if (Settings::bool('jawai_images_enabled')): ?>
     </div>
     <div class="photo-strip">
       <?php for ($n = 0; $n < 5; $n++): $mid = $stripIds[$n] ?? null; ?>
-      <figure class="reveal-img"><?= picture($mid, 'Jawai, Rajasthan', ['sizes' => $n === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'], $stripFallback[$n]) ?></figure>
+      <figure class="reveal-img"><?= picture($mid, '', ['sizes' => $n === 0 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw'], $stripFallback[$n]) ?></figure>
       <?php endfor; ?>
     </div>
   </div>

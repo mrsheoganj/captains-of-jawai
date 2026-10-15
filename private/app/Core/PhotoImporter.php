@@ -40,6 +40,120 @@ final class PhotoImporter
         ['Safari jeep', 'safari jeep India', 'Safari Life'],
     ];
 
+    /**
+     * Hand-picked Wikimedia Commons photos (from the October 2026 content report).
+     * [Commons file name, public alt text, gallery category, slots to fill]
+     * Slots: settings keys (hero_images, jawai_images and *_image), or "page:slug" / "safari:slug".
+     * Alt text describes only what is in the photo: pictures taken outside Jawai do not claim to be Jawai.
+     */
+    public const RECOMMENDED = [
+        ['Indian_leopard_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_02.jpg', 'Wild Indian leopard resting on a granite rock in Jawai Bandh, Rajasthan', 'Leopards', ['hero_images', 'safari:leopard-safari', 'page:jawai/leopards', 'seo_og_image']],
+        ['JAWAI_BERA_LEOPARD.3.jpg', 'Indian leopard scanning the granite hills of Bera, Jawai', 'Leopards', ['hero_images', 'intro_image']],
+        ['JAWAI_BERA_LEOPARD_KING.jpg', 'Adult male leopard on a granite boulder at sunset in Bera, Jawai', 'Leopards', ['hero_images', 'safari:photography-safari']],
+        ['Jawai_Leopard_Hills_Safari-02.jpg', 'Leopards on granite boulders in the Jawai hills', 'Leopards', ['jawai_images', 'page:jawai']],
+        ['JAWAI_BERA_LEOPARD_AND_THE_PRIEST.jpg', 'Leopard resting near a temple priest on a granite hill in Jawai', 'Culture', ['page:jawai/places-to-visit', 'coexist_image']],
+        ['Shepherd_from_Rajasthan_03.jpg', 'Rabari shepherd in a red turban near Jawai Bandh, Rajasthan', 'Culture', ['page:jawai/culture', 'page:experiences/rabari-culture']],
+        ['A_rabari_with_his_cattles.JPG', 'Rabari herdsman with his cattle in a village pasture in Rajasthan', 'Culture', []],
+        ['JAWAI_BANDH_SUNSET.jpg', 'Sunset over the Jawai Dam reservoir and granite hills', 'Landscape', ['hero_images', 'jawai_images', 'season_summer_image', 'page:jawai/best-time-to-visit']],
+        ['JAWAI_BANDH_LAKE.jpg', 'Calm water of Jawai Bandh reflecting the granite hills', 'Landscape', ['jawai_images', 'season_monsoon_image', 'page:jawai/jawai-dam']],
+        ['Predators_of_Jawai.jpg', 'Mugger crocodiles basking on the rocky shore of Jawai Dam', 'Wildlife', ['safari:dam-birding-safari', 'jawai_images']],
+        ['Mugger_Crocodile_(Crocodylus_palustris)_at_National_Chambal_Sanctuary,_Rajasthan,_India.jpg', 'Mugger crocodile basking on a sandbank in Rajasthan', 'Wildlife', []],
+        ['Greater_Flamingo,_Sangli,_Maharashtra,_India.jpg', 'Greater flamingos wading in shallow water', 'Birds & Wetland', ['season_winter_image', 'jawai_images']],
+        ['Sarus_Crane_by_Tisha_Mukherjee_05.jpg', 'Sarus crane foraging in a shallow wetland', 'Birds & Wetland', []],
+        ['Bar-headed_Goose_by_Dr._Raju_Kasambe_DSCN7530_(22).jpg', 'Bar-headed goose resting on a wetland shore in winter', 'Birds & Wetland', []],
+        ['Striped_hyena_in_Bhigwan_August_2025_by_Tisha_Mukherjee_21_(cropped).jpg', 'Striped hyena moving through dry scrub', 'Wildlife', ['page:jawai/wildlife']],
+        ['A_fragile_co-existence_of_between_sloth_bears_and_humans_at_Ratanmahal_Sloth_Bear_Sactuary,_Dahod,_Gujarat,_India.jpg', 'Indian sloth bear in rocky dry forest', 'Wildlife', []],
+        ['Chinkara_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_01.jpg', 'Chinkara, the Indian gazelle, in dry grassland', 'Wildlife', []],
+        ['Nilgai_(Boselaphus_tragocamelus)_male.jpg', 'Male nilgai, the blue bull, in open scrub', 'Wildlife', []],
+        ['Maruti_Gypsy,_Pug_Mark,_Kanha.jpg', 'Open 4x4 Gypsy safari vehicle on a forest track', 'Safari Life', ['booking_image', 'safari:private-safari', 'page:jawai/how-to-reach']],
+    ];
+
+    /**
+     * Import the recommended photos (skips ones already imported) and put them in their slots,
+     * replacing only empty or built-in demo images. Returns [imported count, slots filled, messages].
+     */
+    public static function importRecommended(): array
+    {
+        $msgs = [];
+        $ids = [];
+        foreach (array_chunk(self::RECOMMENDED, 10) as $chunk) {
+            $titles = implode('|', array_map(fn ($r) => 'File:' . str_replace('_', ' ', $r[0]), $chunk));
+            $params = [
+                'action' => 'query', 'format' => 'json', 'formatversion' => '2', 'titles' => $titles,
+                'prop' => 'imageinfo', 'iiprop' => 'url|size|mime|extmetadata', 'iiurlwidth' => '1920',
+                'iiextmetadatafilter' => 'LicenseShortName|LicenseUrl|Artist|ImageDescription|ObjectName',
+            ];
+            [$code, $body, $err] = self::http(self::api() . '?' . http_build_query($params));
+            if ($code !== 200) {
+                return [0, 0, ['Could not reach Wikimedia Commons' . ($err ? " ($err)" : " (HTTP $code)") . '. Check that the server can make outgoing HTTPS requests.']];
+            }
+            $pages = [];
+            foreach ((json_decode($body, true)['query']['pages'] ?? []) as $pg) {
+                $pages[str_replace(' ', '_', preg_replace('/^File:/', '', (string) $pg['title']))] = $pg;
+            }
+            foreach ($chunk as [$file, $alt, $cat, $slots]) {
+                $pg = $pages[$file] ?? null;
+                $ii = $pg['imageinfo'][0] ?? null;
+                if (!$ii) {
+                    $msgs[] = "$file: not found on Wikimedia Commons.";
+                    continue;
+                }
+                $meta = $ii['extmetadata'] ?? [];
+                $item = [
+                    'title' => $file, 'name' => $alt,
+                    'download' => (string) ($ii['thumburl'] ?? $ii['url']), 'original' => (string) $ii['url'],
+                    'page' => (string) ($ii['descriptionurl'] ?? ''),
+                    'license' => trim(strip_tags((string) ($meta['LicenseShortName']['value'] ?? ''))),
+                    'license_url' => (string) strip_tags((string) ($meta['LicenseUrl']['value'] ?? '')),
+                    'artist' => self::clean((string) ($meta['Artist']['value'] ?? 'Unknown')),
+                    'description' => '',
+                ];
+                $r = self::import($item, $cat, true);
+                if (!is_int($r)) {
+                    $msgs[] = "$file: $r";
+                    continue;
+                }
+                DB::update('media', ['alt_text' => $alt, 'caption' => $alt], 'id = ?', [$r]);
+                $ids[] = [$r, $slots];
+            }
+        }
+        return [count($ids), self::placeRecommended($ids), $msgs];
+    }
+
+    /** @param array<int,array{0:int,1:array}> $ids */
+    private static function placeRecommended(array $ids): int
+    {
+        $placeholder = array_map('intval', array_column(DB::all("SELECT id FROM media WHERE path LIKE 'assets/photos/%'"), 'id'));
+        $free = fn ($v) => !$v || in_array((int) $v, $placeholder, true);
+        $filled = 0;
+        $lists = [];
+        foreach ($ids as [$id, $slots]) {
+            foreach ($slots as $slot) {
+                if (in_array($slot, ['hero_images', 'jawai_images'], true)) {
+                    $lists[$slot][] = $id;
+                } elseif (preg_match('/^(page|safari):(.+)$/', $slot, $m)) {
+                    $table = $m[1] === 'page' ? 'pages' : 'safaris';
+                    $cur = DB::val("SELECT image_id FROM $table WHERE slug = ?", [$m[2]]);
+                    if ($cur !== false && $free($cur)) {
+                        DB::update($table, ['image_id' => $id], 'slug = ?', [$m[2]]);
+                        $filled++;
+                    }
+                } elseif ($free(Settings::get($slot))) {
+                    Settings::set($slot, (string) $id);
+                    $filled++;
+                }
+            }
+        }
+        foreach ($lists as $key => $new) {
+            $cur = array_filter(array_map('intval', explode(',', (string) Settings::get($key))));
+            if (!$cur || !array_diff($cur, $placeholder)) { // still the demo set: replace with the real photos
+                Settings::set($key, implode(',', array_slice(array_values(array_unique($new)), 0, 5)));
+                $filled++;
+            }
+        }
+        return $filled;
+    }
+
     private const UA = 'CaptainsOfJawaiWebsite/2.1 (+https://captainsofjawai.com; media importer)';
 
     private static function api(): string

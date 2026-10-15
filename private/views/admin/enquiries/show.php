@@ -8,7 +8,7 @@ $details = array_filter([
     'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'], 'Country' => $e['country'],
     ($e['type'] === 'journey' ? 'Booking' : 'About') => $e['interests'], 'Dates' => $e['travel_window'], 'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
     'Party' => $e['type'] === 'journey' ? (int) $e['adults'] . ' adult(s), ' . (int) $e['children'] . ' child(ren)' : '',
-    'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
+    'Vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
     // Older enquiries (before safari-only) may still carry these:
     'Length of stay' => $e['nights'], 'Accommodation' => $e['accommodation'], 'Transfer' => $e['transfer'],
 ], fn ($v) => $v !== null && $v !== '');

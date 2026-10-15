@@ -21,6 +21,16 @@
 </section>
 
 <?php if (\App\Core\Auth::role() === 'super_admin'): ?>
+<section class="card" id="refresh">
+  <div class="card-head"><h2><?= icon('copy', 18) ?> Update website text to the latest version</h2></div>
+  <p>Reloads the newest built-in text for <strong>safaris, the Jawai guide pages (leopards, Jawai Dam, wildlife, temples, culture, best time, how to reach), other pages, FAQs and menus</strong>. Use it after uploading a new version of the website.</p>
+  <p class="muted small">Kept: all enquiries, settings, users, images (and the photo chosen for each safari and page), testimonials and redirects. Replaced: any text you edited yourself in Safaris, Pages and FAQs.</p>
+  <form method="post" action="<?= e(admin_url('system/refresh-content')) ?>" class="reset-form" autocomplete="off">
+    <?= csrf_field() ?>
+    <label class="field"><span>Your admin password</span><input type="password" name="password" required autocomplete="current-password"></label>
+    <button class="btn btn-primary" type="submit" data-confirm="Reload the latest website text? Text you edited in Safaris, Pages and FAQs will be replaced."><?= icon('check', 15) ?> Update website text</button>
+  </form>
+</section>
 <section class="card reset-card" id="reset">
   <div class="card-head"><h2><?= icon('alert', 18) ?> Reset website and go live</h2></div>
   <p>Use this once, before launch, to clear everything that was added for the demo or for testing, and start clean with the real Jawai content.</p>

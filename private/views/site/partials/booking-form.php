@@ -53,6 +53,11 @@ $uid = 'bk' . substr(md5((string) ($id ?? 'form')), 0, 4);
     </label>
   </div>
 
+  <div class="bk-vehicle" role="radiogroup" aria-label="Vehicle">
+    <label class="bk-pill"><input type="radio" name="vehicle" value="Private gypsy" checked><span>Private gypsy <small>just your group</small></span></label>
+    <label class="bk-pill"><input type="radio" name="vehicle" value="Shared gypsy"><span>Shared gypsy <small>pay per seat</small></span></label>
+  </div>
+
   <p class="bk-label">3. Your details</p>
   <label class="field"><span>Full name *</span><input type="text" name="full_name" required autocomplete="name"></label>
   <div class="field-row">
@@ -60,10 +65,12 @@ $uid = 'bk' . substr(md5((string) ($id ?? 'form')), 0, 4);
     <label class="field"><span>Email *</span><input type="email" name="email" required autocomplete="email"></label>
   </div>
   <label class="field"><span>Anything else? (optional)</span><input type="text" name="message" placeholder="Where you are staying, children's ages, camera gear…"></label>
-  <input type="hidden" name="private_vehicle" value="1">
 
   <div class="form-error" data-form-error hidden></div>
   <button class="btn btn-primary btn-lg btn-block" type="submit"><span>Request booking</span></button>
+  <?php if ($waNum = preg_replace('/\D+/', '', (string) setting('whatsapp_number'))): ?>
+  <a class="btn btn-whatsapp btn-block" href="https://wa.me/<?= e($waNum) ?>" target="_blank" rel="noopener" data-wa-book="<?= e($waNum) ?>"><?= icon('whatsapp', 18) ?> Or book on WhatsApp</a>
+  <?php endif; ?>
   <p class="form-note"><?= e(setting('form_scope_note')) ?> <?= e(setting('privacy_note')) ?> <a href="/privacy-policy/">Privacy policy</a>.</p>
 </form>
 <div class="form-success" data-form-success hidden>

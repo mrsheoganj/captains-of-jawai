@@ -70,7 +70,7 @@ final class SettingDefs
                 'fields' => [
                     ['hero_kicker', 'Hero kicker (small line above headline)', 'text', "Jawai · Pali district · Rajasthan"],
                     ['hero_title', 'Hero headline', 'text', "Private leopard safaris in Jawai"],
-                    ['hero_subtitle', 'Hero sub-headline', 'textarea', "Open-jeep leopard and wildlife safaris at dawn and dusk, with local trackers who know these hills. Safaris only: choose your drive, we take care of the rest."],
+                    ['hero_subtitle', 'Hero sub-headline', 'textarea', "Private and shared open 4x4 gypsy safaris, morning 6 to 9 AM and evening 4 to 7 PM, with local trackers who know these hills."],
                     ['hero_images', 'Hero slideshow images (pick one or more)', 'images', ''],
                     ['hero_cta_primary', 'Primary button text', 'text', "Book a safari"],
                     ['hero_cta_secondary', 'Secondary button text', 'text', "See the safaris"],
@@ -104,7 +104,7 @@ final class SettingDefs
                     ['booking_kicker', 'Booking section kicker', 'text', "Book a safari"],
                     ['booking_heading', 'Booking section heading', 'text', "Book a safari or ask us"],
                     ['booking_intro', 'Booking section intro', 'textarea', "Pick a safari, a date and the number of guests. We confirm availability and the price personally, usually within 12 hours, and tell you where to meet. Nothing is charged until you confirm."],
-                    ['booking_details', 'Booking details (one per line: label | text)', 'lines', "Drive times | Winter (Oct to Mar): 6:00 to 9:00 and 15:30 to 18:30. Summer: 5:00 to 8:00 and 16:30 to 19:30\nVehicle | Open 4x4 gypsy with driver and local tracker, up to 6 guests\nDuration | About 3 hours per drive\nSeason | October to March is best; we run all year\nPrice | Per vehicle, confirmed when you enquire\nPayment | Paid directly to us after confirmation; nothing is taken online\nNot included | Hotels, meals and transfers. We run safaris only"],
+                    ['booking_details', 'Booking details (one per line: label | text)', 'lines', "Drive times | Morning 6:00 to 9:00 AM, evening 4:00 to 7:00 PM\nVehicle | Private or shared open 4x4 gypsy with driver and local tracker, up to 6 guests\nDuration | About 3 hours per drive\nSeason | October to March is best; we run all year\nPrice | Per vehicle, confirmed when you enquire\nPayment | Paid directly to us after confirmation; nothing is taken online\nNot included | Hotels, meals and transfers. We run safaris only"],
                     ['booking_image', 'Booking section image', 'image', ''],
                     ['home_gallery_enabled', 'Show gallery section', 'bool', '1'],
                     ['home_gallery_heading', 'Gallery section heading', 'text', "From the gallery"],
@@ -183,7 +183,7 @@ final class SettingDefs
                 'icon' => 'form',
                 'intro' => 'Options and messages used by the booking form (homepage and /book-a-safari/) and the contact form.',
                 'fields' => [
-                    ['booking_types', 'Booking types (one per line: name | short description | price, optional)', 'lines', "Morning leopard safari | Sunrise drive in an open jeep, about 3 hours |\nEvening leopard safari | Sunset drive in an open jeep, about 3 hours |\nMorning + evening safari | Two drives on the same day |\nFull-day safari | Dawn to dusk with a midday break, flexible timing |\nJawai Dam bird & crocodile safari | Wetland drive along the reservoir |\nVillage safari | Rabari herders, fields and hill shrines by jeep |\nPhotography safari | Longer stops, positioned for the best light |", 'Shown as choices on the booking form. Add a price as the third part, e.g. "From ₹4,000 per jeep".'],
+                    ['booking_types', 'Booking types (one per line: name | short description | price, optional)', 'lines', "Morning leopard safari | 6:00 to 9:00 AM in an open 4x4 gypsy |\nEvening leopard safari | 4:00 to 7:00 PM, into golden hour |\nShared gypsy safari | Join other guests in a shared open 4x4 and pay per seat |\nMorning + evening safari | Two drives on the same day |\nFull-day safari | Dawn to dusk with a midday break, flexible timing |\nJawai Dam bird & crocodile safari | Wetland drive along the reservoir |\nVillage safari | Rabari herders, fields and hill shrines by jeep |\nPhotography safari | Longer stops, positioned for the best light |", 'Shown as choices on the booking form. Add a price as the third part, e.g. "From ₹4,000 per jeep".'],
                     ['form_scope_note', 'Note shown on the form', 'textarea', "We run safaris only. We do not book hotels or arrange airport or station transfers. Tell us where you are staying in Jawai and we will tell you where to meet."],
                     ['form_success_title', 'Success heading', 'text', "Thank you. We have your enquiry."],
                     ['form_success_message', 'Success message', 'textarea', "We'll reply personally, usually within 12 hours. Please check your spam folder if you don't see our email."],
@@ -198,8 +198,8 @@ final class SettingDefs
                 'intro' => 'Default meta tags, social preview image, analytics and custom code.',
                 'fields' => [
                     ['seo_title_suffix', 'Title suffix', 'text', " | Captains of Jawai"],
-                    ['seo_home_title', 'Homepage title', 'text', "Jawai Leopard Safari | Private Safaris in Jawai, Rajasthan"],
-                    ['seo_home_description', 'Homepage meta description', 'textarea', "Private leopard safaris in Jawai, Rajasthan. Open-jeep drives at dawn and dusk with local trackers, Jawai Dam birding and village safaris. Book online."],
+                    ['seo_home_title', 'Homepage title', 'text', "Jawai Leopard Safari | Captains of Jawai, Bera & Jawai Bandh"],
+                    ['seo_home_description', 'Homepage meta description', 'textarea', "Book private & shared 4x4 Jawai leopard safaris in Bera & Jawai Bandh. Track leopards on granite rocks, see crocodiles, birds & temples in Jawai."],
                     ['seo_og_image', 'Default social share image', 'image', ''],
                     ['seo_noindex', 'Hide entire site from search engines (staging)', 'bool', '0'],
                     ['google_verification', 'Google Search Console verification code', 'text', ''],

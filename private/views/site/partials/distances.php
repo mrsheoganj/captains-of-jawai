@@ -73,7 +73,7 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
         <li class="reveal dist-<?= e($p['type']) ?>" data-dist="<?= $n ?>">
           <span class="dist-type"><?= e($label[$p['type']]) ?></span>
           <strong class="dist-name"><?= e($p['name']) ?></strong>
-          <span class="dist-km" data-count><?= e($p['km']) ?></span>
+          <span class="dist-km"><?= e($p['km']) ?></span>
           <?php if ($p['time'] !== ''): ?><span class="dist-time"><?= e($p['time']) ?> by road</span><?php endif; ?>
         </li>
         <?php endforeach; ?>

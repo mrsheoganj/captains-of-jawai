@@ -54,7 +54,7 @@ final class ApiController
             'travel_window' => $window,
             'adults' => max(1, min(50, (int) input('adults', 2))),
             'children' => max(0, min(30, (int) input('children', 0))),
-            'private_vehicle' => input('private_vehicle') ? 'Yes' : 'No preference',
+            'private_vehicle' => in_array($v = str_input('vehicle', 40), ['Private gypsy', 'Shared gypsy'], true) ? $v : (input('private_vehicle') ? 'Private gypsy' : 'No preference'),
             'message' => str_input('message', 3000),
         ];
         $this->done($this->store($data), 'journey');
@@ -156,7 +156,7 @@ final class ApiController
             'Reference' => $e['code'], 'Name' => $e['full_name'], 'Email' => $e['email'], 'Phone / WhatsApp' => $e['phone'],
             'Country' => $e['country'], 'Booking' => $e['interests'], 'Date' => $e['travel_window'],
             'Drive time' => $e['drive_time'] ?? '', 'Drives' => $e['drives'] ?? '',
-            'Party' => $e['type'] === 'journey' ? $party : '', 'Private vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
+            'Party' => $e['type'] === 'journey' ? $party : '', 'Vehicle' => $e['type'] === 'journey' ? $e['private_vehicle'] : '',
             'Message' => $e['message'],
         ], fn ($v) => $v !== null && $v !== '');
         $details = implode("\n", array_map(fn ($k, $v) => "$k: $v", array_keys($rows), $rows));

@@ -194,6 +194,16 @@ If the site was used for a demo or for testing, clear it before launch with **Ad
 
 A fresh install already starts this way: the real Jawai content is always installed, and sample enquiries are added only if you tick the box.
 
+### Deploying with GitHub Actions (SSH)
+The workflow `.github/workflows/deploy-godaddy.yml` copies `public_html/` and `private/` to GoDaddy over SSH and runs the database update. It never touches `private/config.php`, `private/storage/` or `public_html/uploads/`, and never deletes files on the server.
+
+1. On your computer create a key just for deploys: `ssh-keygen -t ed25519 -f coj_deploy -C coj-deploy` (no passphrase).
+2. cPanel → **SSH Access → Manage SSH Keys → Import Key**: paste `coj_deploy.pub`, then **Authorize** it.
+3. GitHub → repository **Settings → Secrets and variables → Actions**, add: `SSH_HOST`, `SSH_USER` (cPanel username), `SSH_KEY` (contents of the private file `coj_deploy`), `DEPLOY_PATH` (e.g. `/home/<cpanel-username>`), and `SSH_PORT` if it is not 22.
+4. GitHub → **Actions → Deploy to GoDaddy → Run workflow** (tick "Dry run" first to see what would change).
+
+Never paste a private key into chat, email or the repository. After deploying, follow `ADMIN_CHECKLIST.md`.
+
 ### Updating later
 Upload the new files over the old ones. Keep `private/config.php`, `private/storage/` and `public_html/uploads/`. Any new database tables or columns are created automatically on the next page load. If you have SSH you can also run `php private/cli/install.php --migrate`. Back up the database (cPanel → Backup) and `public_html/uploads/` regularly.
 

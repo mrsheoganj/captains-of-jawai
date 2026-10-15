@@ -51,23 +51,23 @@ final class Seeder
                 'title' => 'Classic Leopard Tracking Safari', 'slug' => 'leopard-safari', 'category' => 'Apex Predator',
                 'tagline' => 'Dawn and dusk among the granite caves of the leopard hills.',
                 'excerpt' => 'Follow alarm calls, pugmarks and the warmth of sun-struck granite with a master tracker, as resident leopards surface on the rocks at first and last light.',
-                'duration' => 'About 3 hours', 'timing' => 'Winter 6:00–9:00 and 15:30–18:30 · Summer 5:00–8:00 and 16:30–19:30', 'best_season' => 'October – March',
-                'group_size' => 'Private vehicle, up to 6 guests', 'image_id' => $i('leopard1'), 'is_featured' => 1,
+                'duration' => 'About 3 hours', 'timing' => 'Morning 6:00–9:00 AM · Evening 4:00–7:00 PM', 'best_season' => 'October – March',
+                'group_size' => 'Private or shared 4x4 gypsy, up to 6 guests', 'image_id' => $i('leopard1'), 'is_featured' => 1,
                 'highlights' => "Private open 4x4 with an experienced local tracker\nTracking by langur and peafowl alarm calls\nEngine-off observation at ethical distances\nBinoculars on board, beanbags for photographers\nHot tea or coffee served in the field",
                 'body' => '<h2>The anatomy of a tracking drive</h2><p>Long before sunrise, your Captain is already listening. In Jawai the leopards do not hide in dense forest. They rest on and inside the great granite domes, and the land itself tells you where they are. A langur barking from a ridge, a peacock\'s sharp alarm, fresh pugmarks in a sandy riverbed: each sign is read and weighed.</p><p>As the sun warms the rock, leopards often emerge onto ledges and cave mouths to bask. We position the vehicle quietly, switch off the engine and simply wait. Patience is the whole art.</p><h2>Ethical distance standards</h2><p>We never block an animal\'s path, never crowd a sighting and never use calls or bait. Engines are switched off during observation and we leave before the animal is disturbed. A leopard sighting is never guaranteed (any operator who promises one is misleading you), but the open granite terrain gives Jawai one of the highest daytime observation probabilities anywhere.</p><h2>What to bring</h2><ul><li>Neutral clothing: khaki, olive, stone. Warm layers for winter mornings (it can be 8–12°C at dawn).</li><li>A 100–400mm or 70–200mm lens for photographers; we carry beanbags.</li><li>Hat, sunscreen, and a scarf for dusty tracks.</li></ul>',
-                'meta_title' => 'Jawai Leopard Safari in Bera | Private 4x4 Tracking',
-                'meta_description' => 'Experience wild leopards on ancient granite kopjes. Private 4x4 jeeps, dawn and dusk drives, expert local trackers in Jawai and Bera.',
+                'meta_title' => 'Bera Leopard Safari Booking | Private & Shared 4x4',
+                'meta_description' => 'Join expert local trackers for morning (6–9 AM) and evening (4–7 PM) Jawai leopard safaris in private or shared open 4x4 gypsies across Bera\'s granite hills.',
             ],
             [
                 'title' => 'Jawai Bandh Wetland & Raptor Drive', 'slug' => 'dam-birding-safari', 'category' => 'Avian Wetland',
                 'tagline' => 'Flamingos, cranes and basking mugger crocodiles on the great reservoir.',
                 'excerpt' => 'A slower, scope-led exploration of the reservoir shoreline, winter flamingo flocks, demoiselle cranes, raptors and the resident marsh crocodiles.',
-                'duration' => '3 hours', 'timing' => 'Mid-morning or late afternoon', 'best_season' => 'November – February for migrants',
-                'group_size' => 'Private vehicle, up to 6 guests', 'image_id' => $i('bird1'), 'is_featured' => 1,
+                'duration' => 'About 3 hours', 'timing' => 'Morning 6:00–9:00 AM · Evening 4:00–7:00 PM', 'best_season' => 'November – February for migrants',
+                'group_size' => 'Private or shared 4x4 gypsy, up to 6 guests', 'image_id' => $i('bird1'), 'is_featured' => 1,
                 'highlights' => "Greater flamingo, demoiselle crane and bar-headed goose (winter)\nMugger crocodiles basking on sandy shoals\nOsprey, eagles and falcons over the water\nSpotting scope and field guides on board",
                 'body' => '<h2>The largest reservoir in western Rajasthan</h2><p>Commissioned by Maharaja Umaid Singh of Jodhpur in 1946 and completed in 1957, Jawai Bandh is a lifeline for people and wildlife alike. Each winter it becomes a staging ground on the Central Asian Flyway.</p><h2>Key species</h2><ul><li>Greater and lesser flamingo</li><li>Demoiselle crane and bar-headed goose</li><li>Painted stork, Eurasian spoonbill, river tern</li><li>Osprey, steppe and tawny eagle, peregrine falcon</li><li>Mugger (marsh) crocodile</li></ul><h2>The experience</h2><p>We work the water\'s edge slowly with binoculars and a spotting scope, stopping where the light and birds are best. It pairs beautifully with an evening leopard drive on the same day.</p>',
-                'meta_title' => 'Jawai Dam Safari | Crocodiles & Migratory Bird Watching',
-                'meta_description' => 'Mugger crocodiles and winter flamingos at Jawai Bandh. Specialist wetland birding drives with spotting optics and an expert naturalist.',
+                'meta_title' => 'Jawai Dam Bird Watching & Mugger Crocodile Safari',
+                'meta_description' => 'See mugger crocodiles and over 100 bird species, from greater flamingos to bar-headed geese and cranes, on a guided 4x4 wetland safari at Jawai Bandh.',
             ],
             [
                 'title' => 'Master Naturalist Private 4x4 Expedition', 'slug' => 'private-safari', 'category' => 'Bespoke',
@@ -184,7 +184,7 @@ final class Seeder
         foreach ([['About us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/'], ['Ask a question', '/book-a-safari/#ask']] as $n => [$l, $u]) {
             $add('footer2', $l, $u, $n + 1);
         }
-        foreach ([['Privacy Policy', '/privacy-policy/'], ['Terms', '/terms/'], ['Cookies', '/cookie-policy/'], ['Sitemap', '/sitemap.xml']] as $n => [$l, $u]) {
+        foreach ([['Privacy Policy', '/privacy-policy/'], ['Terms', '/terms/'], ['Cookies', '/cookie-policy/'], ['Photo credits', '/photo-credits/'], ['Sitemap', '/sitemap.xml']] as $n => [$l, $u]) {
             $add('legal', $l, $u, $n + 1);
         }
     }

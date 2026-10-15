@@ -38,6 +38,37 @@ final class SiteReset
         return false;
     }
 
+    /**
+     * "Update website text": reload the latest starter text for safaris, pages, FAQs and menus
+     * (with the newest Jawai content), keeping enquiries, settings, users, media and each item's image.
+     * Testimonials are left alone.
+     */
+    public static function refreshContent(): array
+    {
+        $images = [];
+        foreach (['safaris', 'pages'] as $t) {
+            foreach (DB::all("SELECT slug, image_id FROM $t WHERE image_id IS NOT NULL") as $r) {
+                $images[$t][$r['slug']] = (int) $r['image_id'];
+            }
+        }
+        $stats = [];
+        foreach (['safaris', 'pages', 'faqs', 'menu_items'] as $t) {
+            $stats[$t] = (int) DB::val("SELECT COUNT(*) FROM $t");
+            DB::q("DELETE FROM $t");
+        }
+        Seeder::run(false, false);
+        $exists = fn (int $id) => (bool) DB::val('SELECT COUNT(*) FROM media WHERE id = ?', [$id]);
+        foreach ($images as $t => $bySlug) {
+            foreach ($bySlug as $slug => $id) {
+                if ($exists($id)) {
+                    DB::update($t, ['image_id' => $id], 'slug = ?', [$slug]);
+                }
+            }
+        }
+        Demo::assignImages(false);
+        return $stats;
+    }
+
     /** @return array<string,int> counts of what was removed / reloaded */
     public static function run(): array
     {

@@ -184,8 +184,8 @@ HTML,
             [
                 'slug' => 'jawai/wildlife', 'title' => 'Birds and wildlife of Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/wildlife'), 'show_cta' => 1,
                 'intro' => 'Leopards get the attention, but Jawai also has hyenas, crocodiles, cranes, flamingos and a long list of raptors.',
-                'meta_title' => 'Jawai Wildlife & Birds: Hyena, Crocodile, Cranes, Flamingos',
-                'meta_description' => 'Animals and birds you can see in Jawai, Rajasthan: striped hyena, jungle cat, nilgai, mugger crocodile, demoiselle crane, bar-headed goose, flamingo and more.',
+                'meta_title' => 'Rajasthan Wildlife Safari | Leopards, Bears & Birds',
+                'meta_description' => 'Wildlife guide to Jawai Bandh: leopards, striped hyenas, sloth bears, Indian wolves, nilgai, chinkara, mugger crocodiles and over 100 bird species.',
                 'body' => <<<'HTML'
 <p>Jawai is dry, rocky country with one large body of water in the middle. That mix gives it a wider range of wildlife than its size suggests.</p>
 
@@ -196,11 +196,14 @@ HTML,
 <li><strong>Jungle cat</strong> and <strong>Indian fox</strong>: small hunters of the scrub and fields.</li>
 <li><strong>Nilgai</strong> (blue bull): the largest antelope in Asia, common in the farmland.</li>
 <li><strong>Grey (Hanuman) langur</strong>: troops on the rocks and temples. Their alarm calls often reveal a leopard.</li>
-<li>Indian hare, porcupine, grey mongoose and wild boar.</li>
+<li><strong>Indian sloth bear</strong>: shaggy and mostly nocturnal, found in the rocky Aravalli country around Jawai and occasionally seen at dawn or dusk.</li>
+<li><strong>Indian wolf</strong>: small packs range across the open farmland and grassland; sightings are rare and always special.</li>
+<li><strong>Chinkara</strong> (Indian gazelle): a small, graceful gazelle of dry scrub and field edges.</li>
+<li>Indian desert fox, Indian crested porcupine, ruddy and grey mongoose, Indian hare and wild boar.</li>
 </ul>
 
 <h2>Reptiles</h2>
-<p>The <strong>mugger crocodile</strong> is the one most visitors want to see. It basks on the reservoir banks and sandbars on cool, sunny days. Monitor lizards are also found on the rocks.</p>
+<p>The <strong>mugger crocodile</strong> is the one most visitors want to see. Jawai Bandh holds a large population, often estimated locally at several hundred. It basks on the reservoir banks and sandbars on cool, sunny days. Monitor lizards are also found on the rocks.</p>
 
 <h2>Birds</h2>
 <p>Bird lists for the Jawai area run to well over a hundred species. In winter the reservoir is the main attraction:</p>
@@ -208,6 +211,8 @@ HTML,
 <li><strong>Bar-headed goose</strong>, which migrates over the Himalaya</li>
 <li><strong>Demoiselle crane</strong> and <strong>common crane</strong></li>
 <li><strong>Greater flamingo</strong></li>
+<li><strong>Sarus crane</strong>, the world's tallest flying bird, seen in pairs in the wetlands</li>
+<li><strong>Great white and Dalmatian pelicans</strong> in some winters</li>
 <li>Ruddy shelduck, northern pintail and other ducks</li>
 <li>Painted stork, Eurasian spoonbill, black-headed ibis and river tern</li>
 </ul>
@@ -219,6 +224,7 @@ HTML,
                 'faq' => implode("\n", [
                     'What animals can you see in Jawai besides leopards? | Striped hyena, jungle cat, Indian fox, nilgai, grey langur, wild boar and mugger crocodiles, plus a large number of birds.',
                     'Which migratory birds come to Jawai? | Bar-headed geese, demoiselle and common cranes, greater flamingos, ruddy shelducks and many ducks and waders, mainly from November to February.',
+                    'Are there sloth bears and wolves in Jawai? | Yes, both live in the wider Jawai area, but they are shy and mostly nocturnal, so sightings are uncommon. Striped hyenas, jungle cats, nilgai and chinkara are seen more often.',
                     'Are there tigers in Jawai? | No. There are no tigers or lions in Jawai. The leopard is the largest predator.',
                 ]),
                 'sources' => implode("\n", [self::WIKI_RESERVE, self::WIKI_DAM]),
@@ -316,8 +322,8 @@ HTML,
             [
                 'slug' => 'jawai/places-to-visit', 'title' => 'Places to visit in and around Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/places-to-visit'), 'show_cta' => 1,
                 'intro' => 'Between leopard drives: the reservoir, the villages and hill shrines, and the forts and temples within a few hours.',
-                'meta_title' => 'Places to Visit in Jawai & Nearby (Ranakpur, Kumbhalgarh)',
-                'meta_description' => 'Things to do in and around Jawai, Rajasthan: Jawai Dam, Bera and the village hills, Rabari settlements, Ranakpur Jain temple, Kumbhalgarh Fort and Mount Abu.',
+                'meta_title' => 'Temples in Jawai & Top Attractions | Dev Giri & Dam',
+                'meta_description' => 'Visit the temples of Jawai: Dev Giri cave temple, Kambeshwar Mahadev and the Khodiyar Mata and Tankeshwar Mahadev shrines at Jawai Dam, plus Bera and Ranakpur.',
                 'body' => <<<'HTML'
 <p>Most visitors plan their days around two drives, at dawn and late afternoon. The middle of the day is free, and Jawai has plenty to fill it.</p>
 
@@ -326,8 +332,15 @@ HTML,
 <p>The reservoir is the centre of the area. Go in the late afternoon for crocodiles on the banks and the sunset over the water. In winter it is full of birds. <a href="/jawai/jawai-dam/">About the dam</a>.</p>
 <h3>Bera and the village hills</h3>
 <p>Bera is the village most associated with leopard sightings, surrounded by granite hills. Walking through the lanes, past fields and small temples, shows you how closely people and leopards live here.</p>
-<h3>Hill shrines</h3>
-<p>Many hills have a small temple or shrine on top or tucked into a cave, some reached by long flights of steps. Ask locally before climbing and dress respectfully.</p>
+<h3>Temples of Jawai</h3>
+<p>Many hills here have a shrine, from a painted stone under an overhang to a whitewashed temple at the top of a long flight of steps. Three are especially well known.</p>
+<h4 id="dev-giri-temple">Dev Giri Temple (Ashapura Mata cave temple)</h4>
+<p>A cave shrine about halfway up a granite hill near Perwa and Bera, reached by a winding whitewashed staircase. It is dedicated to Ashapura Mata, the protector goddess of many local families. Leopards are regularly seen on the rocks and steps around the temple, especially around dawn and dusk, which has made it a famous symbol of how people and leopards share these hills.</p>
+<h4 id="kambeshwar-mahadev-temple">Kambeshwar Mahadev Temple</h4>
+<p>An old Shiva temple in the Aravalli foothills near Sheoganj, roughly 11 km from Jawai Dam. It sits in a green valley with natural springs, granite boulders, langurs and peafowl: a peaceful stop between a morning and an evening drive.</p>
+<h4 id="khodiyar-mata-tankeshwar-mahadev">Khodiyar Mata and Tankeshwar Mahadev temples</h4>
+<p>Two shrines on the rocky high ground by the Jawai Dam, with wide views over the reservoir, the sandbanks where crocodiles bask, and the granite domes beyond. Come at sunrise or late afternoon for the light.</p>
+<p>All three are working places of worship: remove your shoes, dress modestly, keep your voice down and ask before taking photographs.</p>
 <h3>Rabari settlements</h3>
 <p>A visit with a Rabari family, arranged properly and with permission, is a chance to learn about herding life, traditional dress and how the community sees the leopard. <a href="/experiences/rabari-culture/">Rabari heritage walk</a>.</p>
 <h3>Sundowners on the rocks</h3>
@@ -345,6 +358,7 @@ HTML,
 HTML,
                 'faq' => implode("\n", [
                     'What can you do in Jawai apart from a leopard safari? | Visit the Jawai Dam for crocodiles and birds, walk the village lanes of Bera, meet Rabari herders, climb to a hill shrine and watch sunset from a granite outcrop.',
+                    'Which famous temples can we visit in Jawai between safari drives? | Dev Giri Temple (Ashapura Mata cave temple) near Perwa and Bera, where leopards are often seen on the rocks and steps; Kambeshwar Mahadev Temple in the Aravalli foothills about 11 km from Jawai Dam; and the Khodiyar Mata and Tankeshwar Mahadev shrines overlooking the dam.',
                     'Can I visit Ranakpur and Kumbhalgarh from Jawai? | Yes. Ranakpur is about two hours away and Kumbhalgarh a little further, so both fit in a long day trip.',
                     'Is Jawai good for families? | Yes. Shorter drives and the wetland drive at the dam work well for children. Tell us their ages when you book a safari.',
                 ]),

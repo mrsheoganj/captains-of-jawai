@@ -89,6 +89,9 @@ final class Media
             return '';
         }
         $b = '/assets/photos/' . $fallback;
+        if ($alt === '' && isset(Demo::PHOTOS[$fallback])) {
+            $alt = Demo::PHOTOS[$fallback][0]; // built-in photo: use its own description
+        }
         return '<picture><source type="image/webp" srcset="' . e("$b-800.webp 800w, $b-1600.webp 1600w") . '" sizes="' . e($sizes) . '"><img src="' . e("$b-1600.jpg") . '" srcset="' . e("$b-800.jpg 800w, $b-1600.jpg 1600w") . '" sizes="' . e($sizes) . '" width="1600" height="893" alt="' . e($alt) . '" loading="' . e($loading) . '" decoding="async"' . $priority . ($class ? ' class="' . e($class) . '"' : '') . '></picture>';
     }
 

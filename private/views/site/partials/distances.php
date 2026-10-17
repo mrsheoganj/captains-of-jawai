@@ -6,7 +6,7 @@
  */
 use App\Core\Settings;
 
-$home = [(float) (setting('latitude') ?: 25.1055), (float) (setting('longitude') ?: 73.1722)];
+$home = [(float) (setting('latitude') ?: 25.0012), (float) (setting('longitude') ?: 73.1775)];
 $places = [];
 foreach (Settings::lines('distances_items') as $line) {
     $p = array_pad(array_map('trim', explode('|', $line)), 6, '');

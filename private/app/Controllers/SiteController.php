@@ -260,7 +260,7 @@ final class SiteController
             $schema[] = [
                 '@context' => 'https://schema.org', '@type' => 'TouristDestination', 'name' => $slug === 'jawai' ? 'Jawai' : $item['title'],
                 'description' => excerpt($item['intro'] ?: $item['body'], 300), 'url' => abs_url('/' . $slug . '/'),
-                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 25.1055, 'longitude' => 73.1722],
+                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => (float) setting('latitude'), 'longitude' => (float) setting('longitude')],
                 'containedInPlace' => ['@type' => 'AdministrativeArea', 'name' => 'Pali district, Rajasthan, India'],
                 'touristType' => ['Wildlife enthusiasts', 'Birdwatchers', 'Photographers', 'Families'],
             ];

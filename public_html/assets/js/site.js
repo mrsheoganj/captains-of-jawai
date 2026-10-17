@@ -162,10 +162,11 @@
       if (!info) return;
       if (!pin) { info.innerHTML = hint; return; }
       const d = pin.dataset;
-      info.innerHTML = '<div><span class="info-kind">' + esc(d.kind) + '</span><span class="info-name">' + esc(d.name) + '</span></div>'
-        + (d.time ? '<span class="info-time">' + esc(d.time) + ' by road</span>' : '')
-        + '<a href="' + esc(d.gmaps) + '" target="_blank" rel="noopener">Directions</a>'
-        + '<span class="info-km">' + esc(d.km) + '</span>';
+      info.innerHTML = '<div class="info-place"><span class="info-kind">' + esc(d.kind) + '</span><span class="info-name">' + esc(d.name) + '</span></div>'
+        + '<div class="info-dist"><span class="info-km">' + esc(d.km) + '</span>' + (d.time ? '<span class="info-time">' + esc(d.time) + ' by road from Bera</span>' : '') + '</div>'
+        + '<a class="map-dir" href="' + esc(d.gmaps) + '" target="_blank" rel="noopener">'
+        + '<svg class="icon" width="16" height="16" aria-hidden="true"><use href="#i-map-pin"/></svg>Directions'
+        + '<svg class="icon" width="14" height="14" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>';
     };
     const stopTour = () => { touring = false; clearInterval(tourTimer); };
     const user = (i) => { stopTour(); select(active === i ? null : i); };

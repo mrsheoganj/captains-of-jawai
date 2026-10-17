@@ -1246,3 +1246,19 @@ img, svg, video, iframe { max-width: 100%; }
 .pin-dot { stroke: #FBF5E6; }
 .home-dot { stroke: #FBF5E6; }
 @media (max-width: 639px) { .map-note { font-size: 19px; } .map-rings text { font-size: 15px; } }
+
+/* ===== Distance map: selected place + Directions button ===== */
+.map-info { gap: 10px 18px; padding: 14px 18px; }
+.map-info .info-place { flex: 1 1 200px; min-width: 0; }
+.map-info .info-dist { display: flex; flex-direction: column; line-height: 1.15; }
+.map-info .info-km { margin-left: 0; font-size: 1.45rem; }
+.map-info .info-time { font-size: .82rem; }
+.map-info a.map-dir {
+  display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; min-height: 44px;
+  background: var(--accent); color: #fff; border-radius: 999px; font: 600 .92rem var(--sans); text-decoration: none;
+  box-shadow: 0 8px 18px -10px rgba(180, 83, 42, .8); transition: background .2s, transform .2s, box-shadow .2s;
+}
+.map-info a.map-dir:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 12px 22px -12px rgba(180, 83, 42, .9); }
+.map-info a.map-dir:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.map-info a.map-dir .icon { flex: none; }
+@media (max-width: 479px) { .map-info a.map-dir { flex: 1 1 100%; justify-content: center; } }

@@ -72,7 +72,7 @@ final class JawaiGuide
 <p>October to March is the main season, with cool mornings and leopards out on the rocks. December and January are the coldest months and best for winter birds. April to June is very hot, and July to September brings the monsoon, green hills and rough tracks. <a href="/jawai/best-time-to-visit/">Month-by-month guide</a>.</p>
 
 <h2>Getting there</h2>
-<p>Udaipur airport is the usual way in: about 155 km, or three and a half hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 15 km from Bera and Falna about 34 km, both on the line between Ahmedabad and Jaipur. <a href="/jawai/how-to-reach/">How to reach Jawai</a>.</p>
+<p>Udaipur airport is the usual way in: about 130 km, or two and a half to three hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 18 km from Bera and Falna about 37 km, both on the line between Ahmedabad and Jaipur. <a href="/jawai/how-to-reach/">How to reach Jawai</a>.</p>
 
 <h2>Quick facts</h2>
 <table>
@@ -84,8 +84,8 @@ final class JawaiGuide
 <tr><th>Leopards</th><td>Estimated 50 to 60 in the wider area</td></tr>
 <tr><th>Dam</th><td>Jawai Dam, on the Jawai River, completed 1957</td></tr>
 <tr><th>Best season</th><td>October to March</td></tr>
-<tr><th>Nearest airport</th><td>Udaipur (about 155 km, 3.5 hours by road)</td></tr>
-<tr><th>Nearest railway station</th><td>Sumerpur Jawai Bandh, JWB (about 15 km)</td></tr>
+<tr><th>Nearest airport</th><td>Udaipur (about 130 km, 2.5 to 3 hours by road)</td></tr>
+<tr><th>Nearest railway station</th><td>Sumerpur Jawai Bandh, JWB (about 18 km)</td></tr>
 </tbody>
 </table>
 HTML,
@@ -275,27 +275,27 @@ HTML,
             ],
             [
                 'slug' => 'jawai/how-to-reach', 'title' => 'How to reach Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/how-to-reach'), 'show_cta' => 1,
-                'intro' => 'Udaipur Airport is about 155 km away and Sumerpur Jawai Bandh railway station about 15 km. Routes by air, rail and road.',
+                'intro' => 'Udaipur Airport is about 130 km away and Sumerpur Jawai Bandh railway station about 18 km. Routes by air, rail and road.',
                 'meta_title' => 'How to Reach Jawai: Flights, Trains & Road from Udaipur',
                 'meta_description' => 'How to get to Jawai in Rajasthan: nearest airport (Udaipur), nearest railway stations (Jawai Bandh and Falna), and driving times from Udaipur, Jodhpur and Ahmedabad.',
                 'body' => <<<'HTML'
 <p>Jawai has no airport of its own, but it is well placed between Udaipur and Jodhpur and has a railway station on a main line.</p>
 
 <h2>By air</h2>
-<p><strong>Udaipur (Maharana Pratap Airport, UDR)</strong> is the usual choice, with flights from Delhi, Mumbai, Bengaluru and other cities. It is about 155 km from Bera, around three and a half hours by road. <strong>Jodhpur Airport (JDH)</strong> is about 175 km, around four hours. Ahmedabad has more international connections and is about five to six hours by road.</p>
+<p><strong>Udaipur (Maharana Pratap Airport, UDR)</strong> is the usual choice, with flights from Delhi, Mumbai, Bengaluru and other cities. It is about 130 km from Bera, around two and a half to three hours by road. <strong>Jodhpur Airport (JDH)</strong> is about 175 km, around three and a half hours. Ahmedabad has more international connections and is about five to six hours by road.</p>
 
 <h2>By train</h2>
-<p><strong>Sumerpur Jawai Bandh</strong> (station code JWB) sits right by the dam, about 15 km from Bera. <strong>Falna</strong> (FA) is about 34 km away. Both are on the line between Ahmedabad and Jaipur, with trains to and from Delhi, Jaipur, Ajmer, Abu Road and Ahmedabad; Falna gets more express trains. The small Mori Bera halt, about 5 km from Bera, has only a few local trains.</p>
+<p><strong>Sumerpur Jawai Bandh</strong> (station code JWB) sits right by the dam, about 18 km from Bera. <strong>Falna</strong> (FA) is about 37 km away. Both are on the line between Ahmedabad and Jaipur, with trains to and from Delhi, Jaipur, Ajmer, Abu Road and Ahmedabad; Falna gets more express trains. The small Mori Bera halt, about 5 km from Bera, has only a few local trains.</p>
 
 <h2>By road</h2>
 <table>
 <thead><tr><th>From</th><th>Approx. time by car</th></tr></thead>
 <tbody>
-<tr><td>Sumerpur Jawai Bandh station (15 km)</td><td>25 minutes</td></tr>
-<tr><td>Falna station (34 km)</td><td>45 minutes</td></tr>
-<tr><td>Udaipur city (141 km via Ranakpur)</td><td>3 to 3.5 hours</td></tr>
-<tr><td>Udaipur Airport (155 km)</td><td>3.5 hours</td></tr>
-<tr><td>Jodhpur Airport (175 km)</td><td>4 hours</td></tr>
+<tr><td>Sumerpur Jawai Bandh station (18 km)</td><td>30 minutes</td></tr>
+<tr><td>Falna station (37 km)</td><td>50 minutes</td></tr>
+<tr><td>Udaipur city (115 km)</td><td>2.5 hours</td></tr>
+<tr><td>Udaipur Airport (130 km)</td><td>2.5 to 3 hours</td></tr>
+<tr><td>Jodhpur Airport (175 km)</td><td>3.5 hours</td></tr>
 <tr><td>Kumbhalgarh</td><td>2 to 2.5 hours</td></tr>
 <tr><td>Ranakpur</td><td>1.5 to 2 hours</td></tr>
 <tr><td>Mount Abu</td><td>2.5 to 3 hours</td></tr>
@@ -312,10 +312,10 @@ HTML,
 <p>Jawai fits neatly into a Rajasthan route: Udaipur, then Kumbhalgarh and Ranakpur, then Jawai, then on to Jodhpur. See <a href="/jawai/places-to-visit/">places to visit near Jawai</a>.</p>
 HTML,
                 'faq' => implode("\n", [
-                    'What is the nearest airport to Jawai? | Udaipur (Maharana Pratap Airport), about 155 km or three and a half hours by road. Jodhpur Airport is about 175 km away.',
-                    'What is the nearest railway station to Jawai? | Sumerpur Jawai Bandh (station code JWB), about 15 km from Bera. Falna, about 34 km away, has more express trains.',
-                    'How far is Jawai from Udaipur? | About 141 km via Ranakpur, three to three and a half hours by car. Udaipur airport is about 155 km away.',
-                    'How far is Jawai from Jodhpur? | Jodhpur airport is about 175 km away, around four hours by car.',
+                    'What is the nearest airport to Jawai? | Udaipur (Maharana Pratap Airport), about 130 km or two and a half to three hours by road. Jodhpur Airport is about 175 km away.',
+                    'What is the nearest railway station to Jawai? | Sumerpur Jawai Bandh (station code JWB), about 18 km from Bera. Falna, about 37 km away, has more express trains.',
+                    'How far is Jawai from Udaipur? | About 115 km, around two and a half hours by car. Udaipur airport is about 130 km away.',
+                    'How far is Jawai from Jodhpur? | Jodhpur airport is about 175 km away, around three and a half hours by car.',
                 ]),
                 'sources' => implode("\n", [self::WIKI_STATION, self::WIKI_PALI]),
             ],

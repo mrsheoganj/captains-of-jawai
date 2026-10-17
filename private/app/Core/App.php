@@ -168,6 +168,27 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.11.1: road distances measured from Bera village (OpenStreetMap routing), replacing older estimates. */
+    public const DISTANCE_FIXES = [
+        ["about 155 km, or three and a half hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 15 km from Bera and Falna about 34 km,", "about 130 km, or two and a half to three hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 18 km from Bera and Falna about 37 km,"],
+        ["Udaipur (about 155 km, 3.5 hours by road)", "Udaipur (about 130 km, 2.5 to 3 hours by road)"],
+        ["Sumerpur Jawai Bandh, JWB (about 15 km)", "Sumerpur Jawai Bandh, JWB (about 18 km)"],
+        ["Udaipur Airport is about 155 km away and Sumerpur Jawai Bandh railway station about 15 km.", "Udaipur Airport is about 130 km away and Sumerpur Jawai Bandh railway station about 18 km."],
+        ["It is about 155 km from Bera, around three and a half hours by road.", "It is about 130 km from Bera, around two and a half to three hours by road."],
+        ["is about 175 km, around four hours.", "is about 175 km, around three and a half hours."],
+        ["sits right by the dam, about 15 km from Bera. <strong>Falna</strong> (FA) is about 34 km away.", "sits right by the dam, about 18 km from Bera. <strong>Falna</strong> (FA) is about 37 km away."],
+        ["Sumerpur Jawai Bandh station (15 km)</td><td>25 minutes", "Sumerpur Jawai Bandh station (18 km)</td><td>30 minutes"],
+        ["Falna station (34 km)</td><td>45 minutes", "Falna station (37 km)</td><td>50 minutes"],
+        ["Udaipur city (141 km via Ranakpur)</td><td>3 to 3.5 hours", "Udaipur city (115 km)</td><td>2.5 hours"],
+        ["Udaipur Airport (155 km)</td><td>3.5 hours", "Udaipur Airport (130 km)</td><td>2.5 to 3 hours"],
+        ["Jodhpur Airport (175 km)</td><td>4 hours", "Jodhpur Airport (175 km)</td><td>3.5 hours"],
+        ["about 155 km or three and a half hours by road. Jodhpur Airport is about 175 km away.", "about 130 km or two and a half to three hours by road. Jodhpur Airport is about 175 km away."],
+        ["about 15 km from Bera. Falna, about 34 km away, has more express trains.", "about 18 km from Bera. Falna, about 37 km away, has more express trains."],
+        ["About 141 km via Ranakpur, three to three and a half hours by car. Udaipur airport is about 155 km away.", "About 115 km, around two and a half hours by car. Udaipur airport is about 130 km away."],
+        ["Jodhpur airport is about 175 km away, around four hours by car.", "Jodhpur airport is about 175 km away, around three and a half hours by car."],
+        ["Udaipur Airport is about 155 km (3.5 hours by road) and Jodhpur Airport about 175 km (4 hours). The nearest railway station, Sumerpur Jawai Bandh, is about 15 km away, and Falna about 34 km.", "Udaipur Airport is about 130 km (2.5 to 3 hours by road) and Jodhpur Airport about 175 km (3.5 hours). The nearest railway station, Sumerpur Jawai Bandh, is about 18 km away, and Falna about 37 km."],
+    ];
+
     /**
      * 2.4: the business offers safaris only (no stays, transfers or multi-day journeys).
      * Saved settings that still hold the old stay/transfer wording go back to the new defaults,
@@ -192,6 +213,10 @@ final class App
             'color_accent' => ['#B8822B'],
             'color_accent_hover' => ['#9E6B1D'],
             'color_dark' => ['#121416'],
+            // 2.11.1: map distances and the map's centre now measured from Bera village
+            'distances_items' => ['155 km | 3.5 hrs | 24.6177'],
+            'latitude' => ['25.1055'],
+            'longitude' => ['73.1722'],
             // 2.10.1: report's homepage title and description replace the earlier defaults
             'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai'],
             'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across'],
@@ -207,6 +232,12 @@ final class App
         }
         foreach (['form_interests', 'form_drive_times', 'form_drives', 'journal_enabled', 'journal_heading', 'img_journal', 'team_enabled', 'team_kicker', 'team_heading', 'team_body', 'values_items', 'values_images', 'form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
             DB::delete('settings', 'skey = ?', [$key]);
+        }
+        foreach (self::DISTANCE_FIXES as [$from, $to]) {
+            foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {
+                DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);
+            }
+            DB::q('UPDATE faqs SET answer = REPLACE(answer, ?, ?)', [$from, $to]);
         }
         DB::delete('menu_items', "url LIKE '/journeys/%'");
         DB::q("UPDATE menu_items SET url = '/book-a-safari/' WHERE url = '/plan-your-journey/'");

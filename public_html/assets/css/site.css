@@ -1225,3 +1225,24 @@ img, svg, video, iframe { max-width: 100%; }
   .site-header.has-center-name .header-actions { margin-left: auto; }
 }
 @media (min-width: 1100px) and (max-width: 1439px) { .site-header.has-center-name .header-ask { display: none; } }
+
+/* ===== Distance map: illustrated / sketch style ===== */
+.map-card, .map-card.is-flat { background: #F7EFDC; }
+.map-card figcaption, .map-info { background: #FBF6EA; }
+.map-plane .route-map { box-shadow: 0 1px 0 #fff inset, 0 24px 40px -28px rgba(74, 56, 38, .55); }
+.map-border { fill: none; stroke: #4A3826; stroke-opacity: .35; stroke-width: 1.2; stroke-dasharray: 10 4 2 4; }
+.map-rings circle { stroke: #6B5235; stroke-opacity: .32; stroke-dasharray: 4 5; stroke-width: 1.1; }
+.map-rings text { fill: #6B5235; font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: .02em; font-size: 12px; }
+.map-sketch use { opacity: .92; }
+.map-water { fill: url(#wash); stroke: #3F6E80; stroke-width: 1.4; fill-opacity: .9; }
+.map-ripples { fill: none; stroke: #F4FAFC; stroke-width: 1.2; stroke-linecap: round; opacity: .9; }
+.map-note { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 15px; letter-spacing: .04em; fill: #4A3826; paint-order: stroke; stroke: #F7EFDC; stroke-width: 4px; stroke-linejoin: round; }
+.map-note-hills { font-size: 14px; letter-spacing: .12em; }
+.map-compass path { fill: #B4532A; stroke: #4A3826; stroke-width: 1; stroke-linejoin: round; }
+.map-compass .compass-s { fill: #F7EFDC; }
+.map-compass text { font-family: var(--serif); font-style: italic; font-size: 15px; fill: #4A3826; font-weight: 700; }
+.route-line { stroke-width: 3.2; }
+.route-flow { stroke: #FFF8EA; }
+.pin-dot { stroke: #FBF5E6; }
+.home-dot { stroke: #FBF5E6; }
+@media (max-width: 639px) { .map-note { font-size: 19px; } .map-rings text { font-size: 15px; } }

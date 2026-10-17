@@ -1,0 +1,10 @@
+# Compares the map's written distances with real road routes. Read-only.
+name: Route check
+on:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q requests && python3 deploy/route_check.py

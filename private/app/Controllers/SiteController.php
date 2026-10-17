@@ -168,7 +168,24 @@ final class SiteController
 
     public function credits(): string
     {
-        $items = DB::all("SELECT * FROM media WHERE (credit <> '' AND credit <> 'Placeholder') OR source_url <> '' ORDER BY gallery_category, id");
+        // Only photos that are actually shown: image settings (slider, homepage sections, page banners),
+        // published pages and safaris, and the gallery.
+        $used = [];
+        foreach (DB::all("SELECT skey, svalue FROM settings WHERE skey LIKE 'img\\_%' OR skey LIKE '%\\_image' OR skey LIKE '%\\_images'") as $row) {
+            foreach (explode(',', (string) $row['svalue']) as $v) {
+                if (ctype_digit(trim($v))) {
+                    $used[] = (int) trim($v);
+                }
+            }
+        }
+        $used = array_merge(
+            $used,
+            array_map('intval', array_column(DB::all("SELECT image_id FROM pages WHERE status = 'published' AND image_id IS NOT NULL"), 'image_id')),
+            array_map('intval', array_column(DB::all("SELECT image_id FROM safaris WHERE status = 'published' AND image_id IS NOT NULL"), 'image_id')),
+            array_map('intval', array_column(DB::all('SELECT id FROM media WHERE in_gallery = 1'), 'id'))
+        );
+        $used = array_values(array_unique(array_filter($used)));
+        $items = $used ? DB::all("SELECT * FROM media WHERE id IN (" . implode(',', $used) . ") AND (source_url <> '' OR (credit <> '' AND credit <> 'Placeholder')) ORDER BY gallery_category, id") : [];
         return $this->show('credits', ['items' => $items], [
             'title' => 'Photo Credits',
             'description' => 'Photographers and Creative Commons licences for the photographs of leopards, birds, the Rabari and Jawai Dam used on the Captains of Jawai website.',

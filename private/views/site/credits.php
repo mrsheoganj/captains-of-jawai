@@ -5,10 +5,11 @@
     <div class="credits-grid">
       <?php foreach ($items as $m): ?>
       <figure class="credit-item">
-        <?= picture($m, $m['alt_text'], ['sizes' => '200px']) ?>
+        <?php $by = trim((string) preg_replace('~\s*/\s*Wikimedia Commons$~', '', (string) $m['credit'])); ?>
+        <?= picture($m, 'Photo by ' . ($by ?: 'its photographer'), ['sizes' => '200px']) ?>
         <figcaption>
-          <strong><?= e($m['alt_text'] ?: $m['filename']) ?></strong>
-          <span><?= e($m['credit']) ?></span>
+          <strong><?= e($by ?: 'Photographer unknown') ?></strong>
+          <?php if (str_contains((string) $m['credit'], 'Wikimedia Commons')): ?><span>via Wikimedia Commons</span><?php endif; ?>
           <span>
             <?php if ($m['license_url']): ?><a href="<?= e($m['license_url']) ?>" target="_blank" rel="noopener license"><?= e($m['license']) ?></a><?php else: ?><?= e($m['license']) ?><?php endif; ?>
             <?php if ($m['source_url']): ?> · <a href="<?= e($m['source_url']) ?>" target="_blank" rel="noopener">Source</a><?php endif; ?>

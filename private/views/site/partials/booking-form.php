@@ -53,10 +53,21 @@ $uid = 'bk' . substr(md5((string) ($id ?? 'form')), 0, 4);
     </label>
   </div>
 
+  <?php
+  $vehicles = array_filter([
+      'Private gypsy' => Settings::bool('vehicle_private_enabled') ? 'just your group' : null,
+      'Shared gypsy' => Settings::bool('vehicle_shared_enabled') ? 'pay per seat' : null,
+  ]) ?: ['Private gypsy' => 'just your group'];
+  if (count($vehicles) > 1): ?>
   <div class="bk-vehicle" role="radiogroup" aria-label="Vehicle">
-    <label class="bk-pill"><input type="radio" name="vehicle" value="Private gypsy" checked><span>Private gypsy <small>just your group</small></span></label>
-    <label class="bk-pill"><input type="radio" name="vehicle" value="Shared gypsy"><span>Shared gypsy <small>pay per seat</small></span></label>
+    <?php $first = true; foreach ($vehicles as $v => $note): ?>
+    <label class="bk-pill"><input type="radio" name="vehicle" value="<?= e($v) ?>"<?= $first ? ' checked' : '' ?>><span><?= e($v) ?> <small><?= e($note) ?></small></span></label>
+    <?php $first = false; endforeach; ?>
   </div>
+  <?php else: $v = (string) array_key_first($vehicles); ?>
+  <input type="hidden" name="vehicle" value="<?= e($v) ?>">
+  <p class="bk-vehicle-one"><?= icon('check', 15) ?> <?= e($v) ?>: <?= e($vehicles[$v]) ?></p>
+  <?php endif; ?>
 
   <p class="bk-label">3. Your details</p>
   <label class="field"><span>Full name *</span><input type="text" name="full_name" required autocomplete="name"></label>

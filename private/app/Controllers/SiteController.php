@@ -74,11 +74,13 @@ final class SiteController
         } else {
             $gallery = DB::all('SELECT * FROM media WHERE in_gallery = 1' . ($used ? ' AND id NOT IN (' . implode(',', $used) . ')' : '') . ' ORDER BY sort_order, id DESC LIMIT ' . max(4, min(24, (int) setting('home_gallery_count'))));
         }
-        $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
+        $heroMobile = array_values(array_filter(array_map('intval', explode(',', (string) setting('hero_images_mobile')))));
+        $slideIds = array_merge($heroIds, $heroMobile);
+        $heroSlides = $slideIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $slideIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 
         $faqs = DB::all("SELECT question, answer FROM faqs WHERE status = 'published' ORDER BY CASE WHEN category = 'Planning' THEN 0 ELSE 1 END, sort_order, id LIMIT " . max(3, min(10, (int) setting('home_faq_count'))));
-        return $this->show('home', compact('safaris', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery', 'faqs'), [
+        return $this->show('home', compact('safaris', 'testimonials', 'heroIds', 'heroMobile', 'heroSlides', 'guide', 'gallery', 'faqs'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),

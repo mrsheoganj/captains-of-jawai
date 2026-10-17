@@ -14,10 +14,19 @@ namespace App\Core;
  */
 final class ImagePlan
 {
-    public const PLAN_VERSION = 5;
+    public const PLAN_VERSION = 6;
 
     /** Spots added after an earlier plan: a site that already has that plan only gets these, so photos chosen in the admin since then stay. */
-    private const ADDED = [5 => ['vehicle_images', 'booking_image']];
+    private const ADDED = [5 => ['vehicle_images', 'booking_image'], 6 => ['vehicle_images', 'booking_image']];
+
+    /**
+     * One-off swaps for sites that already have an earlier plan: [since version, spot, old file, new file].
+     * Applied only while the spot still holds the old photo, so a photo chosen in the admin is never replaced.
+     */
+    private const SWAPS = [
+        [6, 'hero_images', 'The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_28.jpg', 'The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_24.jpg'],
+        [6, 'safari:private-safari', 'Padma_a_female_leopard_from_Jawai_giving_close_sighting_to_tourists_during_safari.jpg', 'On_the_rocks,_its_refreshing.jpg'],
+    ];
 
     /** Photos imported per call (each one is downloaded and resized into 3 sizes x 2 formats). */
     private const BATCH = 12;
@@ -31,13 +40,12 @@ final class ImagePlan
         ['Breathtaking_Jawai.jpg', 'Jawai Dam reservoir and the granite hills of Jawai, Rajasthan', 'Landscape', ['hero_images']],
         ['Indian_leopard_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_24.jpg', 'Leopard resting on a granite boulder in Jawai Bandh', 'Leopards', ['hero_images', 'seo_og_image']],
         ['JAWAI_BERA_LEOPARD_KING.jpg', 'Leopard silhouetted on a granite hill at sunset in Bera, Jawai', 'Leopards', ['hero_images']],
-        ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_28.jpg', 'Dusk over the Jawai reservoir with a safari jeep on the shore', 'Landscape', ['hero_images']],
+        ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_24.jpg', 'Sunset over the granite hills of Jawai in the monsoon', 'Landscape', ['hero_images']],
         // Homepage intro and safaris
         ['JAWAI_BERA_LEOPARD.4.jpg', 'Leopard standing in dry grass on a rocky hillside in Bera, Jawai', 'Leopards', ['intro_image']],
         ['Indian_leopard_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_13.jpg', 'Leopard walking across a granite slab in Jawai Bandh', 'Leopards', ['safari:leopard-safari']],
         ['Asian_Woolly-necked_Stork_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_01.jpg', 'Woolly-necked stork at the water\'s edge in Jawai Bandh', 'Birds & Wetland', ['safari:dam-birding-safari']],
-        ['Padma_a_female_leopard_from_Jawai_giving_close_sighting_to_tourists_during_safari.jpg', 'Padma, a female leopard of Jawai, on a granite rock during a safari', 'Safari Life', ['safari:private-safari']],
-        ['Indian_leopard_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_21.jpg', 'Leopard looking out from a boulder among the bushes in Jawai Bandh', 'Leopards', ['safari:photography-safari']],
+                ['Indian_leopard_in_Jawai_Bandh_April_2025_by_Tisha_Mukherjee_21.jpg', 'Leopard looking out from a boulder among the bushes in Jawai Bandh', 'Leopards', ['safari:photography-safari']],
         // "Jawai in pictures"
         ['JAWAI_BERA.6.jpg', 'Still water and smooth granite at the edge of the Jawai reservoir', 'Landscape', ['jawai_images']],
         ['The_view_of_Sena_Village_of_Jawai,_Rajasthan.jpg', 'Sena village among the hills of Jawai', 'Village life', ['jawai_images']],
@@ -50,11 +58,11 @@ final class ImagePlan
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_37.jpg', 'Monsoon clouds over a full Jawai reservoir and green shores', 'Landscape', ['season_monsoon_image']],
         // Booking, coexistence, closing banner
         ['Maruti_Gypsy,_Pug_Mark,_Kanha.jpg', 'Maruti Gypsy 4x4 safari vehicle in Kanha National Park', '', []],
-        // The safari vehicle: open-top Maruti Gypsy 4x4s, as used in Jawai (photographed in other Indian parks)
-        ['Safari_Jeep_at_Rollapadu_Wildlife_Sanctuary,_Nandyal_District,_Andhra_Pradesh_(45955).jpg', 'Open-top Maruti Gypsy safari jeep with roll cage and raised seats (Rollapadu Wildlife Sanctuary)', '', ['booking_image']],
-        ['Jeep_Safari_Kaziranga,_Central_Zone_(Kohara).jpg', 'Open Gypsy safari jeeps on a park track (Kaziranga National Park)', '', ['vehicle_images']],
-        ['Visitor_at_Kaziranga_National_Park.jpg', 'Visitor standing in an open Gypsy safari jeep (Kaziranga National Park)', '', ['vehicle_images']],
-        ['Bandipur_National_Park.jpg', 'Gypsy safari jeep on a forest track with an elephant nearby (Bandipur National Park)', '', ['vehicle_images']],
+        // The safari vehicle in Jawai: open 4x4 gypsies photographed in Jawai itself
+        ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_05.jpg', 'Safari jeep with its lights on at dusk on the granite of Jawai', 'Safari Life', ['vehicle_images']],
+        ['Padma_a_female_leopard_from_Jawai_giving_close_sighting_to_tourists_during_safari.jpg', 'Padma, a female leopard of Jawai, close to guests on a safari', 'Safari Life', ['vehicle_images']],
+        ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_28.jpg', 'Safari jeep on the shore of the Jawai reservoir at dusk', 'Safari Life', ['vehicle_images']],
+        ['JAWAI_BERA.10.jpg', 'Granite hill and open country near Bera, Jawai', 'Landscape', ['booking_image']],
         ['JAWAI_BERA_LEOPARD_AND_THE_PRIEST.jpg', 'A temple priest on a granite hill in Bera, with a leopard resting on the rocks below', 'Village life', ['coexist_image']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_09.jpg', 'Sunset over the Jawai reservoir and its granite islands', 'Landscape', ['cta_image']],
         // Village life
@@ -71,7 +79,7 @@ final class ImagePlan
         ['JawaiLeopards.jpg', 'Female leopard of Sena resting in a red granite cave', 'Leopards', ['img_gallery', 'home_gallery_images']],
         ['JAWAI_BERA.11.jpg', 'Granite cliff and a bare tree in Bera, Jawai', 'Landscape', ['img_faq', 'home_gallery_images']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_43.jpg', 'Granite islands in the Jawai reservoir under monsoon clouds', 'Landscape', ['img_contact']],
-        ['On_the_rocks,_its_refreshing.jpg', 'Leopard on a granite rock near Bera', 'Leopards', ['img_plan', 'home_gallery_images']],
+        ['On_the_rocks,_its_refreshing.jpg', 'Leopard on a granite rock near Bera', 'Leopards', ['img_plan', 'safari:private-safari', 'home_gallery_images']],
         ['Shepherd_from_Rajasthan_03.jpg', 'Shepherd in a red turban waving at sunset, Jawai Bandh', 'Village life', ['img_about', 'page:about']],
         ['JAWAI_BERA.31.jpg', 'Granite hill and scrub near Bera, Jawai', 'Landscape', ['img_404', 'home_gallery_images']],
         ['JAWAI_BERA_LEOPARD.jpg', 'Leopard on a rock at night in Bera, Jawai', 'Leopards', ['img_login']],
@@ -109,7 +117,7 @@ final class ImagePlan
     private const NOT_JAWAI = [
         'Mugger_Crocodile_(Crocodylus_palustris)_at_National_Chambal', 'Greater_Flamingo,_Sangli', 'Sarus_Crane_by_Tisha_Mukherjee_05',
         'Bar-headed_Goose_by_Dr._Raju_Kasambe', 'Striped_hyena_in_Bhigwan', 'A_fragile_co-existence', 'Chinkara_in_Tal_Chhapar',
-        'Nilgai_(Boselaphus_tragocamelus)', 'A_rabari_with_his_cattles', 'Maruti_Gypsy',
+        'Nilgai_(Boselaphus_tragocamelus)', 'A_rabari_with_his_cattles', 'Maruti_Gypsy', 'Rollapadu', 'Kaziranga', 'Bandipur',
     ];
 
     public static function marker(): string
@@ -219,6 +227,13 @@ final class ImagePlan
                         $only = array_merge($only, $slots);
                     }
                 }
+                foreach (self::SWAPS as [$since, $slot, $oldFile, $newFile]) {
+                    $old = $ids[$oldFile] ?? null;
+                    $new = $ids[$newFile] ?? null;
+                    if ($since > $v && $old && $new) {
+                        self::swap($slot, $old, $new);
+                    }
+                }
                 break;
             }
         }
@@ -250,6 +265,19 @@ final class ImagePlan
         }
         Settings::flush();
         return $n;
+    }
+
+    /** Replace one photo with another in a spot, only where the spot still holds the old photo. */
+    private static function swap(string $slot, int $old, int $new): void
+    {
+        if (preg_match('/^(page|safari):(.+)$/', $slot, $m)) {
+            DB::q('UPDATE ' . ($m[1] === 'page' ? 'pages' : 'safaris') . ' SET image_id = ? WHERE slug = ? AND image_id = ?', [$new, $m[2], $old]);
+            return;
+        }
+        $vals = array_map('trim', explode(',', (string) Settings::get($slot)));
+        if (in_array((string) $old, $vals, true)) {
+            Settings::set($slot, implode(',', array_map(fn ($x) => $x === (string) $old ? (string) $new : $x, $vals)));
+        }
     }
 
     /** Gallery: the planned Jawai photos (in plan order) plus the team's own uploads; nothing from outside Jawai, no demo photos. */

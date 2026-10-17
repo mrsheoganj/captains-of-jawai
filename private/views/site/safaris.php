@@ -1,5 +1,5 @@
 <?php use App\Core\View; ?>
-<?= View::partial('site/partials/page-hero', ['title' => 'Jawai safaris', 'kicker' => 'What we offer', 'intro' => 'Book a private jeep for your group or a seat in a shared jeep, always with a local tracker. Choose leopard tracking, birding at Jawai Dam, or a mix of both.', 'image' => (int) setting('img_safaris') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
+<?= View::partial('site/partials/page-hero', ['title' => 'Jawai safaris', 'kicker' => 'What we offer', 'intro' => (\App\Core\Settings::bool('vehicle_shared_enabled') ? 'Book a private jeep for your group or a seat in a shared jeep' : 'Every drive is in a private open 4x4 gypsy for your group') . ', always with a local tracker. Choose leopard tracking, birding at Jawai Dam, or a mix of both.', 'image' => (int) setting('img_safaris') ?: ($items[0]['image_id'] ?? null), 'fallback' => 'leopard2', 'crumbs' => $seo['breadcrumbs']]) ?>
 <section class="section">
   <div class="container">
     <div class="grid grid-2 grid-lg-2">

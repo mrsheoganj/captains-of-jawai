@@ -168,6 +168,14 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.11.4: private gypsies only by default (shared can be switched on in Settings → Enquiry Form). */
+    public const PRIVATE_FIXES = [
+        ["Private or shared 4x4 gypsy, up to 6 guests", "Private open 4x4 gypsy, up to 6 guests"],
+        ["Open 4x4 gypsy, private or shared, with an experienced local tracker", "Private open 4x4 gypsy with an experienced local tracker"],
+        ["Bera Leopard Safari Booking | Private & Shared 4x4", "Bera Leopard Safari Booking | Private 4x4 Gypsy"],
+        ["in private or shared open 4x4 gypsies across Bera", "in private open 4x4 gypsies across Bera"],
+    ];
+
     /** 2.11.2: audit fixes (leopard estimates with honest wording, private or shared jeeps, one season for photography). */
     public const CONTENT_FIXES = [
         ["Published estimates put the population at around 50 to 60 leopards in and around the area.", "Local estimates put the population at around 50 to 70 leopards in the wider Jawai and Bera area; there is no official count for Jawai alone."],
@@ -230,6 +238,9 @@ final class App
             // 2.11.2: one set of drive times everywhere; honest leopard estimate
             'booking_details' => ['15:30 to 18:30'],
             'stats' => ['50–60 | Leopards estimated in the reserve'],
+            // 2.11.4: wording for private gypsies only
+            'hero_subtitle' => ['Private and shared open 4x4'],
+            'seo_home_description' => ['Book private & shared 4x4'],
             'longitude' => ['73.1722'],
             // 2.10.1: report's homepage title and description replace the earlier defaults
             'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai'],
@@ -247,12 +258,18 @@ final class App
         foreach (['form_interests', 'form_drive_times', 'form_drives', 'journal_enabled', 'journal_heading', 'img_journal', 'team_enabled', 'team_kicker', 'team_heading', 'team_body', 'values_items', 'values_images', 'form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
             DB::delete('settings', 'skey = ?', [$key]);
         }
+        // 2.11.4: drop the "Shared gypsy safari" booking type from a saved list (other types are kept).
+        $types = (string) DB::val('SELECT svalue FROM settings WHERE skey = ?', ['booking_types']);
+        if ($types !== '' && stripos($types, 'Shared gypsy safari') !== false) {
+            $keep = array_filter(preg_split('/\R/', $types), fn ($l) => stripos($l, 'Shared gypsy safari') !== 0);
+            Settings::set('booking_types', implode("\n", $keep));
+        }
         // 2.11.3: the new square favicon pack replaces any earlier uploaded (round) favicon, once.
         if (!is_file(STORAGE_PATH . '/.favicon-pack-v2')) {
             DB::delete('settings', 'skey = ?', ['favicon_image']);
             @file_put_contents(STORAGE_PATH . '/.favicon-pack-v2', date('c'));
         }
-        foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES] as [$from, $to]) {
+        foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES, ...self::PRIVATE_FIXES] as [$from, $to]) {
             foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {
                 DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);
             }

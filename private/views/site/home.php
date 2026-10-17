@@ -3,7 +3,8 @@ use App\Core\Settings;
 use App\Core\View;
 
 View::share('bodyClass', 'page-home');
-$heroIds = $heroIds ?: [null];
+$heroIds = array_values($heroIds ?: [null]);
+$heroMobile = array_values($heroMobile ?? []);
 $fallbacks = ['leopard1', 'landscape1', 'leopard2', 'bird1'];
 $stats = [];
 foreach (Settings::lines('stats') as $line) {
@@ -14,27 +15,47 @@ foreach (Settings::lines('stats') as $line) {
 <!-- 1. Full-width slider -->
 <section class="slider" data-hero aria-roledescription="carousel" aria-label="Jawai">
   <div class="hero-slides">
-    <?php foreach ($heroIds as $n => $id): $cap = $id && isset($heroSlides[$id]) ? ($heroSlides[$id]['caption'] ?: '') : ''; ?>
-    <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>" aria-roledescription="slide" aria-label="<?= $n + 1 ?> of <?= count($heroIds) ?>">
-      <?= picture($id, $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : '', ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
+    <?php
+    // PC photos, with optional phone-only photos for the same slide position (art direction by screen width).
+    $slideCount = max(count($heroIds), count($heroMobile));
+    for ($n = 0; $n < $slideCount; $n++):
+        $id = $heroIds[$n] ?? ($heroMobile[$n] ?? null);
+        $mid = $heroMobile[$n] ?? null;
+        $alt = $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : '';
+        $pic = picture($id, $alt, ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]);
+        if ($mid && $mid !== $id && ($mm = \App\Core\Media::find($mid))) {
+            $set = fn (string $x) => implode(', ', array_map(fn ($px) => '/' . $mm['path'] . "-$px.$x {$px}w", [400, 800, 1600]));
+            $src = (is_file(PUBLIC_PATH . '/' . $mm['path'] . '-800.webp') ? '<source media="(max-width: 767px)" type="image/webp" srcset="' . e($set('webp')) . '" sizes="100vw">' : '')
+                . '<source media="(max-width: 767px)" srcset="' . e($set(\App\Core\Media::ext($mm))) . '" sizes="100vw">';
+            $pic = preg_replace('/^<picture>/', '<picture>' . $src, $pic);
+        } ?>
+    <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>" aria-roledescription="slide" aria-label="<?= $n + 1 ?> of <?= $slideCount ?>">
+      <?= $pic ?>
     </div>
-    <?php endforeach; ?>
+    <?php endfor; ?>
   </div>
-  <div class="container slider-content">
+  <?php $showText = Settings::bool('hero_show_text'); $showButtons = Settings::bool('hero_show_buttons'); ?>
+  <div class="container slider-content<?= !$showText && !$showButtons ? ' is-empty' : '' ?>">
+    <?php if ($showText): ?>
     <span class="kicker" data-anim="fade"><?= e(setting('hero_kicker')) ?></span>
     <h1 class="hero-title" data-anim="fade" style="--d:.15s"><?= e(setting('hero_title')) ?></h1>
     <p class="hero-sub" data-anim="fade" style="--d:.3s"><?= e(setting('hero_subtitle')) ?></p>
+    <?php else: ?>
+    <h1 class="sr-only"><?= e(setting('hero_title')) ?></h1>
+    <?php endif; ?>
+    <?php if ($showButtons): ?>
     <div class="btn-row" data-anim="fade" style="--d:.45s">
       <a class="btn btn-primary btn-lg" href="#booking"><?= e(setting('hero_cta_primary')) ?></a>
       <a class="btn btn-ghost-light btn-lg" href="#expeditions"><?= e(setting('hero_cta_secondary')) ?></a>
     </div>
-    <?php if (setting('hero_trust')): ?><p class="hero-trust-line" data-anim="fade" style="--d:.6s"><?= e(setting('hero_trust')) ?></p><?php endif; ?>
+    <?php endif; ?>
+    <?php if ($showText && setting('hero_trust')): ?><p class="hero-trust-line" data-anim="fade" style="--d:.6s"><?= e(setting('hero_trust')) ?></p><?php endif; ?>
   </div>
-  <?php if (count($heroIds) > 1): ?>
+  <?php if ($slideCount > 1): ?>
   <div class="slider-nav">
     <button type="button" class="slider-arrow" data-hero-prev aria-label="Previous photo"><?= icon('chevron-left', 22) ?></button>
     <div class="hero-dots" role="tablist" aria-label="Choose photo">
-      <?php foreach ($heroIds as $n => $id): ?><button type="button" class="<?= $n === 0 ? 'is-active' : '' ?>" aria-label="Show photo <?= $n + 1 ?>" data-hero-dot="<?= $n ?>"></button><?php endforeach; ?>
+      <?php for ($n = 0; $n < $slideCount; $n++): ?><button type="button" class="<?= $n === 0 ? 'is-active' : '' ?>" aria-label="Show photo <?= $n + 1 ?>" data-hero-dot="<?= $n ?>"></button><?php endfor; ?>
     </div>
     <button type="button" class="slider-arrow" data-hero-next aria-label="Next photo"><?= icon('chevron-right', 22) ?></button>
   </div>

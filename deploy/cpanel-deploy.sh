@@ -29,6 +29,6 @@ if [ ! -f "$PRIV/config.php" ]; then
   echo "No private/config.php yet: open the website to run the installer, then deploy again."
   exit 0
 fi
-"$PHP" "$PRIV/cli/apply-update.php" --backup --migrate --once --refresh-text --import-photos \
-  "--phone=+91 79756 89308" "--whatsapp=917975689308"
+# Contact numbers are managed in Admin -> Settings -> Contact, so the deploy does not set them.
+"$PHP" "$PRIV/cli/apply-update.php" --backup --migrate --once --refresh-text --import-photos
 echo "=== Deploy finished ==="

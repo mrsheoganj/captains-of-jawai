@@ -27,13 +27,13 @@ on:
         type: boolean
         default: true
       phone:
-        description: "Optional public phone number, e.g. +91 79756 89308"
+        description: "Optional: set a new public phone number (leave empty to keep the one in Admin -> Settings -> Contact)"
         type: string
-        default: "+91 79756 89308"
+        default: ""
       whatsapp:
-        description: "Optional WhatsApp number, digits with country code"
+        description: "Optional: set a new WhatsApp number, digits with country code (leave empty to keep the admin setting)"
         type: string
-        default: "917975689308"
+        default: ""
       verify_tls:
         description: "Verify the FTP server's TLS certificate (turn off only if the connection fails because of it)"
         type: boolean

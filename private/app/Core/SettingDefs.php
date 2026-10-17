@@ -47,8 +47,8 @@ final class SettingDefs
                 'intro' => 'Shown in the header, footer, contact page, WhatsApp buttons and structured data.',
                 'fields' => [
                     ['contact_email', 'Public contact email', 'email', 'contact@captainsofjawai.com'],
-                    ['contact_phone', 'Phone number (display)', 'text', '', 'e.g. +91 98765 43210 — leave empty to hide'],
-                    ['whatsapp_number', 'WhatsApp number (digits with country code)', 'text', '', 'e.g. 919876543210 — leave empty to hide WhatsApp buttons'],
+                    ['contact_phone', 'Phone number (display)', 'text', '', 'e.g. +91 98765 43210. Used everywhere on the website (header, footer, contact page, call buttons, Google business info); change it here and every page updates. Leave empty to hide.'],
+                    ['whatsapp_number', 'WhatsApp number (digits with country code)', 'text', '', 'e.g. 919876543210. Used by every WhatsApp button on the website (header, footer, booking form, safari pages); change it here and they all update. Leave empty to hide WhatsApp buttons.'],
                     ['whatsapp_message', 'WhatsApp pre-filled message', 'textarea', 'Hello Captains of Jawai, I would like to plan a private safari in Jawai.'],
                     ['address', 'Address', 'textarea', 'Jawai Bandh, Bera, Pali District, Rajasthan, India'],
                     ['map_embed_url', 'Google Maps embed URL (optional)', 'url', '', 'From Google Maps → Share → Embed a map → copy only the src URL'],

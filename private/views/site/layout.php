@@ -84,11 +84,13 @@ foreach ($schema as $s): ?>
 </div>
 <?php endif; ?>
 
-<header class="site-header<?= $overlay ? ' is-overlay' : '' ?>" data-header>
+<?php $centerName = \App\Core\Settings::bool('header_center_name'); ?>
+<header class="site-header<?= $overlay ? ' is-overlay' : '' ?><?= $centerName ? ' has-center-name' : '' ?>" data-header>
   <div class="container header-inner">
+    <?php if ($centerName): ?><a class="header-title" href="/" tabindex="-1" aria-hidden="true"><?= e($siteName) ?></a><?php endif; ?>
     <a class="brand" href="/" aria-label="<?= e($siteName) ?> — home">
       <img class="<?= e($logoClass) ?>" src="<?= e(brand_logo_url()) ?>"<?= $logoId ? '' : ' width="46" height="60"' ?> alt="<?= e($siteName) ?>">
-      <?php if (\App\Core\Settings::bool('logo_show_name')): ?>
+      <?php if (!$centerName && \App\Core\Settings::bool('logo_show_name')): ?>
         <span class="brand-text"><span class="brand-name"><?= e($siteName) ?></span><span class="brand-sub"><?= e(setting('site_tagline')) ?></span></span>
       <?php endif; ?>
     </a>

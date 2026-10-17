@@ -1208,3 +1208,20 @@ img, svg, video, iframe { max-width: 100%; }
   .footer-bottom a { display: inline-block; padding: 6px 0; }
 }
 @media (max-width: 359px) { .bk-type-grid { grid-template-columns: 1fr; } }
+
+/* ===== Site name in the centre of the top bar ===== */
+.header-title {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1;
+  font-family: var(--serif-text); font-size: clamp(1.15rem, 4.6vw, 1.5rem); line-height: 1; letter-spacing: .01em;
+  color: var(--text); white-space: nowrap; transition: color .2s;
+}
+.header-title:hover { color: var(--accent-hover); }
+.site-header.has-center-name .header-actions, .site-header.has-center-name .brand { position: relative; z-index: 2; }
+@media (max-width: 359px) { .header-title { font-size: 1.05rem; } }
+/* PC: menu sits next to the logo so the centre is free for the name */
+@media (min-width: 1100px) {
+  .site-header.has-center-name .header-inner { justify-content: flex-start; }
+  .site-header.has-center-name .main-nav { margin-left: 8px; position: relative; z-index: 2; }
+  .site-header.has-center-name .header-actions { margin-left: auto; }
+}
+@media (min-width: 1100px) and (max-width: 1439px) { .site-header.has-center-name .header-ask { display: none; } }

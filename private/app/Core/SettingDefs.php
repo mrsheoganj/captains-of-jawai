@@ -25,6 +25,7 @@ final class SettingDefs
                     ['site_description', 'Short brand description (footer)', 'textarea', "Private, small-group wildlife safaris in Jawai, Pali district, Rajasthan. We plan every trip by hand and reply to every enquiry personally."],
                     ['logo_image', 'Logo / emblem (header, mobile menu, loading spinner, admin, emails)', 'image', '', 'Upload a PNG (transparent background works) in the Media library or straight from the picker. Leave empty to use the built-in Captains of Jawai emblem.'],
                     ['logo_show_name', 'Show the site name next to the logo in the header', 'bool', '1'],
+                    ['header_center_name', 'Show the site name in the centre of the top bar (instead of next to the logo)', 'bool', '1'],
                     ['logo_dark_badge', 'Show the uploaded logo on a dark round badge (turn on for logos with white artwork)', 'bool', '0'],
                     ['footer_logo_image', 'Footer logo (optional — defaults to the header logo)', 'image', ''],
                     ['favicon_image', 'Browser tab icon / favicon (square image, optional)', 'image', '', 'Defaults to the built-in emblem.'],

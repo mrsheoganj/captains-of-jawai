@@ -1,0 +1,16 @@
+# Saves the visible text of the live pages to the site-snapshot branch (read-only).
+name: Site snapshot
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q requests && python3 deploy/snapshot.py
+      - run: |
+          cd snapshot && git init -q && git checkout -q -b site-snapshot && git add -A
+          git -c user.name=github-actions -c user.email=actions@github.com commit -qm "Snapshot $(date -u +%F)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" site-snapshot

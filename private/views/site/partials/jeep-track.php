@@ -26,11 +26,14 @@ $jeep = static function (string $name): string {
         . '</svg>';
 };
 ?>
-<div class="jeep-track" aria-hidden="false" data-jeep-track>
+<div class="jeep-track" data-jeep-track>
   <svg class="jt-scene" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
     <path class="jt-hills" d="M0 92 C60 70 110 58 170 74 C220 50 260 38 320 66 C380 52 430 70 470 80 C540 46 600 34 660 64 C720 56 760 72 800 82 C860 52 930 40 990 70 C1040 58 1100 64 1140 78 L1200 84 V120 H0 Z"/>
     <path class="jt-road" d="M0 108 H1200"/>
     <path class="jt-ruts" d="M0 114 H1200"/>
   </svg>
-  <div class="jt-mover"><?= $jeep((string) setting('site_name')) ?></div>
+  <?php $svg = $jeep((string) setting('site_name')); // a small convoy: same jeep, three liveries, spaced along the track ?>
+  <div class="jt-mover jt-v1"><?= $svg ?></div>
+  <div class="jt-mover jt-v2"><?= $svg ?></div>
+  <div class="jt-mover jt-v3"><?= $svg ?></div>
 </div>

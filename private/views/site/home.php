@@ -17,7 +17,6 @@ foreach (Settings::lines('stats') as $line) {
     <?php foreach ($heroIds as $n => $id): $cap = $id && isset($heroSlides[$id]) ? ($heroSlides[$id]['caption'] ?: '') : ''; ?>
     <div class="hero-slide<?= $n === 0 ? ' is-active' : '' ?>" aria-roledescription="slide" aria-label="<?= $n + 1 ?> of <?= count($heroIds) ?>">
       <?= picture($id, $id && isset($heroSlides[$id]) ? (string) $heroSlides[$id]['alt_text'] : '', ['sizes' => '100vw', 'loading' => $n === 0 ? 'eager' : 'lazy', 'fetchpriority' => $n === 0 ? 'high' : 'low'], $fallbacks[$n % 4]) ?>
-      <?php if ($cap !== ''): ?><p class="slide-caption"><?= e($cap) ?></p><?php endif; ?>
     </div>
     <?php endforeach; ?>
   </div>
@@ -86,7 +85,6 @@ foreach (Settings::lines('stats') as $line) {
     </div>
     <div class="split-media">
       <div class="framed reveal-img" data-parallax="0.06"><?= picture((int) setting('intro_image') ?: null, '', ['sizes' => '(min-width: 1024px) 45vw, 100vw'], 'leopard-portrait') ?></div>
-      <p class="photo-caption reveal">Granite country near Bera, Pali district</p>
     </div>
   </div>
   <?php if ($stats): ?>

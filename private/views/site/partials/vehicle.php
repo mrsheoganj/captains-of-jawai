@@ -27,7 +27,7 @@ foreach (array_filter(array_map('intval', explode(',', (string) setting('vehicle
       <?php if ($photos): ?>
       <div class="vehicle-photos" data-stagger data-m-slider aria-label="Safari vehicle photos">
         <?php foreach (array_slice($photos, 0, 3) as $m): ?>
-        <figure class="vehicle-photo reveal"><?= picture($m, (string) $m['alt_text'], ['sizes' => '(min-width: 1024px) 30vw, 80vw']) ?><figcaption><?= e((string) $m['alt_text']) ?></figcaption></figure>
+        <figure class="vehicle-photo reveal"><?= picture($m, (string) $m['alt_text'], ['sizes' => '(min-width: 1024px) 30vw, 80vw']) ?></figure>
         <?php endforeach; ?>
       </div>
       <?php endif; ?>

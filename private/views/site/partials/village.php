@@ -30,7 +30,6 @@ $photos = array_slice($photos, 0, count($photos) >= 4 ? intdiv(min(count($photos
       <?php foreach ($photos as $m): ?>
       <figure class="village-item reveal">
         <?= picture($m, (string) $m['alt_text'], ['sizes' => '(min-width: 1024px) 25vw, 50vw']) ?>
-        <figcaption><?= e((string) $m['alt_text']) ?></figcaption>
       </figure>
       <?php endforeach; ?>
     </div>

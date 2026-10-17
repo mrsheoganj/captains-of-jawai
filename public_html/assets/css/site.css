@@ -1376,3 +1376,24 @@ img, svg, video, iframe { max-width: 100%; }
   .site-header .brand-mark, .site-header .brand-custom, .site-header .brand-custom.brand-badge { height: 58px !important; }
   .header-title { font-size: 1rem; }
 }
+
+/* ===== No captions under photos (descriptions stay as alt text) ===== */
+.lightbox figcaption, .village-item figcaption, .vehicle-photo figcaption, .masonry-item figcaption, .slide-caption, .photo-caption { display: none !important; }
+/* PC: slightly bigger logo in the top bar */
+@media (min-width: 640px) { .site-header .brand-mark, .site-header .brand-custom, .site-header .brand-custom.brand-badge { height: 70px !important; max-width: 110px; } }
+
+/* Jeep convoy: three liveries, evenly spaced; parked spread out when not moving */
+.jt-mover.jt-v1 { transform: translateX(6cqw); }
+.jt-mover.jt-v2 { transform: translateX(40cqw); }
+.jt-mover.jt-v3 { transform: translateX(74cqw); }
+.jt-v2 .jt-panel { fill: #C9A96E; }
+.jt-v2 .jt-name { fill: #3A2C1C; }
+.jt-v2 .jt-tracker .jt-hat { stroke: #2F6F5E; }
+.jt-v3 .jt-panel { fill: #2F3B2C; }
+.jt-v3 .jt-tracker .jt-shirt { fill: #E9DFC8; }
+.jt-v3 .jt-tracker .jt-hat { stroke: #E0A33A; }
+@media (max-width: 639px) { .jt-mover { width: 124px; } .jeep-track.is-driving .jt-mover { animation-duration: 15s; } .jeep-track.is-driving .jt-v2 { animation-delay: -5s; } .jeep-track.is-driving .jt-v3 { animation-delay: -10s; } }
+.jeep-track.is-driving .jt-mover { animation: jt-drive 21s linear infinite; }
+.jeep-track.is-driving .jt-v2 { animation-delay: -7s; }
+.jeep-track.is-driving .jt-v3 { animation-delay: -14s; }
+.jeep-track.is-driving .jt-v2 .jt-body { animation-delay: -.2s; }

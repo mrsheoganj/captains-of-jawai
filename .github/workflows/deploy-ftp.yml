@@ -124,7 +124,10 @@ jobs:
         if: ${{ !inputs.dry_run }}
         run: |
           curl -sL "$SITE/book-a-safari/" -o book.html
-          for m in 'data-wa-book' 'Private gypsy' 'safari-vehicle'; do
+          curl -sL "$SITE/" -o home.html
+          for m in 'data-wa-book' 'Private gypsy'; do
             if grep -q "$m" book.html; then echo "YES  $m"; else echo "no   $m"; fi
           done
+          if grep -q 'safari-vehicle' home.html; then echo "YES  safari-vehicle"; else echo "no   safari-vehicle"; fi
+          echo "phone on site: $(grep -o 'href="tel:[^"]*"' home.html | head -1)"
           echo "title: $(curl -sL "$SITE/" | grep -o '<title>[^<]*')"

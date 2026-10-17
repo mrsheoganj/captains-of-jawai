@@ -60,7 +60,7 @@ final class JawaiGuide
 <p>The dam was built on the Jawai River, a tributary of the Luni. It was planned by Maharaja Umaid Singh of Jodhpur, work began in 1946 and it was finished in 1957. It is the largest dam in western Rajasthan and still supplies drinking water and irrigation to towns and farms across Pali and beyond. In a dry state, that water is what makes Jawai's wildlife possible. <a href="/jawai/jawai-dam/">Read more about the Jawai Dam</a>.</p>
 
 <h2>Leopards in the granite</h2>
-<p>The hills here are made of old granite, weathered into domes, boulder piles and caves. Leopards use the caves to rest and raise cubs, and the warm rock to bask on winter mornings. Published estimates put the population at around 50 to 60 leopards in and around the area. There are no tigers or lions, so the leopard is the largest predator. About 20 square kilometres around the dam is protected as the <strong>Jawai Bandh Leopard Conservation Reserve</strong>, managed by the Rajasthan Forest Department. Jawai is not a national park and it is not fenced: villages, temples and fields sit right among the leopard hills. <a href="/jawai/leopards/">More on the leopards of Jawai</a>.</p>
+<p>The hills here are made of old granite, weathered into domes, boulder piles and caves. Leopards use the caves to rest and raise cubs, and the warm rock to bask on winter mornings. Local estimates put the population at around 50 to 70 leopards in the wider Jawai and Bera area; there is no official count for Jawai alone. There are no tigers or lions, so the leopard is the largest predator. About 20 square kilometres around the dam is protected as the <strong>Jawai Bandh Leopard Conservation Reserve</strong>, managed by the Rajasthan Forest Department. Jawai is not a national park and it is not fenced: villages, temples and fields sit right among the leopard hills. <a href="/jawai/leopards/">More on the leopards of Jawai</a>.</p>
 
 <h2>People and leopards</h2>
 <p>The Rabari are a pastoral community known for their red turbans and herds of sheep, goats and camels. Many Rabari families here treat the leopard with tolerance and respect, linked to their faith and the hill shrines found on many rocks. Leopards do sometimes take livestock, and compensation is paid by the forest department. Conflict with people has been rare compared with many other parts of India, which is a large part of why Jawai's leopards are so relaxed in the open. <a href="/experiences/rabari-culture/">About the Rabari</a>.</p>
@@ -81,7 +81,7 @@ final class JawaiGuide
 <tr><th>Nearest towns</th><td>Sumerpur, Falna, Bali</td></tr>
 <tr><th>Known for</th><td>Leopards living in granite hills near villages</td></tr>
 <tr><th>Protected area</th><td>Jawai Bandh Leopard Conservation Reserve (about 20 km²)</td></tr>
-<tr><th>Leopards</th><td>Estimated 50 to 60 in the wider area</td></tr>
+<tr><th>Leopards</th><td>Estimated 50 to 70 in the wider area (no official count)</td></tr>
 <tr><th>Dam</th><td>Jawai Dam, on the Jawai River, completed 1957</td></tr>
 <tr><th>Best season</th><td>October to March</td></tr>
 <tr><th>Nearest airport</th><td>Udaipur (about 130 km, 2.5 to 3 hours by road)</td></tr>
@@ -93,7 +93,7 @@ HTML,
                     'Where is Jawai? | Jawai is in Pali district in western Rajasthan, India, roughly halfway between Udaipur and Jodhpur, near the towns of Sumerpur and Falna.',
                     'What is Jawai famous for? | Leopards that live among granite hills and caves close to villages, the Jawai Dam reservoir, winter birds and the Rabari herding community.',
                     'Is Jawai a national park? | No. Part of the area is protected as the Jawai Bandh Leopard Conservation Reserve, but there is no fence and no park gate. Villages, farms and temples sit among the leopard hills.',
-                    'How many leopards are there in Jawai? | Published estimates usually put the number at around 50 to 60 leopards in the wider Jawai area. Numbers are estimates and change over time.',
+                    'How many leopards are there in Jawai? | Local estimates usually put the number at around 50 to 70 leopards in the wider Jawai and Bera area. There is no official census figure for Jawai alone, and numbers change over time.',
                     'Is a leopard sighting guaranteed in Jawai? | No. Sightings are frequent because leopards rest on open rock, but they are wild animals and no honest operator can guarantee one.',
                     'What is the best time to visit Jawai? | October to March. Mornings are cool and leopards often bask on the rocks. December and January are best for migratory birds.',
                 ]),
@@ -111,7 +111,7 @@ HTML,
 <p>The hills around Jawai are granite outcrops, worn into rounded domes and stacks of boulders. Between the boulders are caves and deep cracks that stay cool in summer and sheltered in winter. A female leopard can raise cubs in a cave like this with little disturbance. In the morning and late afternoon leopards come out onto ledges to warm up and to watch the land below, which is when they are easiest to see.</p>
 
 <h2>How many leopards?</h2>
-<p>Figures quoted by the forest department and researchers are usually in the range of 50 to 60 leopards for the wider Jawai area. The Jawai Bandh Leopard Conservation Reserve covers about 20 km², but leopards move freely across the farmland and hills outside it.</p>
+<p>Local estimates are usually in the range of 50 to 70 leopards for the wider Jawai and Bera area; there is no official census figure for Jawai alone. The Jawai Bandh Leopard Conservation Reserve covers about 19.8 km², but leopards move freely across the farmland and hills outside it.</p>
 
 <h2>Living next to people</h2>
 <p>There are no large forests here, and leopards hunt what they can find: wild prey such as hares, peafowl and langurs, as well as dogs and village livestock. Losses of goats or calves are compensated by the state. What surprises most visitors is how calm the relationship is. The Rabari, who graze herds across these hills, generally accept the leopard as part of the land. Many rocks carry small shrines, and people and leopards use the same paths at different hours.</p>

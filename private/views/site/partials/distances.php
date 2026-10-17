@@ -25,8 +25,9 @@ if (!$places) {
 
 // Compass-style map: real direction (bearing) from Jawai, distance on a log scale so a
 // station 15 km away and an airport 155 km away both fit, with range rings to read it.
-$W = 720; $H = 580; $cx = 320; $cy = 300;
-$rFor = fn (float $km) => 70 + (log(max(8, $km)) - log(8)) / (log(220) - log(8)) * 185;
+$W = 720; $H = 640; $cx = 320; $cy = 362;
+$rFor = fn (float $km) => 64 + (log(max(8, $km)) - log(8)) / (log(220) - log(8)) * 166;
+$sy = $H / 580; // corner decorations were placed on a 580-high sheet
 $pts = [];
 foreach ($places as $n => $p) {
     if ($p['lat'] === null || $p['lng'] === null) {
@@ -61,6 +62,7 @@ unset($p);
 $rings = [[25, '25 km'], [50, '50 km'], [100, '100 km'], [200, '200 km']];
 
 $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City'];
+$ico = ['airport' => 'plane', 'rail' => 'train', 'city' => 'city'];
 ?>
 <section class="section distances" id="distances">
   <div class="container distances-grid">
@@ -71,7 +73,7 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
       <ol class="distance-list" data-stagger>
         <?php foreach ($places as $n => $p): ?>
         <li class="reveal dist-<?= e($p['type']) ?>" data-dist="<?= $n ?>">
-          <span class="dist-type"><?= e($label[$p['type']]) ?></span>
+          <span class="dist-type"><?= icon($ico[$p['type']], 14) ?> <?= e($label[$p['type']]) ?></span>
           <strong class="dist-name"><?= e($p['name']) ?></strong>
           <span class="dist-km"><?= e($p['km']) ?></span>
           <?php if ($p['time'] !== ''): ?><span class="dist-time"><?= e($p['time']) ?> by road</span><?php endif; ?>
@@ -123,7 +125,7 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
             <g class="map-sketch" filter="url(#rough)">
               <!-- Aravalli hills: a chain of ink mountains on an arc to the east -->
               <?php
-              $p0 = [$hx + 150, $hy - 215]; $p1 = [$hx + 240, $hy - 10]; $p2 = [$hx + 140, $hy + 215];
+              $p0 = [$hx + 150, $hy - 245]; $p1 = [$hx + 245, $hy - 10]; $p2 = [$hx + 140, $hy + 235];
               for ($t = 0, $k = 0; $t <= 1.0001; $t += 0.1, $k++) {
                   $bx = (1 - $t) ** 2 * $p0[0] + 2 * (1 - $t) * $t * $p1[0] + $t * $t * $p2[0];
                   $by = (1 - $t) ** 2 * $p0[1] + 2 * (1 - $t) * $t * $p1[1] + $t * $t * $p2[1];
@@ -132,11 +134,11 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
               <?php } ?>
               <!-- Distant hills in the corners -->
               <?php foreach ([[20, 26, 96], [92, 56, 64], [24, 450, 90], [104, 486, 58], [540, 456, 76], [610, 494, 54], [168, 22, 52]] as [$mx0, $my0, $mw]): ?>
-              <use href="#sk-mtn" x="<?= $mx0 ?>" y="<?= $my0 ?>" width="<?= $mw ?>" height="<?= round($mw * .69, 1) ?>"/>
+              <use href="#sk-mtn" x="<?= $mx0 ?>" y="<?= round($my0 * $sy, 1) ?>" width="<?= $mw ?>" height="<?= round($mw * .69, 1) ?>"/>
               <?php endforeach; ?>
               <!-- Scrub trees -->
-              <?php foreach ([[40, 150], [62, 168], [30, 250], [110, 400], [132, 418], [210, 470], [250, 505], [420, 520], [470, 50], [500, 30], [240, 70], [60, 330], [640, 300], [660, 330], [650, 160], [380, 440], [196, 196]] as [$tx, $ty]): ?>
-              <use href="#sk-tree" x="<?= $tx ?>" y="<?= $ty ?>" width="28" height="28"/><use href="#sk-tree" x="<?= $tx + 18 ?>" y="<?= $ty + 10 ?>" width="20" height="20"/>
+              <?php foreach ([[40, 150], [62, 168], [30, 250], [110, 400], [132, 418], [200, 470], [168, 524], [420, 520], [470, 50], [500, 30], [240, 70], [60, 330], [640, 300], [660, 330], [650, 160], [380, 440], [196, 196]] as [$tx, $ty]): ?>
+              <use href="#sk-tree" x="<?= $tx ?>" y="<?= round($ty * $sy, 1) ?>" width="28" height="28"/><use href="#sk-tree" x="<?= $tx + 18 ?>" y="<?= round($ty * $sy + 10, 1) ?>" width="20" height="20"/>
               <?php endforeach; ?>
               <!-- Granite leopard hills around Bera -->
               <?php foreach ([[-60, -52, 34], [24, -60, 30], [48, 14, 32], [-24, 30, 26], [14, 40, 22], [-70, -16, 22], [60, -28, 20]] as [$ox, $oy, $rw]): ?>
@@ -165,7 +167,7 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
 
           <!-- Standing 3D pins (HTML, so they stay sharp and clickable) -->
           <div class="pin3d pin-home" style="left:<?= round($hx / $W * 100, 2) ?>%;top:<?= round($hy / $H * 100, 2) ?>%">
-            <span class="pin-body"><span class="pin-card"><b class="pin-code">JAWAI</b><small>Bera</small></span><span class="pin-stem"></span></span>
+            <span class="pin-body"><span class="pin-card"><b class="pin-code">JAWAI</b> <small>Bera</small></span><span class="pin-stem"></span></span>
           </div>
           <?php foreach ($pts as $p):
               $code = preg_match('/\(([^)]+)\)/', $p['name'], $m) ? $m[1] : strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $p['name']), 0, 3));
@@ -175,7 +177,7 @@ $label = ['airport' => 'Airport', 'rail' => 'Railway station', 'city' => 'City']
           <button type="button" class="pin3d pin-<?= e($p['type']) ?><?= $side ?>" style="left:<?= round($p['x'] / $W * 100, 2) ?>%;top:<?= round($p['y'] / $H * 100, 2) ?>%;--i:<?= $p['i'] ?>"
             data-place="<?= $p['i'] ?>" data-name="<?= e($p['name']) ?>" data-km="<?= e($p['km']) ?>" data-time="<?= e($p['time']) ?>" data-kind="<?= e($label[$p['type']]) ?>" data-gmaps="<?= e($gmaps) ?>"
             aria-label="<?= e($p['name'] . ', ' . $p['km'] . ($p['time'] !== '' ? ', ' . $p['time'] . ' by road' : '')) ?>">
-            <span class="pin-body"><span class="pin-card"><b class="pin-code"><?= e($code) ?></b><span class="pin-text"><strong><?= e($short) ?></strong><small><?= e($p['km']) ?></small></span></span><span class="pin-stem"></span></span>
+            <span class="pin-body"><span class="pin-card"><b class="pin-code"><?= icon($ico[$p['type']], 13, 'pin-ico') ?><?= e($code) ?></b><span class="pin-text"><strong><?= e($short) ?></strong><small><?= e($p['km']) ?></small></span></span><span class="pin-stem"></span></span>
           </button>
           <?php endforeach; ?>
         </div>

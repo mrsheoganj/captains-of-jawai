@@ -29,6 +29,7 @@ foreach (Settings::lines('stats') as $line) {
       <a class="btn btn-primary btn-lg" href="#booking"><?= e(setting('hero_cta_primary')) ?></a>
       <a class="btn btn-ghost-light btn-lg" href="#expeditions"><?= e(setting('hero_cta_secondary')) ?></a>
     </div>
+    <?php if (setting('hero_trust')): ?><p class="hero-trust-line" data-anim="fade" style="--d:.6s"><?= e(setting('hero_trust')) ?></p><?php endif; ?>
   </div>
   <?php if (count($heroIds) > 1): ?>
   <div class="slider-nav">
@@ -41,8 +42,27 @@ foreach (Settings::lines('stats') as $line) {
   <?php endif; ?>
 </section>
 
-<!-- 2. Distance map -->
-<?php if (Settings::bool('distances_enabled')): ?><?= View::partial('site/partials/distances') ?><?php endif; ?>
+<!-- 4. Signature expeditions -->
+<?php if ($safaris): ?>
+<section class="section section-alt" id="expeditions">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="kicker reveal"><?= e(setting('safaris_kicker')) ?></span>
+        <h2 class="display-2 reveal"><?= e(setting('safaris_heading')) ?></h2>
+      </div>
+      <a class="link-arrow reveal" href="/safaris/">All safaris</a>
+    </div>
+    <div class="grid grid-<?= count($safaris) === 4 || count($safaris) === 2 ? 2 : 3 ?>" data-stagger data-m-slider aria-label="Safaris">
+      <?php foreach ($safaris as $s): ?><?= View::partial('site/partials/card-safari', ['s' => $s]) ?><?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- How booking works -->
+<?= View::partial('site/partials/how-booking') ?>
+<?= View::partial('site/partials/vehicle') ?>
 
 <!-- Ticker -->
 <?php if (Settings::bool('ticker_enabled') && ($ticker = Settings::lines('ticker_items'))): ?>
@@ -78,24 +98,6 @@ foreach (Settings::lines('stats') as $line) {
   <?php endif; ?>
 </section>
 
-<!-- 4. Signature expeditions -->
-<?php if ($safaris): ?>
-<section class="section section-alt" id="expeditions">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="kicker reveal"><?= e(setting('safaris_kicker')) ?></span>
-        <h2 class="display-2 reveal"><?= e(setting('safaris_heading')) ?></h2>
-      </div>
-      <a class="link-arrow reveal" href="/safaris/">All safaris</a>
-    </div>
-    <div class="grid grid-<?= count($safaris) === 4 || count($safaris) === 2 ? 2 : 3 ?>" data-stagger data-m-slider aria-label="Safaris">
-      <?php foreach ($safaris as $s): ?><?= View::partial('site/partials/card-safari', ['s' => $s]) ?><?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
 <!-- Jawai in pictures -->
 <?php
 $stripIds = array_values(array_filter(array_map('intval', explode(',', (string) setting('jawai_images')))));
@@ -121,6 +123,9 @@ if (Settings::bool('jawai_images_enabled')): ?>
 
 <!-- Jawai Dam through the seasons -->
 <?php if (Settings::bool('seasons_enabled')): ?><?= View::partial('site/partials/seasons') ?><?php endif; ?>
+
+<!-- 2. Distance map -->
+<?php if (Settings::bool('distances_enabled')): ?><?= View::partial('site/partials/distances') ?><?php endif; ?>
 
 <!-- Booking -->
 <?php if (Settings::bool('booking_enabled')):
@@ -222,6 +227,9 @@ foreach (Settings::lines('booking_details') as $line) {
 
 <!-- Village life -->
 <?= View::partial('site/partials/village') ?>
+
+<!-- Common questions -->
+<?= View::partial('site/partials/home-faq', ['faqs' => $faqs ?? []]) ?>
 
 <!-- Guest words (only real testimonials entered in admin) -->
 <?php if (Settings::bool('testimonials_enabled') && $testimonials): ?>

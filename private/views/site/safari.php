@@ -7,6 +7,11 @@
     <?php endforeach; ?>
   </div>
 </div>
+<div class="container safari-actions">
+  <a class="btn btn-primary" href="/book-a-safari/?safari=<?= e(rawurlencode($item['title'])) ?>">Check availability</a>
+  <?php if (whatsapp_link()): ?><a class="btn btn-outline" href="<?= e(whatsapp_link('Hello, I am interested in the ' . $item['title'] . '.')) ?>" target="_blank" rel="noopener"><?= icon('whatsapp', 16) ?> Ask on WhatsApp</a><?php endif; ?>
+  <span class="safari-actions-note">Reply usually within 12 hours · nothing charged online</span>
+</div>
 <section class="section">
   <div class="container detail-grid">
     <article class="prose">
@@ -18,6 +23,21 @@
       <div class="aside-card">
         <h3>Highlights</h3>
         <ul class="checks"><?php foreach ($hl as $h): ?><li><?= e($h) ?></li><?php endforeach; ?></ul>
+      </div>
+      <?php endif; ?>
+      <?php
+      $know = [];
+      foreach (\App\Core\Settings::lines('booking_details') as $line) {
+          [$k, $v] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
+          if ($v !== '' && in_array(strtolower($k), ['vehicle', 'price', 'payment', 'not included'], true)) {
+              $know[] = [$k, $v];
+          }
+      }
+      if ($know): ?>
+      <div class="aside-card">
+        <h3>Good to know</h3>
+        <dl class="know-list"><?php foreach ($know as [$k, $v]): ?><div><dt><?= e($k) ?></dt><dd><?= e($v) ?></dd></div><?php endforeach; ?></dl>
+        <p class="know-ethics"><a href="/about/conservation-ethics/">How we watch wildlife responsibly</a></p>
       </div>
       <?php endif; ?>
       <div class="aside-card aside-cta">

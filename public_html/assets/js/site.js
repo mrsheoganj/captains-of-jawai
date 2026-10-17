@@ -141,6 +141,12 @@
     update();
   });
 
+  /* ---------------- Safari jeep strip: drive only while on screen ---------------- */
+  $$('[data-jeep-track]').forEach((el) => {
+    if (reduced || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver((en) => en.forEach((e) => el.classList.toggle('is-driving', e.isIntersecting)), { threshold: 0.05 }).observe(el);
+  });
+
   /* ---------------- Distance map (interactive) ---------------- */
   const map = $('[data-map]');
   if (map) {
@@ -306,6 +312,15 @@
       $$('.btn-spin', btn).forEach((s) => s.remove());
     }
   }
+  // If sending fails for a reason other than a field, offer the same request on WhatsApp.
+  function offerWhatsApp(form) {
+    const wa = $('[data-wa-book]', form); const box = $('[data-form-error]', form);
+    if (!wa || !box) return;
+    const link = document.createElement('a');
+    link.href = '#'; link.className = 'form-error-wa'; link.textContent = 'Send this request on WhatsApp instead';
+    link.addEventListener('click', (e) => { e.preventDefault(); wa.click(); window.open(wa.href, '_blank', 'noopener'); });
+    box.append(' ', link);
+  }
   async function submitForm(form, onFieldError) {
     clearErrors(form);
     const btn = $('[type=submit]', form);
@@ -327,9 +342,11 @@
         return;
       }
       const first = showErrors(form, data);
+      if (!data.errors || data.errors._form) offerWhatsApp(form);
       if (onFieldError) onFieldError(first); else if (first) first.focus();
     } catch (err) {
       showErrors(form, { message: 'Network error — please check your connection and try again.' });
+      offerWhatsApp(form);
     } finally {
       setBusy(btn, false);
     }

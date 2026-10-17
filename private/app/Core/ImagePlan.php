@@ -14,7 +14,10 @@ namespace App\Core;
  */
 final class ImagePlan
 {
-    public const PLAN_VERSION = 4;
+    public const PLAN_VERSION = 5;
+
+    /** Spots added after an earlier plan: a site that already has that plan only gets these, so photos chosen in the admin since then stay. */
+    private const ADDED = [5 => ['vehicle_images', 'booking_image']];
 
     /** Photos imported per call (each one is downloaded and resized into 3 sizes x 2 formats). */
     private const BATCH = 12;
@@ -46,7 +49,12 @@ final class ImagePlan
         ['Shelter_by_Jawai.jpg', 'Low water and sheep grazing on the Jawai Dam shore in the dry season', 'Landscape', ['season_summer_image']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_37.jpg', 'Monsoon clouds over a full Jawai reservoir and green shores', 'Landscape', ['season_monsoon_image']],
         // Booking, coexistence, closing banner
-        ['Maruti_Gypsy,_Pug_Mark,_Kanha.jpg', 'Open 4x4 Gypsy safari vehicle', '', ['booking_image']],
+        ['Maruti_Gypsy,_Pug_Mark,_Kanha.jpg', 'Maruti Gypsy 4x4 safari vehicle in Kanha National Park', '', []],
+        // The safari vehicle: open-top Maruti Gypsy 4x4s, as used in Jawai (photographed in other Indian parks)
+        ['Safari_Jeep_at_Rollapadu_Wildlife_Sanctuary,_Nandyal_District,_Andhra_Pradesh_(45955).jpg', 'Open-top Maruti Gypsy safari jeep with roll cage and raised seats (Rollapadu Wildlife Sanctuary)', '', ['booking_image']],
+        ['Jeep_Safari_Kaziranga,_Central_Zone_(Kohara).jpg', 'Open Gypsy safari jeeps on a park track (Kaziranga National Park)', '', ['vehicle_images']],
+        ['Visitor_at_Kaziranga_National_Park.jpg', 'Visitor standing in an open Gypsy safari jeep (Kaziranga National Park)', '', ['vehicle_images']],
+        ['Bandipur_National_Park.jpg', 'Gypsy safari jeep on a forest track with an elephant nearby (Bandipur National Park)', '', ['vehicle_images']],
         ['JAWAI_BERA_LEOPARD_AND_THE_PRIEST.jpg', 'A temple priest on a granite hill in Bera, with a leopard resting on the rocks below', 'Village life', ['coexist_image']],
         ['The_Jawai_landscape_during_monsoon,_Pali_District,_Rajasthan,_India_09.jpg', 'Sunset over the Jawai reservoir and its granite islands', 'Landscape', ['cta_image']],
         // Village life
@@ -135,7 +143,17 @@ final class ImagePlan
         }
         $log[] = count($ids) . ' of ' . count(self::PHOTOS) . ' planned photos are in the media library.';
         $log[] = 'Placed photos in ' . self::place($ids) . ' spots (one distinct photo per spot).';
-        $log[] = self::curateGallery($ids);
+        if (is_file(STORAGE_PATH . '/.images-planned-v' . (self::PLAN_VERSION - 1))) {
+            // Gallery already curated by the earlier plan: only keep the new non-Jawai vehicle photos out of it.
+            $cats = array_column(self::PHOTOS, 2, 0);
+            foreach ($ids as $file => $id) {
+                if (($cats[$file] ?? '') === '') {
+                    DB::update('media', ['in_gallery' => 0], 'id = ?', [$id]);
+                }
+            }
+        } else {
+            $log[] = self::curateGallery($ids);
+        }
         @file_put_contents(self::marker(), date('c'));
         return [$log, true];
     }
@@ -192,10 +210,25 @@ final class ImagePlan
     /** @param array<string,int> $ids */
     private static function place(array $ids): int
     {
+        $only = null;
+        for ($v = self::PLAN_VERSION - 1; $v >= 1; $v--) {
+            if (is_file(STORAGE_PATH . '/.images-planned-v' . $v)) {
+                $only = [];
+                foreach (self::ADDED as $since => $slots) {
+                    if ($since > $v) {
+                        $only = array_merge($only, $slots);
+                    }
+                }
+                break;
+            }
+        }
         $n = 0;
         $lists = [];
         foreach (self::PHOTOS as [$file, , , $slots]) {
             $id = $ids[$file] ?? null;
+            if ($only !== null) {
+                $slots = array_values(array_intersect($slots, $only));
+            }
             if (!$id) {
                 continue;
             }

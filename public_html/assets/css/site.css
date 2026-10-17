@@ -1262,3 +1262,106 @@ img, svg, video, iframe { max-width: 100%; }
 .map-info a.map-dir:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .map-info a.map-dir .icon { flex: none; }
 @media (max-width: 479px) { .map-info a.map-dir { flex: 1 1 100%; justify-content: center; } }
+
+/* ===== Distance map: place icons, labels kept inside the map, bigger on phones ===== */
+.pin-code { display: inline-flex; align-items: center; gap: 4px; }
+.pin-code .pin-ico { flex: none; }
+.dist-type { display: inline-flex; align-items: center; gap: 6px; }
+.dist-type .icon { color: var(--accent); }
+.dist-rail .dist-type .icon { color: var(--olive); }
+.dist-city .dist-type .icon { color: #C68A2E; }
+.map-stage, .map-card .map-stage { padding: 14px 14px 6px; }
+@media (max-width: 767px) {
+  .map-card .map-stage { padding: 6px 4px 2px; }
+  .pin-stem { height: 18px; }
+  .pin-code { font-size: .7rem; padding: 3px 6px; }
+  .pin-home .pin-card { padding: 3px 8px; }
+  .distances .map-card { margin-inline: calc(-1 * var(--gutter) + 6px); }
+}
+
+/* ===== Booking form: request note and WhatsApp fallback ===== */
+.bk-assure { display: flex; gap: 8px; align-items: flex-start; margin: 4px 0 12px; font-size: .84rem; line-height: 1.45; color: var(--text-2); background: var(--subtle, #F4F1EA); border-radius: 10px; padding: 10px 12px; }
+.bk-assure .icon { flex: none; margin-top: 2px; color: var(--accent); }
+.form-error-wa { font-weight: 700; text-decoration: underline; color: inherit; white-space: nowrap; }
+
+/* ===== Safari cards: two actions; safari page: actions under the facts ===== */
+.exp-card h3 a.exp-link { color: inherit; }
+.exp-card h3 a.exp-link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.exp-facts { font-size: .82rem; color: var(--text-3); margin: -4px 0 0; }
+.exp-meta a.exp-book { position: relative; z-index: 2; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: .82rem; transition: background .2s; }
+.exp-meta a.exp-book:hover { background: var(--accent-hover); }
+.safari-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-top: 24px; }
+.safari-actions-note { font-size: .85rem; color: var(--text-3); }
+@media (max-width: 479px) { .safari-actions .btn { flex: 1 1 100%; justify-content: center; } }
+.know-list { margin: 0; display: grid; gap: 10px; }
+.know-list div { display: grid; gap: 2px; }
+.know-list dt { font: 700 .7rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+.know-list dd { margin: 0; font-size: .92rem; }
+.know-ethics { margin: 14px 0 0; font-size: .88rem; }
+.know-ethics a { color: var(--accent-hover); text-decoration: underline; }
+
+/* ===== Hero trust line, How booking works, homepage questions ===== */
+.hero-trust-line { margin: 16px 0 0; font-size: .86rem; color: rgba(255, 255, 255, .88); letter-spacing: .01em; text-shadow: 0 1px 3px rgba(0, 0, 0, .45); }
+.howto-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+@media (min-width: 768px) { .howto-steps { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
+.howto-steps li { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px 22px 22px; }
+.howto-num { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 1.05rem var(--serif); margin-bottom: 14px; }
+.howto-steps h3 { font-family: var(--serif-text); font-size: 1.2rem; margin: 0 0 6px; }
+.howto-steps p { margin: 0; color: var(--text-2); font-size: .95rem; }
+.home-faq .accordion { margin-top: 4px; }
+
+/* ===== Safari jeep strip ===== */
+.jeep-track { position: relative; height: clamp(110px, 16vw, 150px); overflow: hidden; container-type: inline-size; margin: -10px 0 0; }
+.jt-scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+.jt-hills { fill: #EADBB8; opacity: .7; }
+.jt-road { stroke: #C9AE80; stroke-width: 2; stroke-dasharray: 14 10; fill: none; }
+.jt-ruts { stroke: #DCC59C; stroke-width: 1.5; stroke-dasharray: 4 12; fill: none; }
+.jt-mover { position: absolute; left: 0; bottom: 4px; width: clamp(150px, 22vw, 230px); transform: translateX(62cqw); }
+.jt-jeep { display: block; width: 100%; height: auto; overflow: visible; }
+.jt-panel { fill: #5E6B47; stroke: #2E241A; stroke-width: 2; stroke-linejoin: round; }
+.jt-line { fill: none; stroke: #2E241A; stroke-width: 1.2; opacity: .55; }
+.jt-cage { fill: none; stroke: #2E241A; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.jt-thin { stroke-width: 2; }
+.jt-glass { fill: #CFE4EA; opacity: .6; }
+.jt-seat { fill: #8A5A33; stroke: #2E241A; stroke-width: 1.4; }
+.jt-tyre { fill: #2A241D; }
+.jt-tread { fill: none; stroke: #4A3F33; stroke-width: 2; stroke-dasharray: 3 3; }
+.jt-rim { fill: #D8CBB0; stroke: #2E241A; stroke-width: 1.2; }
+.jt-wheel path { stroke: #2E241A; stroke-width: 1.4; }
+.jt-hub { fill: #2E241A; }
+.jt-lamp { fill: #F6E3A0; stroke: #2E241A; stroke-width: 1; }
+.jt-bumper { fill: #2E241A; }
+.jt-name { font: 700 7.5px var(--sans); letter-spacing: .12em; text-transform: uppercase; fill: #F3E8CF; }
+.jt-shadow { fill: rgba(46, 36, 26, .18); }
+.jt-tracker circle { fill: #8A5A33; stroke: #2E241A; stroke-width: 1.2; }
+.jt-tracker path { fill: none; stroke: #2E241A; stroke-width: 2.4; stroke-linecap: round; }
+.jt-tracker .jt-hat { stroke: #B4532A; stroke-width: 3; }
+.jt-dust circle { fill: #D9C29A; opacity: 0; }
+.jt-wheel { transform-box: fill-box; transform-origin: center; }
+/* Motion (only while visible; none for reduced motion) */
+.jeep-track.is-driving .jt-mover { animation: jt-drive 18s linear infinite; }
+.jeep-track.is-driving .jt-body { animation: jt-bump .45s ease-in-out infinite alternate; }
+.jeep-track.is-driving .jt-wheel { animation: jt-spin .55s linear infinite; }
+.jeep-track.is-driving .jt-dust circle { animation: jt-dust 1.1s ease-out infinite; }
+.jeep-track.is-driving .jt-dust circle:nth-child(2) { animation-delay: .35s; }
+.jeep-track.is-driving .jt-dust circle:nth-child(3) { animation-delay: .7s; }
+@keyframes jt-drive { from { transform: translateX(-260px); } to { transform: translateX(calc(100cqw + 20px)); } }
+@keyframes jt-bump { from { transform: translateY(0) rotate(0); } to { transform: translateY(-1.6px) rotate(-.5deg); } }
+@keyframes jt-spin { to { transform: rotate(360deg); } }
+@keyframes jt-dust { 0% { opacity: .75; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(-22px, -10px) scale(1.6); } }
+@media (prefers-reduced-motion: reduce) { .jeep-track .jt-mover, .jeep-track .jt-body, .jeep-track .jt-wheel, .jeep-track .jt-dust circle { animation: none !important; } }
+.jt-tracker .jt-shirt { fill: #C9B27C; stroke: #2E241A; stroke-width: 1.2; stroke-linejoin: round; }
+
+/* ===== Your safari vehicle ===== */
+.vehicle { padding-bottom: 0; }
+.vehicle-grid { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 1024px) { .vehicle-grid { grid-template-columns: 1fr 1.5fr; gap: 48px; } }
+.vehicle-text p { color: var(--text-2); }
+.vehicle-photos { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+.vehicle-photo { margin: 0; }
+.vehicle-photo picture { display: block; overflow: hidden; border-radius: var(--radius-lg); aspect-ratio: 3 / 4; }
+.vehicle-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.vehicle-photo:hover img { transform: scale(1.05); }
+.vehicle-photo figcaption { font-size: .78rem; line-height: 1.4; color: var(--text-3); padding: 8px 2px 0; }
+.vehicle .jeep-track { margin-top: 24px; }
+@media (max-width: 767px) { .vehicle-photos[data-m-slider] > * { flex-basis: 70%; } }

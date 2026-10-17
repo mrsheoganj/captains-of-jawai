@@ -67,6 +67,7 @@ $uid = 'bk' . substr(md5((string) ($id ?? 'form')), 0, 4);
   <label class="field"><span>Anything else? (optional)</span><input type="text" name="message" placeholder="Where you are staying, children's ages, camera gear…"></label>
 
   <div class="form-error" data-form-error hidden></div>
+  <p class="bk-assure"><?= icon('clock', 15) ?> <span>This sends a booking <strong>request</strong>. We reply personally, usually within 12 hours, with availability and the price. Nothing is booked or charged until you confirm.</span></p>
   <button class="btn btn-primary btn-lg btn-block" type="submit"><span>Request booking</span></button>
   <?php if ($waNum = preg_replace('/\D+/', '', (string) setting('whatsapp_number'))): ?>
   <a class="btn btn-whatsapp btn-block" href="https://wa.me/<?= e($waNum) ?>" target="_blank" rel="noopener" data-wa-book="<?= e($waNum) ?>"><?= icon('whatsapp', 18) ?> Or book on WhatsApp</a>

@@ -77,7 +77,8 @@ final class SiteController
         $heroSlides = $heroIds ? DB::all('SELECT id, caption, alt_text FROM media WHERE id IN (' . implode(',', $heroIds) . ')') : [];
         $heroSlides = array_column($heroSlides, null, 'id');
 
-        return $this->show('home', compact('safaris', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery'), [
+        $faqs = DB::all("SELECT question, answer FROM faqs WHERE status = 'published' ORDER BY CASE WHEN category = 'Planning' THEN 0 ELSE 1 END, sort_order, id LIMIT " . max(3, min(10, (int) setting('home_faq_count'))));
+        return $this->show('home', compact('safaris', 'testimonials', 'heroIds', 'heroSlides', 'guide', 'gallery', 'faqs'), [
             'title' => setting('seo_home_title'),
             'raw_title' => true,
             'description' => setting('seo_home_description'),

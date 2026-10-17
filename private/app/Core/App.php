@@ -168,6 +168,17 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.11.2: audit fixes (leopard estimates with honest wording, private or shared jeeps, one season for photography). */
+    public const CONTENT_FIXES = [
+        ["Published estimates put the population at around 50 to 60 leopards in and around the area.", "Local estimates put the population at around 50 to 70 leopards in the wider Jawai and Bera area; there is no official count for Jawai alone."],
+        ["<tr><th>Leopards</th><td>Estimated 50 to 60 in the wider area</td></tr>", "<tr><th>Leopards</th><td>Estimated 50 to 70 in the wider area (no official count)</td></tr>"],
+        ["Published estimates usually put the number at around 50 to 60 leopards in the wider Jawai area. Numbers are estimates and change over time.", "Local estimates usually put the number at around 50 to 70 leopards in the wider Jawai and Bera area. There is no official census figure for Jawai alone, and numbers change over time."],
+        ["Figures quoted by the forest department and researchers are usually in the range of 50 to 60 leopards for the wider Jawai area.", "Local estimates are usually in the range of 50 to 70 leopards for the wider Jawai and Bera area; there is no official census figure for Jawai alone."],
+        ["The Jawai Bandh Leopard Conservation Reserve covers about 20 km²,", "The Jawai Bandh Leopard Conservation Reserve covers about 19.8 km²,"],
+        ["Private open 4x4 with an experienced local tracker", "Open 4x4 gypsy, private or shared, with an experienced local tracker"],
+        ["November – April", "October – March (best light November – February)"],
+    ];
+
     /** 2.11.1: road distances measured from Bera village (OpenStreetMap routing), replacing older estimates. */
     public const DISTANCE_FIXES = [
         ["about 155 km, or three and a half hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 15 km from Bera and Falna about 34 km,", "about 130 km, or two and a half to three hours by road. Jodhpur airport is about 175 km to the north. By train, Sumerpur Jawai Bandh station is about 18 km from Bera and Falna about 37 km,"],
@@ -216,6 +227,9 @@ final class App
             // 2.11.1: map distances and the map's centre now measured from Bera village
             'distances_items' => ['155 km | 3.5 hrs | 24.6177'],
             'latitude' => ['25.1055'],
+            // 2.11.2: one set of drive times everywhere; honest leopard estimate
+            'booking_details' => ['15:30 to 18:30'],
+            'stats' => ['50–60 | Leopards estimated in the reserve'],
             'longitude' => ['73.1722'],
             // 2.10.1: report's homepage title and description replace the earlier defaults
             'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai'],
@@ -233,9 +247,12 @@ final class App
         foreach (['form_interests', 'form_drive_times', 'form_drives', 'journal_enabled', 'journal_heading', 'img_journal', 'team_enabled', 'team_kicker', 'team_heading', 'team_body', 'values_items', 'values_images', 'form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
             DB::delete('settings', 'skey = ?', [$key]);
         }
-        foreach (self::DISTANCE_FIXES as [$from, $to]) {
+        foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES] as [$from, $to]) {
             foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {
                 DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);
+            }
+            foreach (['excerpt', 'body', 'highlights', 'best_season', 'timing', 'meta_description'] as $col) {
+                DB::q("UPDATE safaris SET $col = REPLACE($col, ?, ?)", [$from, $to]);
             }
             DB::q('UPDATE faqs SET answer = REPLACE(answer, ?, ?)', [$from, $to]);
         }

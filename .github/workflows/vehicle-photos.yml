@@ -1,0 +1,16 @@
+# Finds freely-licensed safari jeep photos on Commons; contact sheets go to the vehicle-research branch. Read-only.
+name: Vehicle photos
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q pillow requests && python3 deploy/commons_vehicle.py
+      - run: |
+          cd sheets && git init -q && git checkout -q -b vehicle-research && git add -A
+          git -c user.name=github-actions -c user.email=actions@github.com commit -qm "Vehicle photos $(date -u +%F)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" vehicle-research

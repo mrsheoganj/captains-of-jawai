@@ -1,3 +1,4 @@
+AddType application/manifest+json .webmanifest
 # Captains of Jawai — Apache configuration (GoDaddy cPanel / PHP 8.3)
 
 Options -Indexes
@@ -42,6 +43,7 @@ DirectoryIndex index.php
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 month"
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType text/css "access plus 1 year"

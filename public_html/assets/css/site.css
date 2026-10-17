@@ -1365,3 +1365,14 @@ img, svg, video, iframe { max-width: 100%; }
 .vehicle-photo figcaption { font-size: .78rem; line-height: 1.4; color: var(--text-3); padding: 8px 2px 0; }
 .vehicle .jeep-track { margin-top: 24px; }
 @media (max-width: 767px) { .vehicle-photos[data-m-slider] > * { flex-basis: 70%; } }
+
+/* ===== Phones: bigger, readable logo in the top bar ===== */
+@media (max-width: 639px) {
+  :root { --header-h: 78px; }
+  .site-header .brand-mark, .site-header .brand-custom, .site-header .brand-custom.brand-badge { height: 68px !important; max-width: 92px; }
+}
+@media (max-width: 359px) {
+  :root { --header-h: 70px; }
+  .site-header .brand-mark, .site-header .brand-custom, .site-header .brand-custom.brand-badge { height: 58px !important; }
+  .header-title { font-size: 1rem; }
+}

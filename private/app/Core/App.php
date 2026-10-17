@@ -247,6 +247,11 @@ final class App
         foreach (['form_interests', 'form_drive_times', 'form_drives', 'journal_enabled', 'journal_heading', 'img_journal', 'team_enabled', 'team_kicker', 'team_heading', 'team_body', 'values_items', 'values_images', 'form_accommodation', 'form_transfers', 'form_nights', 'journeys_enabled', 'journeys_heading', 'img_journeys'] as $key) {
             DB::delete('settings', 'skey = ?', [$key]);
         }
+        // 2.11.3: the new square favicon pack replaces any earlier uploaded (round) favicon, once.
+        if (!is_file(STORAGE_PATH . '/.favicon-pack-v2')) {
+            DB::delete('settings', 'skey = ?', ['favicon_image']);
+            @file_put_contents(STORAGE_PATH . '/.favicon-pack-v2', date('c'));
+        }
         foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES] as [$from, $to]) {
             foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {
                 DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);

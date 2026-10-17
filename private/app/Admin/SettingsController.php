@@ -145,6 +145,17 @@ final class SettingsController extends BaseController
         redirect(admin_url('settings/email') . '#test');
     }
 
+    /** Empties the email log (sending history only; email/SMTP settings are not touched). */
+    public function clearEmailLog(): void
+    {
+        $this->guard('email', 'edit');
+        $n = (int) DB::val('SELECT COUNT(*) FROM email_log');
+        DB::q('DELETE FROM email_log');
+        Audit::log('email_log_cleared', 'email_log', null, ['rows' => $n]);
+        flash('success', "Email log cleared ($n entries removed).");
+        redirect(admin_url('email-log'));
+    }
+
     public function emailLog(): string
     {
         $this->guard('email');

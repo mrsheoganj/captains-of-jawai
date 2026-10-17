@@ -6,9 +6,11 @@
       <?php foreach ($items as $m): ?>
       <figure class="credit-item">
         <?php $by = trim((string) preg_replace('~\s*/\s*Wikimedia Commons$~', '', (string) $m['credit'])); ?>
-        <?= picture($m, 'Photo by ' . ($by ?: 'its photographer'), ['sizes' => '200px']) ?>
+        <?= picture($m, (bool) preg_match('/\b(jawai|bera|sena)\b/i', (string) $m['alt_text']) ? (string) $m['alt_text'] : 'Photo by ' . ($by ?: 'its photographer'), ['sizes' => '200px']) ?>
         <figcaption>
-          <strong><?= e($by ?: 'Photographer unknown') ?></strong>
+          <?php $isJawai = (bool) preg_match('/\b(jawai|bera|sena)\b/i', (string) $m['alt_text']); ?>
+          <?php if ($isJawai): ?><strong><?= e((string) $m['alt_text']) ?></strong><?php endif; ?>
+          <span class="credit-by">Photo: <?= e($by ?: 'unknown') ?></span>
           <?php if (str_contains((string) $m['credit'], 'Wikimedia Commons')): ?><span>via Wikimedia Commons</span><?php endif; ?>
           <span>
             <?php if ($m['license_url']): ?><a href="<?= e($m['license_url']) ?>" target="_blank" rel="noopener license"><?= e($m['license']) ?></a><?php else: ?><?= e($m['license']) ?><?php endif; ?>

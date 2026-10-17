@@ -152,6 +152,7 @@ final class App
         $r->get("$a/settings/{group}", [Admin\SettingsController::class, 'edit']);
         $r->post("$a/settings/{group}", [Admin\SettingsController::class, 'save']);
         $r->get("$a/email-log", [Admin\SettingsController::class, 'emailLog']);
+        $r->post("$a/email-log/clear", [Admin\SettingsController::class, 'clearEmailLog']);
 
         $r->get("$a/users", [Admin\UserController::class, 'index']);
         $r->get("$a/users/new", [Admin\UserController::class, 'edit']);
@@ -263,6 +264,11 @@ final class App
         if ($types !== '' && stripos($types, 'Shared gypsy safari') !== false) {
             $keep = array_filter(preg_split('/\R/', $types), fn ($l) => stripos($l, 'Shared gypsy safari') !== 0);
             Settings::set('booking_types', implode("\n", $keep));
+        }
+        // 2.11.5: clear the old email (SMTP) sending log once; email settings are not touched.
+        if (!is_file(STORAGE_PATH . '/.email-log-cleared-v1')) {
+            DB::q('DELETE FROM email_log');
+            @file_put_contents(STORAGE_PATH . '/.email-log-cleared-v1', date('c'));
         }
         // 2.11.3: the new square favicon pack replaces any earlier uploaded (round) favicon, once.
         if (!is_file(STORAGE_PATH . '/.favicon-pack-v2')) {

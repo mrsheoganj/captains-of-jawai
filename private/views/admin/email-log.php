@@ -1,4 +1,4 @@
-<div class="page-actions"><p class="muted">The last 200 emails the website tried to send.</p><span class="spacer"></span><a class="btn btn-light btn-sm" href="<?= e(admin_url('settings/email')) ?>"><?= icon('settings', 15) ?> Email settings</a></div>
+<div class="page-actions"><p class="muted">The last 200 emails the website tried to send.</p><span class="spacer"></span><?php if ($rows && \App\Core\Auth::can('email', 'edit')): ?><form method="post" action="<?= e(admin_url('email-log/clear')) ?>" onsubmit="return confirm('Remove every entry from the email log? Email settings are not changed.')"><?= csrf_field() ?><button class="btn btn-light btn-sm" type="submit"><?= icon('trash', 15) ?> Clear log</button></form><?php endif; ?><a class="btn btn-light btn-sm" href="<?= e(admin_url('settings/email')) ?>"><?= icon('settings', 15) ?> Email settings</a></div>
 <div class="card table-card"><div class="table-wrap">
 <table class="table">
   <thead><tr><th>When</th><th>To</th><th>Subject</th><th>Type</th><th>Status</th></tr></thead>

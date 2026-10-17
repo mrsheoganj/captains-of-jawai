@@ -4,7 +4,7 @@ SITE = 'https://captainsofjawai.com'
 S = requests.Session(); S.headers['User-Agent'] = 'CaptainsOfJawai-snapshot/1.0'
 os.makedirs('snapshot', exist_ok=True)
 sm = S.get(SITE + '/sitemap.xml', timeout=40).text
-urls = sorted(set(re.findall(r'<loc>([^<]+)</loc>', sm))) + [SITE + '/book-a-safari/', SITE + '/faq/']
+urls = sorted(set(re.findall(r'<loc>([^<]+)</loc>', sm))) + [SITE + '/book-a-safari/', SITE + '/faq/', SITE + '/photo-credits/']
 for u in sorted(set(urls)):
     r = S.get(u, timeout=40); h = r.text
     head = '\n'.join(re.findall(r'<title>[^<]*</title>|<meta name="description"[^>]*>|<link rel="canonical"[^>]*>|<h1[^>]*>.*?</h1>', h, re.S))

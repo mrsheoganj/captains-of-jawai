@@ -57,10 +57,6 @@ $footerLogo = (int) setting('footer_logo_image') ?: (int) setting('logo_image');
     </div>
   </div>
 
-  <div class="container footer-ethics">
-    <p>We switch engines off at sightings, keep our distance and never bait or call animals. Sightings are never guaranteed. No payment is taken on this website.</p>
-  </div>
-
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
       <p><?= e(str_replace('{year}', date('Y'), (string) setting('copyright_text'))) ?><?php if (setting('legal_name')): ?> · <?= e(setting('legal_name')) ?><?php endif; ?><?php if (setting('gstin')): ?> · GSTIN <?= e(setting('gstin')) ?><?php endif; ?></p>

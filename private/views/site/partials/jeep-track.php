@@ -1,14 +1,14 @@
 <?php
 /**
- * Animated Jawai scene: a convoy of open-top gypsies climbs over a granite hill on a village track,
- * past the dam, a hill shrine and a leopard on the rocks. Pure SVG (SMIL); the page script pauses it
+ * Animated Jawai scene: a convoy of open-top gypsies drives along a straight village track in front of
+ * the dam backwater, granite hills, a hill shrine, a Rabari hut and a leopard on the rocks. Pure SVG (SMIL); the page script pauses it
  * while off screen and keeps it still for visitors who prefer reduced motion.
  */
 $name = e((string) setting('site_name'));
-$track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112 640 112 690 126 C 760 146 800 186 880 204 C 960 220 1080 216 1360 216';
+$track = 'M-160 216 H 1360'; // a straight, level village track
 ?>
 <div class="jeep-track jeep-scene" data-jeep-track>
-  <svg class="js-scene" viewBox="0 0 1200 250" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Safari jeeps climbing a granite hill in Jawai, past the dam, a hill shrine and a leopard on the rocks">
+  <svg class="js-scene" viewBox="0 0 1200 250" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Safari jeeps driving through Jawai, past the dam, granite hills, a hill shrine and a leopard on the rocks">
     <defs>
       <!-- the open-top gypsy (origin at the middle of the ground line, facing right) -->
       <g id="js-jeep">
@@ -84,15 +84,26 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
 
     <!-- hill shrine with a fluttering flag -->
     <g transform="translate(1000 148)">
-      <path class="js-rock" d="M-70 70 C-60 30 -30 10 0 8 C30 10 60 30 74 70 Z"/>
+      <path class="js-rock" d="M-70 56 C-60 30 -30 10 0 8 C30 10 60 30 74 56 Z"/>
       <rect x="-12" y="-14" width="24" height="22" class="js-shrine"/><path d="M-15 -14 L0 -30 L15 -14 Z" class="js-shrine"/>
       <path d="M0 -30 V-52" class="js-ink"/>
       <path class="js-flag" d="M0 -52 L18 -47 L0 -42 Z"><animate attributeName="d" values="M0 -52 L18 -47 L0 -42 Z;M0 -52 L16 -45 L0 -42 Z;M0 -52 L18 -48 L0 -42 Z" dur="1.2s" repeatCount="indefinite"/></path>
     </g>
 
-    <!-- the granite hill the track climbs, with boulders -->
-    <path class="js-granite" d="M260 250 C360 214 440 150 540 126 C600 110 650 112 700 128 C790 156 840 210 940 250 Z"/>
-    <path class="js-granite-line" d="M470 170 C520 150 560 140 600 140 M650 150 C700 160 730 178 760 200"/>
+    <!-- granite boulder piles behind the track -->
+    <g class="js-boulders">
+      <path d="M520 206 C516 178 534 160 560 158 C588 156 606 176 604 206 Z"/>
+      <path d="M584 206 C584 186 600 174 620 176 C640 178 650 192 648 206 Z"/>
+      <path d="M548 162 C546 146 558 136 574 137 C590 138 598 150 594 162 Z"/>
+      <path d="M700 208 C698 190 712 180 728 181 C744 182 752 194 750 208 Z"/>
+      <path class="js-crack" d="M540 184 C552 178 568 178 580 182 M606 190 l14 -4 M716 196 l14 -3"/>
+    </g>
+    <!-- Rabari hut with a thatched roof -->
+    <g transform="translate(800 206)">
+      <rect x="-20" y="-20" width="40" height="20" class="js-shrine"/>
+      <path d="M-26 -18 L0 -38 L26 -18 Z" class="js-thatch"/>
+      <rect x="-5" y="-12" width="10" height="12" class="js-door"/>
+    </g>
     <!-- granite outcrop on the hills behind the track, with a leopard resting on top -->
     <g transform="translate(-292 4)">
     <g class="js-boulders">
@@ -116,11 +127,9 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
       <circle cx="182" cy="19.5" r="1.4" class="js-leo-eye2"/>
     </g>
     </g>
-    </g>
-    </g>
 
     <!-- trees -->
-    <?php foreach ([[330, 214, 1.1], [860, 222, 1], [1110, 216, 1.3], [1160, 220, .9], [420, 196, .8]] as [$tx, $ty, $sc]): ?>
+    <?php foreach ([[460, 206, 1.1], [680, 206, .8], [880, 208, 1.2], [1110, 210, 1.3], [1160, 212, .9]] as [$tx, $ty, $sc]): ?>
     <use href="#js-tree" transform="translate(<?= $tx ?> <?= $ty ?>) scale(<?= $sc ?>)"/>
     <?php endforeach; ?>
 
@@ -128,28 +137,11 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
     <use href="#js-track" class="js-road"/>
     <use href="#js-track" class="js-ruts" transform="translate(0 7)"/>
 
-    <!-- shallow water crossing on the track -->
-    <path class="js-water js-ford" d="M138 196 C170 192 230 190 300 194 C312 196 314 206 302 210 C260 220 180 222 140 218 C126 214 126 200 138 196 Z"/>
-    <path class="js-ripple" d="M160 206 q8 -4 16 0 t16 0 M226 200 q8 -4 16 0 t16 0 M250 212 q6 -3 12 0">
-      <animate attributeName="opacity" values=".4;1;.4" dur="2.4s" repeatCount="indefinite"/>
-    </path>
-
-    <!-- convoy: same jeep, three liveries, following the track and tilting with the slope -->
+    <!-- convoy: same jeep, three liveries, one after another along the track -->
     <?php foreach ([['#5E6B47', '#F3E8CF', 0], ['#C9A96E', '#3A2C1C', -8], ['#2F3B2C', '#F3E8CF', -16]] as [$body, $label, $begin]): ?>
     <g style="--jt-body:<?= $body ?>;--jt-label:<?= $label ?>">
       <use href="#js-jeep" transform="scale(.62)"/>
-      <g class="js-splash" opacity="0">
-        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.198;.206;.282;.29;1" dur="24s" begin="<?= $begin ?>s" repeatCount="indefinite"/>
-        <?php foreach ([-36, 36] as $wx): ?>
-        <g transform="translate(<?= $wx ?> 0)">
-          <?php foreach ([[-10, -16, 0], [-4, -22, .15], [6, -18, .3], [12, -12, .1]] as [$dx, $dy, $dd]): ?>
-          <circle r="2" cx="0" cy="0"><animate attributeName="cx" values="0;<?= $dx ?>" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/><animate attributeName="cy" values="-2;<?= $dy ?>;-2" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/></circle>
-          <?php endforeach; ?>
-        </g>
-        <?php endforeach; ?>
-        <path class="js-wake" d="M-60 2 q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
-      </g>
-      <animateMotion dur="24s" begin="<?= $begin ?>s" repeatCount="indefinite" rotate="auto"><mpath href="#js-track"/></animateMotion>
+      <animateMotion dur="24s" begin="<?= $begin ?>s" repeatCount="indefinite"><mpath href="#js-track"/></animateMotion>
     </g>
     <?php endforeach; ?>
 

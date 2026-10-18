@@ -1477,3 +1477,5 @@ img, svg, video, iframe { max-width: 100%; }
 .js-fl-tip { fill: #2F241A; }
 .js-boulders .js-crack { fill: none; stroke: #4A3826; stroke-width: 1; opacity: .5; }
 .js-boulders .js-rest-shadow { fill: rgba(58, 42, 24, .28); stroke: none; }
+.js-thatch { fill: #C9A25E; stroke: #4A3826; stroke-width: 1.4; stroke-linejoin: round; }
+.js-door { fill: #8A5A33; stroke: #4A3826; stroke-width: 1; }

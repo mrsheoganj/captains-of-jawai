@@ -1475,3 +1475,5 @@ img, svg, video, iframe { max-width: 100%; }
 .js-fl-pink { fill: #EE93A6; stroke: #9C4458; stroke-width: 1.2; stroke-linejoin: round; }
 .js-fl-leg2 { fill: #C96E80; }
 .js-fl-tip { fill: #2F241A; }
+.js-boulders .js-crack { fill: none; stroke: #4A3826; stroke-width: 1; opacity: .5; }
+.js-boulders .js-rest-shadow { fill: rgba(58, 42, 24, .28); stroke: none; }

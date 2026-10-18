@@ -96,8 +96,10 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
     <!-- granite outcrop on the hills behind the track, with a leopard resting on top -->
     <g transform="translate(-292 4)">
     <g class="js-boulders">
-      <path d="M560 128 C556 100 580 84 604 88 C626 92 636 112 630 128 Z"/>
-      <path d="M616 126 C618 106 640 98 656 106 C668 112 668 124 664 130 Z"/>
+      <path d="M636 142 C638 120 654 108 672 110 C690 112 698 126 698 142 Z"/>
+      <path d="M544 142 C544 118 551 99 566 93.5 C590 89 626 89 645 92.5 C662 96 670 116 672 142 Z"/>
+      <path class="js-crack" d="M576 112 C588 107 604 107 614 111 M598 126 l16 -3 M640 104 C646 112 648 122 646 134"/>
+      <ellipse cx="600" cy="92.5" rx="44" ry="2.6" class="js-rest-shadow"/>
     </g>
     <!-- leopard resting on the top boulder, tail swinging -->
     <g class="js-leopard" transform="translate(546 63) scale(.5)">

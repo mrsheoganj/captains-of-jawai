@@ -1446,3 +1446,20 @@ img, svg, video, iframe { max-width: 100%; }
 .js-ruts { fill: none; stroke: #CDB48A; stroke-width: 1.6; stroke-dasharray: 5 13; }
 .js-ground { fill: #EADBB8; opacity: .6; }
 @media (max-width: 639px) { .jeep-scene { height: 150px; } }
+/* scene: leopard, crocodile, flamingos, water crossing */
+.js-leo { fill: #E2AE4E; stroke: #4A3826; stroke-width: 1.1; stroke-linejoin: round; }
+.js-leo-muzzle { fill: #F5E6C6; stroke: #4A3826; stroke-width: .9; }
+.js-leo-eye { fill: #2E241A; }
+.js-rosettes circle { fill: none; stroke: #4A3826; stroke-width: 1.1; }
+.js-croc-body { fill: #6F7A4C; stroke: #2E3320; stroke-width: 1.2; stroke-linejoin: round; }
+.js-croc-ridge { fill: none; stroke: #2E3320; stroke-width: 1.1; stroke-linejoin: round; }
+.js-croc-leg { stroke: #2E3320; stroke-width: 2.4; stroke-linecap: round; }
+.js-croc-eye { fill: #E8D27A; stroke: #2E3320; stroke-width: .8; }
+.js-croc-jaw { fill: #6F7A4C; stroke: #2E3320; stroke-width: 1; stroke-linejoin: round; }
+.js-fl-leg { fill: none; stroke: #C9677A; stroke-width: 1.4; stroke-linecap: round; }
+.js-fl-body { fill: #F2A3B3; stroke: #8C3A4C; stroke-width: 1; }
+.js-fl-neck { fill: none; stroke: #F2A3B3; stroke-width: 2.6; stroke-linecap: round; }
+.js-fl-beak { fill: #2E241A; stroke: #2E241A; stroke-width: 1; stroke-linejoin: round; }
+.js-ford { opacity: .95; }
+.js-splash circle { fill: #CFE7F0; stroke: #6FA3B8; stroke-width: .6; }
+.js-wake { fill: none; stroke: #F4FAFC; stroke-width: 1.6; stroke-linecap: round; }

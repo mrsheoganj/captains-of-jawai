@@ -57,11 +57,29 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
     </path>
     <?php endforeach; ?>
 
-    <!-- Jawai Dam -->
-    <path class="js-water" d="M0 196 C60 186 130 184 210 190 C250 194 240 204 200 208 L0 212 Z"/>
-    <path class="js-ripple" d="M40 197 q8 -4 16 0 t16 0 M120 194 q8 -4 16 0 t16 0 M70 205 q6 -3 12 0">
+    <!-- Jawai Dam backwater: crocodile on the bank, flamingos wading -->
+    <path class="js-water" d="M0 190 C50 180 120 178 190 184 C228 188 232 198 200 204 C150 210 60 210 0 208 Z"/>
+    <path class="js-ripple" d="M24 192 q8 -4 16 0 t16 0 M96 188 q8 -4 16 0 t16 0 M150 198 q6 -3 12 0">
       <animate attributeName="opacity" values=".3;.9;.3" dur="3s" repeatCount="indefinite"/>
     </path>
+    <g class="js-croc" transform="translate(18 186)">
+      <path class="js-croc-body" d="M8 0 C20 -5 44 -7 66 -6 C80 -5 92 -3 104 -1 L118 1 L104 3 C88 4 60 5 36 4 C22 4 12 3 8 0 Z"/>
+      <path class="js-croc-ridge" d="M40 -6 l3 -3 l3 3 M50 -6.5 l3 -3 l3 3 M60 -6.5 l3 -3 l3 3 M70 -6 l3 -3 l3 3 M80 -5 l2.5 -2.5 l2.5 2.5"/>
+      <path class="js-croc-leg" d="M30 3 l-4 5 M56 4 l-3 5 M84 3 l3 5"/>
+      <circle cx="21" cy="-3.6" r="1.5" class="js-croc-eye"/>
+      <path class="js-croc-jaw" d="M8 0 L-10 -1 C-12 -1 -13 1 -10 2 L10 3 Z"><animateTransform attributeName="transform" type="rotate" values="0 9 1;0 9 1;-14 9 1;-14 9 1;0 9 1" keyTimes="0;.55;.62;.8;1" dur="6s" repeatCount="indefinite"/></path>
+      <path class="js-croc-jaw" d="M8 2 L-10 2.5 C-11 3 -10 4 -8 4 L10 4 Z"/>
+    </g>
+    <?php foreach ([[118, 186, 1, 0], [146, 190, .9, -1.6]] as [$fx, $fy, $fs, $fb]): ?>
+    <g class="js-flamingo" transform="translate(<?= $fx ?> <?= $fy ?>) scale(<?= $fs ?>)">
+      <path class="js-fl-leg" d="M0 0 V-16 M3 0 L2 -8 L0 -16"/>
+      <ellipse cx="2" cy="-21" rx="8" ry="5" class="js-fl-body"/>
+      <g><animateTransform attributeName="transform" type="rotate" values="0 6 -22;0 6 -22;70 6 -22;70 6 -22;0 6 -22" keyTimes="0;.5;.6;.85;1" dur="5s" begin="<?= $fb ?>s" repeatCount="indefinite"/>
+        <path class="js-fl-neck" d="M6 -23 C10 -30 4 -34 6 -40 C7 -44 12 -44 13 -41"/>
+        <path class="js-fl-beak" d="M13 -41 l4 2 l-2 1.5"/>
+      </g>
+    </g>
+    <?php endforeach; ?>
 
     <!-- hill shrine with a fluttering flag -->
     <g transform="translate(1000 148)">
@@ -81,16 +99,26 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
       <path d="M616 126 C618 106 640 98 656 106 C668 112 668 124 664 130 Z"/>
     </g>
     <!-- leopard resting on the top boulder, tail swinging -->
-    <g class="js-leopard" transform="translate(590 88)">
-      <path d="M-22 0 C-20 -10 -8 -14 6 -12 C14 -11 18 -14 22 -18 C26 -21 32 -19 32 -14 C32 -10 28 -8 24 -8 C22 -3 18 0 12 0 Z"/>
-      <circle cx="27" cy="-19" r="2"/><circle cx="31" cy="-19" r="2"/>
-      <path class="js-tail" d="M-20 -2 C-30 -2 -34 6 -30 14"><animateTransform attributeName="transform" type="rotate" values="-8 -20 -2;10 -20 -2;-8 -20 -2" dur="2.6s" repeatCount="indefinite"/></path>
-      <g class="js-spots"><circle cx="-8" cy="-6" r="1.4"/><circle cx="0" cy="-8" r="1.4"/><circle cx="8" cy="-6" r="1.4"/><circle cx="-2" cy="-3" r="1.2"/></g>
+    <g class="js-leopard" transform="translate(588 89)">
+      <path class="js-tail" d="M-32 -7 C-44 -7 -48 4 -45 18 C-44 22 -40 23 -40 19"><animateTransform attributeName="transform" type="rotate" values="-6 -32 -7;9 -32 -7;-6 -32 -7" dur="2.8s" repeatCount="indefinite"/></path>
+      <ellipse cx="-22" cy="-8" rx="12" ry="8.5" class="js-leo"/>
+      <path class="js-leo" d="M-33 -1 C-35 -11 -26 -18 -12 -19 C2 -20 16 -18 24 -14 C29 -12 31 -8 30 -3 L30 0 L-30 0 Z"/>
+      <path class="js-leo" d="M16 -3 L42 -3 C45 -3 46 0 44 1.5 L16 1.5 Z"/>
+      <path class="js-leo" d="M10 0 L36 0 C39 0 40 2.4 38 3.5 L10 3.5 Z"/>
+      <path class="js-leo" d="M22 -14 C22 -22 28 -28 36 -28 C43 -28 48 -24 48 -19 C48 -15 44 -12 38 -12 C32 -12 25 -11 22 -14 Z"/>
+      <path class="js-leo" d="M30 -26 L31 -32 L35 -27 Z M37 -28 L40 -33 L42 -27 Z"/>
+      <path class="js-leo-muzzle" d="M44 -19 C46 -19 48 -18 48 -17 C47 -15 44 -15 43 -16"/>
+      <circle cx="41" cy="-22" r="1.1" class="js-leo-eye"><animate attributeName="r" values="1.1;1.1;.2;1.1" keyTimes="0;.93;.96;1" dur="4s" repeatCount="indefinite"/></circle>
+      <circle cx="48" cy="-19" r="1" class="js-leo-eye"/>
+      <g class="js-rosettes">
+        <?php foreach ([[-24, -11], [-18, -5], [-12, -14], [-6, -8], [0, -15], [4, -6], [10, -12], [16, -7], [-28, -4], [20, -13], [30, -22], [34, -17]] as [$rx, $ry]): ?><circle cx="<?= $rx ?>" cy="<?= $ry ?>" r="1.7"/><?php endforeach; ?>
+      </g>
+    </g>
     </g>
     </g>
 
     <!-- trees -->
-    <?php foreach ([[110, 214, 1.2], [180, 218, .9], [330, 214, 1.1], [860, 222, 1], [1110, 216, 1.3], [1160, 220, .9], [420, 196, .8]] as [$tx, $ty, $sc]): ?>
+    <?php foreach ([[330, 214, 1.1], [860, 222, 1], [1110, 216, 1.3], [1160, 220, .9], [420, 196, .8]] as [$tx, $ty, $sc]): ?>
     <use href="#js-tree" transform="translate(<?= $tx ?> <?= $ty ?>) scale(<?= $sc ?>)"/>
     <?php endforeach; ?>
 
@@ -98,10 +126,27 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
     <use href="#js-track" class="js-road"/>
     <use href="#js-track" class="js-ruts" transform="translate(0 7)"/>
 
+    <!-- shallow water crossing on the track -->
+    <path class="js-water js-ford" d="M138 196 C170 192 230 190 300 194 C312 196 314 206 302 210 C260 220 180 222 140 218 C126 214 126 200 138 196 Z"/>
+    <path class="js-ripple" d="M160 206 q8 -4 16 0 t16 0 M226 200 q8 -4 16 0 t16 0 M250 212 q6 -3 12 0">
+      <animate attributeName="opacity" values=".4;1;.4" dur="2.4s" repeatCount="indefinite"/>
+    </path>
+
     <!-- convoy: same jeep, three liveries, following the track and tilting with the slope -->
     <?php foreach ([['#5E6B47', '#F3E8CF', 0], ['#C9A96E', '#3A2C1C', -8], ['#2F3B2C', '#F3E8CF', -16]] as [$body, $label, $begin]): ?>
     <g style="--jt-body:<?= $body ?>;--jt-label:<?= $label ?>">
       <use href="#js-jeep" transform="scale(.62)"/>
+      <g class="js-splash" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.198;.206;.282;.29;1" dur="24s" begin="<?= $begin ?>s" repeatCount="indefinite"/>
+        <?php foreach ([-36, 36] as $wx): ?>
+        <g transform="translate(<?= $wx ?> 0)">
+          <?php foreach ([[-10, -16, 0], [-4, -22, .15], [6, -18, .3], [12, -12, .1]] as [$dx, $dy, $dd]): ?>
+          <circle r="2" cx="0" cy="0"><animate attributeName="cx" values="0;<?= $dx ?>" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/><animate attributeName="cy" values="-2;<?= $dy ?>;-2" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur=".55s" begin="<?= $dd ?>s" repeatCount="indefinite"/></circle>
+          <?php endforeach; ?>
+        </g>
+        <?php endforeach; ?>
+        <path class="js-wake" d="M-60 2 q10 -4 20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>
+      </g>
       <animateMotion dur="24s" begin="<?= $begin ?>s" repeatCount="indefinite" rotate="auto"><mpath href="#js-track"/></animateMotion>
     </g>
     <?php endforeach; ?>

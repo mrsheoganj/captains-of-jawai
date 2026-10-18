@@ -143,8 +143,14 @@
 
   /* ---------------- Safari jeep strip: drive only while on screen ---------------- */
   $$('[data-jeep-track]').forEach((el) => {
+    const svg = $('svg', el);
+    const smil = svg && typeof svg.pauseAnimations === 'function';
+    if (smil) { svg.setCurrentTime(6); svg.pauseAnimations(); } // a natural first frame: the convoy spread along the track
     if (reduced || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver((en) => en.forEach((e) => el.classList.toggle('is-driving', e.isIntersecting)), { threshold: 0.05 }).observe(el);
+    new IntersectionObserver((en) => en.forEach((e) => {
+      el.classList.toggle('is-driving', e.isIntersecting);
+      if (smil) { if (e.isIntersecting) svg.unpauseAnimations(); else svg.pauseAnimations(); }
+    }), { threshold: 0.05 }).observe(el);
   });
 
   /* ---------------- Scroll cue under the slider: hide once the visitor scrolls ---------------- */

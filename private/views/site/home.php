@@ -81,8 +81,6 @@ foreach (Settings::lines('stats') as $line) {
 </section>
 <?php endif; ?>
 
-<!-- How booking works -->
-<?= View::partial('site/partials/how-booking') ?>
 <?= View::partial('site/partials/vehicle') ?>
 
 <!-- Ticker -->
@@ -146,6 +144,9 @@ if (Settings::bool('jawai_images_enabled')): ?>
 
 <!-- 2. Distance map -->
 <?php if (Settings::bool('distances_enabled')): ?><?= View::partial('site/partials/distances') ?><?php endif; ?>
+
+<!-- How booking works -->
+<?= View::partial('site/partials/how-booking') ?>
 
 <!-- Booking -->
 <?php if (Settings::bool('booking_enabled')):

@@ -41,6 +41,15 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
       <path id="js-track" d="<?= $track ?>"/>
       <!-- acacia / khejri tree -->
       <g id="js-tree"><path d="M0 0 V-16 M0 -11 L-6 -18 M0 -12 L6 -19" class="js-ink"/><path d="M-17 -18 C-15 -25 -8 -27 -4 -25 C-2 -30 6 -30 8 -25 C13 -27 19 -24 18 -19 C12 -15 -11 -15 -17 -18 Z" class="js-canopy"/></g>
+      <!-- animals (drawn large, scaled down in the scene) -->
+      <pattern id="js-ros" width="9" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)">
+        <path d="M2.2 1.2 a2 1.7 0 1 0 0.1 0 M6.6 5.2 a1.8 1.5 0 1 0 0.1 0" fill="none" stroke="#2F241A" stroke-width="1" stroke-dasharray="2 1.2"/>
+        <circle cx="2.3" cy="2.9" r=".55" fill="#9A6A2A"/><circle cx="6.7" cy="6.7" r=".5" fill="#9A6A2A"/>
+      </pattern>
+      <path id="js-leo-shape" d="M20 52 C20 42 28 34 42 31 C56 29 70 33 86 33 C100 33 112 26 122 21 C128 18 133 15 138 12 C139 7 141 4 145 4 C147 4 149 5 150 7 C154 5 159 5 163 6 C164 3 167 2 169 3 C171 4 171 7 170 9 C174 11 177 14 179 17 C181 18 183 19 183 21 C183 23 181 24 179 24 C177 26 173 27 170 27 C166 29 163 33 162 38 C162 43 164 47 168 49 L194 50 C199 50 201 53 199 55.5 C197 57.5 192 57.5 186 57.5 L156 57.5 C150 57.5 144 56 138 55 L100 56 C86 58 70 60 54 60 C46 60 38 60 32 59 C26 58 22 56 20 54 C16 57 14 63 13 71 C12 81 14 90 19 95 C22 98 25 97 24 94 C20 88 19 80 20 72 C21 64 23 58 24 55 Z"/>
+      <path id="js-croc-shape" d="M0 30 C6 27 16 26 30 26 L40 24 C48 22 56 21 62 22 L66 18 L70 22 L76 17 L80 21 L86 16 L90 20 L96 16 L100 20 L106 17 L110 21 L116 18 L120 22 L126 20 L130 23 C150 25 175 27 200 30 C214 31 224 32 236 33 C224 35 210 35 196 35 C180 36 160 36 146 36 L144 42 L136 43 L138 36 C120 37 100 37 84 36 L82 42 L74 43 L76 36 C62 36 50 35 40 34 C30 34 18 34 8 33 C3 33 0 32 0 30 Z"/>
+      <g id="js-fl-stand"><path d="M20 92 L21 60 L23 60 L22 92 Z M24 60 L30 74 L22 82 L23 84 L33 75 L26 60 Z" class="js-fl-leg2"/><path d="M12 50 C12 41 22 36 34 38 C42 39 46 44 44 50 C40 58 26 61 18 58 C14 56 12 54 12 50 Z M38 41 C40 34 36 28 32 22 C27 15 28 6 35 4 C41 2 46 6 46 10 L51 14 L49 16 L44 13 C41 10 37 9 35 12 C33 16 37 21 41 28 C45 35 45 41 42 45 Z" class="js-fl-pink"/><path d="M46 10 L51 14 L49 16 L46 14 Z" class="js-fl-tip"/></g>
+      <g id="js-fl-feed"><path d="M20 92 L21 60 L23 60 L22 92 Z M28 92 L27 60 L29 60 L30 92 Z" class="js-fl-leg2"/><path d="M12 50 C12 41 22 36 34 38 C42 39 46 44 44 50 C40 58 26 61 18 58 C14 56 12 54 12 50 Z M40 44 C46 46 50 52 52 60 C54 68 56 76 60 82 C62 86 60 90 57 88 L54 84 L57 82 C53 76 50 68 48 60 C46 54 42 50 38 48 Z" class="js-fl-pink"/><path d="M57 88 L54 84 L57 82 C59 84 61 86 60 88 Z" class="js-fl-tip"/></g>
       <radialGradient id="js-sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F6C46A"/><stop offset="1" stop-color="#F6C46A" stop-opacity="0"/></radialGradient>
     </defs>
 
@@ -62,22 +71,14 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
     <path class="js-ripple" d="M24 192 q8 -4 16 0 t16 0 M96 188 q8 -4 16 0 t16 0 M150 198 q6 -3 12 0">
       <animate attributeName="opacity" values=".3;.9;.3" dur="3s" repeatCount="indefinite"/>
     </path>
-    <g class="js-croc" transform="translate(18 186)">
-      <path class="js-croc-body" d="M8 0 C20 -5 44 -7 66 -6 C80 -5 92 -3 104 -1 L118 1 L104 3 C88 4 60 5 36 4 C22 4 12 3 8 0 Z"/>
-      <path class="js-croc-ridge" d="M40 -6 l3 -3 l3 3 M50 -6.5 l3 -3 l3 3 M60 -6.5 l3 -3 l3 3 M70 -6 l3 -3 l3 3 M80 -5 l2.5 -2.5 l2.5 2.5"/>
-      <path class="js-croc-leg" d="M30 3 l-4 5 M56 4 l-3 5 M84 3 l3 5"/>
-      <circle cx="21" cy="-3.6" r="1.5" class="js-croc-eye"/>
-      <path class="js-croc-jaw" d="M8 0 L-10 -1 C-12 -1 -13 1 -10 2 L10 3 Z"><animateTransform attributeName="transform" type="rotate" values="0 9 1;0 9 1;-14 9 1;-14 9 1;0 9 1" keyTimes="0;.55;.62;.8;1" dur="6s" repeatCount="indefinite"/></path>
-      <path class="js-croc-jaw" d="M8 2 L-10 2.5 C-11 3 -10 4 -8 4 L10 4 Z"/>
+    <g class="js-croc" transform="translate(4 172) scale(.5)">
+      <use href="#js-croc-shape" class="js-croc-fill"/>
+      <circle cx="44" cy="25" r="1.8" class="js-croc-eye"><animate attributeName="r" values="1.8;1.8;.3;1.8" keyTimes="0;.9;.95;1" dur="5s" repeatCount="indefinite"/></circle>
     </g>
-    <?php foreach ([[118, 186, 1, 0], [146, 190, .9, -1.6]] as [$fx, $fy, $fs, $fb]): ?>
-    <g class="js-flamingo" transform="translate(<?= $fx ?> <?= $fy ?>) scale(<?= $fs ?>)">
-      <path class="js-fl-leg" d="M0 0 V-16 M3 0 L2 -8 L0 -16"/>
-      <ellipse cx="2" cy="-21" rx="8" ry="5" class="js-fl-body"/>
-      <g><animateTransform attributeName="transform" type="rotate" values="0 6 -22;0 6 -22;70 6 -22;70 6 -22;0 6 -22" keyTimes="0;.5;.6;.85;1" dur="5s" begin="<?= $fb ?>s" repeatCount="indefinite"/>
-        <path class="js-fl-neck" d="M6 -23 C10 -30 4 -34 6 -40 C7 -44 12 -44 13 -41"/>
-        <path class="js-fl-beak" d="M13 -41 l4 2 l-2 1.5"/>
-      </g>
+    <?php foreach ([[112, 152, .5, 0], [140, 158, .45, -2.2]] as [$fx, $fy, $fs, $fb]): ?>
+    <g transform="translate(<?= $fx ?> <?= $fy ?>) scale(<?= $fs ?>)">
+      <use href="#js-fl-stand"><animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.5;.52;.85;.87" calcMode="discrete" dur="6s" begin="<?= $fb ?>s" repeatCount="indefinite"/></use>
+      <use href="#js-fl-feed" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.52;.85;.87" calcMode="discrete" dur="6s" begin="<?= $fb ?>s" repeatCount="indefinite"/></use>
     </g>
     <?php endforeach; ?>
 
@@ -99,20 +100,19 @@ $track = 'M-160 214 C 60 214 170 212 300 202 C 400 194 460 150 540 128 C 600 112
       <path d="M616 126 C618 106 640 98 656 106 C668 112 668 124 664 130 Z"/>
     </g>
     <!-- leopard resting on the top boulder, tail swinging -->
-    <g class="js-leopard" transform="translate(588 89)">
-      <path class="js-tail" d="M-32 -7 C-44 -7 -48 4 -45 18 C-44 22 -40 23 -40 19"><animateTransform attributeName="transform" type="rotate" values="-6 -32 -7;9 -32 -7;-6 -32 -7" dur="2.8s" repeatCount="indefinite"/></path>
-      <ellipse cx="-22" cy="-8" rx="12" ry="8.5" class="js-leo"/>
-      <path class="js-leo" d="M-33 -1 C-35 -11 -26 -18 -12 -19 C2 -20 16 -18 24 -14 C29 -12 31 -8 30 -3 L30 0 L-30 0 Z"/>
-      <path class="js-leo" d="M16 -3 L42 -3 C45 -3 46 0 44 1.5 L16 1.5 Z"/>
-      <path class="js-leo" d="M10 0 L36 0 C39 0 40 2.4 38 3.5 L10 3.5 Z"/>
-      <path class="js-leo" d="M22 -14 C22 -22 28 -28 36 -28 C43 -28 48 -24 48 -19 C48 -15 44 -12 38 -12 C32 -12 25 -11 22 -14 Z"/>
-      <path class="js-leo" d="M30 -26 L31 -32 L35 -27 Z M37 -28 L40 -33 L42 -27 Z"/>
-      <path class="js-leo-muzzle" d="M44 -19 C46 -19 48 -18 48 -17 C47 -15 44 -15 43 -16"/>
-      <circle cx="41" cy="-22" r="1.1" class="js-leo-eye"><animate attributeName="r" values="1.1;1.1;.2;1.1" keyTimes="0;.93;.96;1" dur="4s" repeatCount="indefinite"/></circle>
-      <circle cx="48" cy="-19" r="1" class="js-leo-eye"/>
-      <g class="js-rosettes">
-        <?php foreach ([[-24, -11], [-18, -5], [-12, -14], [-6, -8], [0, -15], [4, -6], [10, -12], [16, -7], [-28, -4], [20, -13], [30, -22], [34, -17]] as [$rx, $ry]): ?><circle cx="<?= $rx ?>" cy="<?= $ry ?>" r="1.7"/><?php endforeach; ?>
+    <g class="js-leopard" transform="translate(546 63) scale(.5)">
+      <g><animateTransform attributeName="transform" type="rotate" values="-4 22 55;5 22 55;-4 22 55" dur="2.8s" repeatCount="indefinite"/>
+        <path d="M20 54 C16 57 14 63 13 71 C12 81 14 90 19 95 C22 98 25 97 24 94 C20 88 19 80 20 72 C21 64 23 58 24 55 Z" class="js-leo-coat"/>
       </g>
+      <use href="#js-leo-shape" class="js-leo-coat"/>
+      <use href="#js-leo-shape" fill="url(#js-ros)"/>
+      <path d="M60 57 C80 59 110 58 138 55" class="js-leo-belly"/>
+      <use href="#js-leo-shape" class="js-leo-line"/>
+      <path d="M38 44 C46 34 60 36 62 50 M150 44 C150 51 153 55 158 56" class="js-leo-detail"/>
+      <path d="M176 21 C178 22 181 22 183 21 M147 6 L148.5 8 M166 4 L167 6.5" class="js-leo-detail"/>
+      <ellipse cx="172.5" cy="14.5" rx="1.6" ry="1.2" class="js-leo-eye2"><animate attributeName="ry" values="1.2;1.2;.15;1.2" keyTimes="0;.92;.95;1" dur="4.5s" repeatCount="indefinite"/></ellipse>
+      <circle cx="182" cy="19.5" r="1.4" class="js-leo-eye2"/>
+    </g>
     </g>
     </g>
     </g>

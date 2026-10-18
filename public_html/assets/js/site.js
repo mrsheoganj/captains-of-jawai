@@ -147,6 +147,13 @@
     new IntersectionObserver((en) => en.forEach((e) => el.classList.toggle('is-driving', e.isIntersecting)), { threshold: 0.05 }).observe(el);
   });
 
+  /* ---------------- Scroll cue under the slider: hide once the visitor scrolls ---------------- */
+  const cue = $('[data-hero-cue]');
+  if (cue) {
+    const tick = () => cue.classList.toggle('is-gone', window.scrollY > 24);
+    window.addEventListener('scroll', tick, { passive: true }); tick();
+  }
+
   /* ---------------- Distance map (interactive) ---------------- */
   const map = $('[data-map]');
   if (map) {

@@ -1402,3 +1402,19 @@ img, svg, video, iframe { max-width: 100%; }
 /* Slider: optional photos-only mode */
 .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .slider-content.is-empty { padding-bottom: 0; }
+
+/* ===== Phones: slider fills the screen; animated scroll cue in the strip below it ===== */
+.hero-cue { display: none; }
+@media (max-width: 767px) {
+  .page-home .slider { height: calc(100svh - var(--header-h) - 65px - 56px - env(safe-area-inset-bottom)); min-height: 440px; }
+  .hero-cue { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 56px; width: 100%; background: var(--subtle, #F2F4F2); transition: opacity .45s var(--ease); }
+  .page-home .slider + .hero-cue + .section-alt { background: var(--subtle, #F2F4F2); }
+  .hero-cue span { display: block; width: 17px; height: 17px; margin-top: -6px; border-right: 3px solid var(--accent); border-bottom: 3px solid var(--accent); border-radius: 0 0 3px 0; transform: rotate(45deg); opacity: .35; animation: cueDrop 1.6s ease-in-out infinite; }
+  .hero-cue span:first-child { margin-top: 12px; }
+  .hero-cue span:nth-child(2) { animation-delay: .25s; }
+  .hero-cue.is-gone span { opacity: 0 !important; animation: none; }
+  .hero-cue.is-gone { pointer-events: none; }
+  .page-home .slider + .hero-cue + .section { padding-top: 8px; }
+}
+@keyframes cueDrop { 0%, 100% { opacity: .3; transform: translateY(-3px) rotate(45deg); } 50% { opacity: 1; transform: translateY(5px) rotate(45deg); } }
+@media (prefers-reduced-motion: reduce) { .hero-cue span { animation: none; opacity: .8; } }

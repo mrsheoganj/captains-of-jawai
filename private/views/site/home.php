@@ -61,6 +61,7 @@ foreach (Settings::lines('stats') as $line) {
   </div>
   <?php endif; ?>
 </section>
+<a class="hero-cue" href="#expeditions" data-hero-cue aria-label="Scroll down to the safaris"><span></span><span></span></a>
 
 <!-- 4. Signature expeditions -->
 <?php if ($safaris): ?>

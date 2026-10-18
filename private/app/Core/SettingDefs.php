@@ -120,6 +120,7 @@ final class SettingDefs
                     ['vehicle_body', 'Safari vehicle text', 'textarea', "Jawai safaris run in open-top 4x4s, mostly modified Maruti Suzuki Gypsys with a roll cage and raised seats at the back, so everyone has a clear view over the rocks. The jeeps are light and nimble enough for the village tracks and granite slopes where the leopards live."],
                     ['vehicle_points', 'Vehicle points (one per line)', 'lines', "Open top, raised rear seats, up to 6 guests\nDriver and local tracker on every drive\nYour own jeep: just your group\nBinoculars on board; beanbags for cameras on request"],
                     ['vehicle_images', 'Safari vehicle photos (pick up to 3)', 'images', ''],
+                    ['vehicle_animation', 'Safari animation style', 'select', 'standard', 'Standard: the illustrated jeep convoy. Modern: the painted "Safari Journey" scene with the jeep driving over the hill.', ['standard' => 'Standard (jeep convoy)', 'modern' => 'Modern (Safari Journey painting)']],
                     ['home_faq_enabled', 'Show common questions on the homepage', 'bool', '1'],
                     ['home_faq_heading', 'Common questions heading', 'text', "Before you book"],
                     ['home_faq_count', 'Number of questions on the homepage', 'number', '5'],

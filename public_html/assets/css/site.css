@@ -1479,3 +1479,9 @@ img, svg, video, iframe { max-width: 100%; }
 .js-boulders .js-rest-shadow { fill: rgba(58, 42, 24, .28); stroke: none; }
 .js-thatch { fill: #C9A25E; stroke: #4A3826; stroke-width: 1.4; stroke-linejoin: round; }
 .js-door { fill: #8A5A33; stroke: #4A3826; stroke-width: 1; }
+/* modern safari animation (painted Safari Journey scene) */
+.jeep-track.jeep-modern { height: auto; margin-top: 24px; container-type: normal; }
+.jeep-modern .jm-scene { display: block; width: 100%; height: auto; aspect-ratio: 2172 / 564; }
+.jm-bird { fill: none; stroke: #2F241A; stroke-width: 3; stroke-linecap: round; }
+.jm-dust circle { fill: #EBC79A; }
+@media (max-width: 767px) { .jeep-modern .jm-scene { aspect-ratio: auto; height: 200px; } }

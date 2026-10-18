@@ -33,5 +33,5 @@ foreach (array_filter(array_map('intval', explode(',', (string) setting('vehicle
       <?php endif; ?>
     </div>
   </div>
-  <?= View::partial('site/partials/jeep-track') ?>
+  <?= View::partial(setting('vehicle_animation') === 'modern' ? 'site/partials/jeep-journey' : 'site/partials/jeep-track') ?>
 </section>

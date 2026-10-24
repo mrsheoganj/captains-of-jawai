@@ -69,6 +69,12 @@ final class Updater
         if (!empty($o['once']) && $first && (!empty($o['refresh_text']) || !empty($o['phone']))) {
             @file_put_contents($mark, date('c'));
         }
+        // Tell search engines about every page, at most every 6 hours (deploys can run several rounds).
+        $ping = STORAGE_PATH . '/.indexnow-sent';
+        if (!is_file($ping) || filemtime($ping) < time() - 6 * 3600) {
+            $this->say(IndexNow::submit(IndexNow::allPaths()));
+            @touch($ping);
+        }
         Settings::flush();
         $this->say('Done.');
         @file_put_contents(STORAGE_PATH . '/logs/deploy.log', implode("\n", $this->log) . "\n", FILE_APPEND);

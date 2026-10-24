@@ -6,6 +6,7 @@ namespace App\Admin;
 use App\Core\Audit;
 use App\Core\Auth;
 use App\Core\DB;
+use App\Core\IndexNow;
 use App\Core\Html;
 use App\Core\Schema;
 
@@ -115,6 +116,9 @@ final class ContentController extends BaseController
             $id = DB::insert($r['table'], $data);
             Audit::log('create', $r['table'], $id, ['title' => $data[$r['title']] ?? '']);
             flash('success', $r['singular'] . ' created.');
+        }
+        if (in_array($r['table'], ['safaris', 'pages'], true) && ($data['status'] ?? '') === 'published' && !empty($data['slug'])) {
+            IndexNow::submit([($r['table'] === 'safaris' ? '/safaris/' : '/') . $data['slug'] . '/']); // search engines see the change sooner
         }
         redirect(admin_url("content/$res/$id"));
     }

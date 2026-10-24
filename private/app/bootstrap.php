@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-const APP_VERSION = '2.11.6';
+const APP_VERSION = '2.11.7';
 
 if (!defined('PUBLIC_PATH')) {
     define('PUBLIC_PATH', dirname(__DIR__, 2) . '/public_html');

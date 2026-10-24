@@ -1,0 +1,42 @@
+Date: Sat, 24 Oct 2026 19:15:24 GMT
+Server: Apache
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+Last-Modified: Sat, 24 Oct 2026 19:00:43 GMT
+ETag: "1420570-1de3c-65e9ab6ac8cc0-gzip"
+Accept-Ranges: bytes
+Cache-Control: public, max-age=31536000, immutable
+Expires: Sun, 24 Oct 2027 19:15:24 GMT
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 25194
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: text/css
+
+Date: Sat, 24 Oct 2026 19:15:24 GMT
+Server: Apache
+X-Powered-By: PHP/8.3.36
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Frame-Options: SAMEORIGIN
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 26896
+Keep-Alive: timeout=5
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+robots.txt:
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://captainsofjawai.com/sitemap.xml

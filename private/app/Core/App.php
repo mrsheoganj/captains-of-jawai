@@ -5,6 +5,7 @@ namespace App\Core;
 
 use App\Admin;
 use App\Controllers\ApiController;
+use App\Controllers\InsightsController;
 use App\Controllers\InstallController;
 use App\Controllers\SiteController;
 
@@ -57,8 +58,23 @@ final class App
             (new \App\Controllers\DeployController())->run();
         }
 
+        // Private website insights (own password, separate from the admin login).
+        if ($path === '/pk-insights' || str_starts_with($path, '/pk-insights/')) {
+            header('X-Frame-Options: DENY');
+            header('Cache-Control: no-store, private');
+            header('X-Robots-Tag: noindex, nofollow');
+            $router->get('pk-insights', [InsightsController::class, 'index']);
+            $router->post('pk-insights', [InsightsController::class, 'login']);
+            $router->post('pk-insights/logout', [InsightsController::class, 'logout']);
+            if (!$router->dispatch($method, $path)) {
+                redirect('/pk-insights/');
+            }
+            return;
+        }
+
         // Public site ------------------------------------------------------
         self::applyRedirects($path);
+        Insights::track($path);
 
         // Canonical trailing slash for page URLs (not files like sitemap.xml).
         if ($method === 'GET' && $path !== '/' && !str_contains(basename($path), '.') && !str_ends_with((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/') && !str_starts_with($path, '/api/')) {

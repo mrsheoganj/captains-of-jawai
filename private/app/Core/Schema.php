@@ -77,6 +77,13 @@ final class Schema
             'login_attempts' => [
                 'id' => 'pk', 'ip' => 'short', 'email' => 'str', 'created_at' => 'datetime', '_index' => ['ip'],
             ],
+            'visits' => [
+                'id' => 'pk', 'created_at' => 'datetime', 'ip' => 'short', 'visitor' => 'short', 'path' => 'str', 'referrer' => 'str',
+                'device' => 'short', 'browser' => 'short', 'os' => 'short', 'user_agent' => 'text', '_index' => ['created_at', 'ip'],
+            ],
+            'ip_geo' => [
+                'ip' => 'pkstr', 'country' => 'short', 'region' => 'short', 'city' => 'short', 'org' => 'short', 'looked_up_at' => 'datetime',
+            ],
         ];
     }
 

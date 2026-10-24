@@ -86,11 +86,63 @@ final class SiteController
             'description' => setting('seo_home_description'),
             'image' => $heroIds[0] ?? null,
             'path' => '/',
-            'schema' => [$this->orgSchema(), [
+            'schema' => array_values(array_filter([$this->orgSchema(), [
                 '@context' => 'https://schema.org', '@type' => 'WebSite', 'url' => abs_url('/'), 'name' => setting('site_name'),
                 'publisher' => ['@id' => abs_url('/#organization')],
-            ]],
+            ], $this->destinationSchema(), Settings::bool('home_faq_enabled') ? $this->faqSchema($faqs) : null])),
         ]);
+    }
+
+    /** Jawai itself as a tourist destination, with the safaris as the way to experience it. */
+    private function destinationSchema(): array
+    {
+        return [
+            '@context' => 'https://schema.org', '@type' => 'TouristDestination', 'name' => 'Jawai',
+            'alternateName' => ['Jawai Bandh', 'Jawai, Rajasthan'],
+            'description' => 'Granite hill country around the Jawai Dam in Pali district, Rajasthan, known for leopards that live alongside Rabari herders, and for winter birds at the reservoir.',
+            'url' => abs_url('/jawai/'),
+            'geo' => ['@type' => 'GeoCoordinates', 'latitude' => (float) setting('latitude'), 'longitude' => (float) setting('longitude')],
+            'containedInPlace' => ['@type' => 'AdministrativeArea', 'name' => 'Pali district, Rajasthan, India'],
+            'touristType' => ['Wildlife enthusiasts', 'Photographers', 'Birdwatchers', 'Families'],
+            'includesAttraction' => [
+                ['@type' => 'TouristAttraction', 'name' => 'Jawai leopard safari', 'url' => abs_url('/safaris/leopard-safari/')],
+                ['@type' => 'TouristAttraction', 'name' => 'Jawai Dam (Jawai Bandh)', 'url' => abs_url('/jawai/jawai-dam/')],
+            ],
+        ];
+    }
+
+    /** FAQPage data for questions that are shown on the page. */
+    private function faqSchema(array $faqs): ?array
+    {
+        $q = [];
+        foreach ($faqs as $f) {
+            $answer = trim(strip_tags((string) $f['answer']));
+            if ($answer !== '' && trim((string) $f['question']) !== '') {
+                $q[] = ['@type' => 'Question', 'name' => trim((string) $f['question']), 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $answer]];
+            }
+        }
+        return $q ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $q] : null;
+    }
+
+    /** /llms.txt: a plain summary of the business and its key pages for AI assistants and answer engines. */
+    public function llms(): void
+    {
+        header('Content-Type: text/plain; charset=utf-8');
+        $out = '# ' . setting('site_name') . "\n\n> " . trim((string) setting('site_description')) . "\n\n";
+        $out .= 'Jawai safari operator based at Jawai Bandh, Bera (Pali district, Rajasthan, India). '
+            . 'Private open 4x4 gypsy safaris with local trackers: mornings 6:00–9:00 AM and evenings 4:00–7:00 PM. '
+            . 'Booking requests: ' . abs_url('/book-a-safari/')
+            . (setting('contact_phone') ? ' · Phone/WhatsApp: ' . setting('contact_phone') : '')
+            . (setting('contact_email') ? ' · Email: ' . setting('contact_email') : '') . "\n\n## Safaris\n\n";
+        foreach (DB::all("SELECT title, slug, excerpt FROM safaris WHERE status = 'published' ORDER BY sort_order, id") as $r) {
+            $out .= '- [' . $r['title'] . '](' . abs_url('/safaris/' . $r['slug'] . '/') . '): ' . excerpt($r['excerpt'], 180) . "\n";
+        }
+        $out .= "\n## Jawai guide\n\n";
+        foreach (DB::all("SELECT title, slug, meta_description FROM pages WHERE status = 'published' AND slug LIKE 'jawai%' ORDER BY slug") as $r) {
+            $out .= '- [' . $r['title'] . '](' . abs_url('/' . $r['slug'] . '/') . ')' . ($r['meta_description'] ? ': ' . $r['meta_description'] : '') . "\n";
+        }
+        $out .= "\n## More\n\n- [All safaris](" . abs_url('/safaris/') . ")\n- [FAQ](" . abs_url('/faq/') . ")\n- [Contact](" . abs_url('/contact/') . ")\n";
+        echo $out;
     }
 
     public function safaris(): string
@@ -351,6 +403,10 @@ final class SiteController
             // The admin path is deliberately not listed (it would reveal a custom login URL);
             // admin pages send "X-Robots-Tag: noindex" instead.
             echo "User-agent: *\nAllow: /\nDisallow: /api/\n";
+            // Answer engines (ChatGPT, Claude, Perplexity, Apple, Google AI) may read the public pages.
+            foreach (['GPTBot', 'ChatGPT-User', 'OAI-SearchBot', 'ClaudeBot', 'Claude-User', 'PerplexityBot', 'Applebot-Extended', 'Google-Extended'] as $bot) {
+                echo "\nUser-agent: $bot\nAllow: /\nDisallow: /api/\n";
+            }
         }
         echo "\nSitemap: " . abs_url('/sitemap.xml') . "\n";
     }
@@ -375,6 +431,8 @@ final class SiteController
                 'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                 'opens' => str_pad($h[1], 5, '0', STR_PAD_LEFT), 'closes' => str_pad($h[2], 5, '0', STR_PAD_LEFT)]];
         }
+        $org['potentialAction'] = ['@type' => 'ReserveAction', 'name' => 'Book a Jawai safari',
+            'target' => ['@type' => 'EntryPoint', 'urlTemplate' => abs_url('/book-a-safari/')]];
         $org['knowsAbout'] = ['Jawai safari', 'Jawai leopard safari', 'Jawai Bandh', 'Jawai Dam bird watching', 'Leopards of Jawai', 'Rabari herders'];
         $org['address']['addressLocality'] = 'Bera';
         $org['address']['postalCode'] ??= null;

@@ -108,6 +108,7 @@ final class App
         $router->get('plan-your-journey', fn () => redirect('/book-a-safari/', 301));
         $router->get('sitemap.xml', [SiteController::class, 'sitemap']);
         $router->get('robots.txt', [SiteController::class, 'robots']);
+        $router->get('llms.txt', [SiteController::class, 'llms']);
         $router->post('api/enquiry', [ApiController::class, 'enquiry']);
         $router->post('api/contact', [ApiController::class, 'contact']);
         $router->get('install', fn () => redirect('/'));

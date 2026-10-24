@@ -97,9 +97,10 @@ final class SiteController
     {
         $items = $this->published('safaris');
         return $this->show('safaris', ['items' => $items], [
-            'title' => 'Best Safari in Jawai Bandh | 4x4 Wildlife Safaris',
+            'title' => 'Jawai Safari Booking | Leopard & Jeep Safaris in Jawai Bandh',
             'raw_title' => true,
-            'description' => 'Rajasthan wildlife safaris with Captains of Jawai: 6 AM and 4 PM Bera leopard safaris, Jawai Dam bird watching, village and photography safaris.',
+            'description' => 'Jawai safari options with local trackers: private open-gypsy leopard safaris at 6 AM and 4 PM in Bera and Jawai Bandh, Jawai Dam birding and photography drives.',
+            'schema' => [$this->safariListSchema($items)],
             'breadcrumbs' => [['Safaris', '/safaris/']],
             'image' => $items[0]['image_id'] ?? null,
         ]);
@@ -208,9 +209,9 @@ final class SiteController
         $safari = str_input('safari', 120);
         $safaris = DB::all("SELECT title, slug FROM safaris WHERE status = 'published' ORDER BY sort_order, id");
         return $this->show('plan', ['preselect' => $safari, 'safaris' => $safaris], [
-            'title' => 'Bera Leopard Safari Booking | Captains of Jawai',
+            'title' => 'Book a Jawai Safari | Leopard Safari Booking in Bera, Jawai',
             'raw_title' => true,
-            'description' => 'Reserve a morning (6–9 AM) or evening (4–7 PM) Jawai leopard safari, a Jawai Dam birding drive or a photography jeep with Captains of Jawai.',
+            'description' => 'Book a Jawai safari: morning (6–9 AM) or evening (4–7 PM) leopard safari in Bera, a Jawai Dam birding drive or a photography jeep. Personal reply within 12 hours.',
             'breadcrumbs' => [['Book a safari', '/book-a-safari/']],
         ]);
     }
@@ -313,19 +314,25 @@ final class SiteController
     public function sitemap(): void
     {
         header('Content-Type: application/xml; charset=utf-8');
-        $urls = [['/', null, '1.0']];
-        foreach (array_merge(['/safaris/'], ['/gallery/', '/faq/', '/about/', '/contact/', '/book-a-safari/']) as $p) {
-            $urls[] = [$p, null, '0.8'];
+        $latest = (string) (DB::val("SELECT MAX(updated_at) FROM safaris WHERE status = 'published'") ?: date('Y-m-d'));
+        $urls = [['/', $latest, '1.0', null]];
+        foreach (['/safaris/' => '0.9', '/book-a-safari/' => '0.9', '/gallery/' => '0.6', '/faq/' => '0.7', '/about/' => '0.6', '/contact/' => '0.6'] as $p => $prio) {
+            $urls[] = [$p, $latest, $prio, null];
         }
-        foreach (DB::all("SELECT slug, updated_at FROM safaris WHERE status = 'published'") as $r) {
-            $urls[] = ['/safaris/' . $r['slug'] . '/', $r['updated_at'], '0.9'];
+        foreach (DB::all("SELECT slug, title, updated_at, image_id FROM safaris WHERE status = 'published'") as $r) {
+            $urls[] = ['/safaris/' . $r['slug'] . '/', $r['updated_at'], '0.9', $r['image_id'] ? [(int) $r['image_id'], $r['title'] . ' in Jawai'] : null];
         }
-        foreach (DB::all("SELECT slug, updated_at FROM pages WHERE status = 'published' AND slug <> 'about'") as $r) {
-            $urls[] = ['/' . $r['slug'] . '/', $r['updated_at'], str_contains($r['slug'], 'policy') || $r['slug'] === 'terms' ? '0.3' : '0.7'];
+        foreach (DB::all("SELECT slug, title, updated_at, image_id FROM pages WHERE status = 'published' AND slug <> 'about'") as $r) {
+            $prio = str_contains($r['slug'], 'policy') || $r['slug'] === 'terms' ? '0.3' : (str_starts_with($r['slug'], 'jawai') ? '0.8' : '0.7');
+            $urls[] = ['/' . $r['slug'] . '/', $r['updated_at'], $prio, $r['image_id'] ? [(int) $r['image_id'], $r['title']] : null];
         }
-        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        foreach ($urls as [$p, $mod, $prio]) {
-            echo '  <url><loc>' . e(abs_url($p)) . '</loc>' . ($mod ? '<lastmod>' . date('Y-m-d', strtotime($mod)) . '</lastmod>' : '') . '<priority>' . $prio . "</priority></url>\n";
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
+        foreach ($urls as [$p, $mod, $prio, $img]) {
+            echo '  <url><loc>' . e(abs_url($p)) . '</loc>' . ($mod ? '<lastmod>' . date('Y-m-d', strtotime($mod)) . '</lastmod>' : '') . '<priority>' . $prio . '</priority>';
+            if ($img && ($src = Media::url($img[0], 'lg'))) {
+                echo '<image:image><image:loc>' . e(abs_url($src)) . '</image:loc></image:image>';
+            }
+            echo "</url>\n";
         }
         echo "</urlset>\n";
     }
@@ -363,6 +370,15 @@ final class SiteController
         if (setting('contact_phone')) {
             $org['telephone'] = setting('contact_phone');
         }
+        if (preg_match('/(\d{1,2}:\d{2})\s*[–-]\s*(\d{1,2}:\d{2})/u', (string) setting('office_hours'), $h)) {
+            $org['openingHoursSpecification'] = [['@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                'opens' => str_pad($h[1], 5, '0', STR_PAD_LEFT), 'closes' => str_pad($h[2], 5, '0', STR_PAD_LEFT)]];
+        }
+        $org['knowsAbout'] = ['Jawai safari', 'Jawai leopard safari', 'Jawai Bandh', 'Jawai Dam bird watching', 'Leopards of Jawai', 'Rabari herders'];
+        $org['address']['addressLocality'] = 'Bera';
+        $org['address']['postalCode'] ??= null;
+        unset($org['address']['postalCode']);
         $offers = [];
         foreach (DB::all("SELECT title, slug, excerpt FROM safaris WHERE status = 'published' ORDER BY sort_order, id") as $s) {
             $offers[] = ['@type' => 'Offer', 'itemOffered' => ['@type' => 'TouristTrip', 'name' => $s['title'], 'description' => excerpt($s['excerpt'], 200), 'url' => abs_url('/safaris/' . $s['slug'] . '/')]];
@@ -374,5 +390,15 @@ final class SiteController
             $org['sameAs'] = $same;
         }
         return $org;
+    }
+
+    /** ItemList of the safaris on /safaris/, so search engines see the whole range of Jawai safaris. */
+    private function safariListSchema(array $items): array
+    {
+        $list = [];
+        foreach (array_values($items) as $i => $s) {
+            $list[] = ['@type' => 'ListItem', 'position' => $i + 1, 'url' => abs_url('/safaris/' . $s['slug'] . '/'), 'name' => $s['title']];
+        }
+        return ['@context' => 'https://schema.org', '@type' => 'ItemList', 'name' => 'Jawai safaris', 'itemListElement' => $list];
     }
 }

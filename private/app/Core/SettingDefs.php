@@ -224,8 +224,8 @@ final class SettingDefs
                 'intro' => 'Default meta tags, social preview image, analytics and custom code.',
                 'fields' => [
                     ['seo_title_suffix', 'Title suffix', 'text', " | Captains of Jawai"],
-                    ['seo_home_title', 'Homepage title', 'text', "Jawai Leopard Safari | Captains of Jawai, Bera & Jawai Bandh"],
-                    ['seo_home_description', 'Homepage meta description', 'textarea', "Book private 4x4 Jawai leopard safaris in Bera & Jawai Bandh. Track leopards on granite rocks, see crocodiles, birds & temples in Jawai."],
+                    ['seo_home_title', 'Homepage title', 'text', "Jawai Safari | Leopard Safari in Jawai, Rajasthan | Captains of Jawai"],
+                    ['seo_home_description', 'Homepage meta description', 'textarea', "Jawai safari with local trackers: private open 4x4 leopard safaris at 6 AM & 4 PM in Bera and Jawai Bandh, Rajasthan, plus Jawai Dam birding. Book online."],
                     ['seo_og_image', 'Default social share image', 'image', ''],
                     ['seo_noindex', 'Hide entire site from search engines (staging)', 'bool', '0'],
                     ['google_verification', 'Google Search Console verification code', 'text', ''],

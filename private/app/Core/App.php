@@ -185,6 +185,13 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.11.8: search titles aimed at "Jawai safari" (titles and descriptions only; page text is unchanged). */
+    public const SEO_FIXES = [
+        ["Bera Leopard Safari Booking | Private & Shared 4x4", "Jawai Leopard Safari | Morning & Evening 4x4 in Bera"],
+        ["Bera Leopard Safari Booking | Private 4x4 Gypsy", "Jawai Leopard Safari | Morning & Evening 4x4 in Bera"],
+        ["Rajasthan Wildlife Safari | Leopards, Bears & Birds", "Jawai Wildlife Safari | Leopards, Sloth Bears & Birds"],
+    ];
+
     /** 2.11.4: private gypsies only by default (shared can be switched on in Settings → Enquiry Form). */
     public const PRIVATE_FIXES = [
         ["Private or shared 4x4 gypsy, up to 6 guests", "Private open 4x4 gypsy, up to 6 guests"],
@@ -235,7 +242,7 @@ final class App
         $old = [
             'form_interests' => ['Family Journey', 'Rabari Cultural Walk'],
             'hero_cta_primary' => ['Plan your trip'],
-            'hero_subtitle' => ["we'll plan the rest"],
+            'hero_subtitle' => ["we'll plan the rest", 'Private and shared open 4x4'],
             'ticker_items' => ['Rabari village walks'],
             'coexist_body' => ['We arrange visits'],
             'coexist_link' => ['/experiences/rabari-culture/'],
@@ -256,12 +263,10 @@ final class App
             'booking_details' => ['15:30 to 18:30'],
             'stats' => ['50–60 | Leopards estimated in the reserve'],
             // 2.11.4: wording for private gypsies only
-            'hero_subtitle' => ['Private and shared open 4x4'],
-            'seo_home_description' => ['Book private & shared 4x4'],
             'longitude' => ['73.1722'],
             // 2.10.1: report's homepage title and description replace the earlier defaults
-            'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai'],
-            'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across'],
+            'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai', 'Jawai Leopard Safari | Captains of Jawai, Bera'],
+            'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across', 'Book private 4x4 Jawai leopard safaris in Bera', 'Book private & shared 4x4'],
         ];
         foreach ($old as $key => $needles) {
             $v = (string) DB::val('SELECT svalue FROM settings WHERE skey = ?', [$key]);
@@ -290,6 +295,10 @@ final class App
         if (!is_file(STORAGE_PATH . '/.favicon-pack-v2')) {
             DB::delete('settings', 'skey = ?', ['favicon_image']);
             @file_put_contents(STORAGE_PATH . '/.favicon-pack-v2', date('c'));
+        }
+        foreach ([...self::PRIVATE_FIXES, ...self::SEO_FIXES] as [$from, $to]) {
+            DB::q('UPDATE pages SET meta_title = REPLACE(meta_title, ?, ?)', [$from, $to]);
+            DB::q('UPDATE safaris SET meta_title = REPLACE(meta_title, ?, ?)', [$from, $to]);
         }
         foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES, ...self::PRIVATE_FIXES] as [$from, $to]) {
             foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {

@@ -71,7 +71,9 @@ final class Updater
         }
         // Tell search engines about every page, at most every 6 hours (deploys can run several rounds).
         $ping = STORAGE_PATH . '/.indexnow-sent';
-        if (!is_file($ping) || filemtime($ping) < time() - 6 * 3600) {
+        $version = STORAGE_PATH . '/.indexnow-' . APP_VERSION;
+        if (!is_file($ping) || filemtime($ping) < time() - 6 * 3600 || !is_file($version)) {
+            @touch($version);
             $this->say(IndexNow::submit(IndexNow::allPaths()));
             @touch($ping);
         }

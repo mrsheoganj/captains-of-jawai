@@ -184,7 +184,7 @@ HTML,
             [
                 'slug' => 'jawai/wildlife', 'title' => 'Birds and wildlife of Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/wildlife'), 'show_cta' => 1,
                 'intro' => 'Leopards get the attention, but Jawai also has hyenas, crocodiles, cranes, flamingos and a long list of raptors.',
-                'meta_title' => 'Rajasthan Wildlife Safari | Leopards, Bears & Birds',
+                'meta_title' => 'Jawai Wildlife Safari | Leopards, Sloth Bears & Birds',
                 'meta_description' => 'Wildlife guide to Jawai Bandh: leopards, striped hyenas, sloth bears, Indian wolves, nilgai, chinkara, mugger crocodiles and over 100 bird species.',
                 'body' => <<<'HTML'
 <p>Jawai is dry, rocky country with one large body of water in the middle. That mix gives it a wider range of wildlife than its size suggests.</p>

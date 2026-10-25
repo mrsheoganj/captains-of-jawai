@@ -58,6 +58,12 @@ final class UserController extends BaseController
         }
         if ($id) {
             DB::update('users', $data, 'id = ?', [$id]);
+            if ($pass !== '' || !$active) {
+                Auth::forgetDevices($id);
+                if ($id === Auth::id() && $active) {
+                    Auth::remember($id);
+                }
+            }
             Audit::log('user_update', 'users', $id, ['role' => $role, 'active' => $active, 'password_changed' => $pass !== '']);
         } else {
             $id = DB::insert('users', $data + ['created_at' => now()]);

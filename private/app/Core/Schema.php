@@ -77,6 +77,10 @@ final class Schema
             'login_attempts' => [
                 'id' => 'pk', 'ip' => 'short', 'email' => 'str', 'created_at' => 'datetime', '_index' => ['ip'],
             ],
+            'remember_tokens' => [
+                'id' => 'pk', 'user_id' => 'int', 'selector' => 'short', 'token_hash' => 'short', 'expires_at' => 'datetime', 'created_at' => 'datetime',
+                '_unique' => ['selector'], '_index' => ['user_id'],
+            ],
             'visits' => [
                 'id' => 'pk', 'created_at' => 'datetime', 'ip' => 'short', 'visitor' => 'short', 'path' => 'str', 'referrer' => 'str',
                 'device' => 'short', 'browser' => 'short', 'os' => 'short', 'user_agent' => 'text', '_index' => ['created_at', 'ip'],

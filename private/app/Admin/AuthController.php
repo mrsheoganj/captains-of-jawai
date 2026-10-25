@@ -78,6 +78,10 @@ final class AuthController extends BaseController
             Audit::log('password_change', 'users', (int) $u['id']);
         }
         DB::update('users', $data, 'id = ?', [$u['id']]);
+        if (isset($data['password_hash'])) {
+            Auth::forgetDevices((int) $u['id']); // other devices must sign in with the new password
+            Auth::remember((int) $u['id']);
+        }
         flash('success', 'Profile updated.');
         redirect(admin_url('profile'));
     }

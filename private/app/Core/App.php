@@ -53,6 +53,20 @@ final class App
             return;
         }
 
+        // CRM-only area: dashboard and enquiries with the admin logins, nothing else.
+        if ($path === '/' . Auth::CRM_PATH || str_starts_with($path, '/' . Auth::CRM_PATH . '/')) {
+            Auth::enterCrm();
+            header('X-Frame-Options: SAMEORIGIN');
+            header('Cache-Control: no-store, private');
+            header('X-Robots-Tag: noindex, nofollow');
+            self::crmRoutes($router, Auth::CRM_PATH);
+            if (!$router->dispatch($method, $path)) {
+                http_response_code(404);
+                echo View::render('admin/forbidden', ['title' => 'Page not found', 'notFound' => true], 'admin/layout');
+            }
+            return;
+        }
+
         // One-time deploy hook (FTP deploys without shell access); closed unless a fresh token file exists.
         if ($method === 'POST' && $path === '/_deploy') {
             (new \App\Controllers\DeployController())->run();
@@ -117,6 +131,24 @@ final class App
         if (!$router->dispatch($method, $path)) {
             (new SiteController())->notFound();
         }
+    }
+
+    /** The CRM keeps only sign-in, profile, dashboard and enquiry routes. */
+    private static function crmRoutes(Router $r, string $a): void
+    {
+        $r->get("$a/login", [Admin\AuthController::class, 'loginForm']);
+        $r->post("$a/login", [Admin\AuthController::class, 'login']);
+        $r->post("$a/logout", [Admin\AuthController::class, 'logout']);
+        $r->get("$a/profile", [Admin\AuthController::class, 'profile']);
+        $r->post("$a/profile", [Admin\AuthController::class, 'saveProfile']);
+        $r->get($a, [Admin\DashboardController::class, 'index']);
+        $r->get("$a/enquiries", [Admin\EnquiryController::class, 'index']);
+        $r->get("$a/enquiries/export", [Admin\EnquiryController::class, 'export']);
+        $r->post("$a/enquiries/bulk", [Admin\EnquiryController::class, 'bulk']);
+        $r->get("$a/enquiries/{id:\d+}", [Admin\EnquiryController::class, 'show']);
+        $r->post("$a/enquiries/{id:\d+}", [Admin\EnquiryController::class, 'update']);
+        $r->post("$a/enquiries/{id:\d+}/note", [Admin\EnquiryController::class, 'note']);
+        $r->post("$a/enquiries/{id:\d+}/delete", [Admin\EnquiryController::class, 'delete']);
     }
 
     private static function adminRoutes(Router $r, string $a): void

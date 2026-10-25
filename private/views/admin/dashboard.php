@@ -4,7 +4,7 @@ use App\Admin\EnquiryController;
 $delta = $prev7 ? round(($new7 - $prev7) / $prev7 * 100) : null;
 $max = max(1, ...array_values($daily));
 ?>
-<?php if (!empty($demoCount)): ?>
+<?php if (!empty($demoCount) && !\App\Core\Auth::crm()): ?>
 <div class="alert alert-info demo-banner">
   <strong>Demo mode:</strong> <?= (int) $demoCount ?> sample enquiries (codes DEMO-…) are loaded so the dashboard and CRM look alive. Remove them before going live.
   <form method="post" action="<?= e(admin_url('demo/clear')) ?>"><?= csrf_field() ?><button class="btn btn-light btn-sm" type="submit" data-confirm="Remove all sample enquiries?">Remove sample data</button></form>
@@ -21,7 +21,7 @@ $max = max(1, ...array_values($daily));
   <div class="kpi"><span class="kpi-label">Avg. first response</span><strong><?= $avgResp === null ? '—' : ($avgResp < 1 ? round($avgResp * 60) . 'm' : round($avgResp, 1) . 'h') ?></strong><span class="kpi-delta <?= $avgResp !== null && $avgResp > 12 ? 'down' : '' ?>">Target: under 12 hours</span></div>
 </div>
 
-<?php if ($mailFailures): ?>
+<?php if ($mailFailures && !\App\Core\Auth::crm()): ?>
 <div class="alert alert-error"><?= $mailFailures ?> email(s) failed to send in the last 7 days. <a href="<?= e(admin_url('email-log')) ?>">Open the email log</a> and check <a href="<?= e(admin_url('settings/email')) ?>">SMTP settings</a>.</div>
 <?php endif; ?>
 
@@ -75,7 +75,7 @@ $max = max(1, ...array_values($daily));
     <?php else: ?><p class="muted">No enquiries yet. Test the form on <a href="/book-a-safari/" target="_blank">Book a safari</a>.</p><?php endif; ?>
   </section>
 
-  <?php if ($setup): ?>
+  <?php if ($setup && !\App\Core\Auth::crm()): ?>
   <section class="card">
     <div class="card-head"><h2>Launch checklist</h2></div>
     <ul class="todo">

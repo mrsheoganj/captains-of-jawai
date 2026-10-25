@@ -34,6 +34,21 @@ final class Auth
 
     private static ?array $user = null;
 
+    /** CRM-only mode (/pk-crm): the same logins, but only the dashboard and enquiries are available. */
+    public const CRM_PATH = 'pk-crm';
+    private const CRM_AREAS = ['dashboard', 'enquiries'];
+    private static bool $crm = false;
+
+    public static function enterCrm(): void
+    {
+        self::$crm = true;
+    }
+
+    public static function crm(): bool
+    {
+        return self::$crm;
+    }
+
     public static function user(): ?array
     {
         if (self::$user !== null) {
@@ -70,7 +85,7 @@ final class Auth
     public static function can(string $area, string $mode = 'view'): bool
     {
         $role = self::role();
-        if ($role === '') {
+        if ($role === '' || (self::$crm && !in_array($area, self::CRM_AREAS, true))) {
             return false;
         }
         [$view, $edit] = self::AREAS[$area] ?? [[], []];

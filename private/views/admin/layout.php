@@ -31,7 +31,7 @@ $exact = fn (string $p) => rtrim($path, '/') === rtrim(admin_url($p), '/') ? ' i
 <?= View::partial('partials/icons') ?>
 <?php if ($u): ?>
 <aside class="sidebar" data-sidebar>
-  <a class="side-brand" href="<?= e(admin_url()) ?>"><img src="<?= e(brand_logo_url()) ?>" alt=""><span><?= e(setting('site_name')) ?><small>Admin</small></span></a>
+  <a class="side-brand" href="<?= e(admin_url()) ?>"><img src="<?= e(brand_logo_url()) ?>" alt=""><span><?= e(setting('site_name')) ?><small><?= Auth::crm() ? 'CRM' : 'Admin' ?></small></span></a>
   <nav class="side-nav">
     <a class="<?= $exact('') ?>" href="<?= e(admin_url()) ?>"><?= icon('home', 18) ?> Dashboard</a>
     <?php if (Auth::can('enquiries')): ?>

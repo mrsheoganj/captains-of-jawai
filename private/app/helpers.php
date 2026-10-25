@@ -44,6 +44,9 @@ function abs_url(string $path = '/'): string
 
 function admin_path(): string
 {
+    if (\App\Core\Auth::crm()) {
+        return '/' . \App\Core\Auth::CRM_PATH;
+    }
     return '/' . trim((string) Config::get('admin_path', 'admin'), '/');
 }
 

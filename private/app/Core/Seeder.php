@@ -37,6 +37,7 @@ final class Seeder
             self::menus();
         }
         JawaiGuide::ensure(); // the /jawai/ pillar page, guide pages and their menu links
+        Articles::ensure();
         // Every image slot gets a photo, so the site is presentation-ready straight after install.
         Demo::assignImages($fresh && $resetImages); // on a fresh install, apply the full curated image map
         if ($demoEnquiries) {

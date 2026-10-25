@@ -156,7 +156,13 @@ final class SiteController
             $out .= '- [' . $r['title'] . '](' . abs_url('/safaris/' . $r['slug'] . '/') . '): ' . excerpt($r['excerpt'], 180) . "\n";
         }
         $out .= "\n## Jawai guide\n\n";
-        foreach (DB::all("SELECT title, slug, meta_description FROM pages WHERE status = 'published' AND slug LIKE 'jawai%' ORDER BY slug") as $r) {
+        foreach (DB::all("SELECT title, slug, meta_description FROM pages WHERE status = 'published' AND (slug = 'jawai' OR slug LIKE 'jawai/%') ORDER BY slug") as $r) {
+            $out .= '- [' . $r['title'] . '](' . abs_url('/' . $r['slug'] . '/') . ')' . ($r['meta_description'] ? ': ' . $r['meta_description'] : '') . "\n";
+        }
+        $out .= "\n## Travel articles\n\n";
+        $slugs = array_column(\App\Core\Articles::pages(fn () => null), 'slug');
+        $place = implode(',', array_fill(0, count($slugs), '?'));
+        foreach (DB::all("SELECT title, slug, meta_description FROM pages WHERE status = 'published' AND slug IN ($place) ORDER BY slug", $slugs) as $r) {
             $out .= '- [' . $r['title'] . '](' . abs_url('/' . $r['slug'] . '/') . ')' . ($r['meta_description'] ? ': ' . $r['meta_description'] : '') . "\n";
         }
         $out .= "\n## More\n\n- [All safaris](" . abs_url('/safaris/') . ")\n- [FAQ](" . abs_url('/faq/') . ")\n- [Contact](" . abs_url('/contact/') . ")\n";

@@ -328,6 +328,7 @@ final class App
             DB::q("DELETE FROM menu_items");
             Seeder::menus();
             JawaiGuide::ensure();
+            Articles::ensure();
         }
         Settings::flush();
     }
@@ -349,6 +350,7 @@ final class App
     {
         Schema::create(DB::pdo());
         JawaiGuide::ensure(); // add new guide pages to existing sites
+        Articles::ensure(); // travel articles (routes, booking, price…)
         self::safariOnlyUpgrade();
         Demo::assignImages(); // register new built-in photos and fill any empty image slots
         Settings::set('schema_version', APP_VERSION);

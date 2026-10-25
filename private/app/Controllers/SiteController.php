@@ -28,7 +28,7 @@ final class SiteController
         $imageUrl = $image ? abs_url(Media::url($image, 'lg')) : (setting('seo_og_image') ? abs_url(Media::url((int) setting('seo_og_image'), 'lg')) : abs_url('/assets/img/og-image.jpg'));
         return [
             'title' => $title,
-            'description' => $s['description'] ?? setting('seo_home_description'),
+            'description' => self::withPrice((string) ($s['description'] ?? setting('seo_home_description'))),
             'canonical' => abs_url($s['path'] ?? current_path()),
             'image' => $imageUrl,
             'type' => $s['type'] ?? 'website',
@@ -36,6 +36,23 @@ final class SiteController
             'noindex' => !empty($s['noindex']) || Settings::bool('seo_noindex'),
             'breadcrumbs' => $s['breadcrumbs'] ?? [],
         ];
+    }
+
+    /** "₹3,500" from the price setting, or '' when no price is set. */
+    public static function price(): string
+    {
+        $p = (int) preg_replace('/\D+/', '', (string) setting('price_from'));
+        return $p > 0 ? '₹' . number_format($p) : '';
+    }
+
+    /** Fill "{price}" in a description; without a price, drop the "from {price} per jeep" phrase. */
+    private static function withPrice(string $text): string
+    {
+        $price = self::price();
+        if ($price === '') {
+            $text = (string) preg_replace('/\s*from \{price\} per jeep/u', '', $text);
+        }
+        return str_replace('{price}', $price, $text);
     }
 
     private function published(string $table, string $order = 'sort_order, id'): array
@@ -131,6 +148,7 @@ final class SiteController
         $out = '# ' . setting('site_name') . "\n\n> " . trim((string) setting('site_description')) . "\n\n";
         $out .= 'Jawai safari operator based at Jawai Bandh, Bera (Pali district, Rajasthan, India). '
             . 'Private open 4x4 gypsy safaris with local trackers: mornings 6:00–9:00 AM and evenings 4:00–7:00 PM. '
+            . (self::price() !== '' ? 'Prices from ' . self::price() . ' per jeep. ' : '')
             . 'Booking requests: ' . abs_url('/book-a-safari/')
             . (setting('contact_phone') ? ' · Phone/WhatsApp: ' . setting('contact_phone') : '')
             . (setting('contact_email') ? ' · Email: ' . setting('contact_email') : '') . "\n\n## Safaris\n\n";
@@ -151,7 +169,7 @@ final class SiteController
         return $this->show('safaris', ['items' => $items], [
             'title' => 'Jawai Safari Booking | Leopard & Jeep Safaris in Jawai Bandh',
             'raw_title' => true,
-            'description' => 'Jawai safari options with local trackers: private open-gypsy leopard safaris at 6 AM and 4 PM in Bera and Jawai Bandh, Jawai Dam birding and photography drives.',
+            'description' => 'Jawai safari from {price} per jeep with local trackers: private open-gypsy leopard safaris at 6 AM and 4 PM in Bera and Jawai Bandh, plus Jawai Dam birding.',
             'schema' => [$this->safariListSchema($items)],
             'breadcrumbs' => [['Safaris', '/safaris/']],
             'image' => $items[0]['image_id'] ?? null,
@@ -263,7 +281,7 @@ final class SiteController
         return $this->show('plan', ['preselect' => $safari, 'safaris' => $safaris], [
             'title' => 'Book a Jawai Safari | Leopard Safari Booking in Bera, Jawai',
             'raw_title' => true,
-            'description' => 'Book a Jawai safari: morning (6–9 AM) or evening (4–7 PM) leopard safari in Bera, a Jawai Dam birding drive or a photography jeep. Personal reply within 12 hours.',
+            'description' => 'Book a Jawai safari from {price} per jeep: morning (6–9 AM) or evening (4–7 PM) leopard safari in Bera, or a Jawai Dam birding drive. Reply within 12 hours.',
             'breadcrumbs' => [['Book a safari', '/book-a-safari/']],
         ]);
     }
@@ -438,8 +456,17 @@ final class SiteController
         $org['address']['postalCode'] ??= null;
         unset($org['address']['postalCode']);
         $offers = [];
+        $from = (int) preg_replace('/\D+/', '', (string) setting('price_from'));
         foreach (DB::all("SELECT title, slug, excerpt FROM safaris WHERE status = 'published' ORDER BY sort_order, id") as $s) {
-            $offers[] = ['@type' => 'Offer', 'itemOffered' => ['@type' => 'TouristTrip', 'name' => $s['title'], 'description' => excerpt($s['excerpt'], 200), 'url' => abs_url('/safaris/' . $s['slug'] . '/')]];
+            $offer = ['@type' => 'Offer', 'itemOffered' => ['@type' => 'TouristTrip', 'name' => $s['title'], 'description' => excerpt($s['excerpt'], 200), 'url' => abs_url('/safaris/' . $s['slug'] . '/')]];
+            if ($from > 0 && $s['slug'] === 'leopard-safari') {
+                $offer['priceSpecification'] = ['@type' => 'UnitPriceSpecification', 'minPrice' => $from, 'priceCurrency' => 'INR', 'unitText' => 'per jeep'];
+            }
+            $offers[] = $offer;
+        }
+        if ($from > 0) {
+            $org['priceRange'] = 'From ' . self::price() . ' per jeep';
+            $org['currenciesAccepted'] = 'INR';
         }
         if ($offers) {
             $org['makesOffer'] = $offers;

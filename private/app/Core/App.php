@@ -188,6 +188,7 @@ final class App
     /** After uploading a new version, create any new tables/columns automatically (once). */
     /** 2.11.8: search titles aimed at "Jawai safari" (titles and descriptions only; page text is unchanged). */
     public const SEO_FIXES = [
+        ["Join expert local trackers for morning (6–9 AM) and evening (4–7 PM) Jawai leopard safaris in private open 4x4 gypsies across Bera's granite hills.", "Jawai leopard safari from {price} per jeep: morning (6–9 AM) and evening (4–7 PM) drives with expert local trackers in private open 4x4 gypsies in Bera."],
         ["Bera Leopard Safari Booking | Private & Shared 4x4", "Jawai Leopard Safari | Morning & Evening 4x4 in Bera"],
         ["Bera Leopard Safari Booking | Private 4x4 Gypsy", "Jawai Leopard Safari | Morning & Evening 4x4 in Bera"],
         ["Rajasthan Wildlife Safari | Leopards, Bears & Birds", "Jawai Wildlife Safari | Leopards, Sloth Bears & Birds"],
@@ -267,7 +268,7 @@ final class App
             'longitude' => ['73.1722'],
             // 2.10.1: report's homepage title and description replace the earlier defaults
             'seo_home_title' => ['Private Safaris in Jawai, Rajasthan', 'Private Expeditions | Captains of Jawai', 'Jawai Leopard Safari | Captains of Jawai, Bera'],
-            'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across', 'Book private 4x4 Jawai leopard safaris in Bera', 'Book private & shared 4x4'],
+            'seo_home_description' => ['Private leopard safaris in Jawai', 'Private 4x4 leopard tracking across', 'Book private 4x4 Jawai leopard safaris in Bera', 'Book private & shared 4x4', 'Jawai safari with local trackers: private open 4x4'],
         ];
         foreach ($old as $key => $needles) {
             $v = (string) DB::val('SELECT svalue FROM settings WHERE skey = ?', [$key]);
@@ -298,8 +299,10 @@ final class App
             @file_put_contents(STORAGE_PATH . '/.favicon-pack-v2', date('c'));
         }
         foreach ([...self::PRIVATE_FIXES, ...self::SEO_FIXES] as [$from, $to]) {
-            DB::q('UPDATE pages SET meta_title = REPLACE(meta_title, ?, ?)', [$from, $to]);
-            DB::q('UPDATE safaris SET meta_title = REPLACE(meta_title, ?, ?)', [$from, $to]);
+            foreach (['meta_title', 'meta_description'] as $col) {
+                DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);
+                DB::q("UPDATE safaris SET $col = REPLACE($col, ?, ?)", [$from, $to]);
+            }
         }
         foreach ([...self::DISTANCE_FIXES, ...self::CONTENT_FIXES, ...self::PRIVATE_FIXES] as [$from, $to]) {
             foreach (['intro', 'body', 'faq', 'meta_description'] as $col) {

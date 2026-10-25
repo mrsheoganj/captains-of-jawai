@@ -223,9 +223,10 @@ final class SettingDefs
                 'icon' => 'search',
                 'intro' => 'Default meta tags, social preview image, analytics and custom code.',
                 'fields' => [
+                    ['price_from', 'Safari price "from" (₹ per jeep, digits only)', 'text', '3500', 'Used in Google descriptions and search data as "from ₹3,500 per jeep". Leave empty to hide the price from search results.'],
                     ['seo_title_suffix', 'Title suffix', 'text', " | Captains of Jawai"],
                     ['seo_home_title', 'Homepage title', 'text', "Jawai Safari | Leopard Safari in Jawai, Rajasthan | Captains of Jawai"],
-                    ['seo_home_description', 'Homepage meta description', 'textarea', "Jawai safari with local trackers: private open 4x4 leopard safaris at 6 AM & 4 PM in Bera and Jawai Bandh, Rajasthan, plus Jawai Dam birding. Book online."],
+                    ['seo_home_description', 'Homepage meta description', 'textarea', "Jawai safari from {price} per jeep: private open 4x4 leopard safaris at 6 AM & 4 PM in Bera and Jawai Bandh, Rajasthan, with local trackers. Book online."],
                     ['seo_og_image', 'Default social share image', 'image', ''],
                     ['seo_noindex', 'Hide entire site from search engines (staging)', 'bool', '0'],
                     ['google_verification', 'Google Search Console verification code', 'text', ''],

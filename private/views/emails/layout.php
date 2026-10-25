@@ -6,7 +6,7 @@
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#FFFFFF;border-radius:10px;overflow:hidden;border:1px solid #E8E2D6">
     <tr><td style="background:#121416;padding:22px 28px">
       <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-        <td><img src="<?= e($logo) ?>" width="44" height="44" alt="" style="display:block;border-radius:50%"></td>
+        <td><img src="<?= e($logo) ?>" width="56" height="56" alt="<?= e($siteName) ?>" style="display:block;width:56px;height:56px;border:0"></td>
         <td style="padding-left:12px;font-family:Georgia,'Times New Roman',serif;font-size:21px;color:#FDFBF7;letter-spacing:.3px"><?= e($siteName) ?></td>
       </tr></table>
     </td></tr>

@@ -108,7 +108,8 @@ final class Mailer
             'title' => $title,
             'body' => $body,
             'accent' => $accent,
-            'logo' => abs_url((int) Settings::get('logo_image') ? Media::url((int) Settings::get('logo_image'), 'sm') : '/assets/img/emblem-96.png'),
+            // A PNG with the whole logo inside a dark circle: every email app shows PNG, and nothing gets cropped.
+            'logo' => abs_url('/assets/img/email-logo.png'),
             'siteName' => (string) Settings::get('site_name'),
             'footer' => (string) Settings::get('email_footer'),
         ]);

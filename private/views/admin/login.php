@@ -17,7 +17,7 @@
   <main class="auth-wrap">
     <div class="auth-brand"><img src="<?= e(brand_logo_url()) ?>" alt=""><div><strong><?= e(setting('site_name')) ?></strong><span><?= \App\Core\Auth::crm() ? 'Enquiry CRM' : 'Admin &amp; CRM' ?></span></div></div>
     <h1>Welcome back</h1>
-    <p class="muted">Sign in to manage enquiries, content and settings.</p>
+    <p class="muted"><?= \App\Core\Auth::crm() ? 'Sign in to manage enquiries.' : 'Sign in to manage enquiries, content and settings.' ?></p>
     <?php foreach ($messages as $m): ?><div class="alert alert-<?= e($m['type']) ?>"><?= e($m['message']) ?></div><?php endforeach; ?>
     <form method="post" action="<?= e(admin_url('login')) ?>" class="form">
       <?= csrf_field() ?>

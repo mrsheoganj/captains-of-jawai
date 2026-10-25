@@ -29,3 +29,13 @@ for name, (lat, lng) in {'Sumerpur Jawai Bandh station (JWB)': (25.11437, 73.147
     alts = ', '.join(f'{x["distance"]/1000:.1f} km / {x["duration"]/3600:.2f} h' for x in r['routes'])
     print(f'{name:36s} {alts}')
     time.sleep(1)
+
+print('\nRoad routes from Bera village to cities (for the guide articles):')
+for name, (lat, lng) in {'Jodhpur city': (26.2389, 73.0243), 'Ahmedabad': (23.0225, 72.5714), 'Jaipur': (26.9124, 75.7873),
+                        'Delhi': (28.6139, 77.2090), 'Mumbai': (19.0760, 72.8777), 'Sawai Madhopur (Ranthambore)': (26.0173, 76.3566),
+                        'Kumbhalgarh fort': (25.1528, 73.5870), 'Ranakpur temple': (25.1159, 73.4729), 'Mount Abu': (24.5926, 72.7156),
+                        'Pali city': (25.7711, 73.3234), 'Sumerpur': (25.1540, 73.0820)}.items():
+    r = S.get(f'https://router.project-osrm.org/route/v1/driving/{BERA[1]},{BERA[0]};{lng},{lat}?overview=false', timeout=40).json()
+    rt = r['routes'][0]
+    print(f'{name:36s} {rt["distance"]/1000:.0f} km / {rt["duration"]/3600:.1f} h')
+    time.sleep(1)

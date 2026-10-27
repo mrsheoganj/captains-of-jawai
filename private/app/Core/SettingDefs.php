@@ -209,6 +209,7 @@ final class SettingDefs
                 'fields' => [
                     ['vehicle_private_enabled', 'Offer a private gypsy (just the guest’s group)', 'bool', '1'],
                     ['vehicle_shared_enabled', 'Offer a shared gypsy (pay per seat)', 'bool', '0', 'When both are on, the booking form lets guests choose; when only one is on, it is used for every request.'],
+                    ['price_from', 'Safari price "starting from" (₹ per jeep, digits only)', 'text', '3999', 'Shown as "from ₹3,999 per jeep" in the travel articles, the review page, Google descriptions and search data. Change it here and every place updates. Leave empty to hide the price.'],
                     ['booking_types', 'Booking types (one per line: name | short description | price, optional)', 'lines', "Morning leopard safari | 6:00 to 9:00 AM in an open 4x4 gypsy |\nEvening leopard safari | 4:00 to 7:00 PM, into golden hour |\nMorning + evening safari | Two drives on the same day |\nFull-day safari | Dawn to dusk with a midday break, flexible timing |\nJawai Dam bird & crocodile safari | Wetland drive along the reservoir |\nVillage safari | Rabari herders, fields and hill shrines by jeep |\nPhotography safari | Longer stops, positioned for the best light |", 'Shown as choices on the booking form. Add a price as the third part, e.g. "From ₹4,000 per jeep".'],
                     ['form_scope_note', 'Note shown on the form', 'textarea', "We run safaris only. We do not book hotels or arrange airport or station transfers. Tell us where you are staying in Jawai and we will tell you where to meet."],
                     ['form_success_title', 'Success heading', 'text', "Thank you. We have your enquiry."],
@@ -223,7 +224,6 @@ final class SettingDefs
                 'icon' => 'search',
                 'intro' => 'Default meta tags, social preview image, analytics and custom code.',
                 'fields' => [
-                    ['price_from', 'Safari price "from" (₹ per jeep, digits only)', 'text', '3500', 'Used in Google descriptions and search data as "from ₹3,500 per jeep". Leave empty to hide the price from search results.'],
                     ['seo_title_suffix', 'Title suffix', 'text', " | Captains of Jawai"],
                     ['seo_home_title', 'Homepage title', 'text', "Jawai Safari | Leopard Safari in Jawai, Rajasthan | Captains of Jawai"],
                     ['seo_home_description', 'Homepage meta description', 'textarea', "Jawai safari from {price} per jeep: private open 4x4 leopard safaris at 6 AM & 4 PM in Bera and Jawai Bandh, Rajasthan, with local trackers. Book online."],

@@ -182,7 +182,7 @@ final class Seeder
         foreach ([['Safaris', '/safaris/'], ['Book a safari', '/book-a-safari/'], ['Jawai guide', '/jawai/'], ['Jawai culture', '/jawai/culture/'], ['Gallery', '/gallery/']] as $n => [$l, $u]) {
             $add('footer', $l, $u, $n + 1);
         }
-        foreach ([['About us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/'], ['Ask a question', '/book-a-safari/#ask']] as $n => [$l, $u]) {
+        foreach ([['About us', '/about/'], ['Conservation & Ethics', '/about/conservation-ethics/'], ['FAQ', '/faq/'], ['Contact', '/contact/'], ['Ask a question', '/book-a-safari/#ask'], ['Write a review', '/review/']] as $n => [$l, $u]) {
             $add('footer2', $l, $u, $n + 1);
         }
         foreach ([['Privacy Policy', '/privacy-policy/'], ['Terms', '/terms/'], ['Cookies', '/cookie-policy/'], ['Photo credits', '/photo-credits/'], ['Sitemap', '/sitemap.xml']] as $n => [$l, $u]) {

@@ -80,7 +80,7 @@ HTML,
                 'slug' => 'how-to-book-jawai-safari', 'title' => 'How to book a Jawai safari', 'image_id' => $i('how-to-book-jawai-safari'),
                 'intro' => 'Booking a Jawai leopard safari takes a few minutes: choose a drive, send your date, and confirm the price in writing. Here is how it works.',
                 'meta_title' => 'How to Book a Jawai Safari Online: Steps, Price & Timings',
-                'meta_description' => 'How to book a Jawai leopard safari: choose morning (6–9 AM) or evening (4–7 PM), send your date online or on WhatsApp, and confirm. Prices from ₹3,500 per jeep.',
+                'meta_description' => 'How to book a Jawai leopard safari: choose morning (6–9 AM) or evening (4–7 PM), send your date online or on WhatsApp, and confirm. Prices from {price} per jeep.',
                 'body' => <<<'HTML'
 <p>Jawai safaris run every day, in the morning and in the evening, in open 4x4 gypsies with a local tracker. Jeeps are limited, especially from October to March and on holiday weekends, so it is worth booking a few days ahead.</p>
 
@@ -94,7 +94,7 @@ HTML,
 </ol>
 
 <h2>What it costs</h2>
-<p>Jawai leopard safaris start <strong>from ₹3,500 per jeep</strong>. The jeep is private to your group and seats up to six guests, so the price per person drops as your group grows. Longer private expeditions and photography drives cost more. See <a href="/jawai-safari-price/">Jawai safari price</a> for the details.</p>
+<p>Jawai leopard safaris start <strong>from {price} per jeep</strong>. The jeep is private to your group and seats up to six guests, so the price per person drops as your group grows. Longer private expeditions and photography drives cost more. See <a href="/jawai-safari-price/">Jawai safari price</a> for the details.</p>
 
 <h2>Tips for booking</h2>
 <ul>
@@ -114,9 +114,9 @@ HTML,
             ],
             $base + [
                 'slug' => 'jawai-safari-price', 'title' => 'Jawai safari price', 'image_id' => $i('jawai-safari-price'),
-                'intro' => 'Jawai leopard safaris start from ₹3,500 per jeep for your group. What is included, what changes the price, and how to get the best value.',
+                'intro' => 'Jawai leopard safaris start from {price} per jeep for your group. What is included, what changes the price, and how to get the best value.',
                 'meta_title' => 'Jawai Safari Price 2026: Leopard Safari Cost per Jeep',
-                'meta_description' => 'Jawai safari price: leopard safaris from ₹3,500 per jeep (up to 6 guests), morning or evening. What is included and what affects the cost.',
+                'meta_description' => 'Jawai safari price: leopard safaris from {price} per jeep (up to 6 guests), morning or evening. What is included and what affects the cost.',
                 'body' => <<<'HTML'
 <p>In Jawai the safari is priced <strong>per jeep</strong>, not per person. You get an open 4x4 gypsy for your own group, a driver and a local tracker.</p>
 
@@ -124,7 +124,7 @@ HTML,
 <table>
 <thead><tr><th>Safari</th><th>Duration</th><th>Price</th></tr></thead>
 <tbody>
-<tr><td><a href="/safaris/leopard-safari/">Classic Leopard Tracking Safari</a>, morning or evening</td><td>about 3 hours</td><td>from ₹3,500 per jeep</td></tr>
+<tr><td><a href="/safaris/leopard-safari/">Classic Leopard Tracking Safari</a>, morning or evening</td><td>about 3 hours</td><td>from {price} per jeep</td></tr>
 <tr><td><a href="/safaris/dam-birding-safari/">Jawai Dam wetland and birding drive</a></td><td>about 3 hours</td><td>on request</td></tr>
 <tr><td><a href="/safaris/private-safari/">Private 4x4 expedition</a> (half or full day)</td><td>flexible</td><td>on request</td></tr>
 <tr><td><a href="/safaris/photography-safari/">Photography safari</a></td><td>multi-drive</td><td>on request</td></tr>
@@ -140,7 +140,7 @@ HTML,
 </ul>
 
 <h2>Price per person</h2>
-<p>Because you pay per jeep, sharing makes it cheaper: with six guests, a ₹3,500 jeep works out at under ₹600 each. Two people pay the same jeep price but have the whole vehicle to themselves.</p>
+<p>Because you pay per jeep, sharing makes it cheaper: with six guests, a {price} jeep works out at about {price_each} each. Two people pay the same jeep price but have the whole vehicle to themselves.</p>
 
 <h2>Getting the best value</h2>
 <ul>
@@ -151,7 +151,7 @@ HTML,
 <p>Ready? <a href="/book-a-safari/">Send a booking request</a> and we will reply with availability for your date.</p>
 HTML,
                 'faq' => implode("\n", [
-                    'What is the price of a Jawai safari? | Jawai leopard safaris with Captains of Jawai start from ₹3,500 per jeep for a morning or evening drive of about three hours. The jeep is private to your group and seats up to six guests.',
+                    'What is the price of a Jawai safari? | Jawai leopard safaris with Captains of Jawai start from {price} per jeep for a morning or evening drive of about three hours. The jeep is private to your group and seats up to six guests.',
                     'Is the Jawai safari price per person or per jeep? | Per jeep. Up to six guests share one open 4x4 gypsy, so the price per person goes down as your group gets bigger.',
                     'Are there extra charges? | We confirm the full price in writing before you book. Longer private expeditions, photography drives and holiday dates are priced separately.',
                 ]),
@@ -310,7 +310,7 @@ HTML,
 
 <h2>What to pack</h2>
 <p>Neutral-coloured clothes, a warm layer for morning drives from November to February, a cap, sunscreen, binoculars and a camera with a zoom lens.</p>
-<p><a href="/book-a-safari/">Book your Jawai safaris</a>, from ₹3,500 per jeep.</p>
+<p><a href="/book-a-safari/">Book your Jawai safaris</a>, from {price} per jeep.</p>
 HTML,
                 'faq' => implode("\n", [
                     'How many days are enough for Jawai? | Two nights is ideal: it gives you three safaris (evening, morning, evening or morning) and time for the dam and a temple. One night works if you are short of time.',
@@ -375,7 +375,7 @@ HTML,
 <tr><td>Sunday late morning</td><td>Jawai Dam, then drive home</td></tr>
 </tbody>
 </table>
-<p>Safaris start from ₹3,500 per jeep for up to six guests, which makes Jawai good value for a family or a group of friends. <a href="/book-a-safari/">Book your weekend safaris</a>, or see our <a href="/jawai-itinerary/">2-day Jawai itinerary</a>.</p>
+<p>Safaris start from {price} per jeep for up to six guests, which makes Jawai good value for a family or a group of friends. <a href="/book-a-safari/">Book your weekend safaris</a>, or see our <a href="/jawai-itinerary/">2-day Jawai itinerary</a>.</p>
 HTML,
                 'faq' => implode("\n", [
                     'How far is Jawai from Ahmedabad? | About 285 km by road to Bera in Jawai, usually five to six hours by car via Palanpur and Abu Road.',
@@ -416,7 +416,7 @@ HTML,
 </ul>
 
 <h2>Book early</h2>
-<p>Winter is the busiest time, especially from Diwali to New Year. Book your safaris one to two weeks ahead. Drives start from ₹3,500 per jeep. <a href="/book-a-safari/">Send a booking request</a>, or read the <a href="/jawai/best-time-to-visit/">month-by-month guide</a>.</p>
+<p>Winter is the busiest time, especially from Diwali to New Year. Book your safaris one to two weeks ahead. Drives start from {price} per jeep. <a href="/book-a-safari/">Send a booking request</a>, or read the <a href="/jawai/best-time-to-visit/">month-by-month guide</a>.</p>
 HTML,
                 'faq' => implode("\n", [
                     'Is winter a good time to visit Jawai? | Yes, October to March is the best season: pleasant days, active leopards and migratory birds such as flamingos and demoiselle cranes at the Jawai Dam.',

@@ -227,6 +227,12 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.13.1: prices in article text follow the "starting from" setting (Settings → Enquiry Form). */
+    public const PRICE_FIXES = [
+        ['with six guests, a ₹3,500 jeep works out at under ₹600 each.', 'with six guests, a {price} jeep works out at about {price_each} each.'],
+        ['₹3,500', '{price}'],
+    ];
+
     /** 2.11.8: search titles aimed at "Jawai safari" (titles and descriptions only; page text is unchanged). */
     public const SEO_FIXES = [
         ["Join expert local trackers for morning (6–9 AM) and evening (4–7 PM) Jawai leopard safaris in private open 4x4 gypsies across Bera's granite hills.", "Jawai leopard safari from {price} per jeep: morning (6–9 AM) and evening (4–7 PM) drives with expert local trackers in private open 4x4 gypsies in Bera."],
@@ -328,6 +334,26 @@ final class App
         if ($types !== '' && stripos($types, 'Shared gypsy safari') !== false) {
             $keep = array_filter(preg_split('/\R/', $types), fn ($l) => stripos($l, 'Shared gypsy safari') !== 0);
             Settings::set('booking_types', implode("\n", $keep));
+        }
+        foreach (self::PRICE_FIXES as [$from, $to]) {
+            foreach (['title', 'intro', 'body', 'faq', 'meta_title', 'meta_description'] as $col) {
+                DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?)", [$from, $to]);
+            }
+        }
+        // 2.13.1: new starting price ₹3,999 (only replaces the old saved ₹3,500, once).
+        if (!is_file(STORAGE_PATH . '/.price-3999-v1')) {
+            if (trim((string) DB::val('SELECT svalue FROM settings WHERE skey = ?', ['price_from'])) === '3500') {
+                Settings::set('price_from', '3999');
+            }
+            @file_put_contents(STORAGE_PATH . '/.price-3999-v1', date('c'));
+        }
+        // 2.13.1: "Write a review" link in the footer (added once; the owner can move or remove it in Navigation menus).
+        if (!is_file(STORAGE_PATH . '/.footer-review-v1')) {
+            if (!DB::val("SELECT id FROM menu_items WHERE url IN ('/review/', '/write-a-review/') AND location LIKE 'footer%'")) {
+                $sort = (int) DB::val("SELECT MAX(sort_order) FROM menu_items WHERE location = 'footer2'");
+                DB::insert('menu_items', ['location' => 'footer2', 'label' => 'Write a review', 'url' => '/review/', 'parent_id' => null, 'sort_order' => $sort + 1, 'is_active' => 1, 'new_tab' => 0]);
+            }
+            @file_put_contents(STORAGE_PATH . '/.footer-review-v1', date('c'));
         }
         // 2.11.5: clear the old email (SMTP) sending log once; email settings are not touched.
         if (!is_file(STORAGE_PATH . '/.email-log-cleared-v1')) {

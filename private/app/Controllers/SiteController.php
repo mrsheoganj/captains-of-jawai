@@ -38,21 +38,30 @@ final class SiteController
         ];
     }
 
-    /** "₹3,500" from the price setting, or '' when no price is set. */
+    /** "₹3,999" from the price setting (Settings → Enquiry Form), or '' when no price is set. */
     public static function price(): string
     {
         $p = (int) preg_replace('/\D+/', '', (string) setting('price_from'));
         return $p > 0 ? '₹' . number_format($p) : '';
     }
 
-    /** Fill "{price}" in a description; without a price, drop the "from {price} per jeep" phrase. */
-    private static function withPrice(string $text): string
+    /**
+     * Fill "{price}" (₹3,999) and "{price_each}" (the jeep price shared by six guests, rounded) in text.
+     * Without a price, the "from {price} per jeep" phrase is dropped.
+     */
+    public static function withPrice(string $text): string
     {
+        if (!str_contains($text, '{price')) {
+            return $text;
+        }
         $price = self::price();
         if ($price === '') {
-            $text = (string) preg_replace('/\s*from \{price\} per jeep/u', '', $text);
+            $text = (string) preg_replace('/\s*(?:start(?:s)?\s+)?from \{price\} per jeep/u', '', $text);
+            $text = (string) preg_replace('/,?\s*a \{price\} jeep works out at about \{price_each\} each/u', '', $text);
         }
-        return str_replace('{price}', $price, $text);
+        $p = (int) preg_replace('/\D+/', '', (string) setting('price_from'));
+        $each = $p > 0 ? '₹' . number_format((int) (round($p / 6 / 10) * 10)) : '';
+        return str_replace(['{price_each}', '{price}'], [$each, $price], $text);
     }
 
     private function published(string $table, string $order = 'sort_order, id'): array
@@ -316,6 +325,9 @@ final class SiteController
             if (!$item) {
                 $this->notFound();
             }
+        }
+        foreach (['title', 'intro', 'body', 'faq', 'meta_title', 'meta_description'] as $k) {
+            $item[$k] = self::withPrice((string) ($item[$k] ?? ''));
         }
         $crumbs = [];
         $acc = '';

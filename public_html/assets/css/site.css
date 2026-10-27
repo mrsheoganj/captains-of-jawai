@@ -1485,3 +1485,18 @@ img, svg, video, iframe { max-width: 100%; }
 .jm-bird { fill: none; stroke: #2F241A; stroke-width: 3; stroke-linecap: round; }
 .jm-dust circle { fill: #EBC79A; }
 @media (max-width: 767px) { .jeep-modern .jm-scene { aspect-ratio: auto; height: 200px; } }
+/* Guest reviews */
+.reviews-home .stars, .review-mini .stars { color: #C8901E; letter-spacing: 3px; font-size: 1.15rem; margin-bottom: 14px; }
+.reviews-home .quotes { min-height: 200px; }
+.reviews-cta { margin-top: 28px; }
+.review-mini { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 18px; }
+.review-mini li { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+.review-mini p { margin: 4px 0 6px; color: var(--text-2); font-style: italic; }
+.review-mini .stars { margin-bottom: 0; font-size: 1rem; }
+.star-input { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+.star-input input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.star-input label { font-size: 2.1rem; line-height: 1; color: var(--border-2); cursor: pointer; transition: color .15s, transform .15s; }
+.star-input label:hover, .star-input label:hover ~ label, .star-input input:checked ~ label { color: #C8901E; }
+.star-input input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.star-input label:active { transform: scale(.9); }
+.form-card .check input[type=checkbox] { flex: none; width: 20px; height: 20px; min-height: 0; padding: 0; margin: 3px 0 0; border-radius: 4px; appearance: auto; -webkit-appearance: checkbox; box-shadow: none; }

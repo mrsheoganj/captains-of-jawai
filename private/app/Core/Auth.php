@@ -24,6 +24,7 @@ final class Auth
         'email' => [['super_admin'], ['super_admin']],
         'users' => [['super_admin'], ['super_admin']],
         'audit' => [['super_admin', 'manager'], ['super_admin']],
+        'reviews' => [['super_admin', 'manager', 'sales', 'editor', 'read_only'], ['super_admin', 'manager', 'sales', 'editor']],
     ];
 
     private const MAX_ATTEMPTS = 5;
@@ -36,7 +37,7 @@ final class Auth
 
     /** CRM-only mode (/pk-crm): the same logins, but only the dashboard and enquiries are available. */
     public const CRM_PATH = 'pk-crm';
-    private const CRM_AREAS = ['dashboard', 'enquiries'];
+    private const CRM_AREAS = ['dashboard', 'enquiries', 'reviews'];
     private static bool $crm = false;
 
     public static function enterCrm(): void

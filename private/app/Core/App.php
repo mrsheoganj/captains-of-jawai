@@ -125,6 +125,10 @@ final class App
         $router->get('llms.txt', [SiteController::class, 'llms']);
         $router->post('api/enquiry', [ApiController::class, 'enquiry']);
         $router->post('api/contact', [ApiController::class, 'contact']);
+        $router->post('api/review', [ApiController::class, 'review']);
+        $router->get('write-a-review', [SiteController::class, 'writeReview']);
+        $router->get('review', fn () => redirect('/write-a-review/', 301));
+        $router->get('reviews', fn () => redirect('/write-a-review/', 301));
         $router->get('install', fn () => redirect('/'));
         $router->get('{path:.+}', [SiteController::class, 'page']);
 
@@ -149,6 +153,8 @@ final class App
         $r->post("$a/enquiries/{id:\d+}", [Admin\EnquiryController::class, 'update']);
         $r->post("$a/enquiries/{id:\d+}/note", [Admin\EnquiryController::class, 'note']);
         $r->post("$a/enquiries/{id:\d+}/delete", [Admin\EnquiryController::class, 'delete']);
+        $r->get("$a/reviews", [Admin\ReviewController::class, 'index']);
+        $r->post("$a/reviews/{id:\d+}/{action}", [Admin\ReviewController::class, 'act']);
     }
 
     private static function adminRoutes(Router $r, string $a): void
@@ -168,6 +174,9 @@ final class App
         $r->post("$a/enquiries/{id:\d+}", [Admin\EnquiryController::class, 'update']);
         $r->post("$a/enquiries/{id:\d+}/note", [Admin\EnquiryController::class, 'note']);
         $r->post("$a/enquiries/{id:\d+}/delete", [Admin\EnquiryController::class, 'delete']);
+
+        $r->get("$a/reviews", [Admin\ReviewController::class, 'index']);
+        $r->post("$a/reviews/{id:\d+}/{action}", [Admin\ReviewController::class, 'act']);
 
         $r->get("$a/content/{res}", [Admin\ContentController::class, 'index']);
         $r->get("$a/content/{res}/new", [Admin\ContentController::class, 'create']);

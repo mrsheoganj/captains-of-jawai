@@ -46,6 +46,7 @@ final class Schema
             ],
             'testimonials' => [
                 'id' => 'pk', 'author' => 'str', 'origin' => 'str', 'quote' => 'text', 'source' => 'str', 'sort_order' => 'int', 'status' => 'short',
+                'rating' => 'int', 'email' => 'str', 'visit' => 'short', 'ip' => 'short', 'created_at' => 'datetime', '_index' => ['status'],
             ],
             'enquiries' => [
                 'id' => 'pk', 'code' => 'short', 'type' => 'short', 'full_name' => 'str', 'email' => 'str', 'phone' => 'short',

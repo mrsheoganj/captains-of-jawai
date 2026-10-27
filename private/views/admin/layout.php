@@ -37,6 +37,9 @@ $exact = fn (string $p) => rtrim($path, '/') === rtrim(admin_url($p), '/') ? ' i
     <?php if (Auth::can('enquiries')): ?>
     <a class="<?= $active('enquiries') ?>" href="<?= e(admin_url('enquiries')) ?>"><?= icon('inbox', 18) ?> Enquiries <?php if ($newCount): ?><b class="count"><?= $newCount ?></b><?php endif; ?></a>
     <?php endif; ?>
+    <?php if (Auth::can('reviews')): $pendingReviews = \App\Admin\ReviewController::pendingCount(); ?>
+    <a class="<?= $active('reviews') ?>" href="<?= e(admin_url('reviews')) ?>"><?= icon('star', 18) ?> Reviews <?php if ($pendingReviews): ?><b class="count"><?= $pendingReviews ?></b><?php endif; ?></a>
+    <?php endif; ?>
 
     <?php if (Auth::can('content')): ?>
     <span class="side-label">Content</span>

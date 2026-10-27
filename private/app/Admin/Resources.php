@@ -12,6 +12,8 @@ namespace App\Admin;
 final class Resources
 {
     private const STATUS = ['published' => 'Published', 'draft' => 'Draft'];
+    /** Reviews sent by guests from the website arrive as "pending" and appear only once approved. */
+    public const REVIEW_STATUS = ['published' => 'Published (shown on website)', 'pending' => 'Awaiting approval', 'draft' => 'Hidden'];
     private const POST_STATUS = ['published' => 'Published', 'draft' => 'Draft', 'review' => 'In review', 'archived' => 'Archived'];
 
     public static function all(): array
@@ -81,8 +83,11 @@ final class Resources
                     'quote' => ['Quote', 'textarea', ['rows' => 5, 'required' => true]],
                     'author' => ['Guest name', 'text', ['required' => true, 'width' => 'half']],
                     'origin' => ['From (city / country)', 'text', ['width' => 'half']],
+                    'rating' => ['Stars', 'select', ['choices' => ['5' => '★★★★★ 5', '4' => '★★★★ 4', '3' => '★★★ 3', '2' => '★★ 2', '1' => '★ 1', '' => 'No rating'], 'width' => 'half']],
+                    'visit' => ['Safari month', 'text', ['placeholder' => 'November 2026', 'width' => 'half']],
                     'source' => ['Source', 'text', ['placeholder' => 'Google Reviews', 'side' => true]],
-                    'status' => ['Status', 'select', ['choices' => self::STATUS, 'side' => true]],
+                    'status' => ['Status', 'select', ['choices' => self::REVIEW_STATUS, 'side' => true]],
+                    'email' => ['Guest email (never shown)', 'text', ['side' => true]],
                     'sort_order' => ['Sort order', 'number', ['side' => true]],
                 ],
             ],

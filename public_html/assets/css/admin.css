@@ -489,3 +489,11 @@ code { background: var(--subtle); padding: 1px 5px; border-radius: 4px; }
 .reset-form .field { display: flex; flex-direction: column; gap: 4px; min-width: 220px; }
 .reset-form .field span { font-size: .85rem; font-weight: 600; }
 .reset-form input { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font: inherit; }
+/* Guest reviews */
+.review-list { display: grid; gap: 14px; margin-top: 16px; }
+.review-item { padding: 18px 20px; }
+.review-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.review-stars { color: #C8901E; letter-spacing: 2px; font-size: 16px; margin-top: 2px; }
+.review-text { margin: 12px 0; line-height: 1.6; white-space: normal; }
+.review-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.review-actions form { margin: 0; }

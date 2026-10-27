@@ -63,7 +63,7 @@ final class SiteController
     public function home(): string
     {
         $safaris = $this->published('safaris');
-        $testimonials = $this->published('testimonials');
+        $testimonials = DB::all("SELECT * FROM testimonials WHERE status = 'published' ORDER BY sort_order, id DESC");
         $heroIds = array_filter(array_map('intval', explode(',', (string) setting('hero_images'))));
         // "Before you come": the Jawai overview plus each guide page, in reading order, with short labels.
         $labels = ['jawai' => 'Jawai at a glance'] + \App\Core\JawaiGuide::MENU;
@@ -267,6 +267,18 @@ final class SiteController
             'title' => 'Photo Credits',
             'description' => 'Photographers and Creative Commons licences for the photographs of leopards, birds, the Rabari and Jawai Dam used on the Captains of Jawai website.',
             'breadcrumbs' => [['Photo Credits', '/photo-credits/']],
+        ]);
+    }
+
+    /** /write-a-review/: guests send a review; it is shown only after approval in the admin or CRM. */
+    public function writeReview(): string
+    {
+        $reviews = DB::all("SELECT * FROM testimonials WHERE status = 'published' ORDER BY id DESC LIMIT 4");
+        return $this->show('review', ['reviews' => $reviews], [
+            'title' => 'Write a Review | Captains of Jawai Safari',
+            'raw_title' => true,
+            'description' => 'Been on a Jawai safari with Captains of Jawai? Share your experience: write a review of your leopard safari in Jawai, Rajasthan.',
+            'breadcrumbs' => [['Write a review', '/write-a-review/']],
         ]);
     }
 

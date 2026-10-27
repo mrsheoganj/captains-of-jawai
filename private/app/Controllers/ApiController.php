@@ -88,6 +88,74 @@ final class ApiController
         $this->done($id, 'contact');
     }
 
+    /** A guest review from /write-a-review/: saved as "pending" and shown only after approval. */
+    public function review(): void
+    {
+        if (!Csrf::valid()) {
+            $this->fail(['_form' => 'Your session expired. Please refresh the page and try again.'], 419);
+        }
+        $started = (int) input('_ts', 0);
+        if (str_input('website') !== '' || ($started > 0 && time() - $started < 4)) {
+            $this->reviewDone(); // pretend success to bots
+        }
+        $recent = (int) DB::val('SELECT COUNT(*) FROM testimonials WHERE ip = ? AND created_at > ?', [client_ip(), date('Y-m-d H:i:s', time() - 3600)]);
+        if ($recent >= 3) {
+            $this->fail(['_form' => 'Thank you, we have already received your review. Please try again later if you want to send another.'], 429);
+        }
+        $name = str_input('full_name', 80);
+        $email = strtolower(str_input('email', 150));
+        $rating = (int) input('rating', 0);
+        $text = trim(str_input('review', 2000));
+        $errors = [];
+        if (mb_strlen($name) < 2) {
+            $errors['full_name'] = 'Please tell us your name.';
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Please enter a valid email address (it is never shown).';
+        }
+        if ($rating < 1 || $rating > 5) {
+            $errors['rating'] = 'Please choose a star rating.';
+        }
+        if (mb_strlen($text) < 20) {
+            $errors['review'] = 'Please write a few words about your safari (at least 20 characters).';
+        }
+        if (!input('consent')) {
+            $errors['consent'] = 'Please confirm this is your own honest experience.';
+        }
+        if ($errors) {
+            $this->fail($errors);
+        }
+        $id = DB::insert('testimonials', [
+            'author' => $name, 'origin' => str_input('origin', 80), 'quote' => $text, 'source' => 'Website',
+            'rating' => $rating, 'email' => $email, 'visit' => str_input('visit', 60), 'ip' => client_ip(),
+            'status' => 'pending', 'sort_order' => 0, 'created_at' => now(),
+        ]);
+        $team = emails_list(setting('notify_recipients')) ?: emails_list(setting('contact_email'));
+        if ($team) {
+            $body = "A guest has written a review. It is waiting for your approval and is not on the website yet.\n\n"
+                . "Name: $name\nStars: " . str_repeat('★', $rating) . " ($rating/5)\n"
+                . (str_input('origin', 80) !== '' ? 'From: ' . str_input('origin', 80) . "\n" : '')
+                . "Review: $text\n\nApprove or hide it in the CRM: " . abs_url('/pk-crm/reviews');
+            try {
+                Mailer::send($team, 'New guest review from ' . $name . ' (' . $rating . '★): awaiting approval', $body, ['reply_to' => $email, 'reply_name' => $name, 'context' => 'review']);
+            } catch (\Throwable $e) {
+                error_log('Review notification: ' . $e->getMessage());
+            }
+        }
+        $this->reviewDone();
+    }
+
+    private function reviewDone(): never
+    {
+        $title = 'Thank you for your review!';
+        $message = 'It will appear on our website after a quick check. We are glad you joined us in Jawai.';
+        if ($this->wantsJson()) {
+            json_out(['success' => true, 'title' => $title, 'message' => $message], 201);
+        }
+        flash('success', $title . ' ' . $message);
+        redirect('/write-a-review/');
+    }
+
     /** CSRF, honeypot, minimum fill time and per-IP rate limit. */
     private function guard(): void
     {

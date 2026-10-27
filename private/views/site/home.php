@@ -176,6 +176,9 @@ foreach (Settings::lines('booking_details') as $line) {
 </section>
 <?php endif; ?>
 
+<!-- Guest reviews (approved only) and the link to write one -->
+<?= View::partial('site/partials/reviews', ['testimonials' => $testimonials]) ?>
+
 <!-- Gallery -->
 <?php if (Settings::bool('home_gallery_enabled') && $gallery): ?>
 <section class="section">
@@ -251,22 +254,3 @@ foreach (Settings::lines('booking_details') as $line) {
 
 <!-- Common questions -->
 <?= View::partial('site/partials/home-faq', ['faqs' => $faqs ?? []]) ?>
-
-<!-- Guest words (only real testimonials entered in admin) -->
-<?php if (Settings::bool('testimonials_enabled') && $testimonials): ?>
-<section class="section">
-  <div class="container narrow">
-    <div class="quotes" data-quotes>
-      <?php foreach ($testimonials as $n => $q): ?>
-      <figure class="quote<?= $n === 0 ? ' is-active' : '' ?>">
-               <blockquote><?= e($q['quote']) ?></blockquote>
-        <figcaption><strong><?= e($q['author']) ?></strong><?php if ($q['origin']): ?> · <?= e($q['origin']) ?><?php endif; ?><?php if ($q['source']): ?> <span class="mono">via <?= e($q['source']) ?></span><?php endif; ?></figcaption>
-      </figure>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-<?php endif; ?>
-
-
-

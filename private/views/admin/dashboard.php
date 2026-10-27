@@ -21,6 +21,9 @@ $max = max(1, ...array_values($daily));
   <div class="kpi"><span class="kpi-label">Avg. first response</span><strong><?= $avgResp === null ? '—' : ($avgResp < 1 ? round($avgResp * 60) . 'm' : round($avgResp, 1) . 'h') ?></strong><span class="kpi-delta <?= $avgResp !== null && $avgResp > 12 ? 'down' : '' ?>">Target: under 12 hours</span></div>
 </div>
 
+<?php if (\App\Core\Auth::can('reviews') && ($pr = \App\Admin\ReviewController::pendingCount())): ?>
+<div class="alert alert-info"><?= $pr ?> guest review<?= $pr > 1 ? 's are' : ' is' ?> waiting for approval. <a href="<?= e(admin_url('reviews')) ?>">Open reviews</a></div>
+<?php endif; ?>
 <?php if ($mailFailures && !\App\Core\Auth::crm()): ?>
 <div class="alert alert-error"><?= $mailFailures ?> email(s) failed to send in the last 7 days. <a href="<?= e(admin_url('email-log')) ?>">Open the email log</a> and check <a href="<?= e(admin_url('settings/email')) ?>">SMTP settings</a>.</div>
 <?php endif; ?>

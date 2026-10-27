@@ -29,6 +29,16 @@ final class Articles
         'jodhpur-to-jawai' => 'granite-boulders',
         'ahmedabad-to-jawai' => 'bandh-shoreline',
         'jawai-in-winter' => 'flamingo-flock',
+        'where-is-jawai' => 'landscape1',
+        'delhi-to-jawai' => 'safari1',
+        'mumbai-to-jawai' => 'granite-dome-dusk',
+        'jaipur-to-jawai' => 'sunset-valley',
+        'jawai-in-monsoon' => 'lake-reflection',
+        'jawai-in-summer' => 'leopard1',
+        'jawai-leopard-safari-what-to-expect' => 'leopard2',
+        'what-to-wear-on-jawai-safari' => 'safari-guests',
+        'jawai-with-kids' => 'safari-jeep',
+        'jawai-photography-tips' => 'leopard-portrait',
     ];
 
     public static function pages(callable $img): array
@@ -424,6 +434,369 @@ HTML,
                     'When do flamingos come to Jawai? | Flamingos and other migratory birds visit the Jawai Dam reservoir in the cooler months, mainly from about November to February, depending on water levels.',
                 ]),
                 'sources' => implode("\n", [self::WIKI_DAM]),
+            ],
+            $base + [
+                'slug' => 'where-is-jawai', 'title' => 'Where is Jawai?', 'image_id' => $i('where-is-jawai'),
+                'intro' => 'Jawai is in Pali district in southern Rajasthan, between Udaipur and Jodhpur, around the Jawai Dam near Sumerpur and Bera.',
+                'meta_title' => 'Where is Jawai? Location, Map & Nearest Cities in Rajasthan',
+                'meta_description' => 'Where is Jawai? In Pali district, Rajasthan, about 115 km from Udaipur and 170 km from Jodhpur, around the Jawai Dam near Bera and Sumerpur.',
+                'body' => <<<'HTML'
+<p>Jawai is not a single town but an area of granite hills, farmland and villages around the <strong>Jawai Dam (Jawai Bandh)</strong> in <strong>Pali district, Rajasthan</strong>. It lies in the foothills of the Aravalli range, roughly halfway between Udaipur and Jodhpur.</p>
+
+<h2>Jawai on the map</h2>
+<ul>
+<li><strong>District:</strong> Pali, Rajasthan, India</li>
+<li><strong>Nearest towns:</strong> Sumerpur and Sheoganj, with the villages of Bera and Jawai Bandh at the heart of leopard country</li>
+<li><strong>Landmark:</strong> the Jawai Dam reservoir, built on the Jawai River between 1946 and 1957</li>
+</ul>
+
+<h2>How far is Jawai from…</h2>
+<table>
+<thead><tr><th>From</th><th>Road distance</th><th>Typical drive</th></tr></thead>
+<tbody>
+<tr><td><a href="/udaipur-to-jawai/">Udaipur</a></td><td>about 115 km</td><td>around 2.5 hours</td></tr>
+<tr><td><a href="/jodhpur-to-jawai/">Jodhpur</a></td><td>about 170 km</td><td>3 to 3.5 hours</td></tr>
+<tr><td>Mount Abu</td><td>about 100 km</td><td>2 to 2.5 hours</td></tr>
+<tr><td><a href="/ahmedabad-to-jawai/">Ahmedabad</a></td><td>about 285 km</td><td>5 to 6 hours</td></tr>
+<tr><td><a href="/jaipur-to-jawai/">Jaipur</a></td><td>about 390 km</td><td>6 to 7 hours</td></tr>
+<tr><td><a href="/delhi-to-jawai/">Delhi</a></td><td>about 680 km</td><td>11 to 12 hours</td></tr>
+<tr><td><a href="/mumbai-to-jawai/">Mumbai</a></td><td>about 800 km</td><td>13 to 14 hours</td></tr>
+</tbody>
+</table>
+<p>The nearest airport is Udaipur (about 130 km) and the nearest railway station is Sumerpur Jawai Bandh, about 18 km from Bera.</p>
+
+<h2>Why Jawai is famous</h2>
+<p>Jawai is known across India for its <a href="/jawai/leopards/">leopards</a>, which live in the caves of the granite hills close to villages and temples, and for the Rabari herders who have shared this land with them for generations. In winter, flamingos and cranes gather at the dam. Read the full <a href="/jawai/">Jawai guide</a> or <a href="/book-a-safari/">book a Jawai safari</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'Which district is Jawai in? | Jawai is in Pali district, Rajasthan, around the Jawai Dam near Sumerpur and Bera.',
+                    'Is Jawai near Udaipur? | Yes. Jawai is about 115 km from Udaipur city, around two and a half hours by car, and Udaipur airport is the nearest airport.',
+                    'What is Jawai famous for? | Leopards living in granite hills alongside villages and Rabari herders, the Jawai Dam, and winter birds such as flamingos and cranes.',
+                ]),
+                'sources' => implode("\n", [self::WIKI_DAM, self::WIKI_RESERVE, self::OSM]),
+            ],
+            $base + [
+                'slug' => 'delhi-to-jawai', 'title' => 'How to reach Jawai from Delhi', 'image_id' => $i('delhi-to-jawai'),
+                'intro' => 'The quickest way from Delhi to Jawai is a flight to Udaipur and a 2.5-hour drive. Overnight trains to Falna and Jawai Bandh are a good alternative.',
+                'meta_title' => 'Delhi to Jawai: Flights, Trains & Road Distance (680 km)',
+                'meta_description' => 'How to reach Jawai from Delhi: fly to Udaipur or Jodhpur and drive, take an overnight train to Falna or Jawai Bandh, or drive about 680 km.',
+                'body' => <<<'HTML'
+<p>Jawai is about <strong>680 km by road from Delhi</strong>, so most travellers fly or take the train for most of the way.</p>
+
+<h2>By air (fastest)</h2>
+<p>Fly from Delhi to <strong>Udaipur (UDR)</strong>, then drive about 130 km, around two and a half to three hours, to Jawai. Flying to <strong>Jodhpur (JDH)</strong> also works, with about three and a half hours by road from there. Take a morning flight and you can be on the evening safari the same day.</p>
+
+<h2>By train</h2>
+<p>Jawai lies on the main railway line between Delhi and Ahmedabad. Trains on this route stop at <strong>Falna (FA)</strong>, about 37 km from Bera, and some also at <strong>Sumerpur Jawai Bandh (JWB)</strong>, about 18 km away. An overnight train from Delhi lets you arrive in the morning, rest, and take the evening safari. Check current timetables on the Indian Railways website, and arrange a car from the station.</p>
+
+<h2>By road</h2>
+<p>Driving takes <strong>11 to 12 hours</strong>, usually via Jaipur and Ajmer. It is best split over two days, for example with a night in Jaipur, Ajmer or Pushkar.</p>
+
+<h2>Suggested plan from Delhi</h2>
+<table>
+<thead><tr><th>Day</th><th>Plan</th></tr></thead>
+<tbody>
+<tr><td>Day 1</td><td>Morning flight to Udaipur, drive to Jawai, evening leopard safari</td></tr>
+<tr><td>Day 2</td><td>Morning safari, Jawai Dam and a hill temple, evening safari</td></tr>
+<tr><td>Day 3</td><td>Final morning safari, drive to Udaipur for an afternoon flight</td></tr>
+</tbody>
+</table>
+<p>See our <a href="/jawai-itinerary/">2-day Jawai itinerary</a> and <a href="/udaipur-to-jawai/">Udaipur to Jawai</a>, then <a href="/book-a-safari/">book your safaris</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'How far is Jawai from Delhi? | About 680 km by road, 11 to 12 hours of driving. Most people fly to Udaipur and drive the last 130 km.',
+                    'Which airport is best for Jawai from Delhi? | Udaipur, about 2.5 to 3 hours by road from Jawai. Jodhpur is the other option, about 3.5 hours away.',
+                    'Is there a train from Delhi to Jawai? | Yes. Trains on the Delhi–Ahmedabad line stop at Falna, about 37 km from Bera, and some at Sumerpur Jawai Bandh, about 18 km away.',
+                ]),
+                'sources' => implode("\n", [self::OSM, self::WIKI_STATION]),
+            ],
+            $base + [
+                'slug' => 'mumbai-to-jawai', 'title' => 'How to reach Jawai from Mumbai', 'image_id' => $i('mumbai-to-jawai'),
+                'intro' => 'From Mumbai, fly to Udaipur and drive 2.5 hours to Jawai, or take a train towards Rajasthan via Ahmedabad to Falna.',
+                'meta_title' => 'Mumbai to Jawai: Flights, Trains & Best Route',
+                'meta_description' => 'How to reach Jawai from Mumbai: fly to Udaipur (2.5 hours by road to Jawai), take a train via Ahmedabad to Falna, or drive about 800 km.',
+                'body' => <<<'HTML'
+<p>Jawai is about <strong>800 km by road from Mumbai</strong>. The easiest way is to fly most of the distance.</p>
+
+<h2>By air (recommended)</h2>
+<p>Fly from Mumbai to <strong>Udaipur (UDR)</strong>, about an hour and a half in the air, then drive about 130 km to Jawai (2.5 to 3 hours). Flights to <strong>Jodhpur</strong> are another option, about three and a half hours by road from Jawai. With a morning flight you can reach Jawai for the 4:00 PM evening safari.</p>
+
+<h2>By train</h2>
+<p>Several trains from Mumbai to Rajasthan run via Ahmedabad and Abu Road and stop at <strong>Falna (FA)</strong>, about 37 km from Bera; a few also stop at <strong>Sumerpur Jawai Bandh (JWB)</strong>, about 18 km away. An overnight train is relaxed and good value. Check current trains and timings on the Indian Railways website.</p>
+
+<h2>By road</h2>
+<p>The drive is <strong>13 to 14 hours</strong> via Ahmedabad. Most people who drive break the journey in Ahmedabad, then continue the next morning (about 5 to 6 hours to Jawai). See <a href="/ahmedabad-to-jawai/">Ahmedabad to Jawai</a>.</p>
+
+<h2>How long to stay</h2>
+<p>Two nights is ideal after a long journey: three safaris and time for the dam and a temple. See our <a href="/jawai-itinerary/">Jawai itinerary</a> and <a href="/book-a-safari/">book your safaris</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'How far is Jawai from Mumbai? | About 800 km by road, 13 to 14 hours of driving. Most travellers fly to Udaipur and drive the last 130 km.',
+                    'What is the best way to reach Jawai from Mumbai? | A flight to Udaipur followed by a 2.5 to 3 hour drive. Trains via Ahmedabad to Falna are a good-value alternative.',
+                    'Which railway station is nearest to Jawai? | Sumerpur Jawai Bandh, about 18 km from Bera. Falna, about 37 km away, has more trains.',
+                ]),
+                'sources' => implode("\n", [self::OSM, self::WIKI_STATION]),
+            ],
+            $base + [
+                'slug' => 'jaipur-to-jawai', 'title' => 'Jaipur to Jawai: distance and how to get there', 'image_id' => $i('jaipur-to-jawai'),
+                'intro' => 'Jawai is about 390 km from Jaipur, six to seven hours by road via Ajmer. Trains on the Jaipur–Ahmedabad line stop at Falna and Jawai Bandh.',
+                'meta_title' => 'Jaipur to Jawai: Distance (390 km), Train & Road Route',
+                'meta_description' => 'Jaipur to Jawai is about 390 km, 6 to 7 hours by car via Ajmer. Trains towards Ahmedabad stop at Falna and Sumerpur Jawai Bandh.',
+                'body' => <<<'HTML'
+<p>Many Rajasthan trips start in Jaipur. Jawai makes a great wildlife stop on the way south to Udaipur or west to Jodhpur.</p>
+
+<h2>By road</h2>
+<p>Jaipur to Bera in Jawai is <strong>about 390 km</strong>, usually <strong>6 to 7 hours</strong> by car. The route runs south-west via Ajmer and Beawar. Leave early to reach Jawai in time for the evening safari, or break the trip with a night in Ajmer or Pushkar.</p>
+
+<h2>By train</h2>
+<p>Trains from Jaipur towards Ahmedabad and Mumbai run via Ajmer and Marwar Junction and stop at <strong>Falna (FA)</strong>, about 37 km from Bera, with some stopping at <strong>Sumerpur Jawai Bandh (JWB)</strong>, about 18 km away. Check current timetables on the Indian Railways website.</p>
+
+<h2>Fitting Jawai into a Rajasthan route</h2>
+<table>
+<thead><tr><th>Route</th><th>Idea</th></tr></thead>
+<tbody>
+<tr><td>Jaipur → Jawai → Udaipur</td><td>Two nights in Jawai, then about 2.5 hours on to Udaipur</td></tr>
+<tr><td>Jaipur → Jodhpur → Jawai → Udaipur</td><td>The classic western loop; Jawai sits neatly between Jodhpur and Udaipur</td></tr>
+<tr><td>Jaipur → Ranthambore → … → Jawai</td><td>Tigers and leopards on one trip; see <a href="/jawai-vs-ranthambore/">Jawai vs Ranthambore</a></td></tr>
+</tbody>
+</table>
+<p><a href="/book-a-safari/">Book your Jawai safaris</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'How far is Jawai from Jaipur? | About 390 km by road to Bera in Jawai, six to seven hours by car via Ajmer.',
+                    'Can I take a train from Jaipur to Jawai? | Yes. Trains towards Ahmedabad stop at Falna, about 37 km from Bera, and some at Sumerpur Jawai Bandh, about 18 km away.',
+                    'Is Jawai on the way from Jaipur to Udaipur? | It is a detour but a popular one: Jawai is about 2.5 hours from Udaipur, so many travellers stop for two nights between Jaipur or Jodhpur and Udaipur.',
+                ]),
+                'sources' => implode("\n", [self::OSM, self::WIKI_STATION]),
+            ],
+            $base + [
+                'slug' => 'jawai-in-monsoon', 'title' => 'Jawai in the monsoon', 'image_id' => $i('jawai-in-monsoon'),
+                'intro' => 'July to September turns Jawai green: the dam fills, the hills soften and the crowds disappear. Is Jawai open in the monsoon, and what to expect.',
+                'meta_title' => 'Jawai in Monsoon: Is It Open? Weather, Safaris & Tips',
+                'meta_description' => 'Is Jawai open in the monsoon? Yes. July to September brings green hills, a full Jawai Dam and quiet roads. What to expect on a monsoon leopard safari.',
+                'body' => <<<'HTML'
+<p>Jawai is not a closed national park, so it stays open through the monsoon. From July to September the landscape changes completely: dry granite hills turn green, seasonal streams run and the <a href="/jawai/jawai-dam/">Jawai Dam</a> fills up.</p>
+
+<h2>What the monsoon is like</h2>
+<ul>
+<li><strong>Green, dramatic scenery</strong> with clouds over the granite and fresh grass on the hills.</li>
+<li><strong>Cooler than summer</strong>, but humid, with heavy showers on some days.</li>
+<li><strong>Fewer visitors</strong>, so drives feel unhurried.</li>
+<li>Peafowl dance and call, and the countryside is full of birdsong.</li>
+</ul>
+
+<h2>Safaris in the rain</h2>
+<p>Drives run as usual whenever the weather allows. After heavy rain some tracks become muddy or slippery, so routes may change and a drive may occasionally be shortened or moved for safety. Leopards are still around the hills, though thicker green cover can make spotting harder than in the dry months.</p>
+
+<h2>What to bring</h2>
+<ul>
+<li>A light rain jacket or poncho, and a cover for your camera</li>
+<li>Quick-dry clothes and shoes with grip</li>
+<li>Insect repellent for the evenings</li>
+</ul>
+
+<h2>Is it worth it?</h2>
+<p>If you love landscapes and quiet, yes. If seeing a leopard is your main goal, the cooler dry months from October to March usually give better odds. See <a href="/jawai-in-winter/">Jawai in winter</a> and the <a href="/jawai/best-time-to-visit/">month-by-month guide</a>, or <a href="/book-a-safari/">book a monsoon safari</a> from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'Is Jawai open in the monsoon? | Yes. Jawai is not a closed national park, so safaris continue from July to September whenever the weather allows; heavy rain can change routes or shorten a drive.',
+                    'Is the monsoon a good time to see leopards in Jawai? | Leopards are still there, but thicker green cover can make them harder to spot. October to March usually gives better odds.',
+                    'What is Jawai like in the monsoon? | Green hills, a full Jawai Dam, cooler air than summer, occasional heavy showers and very few visitors.',
+                ]),
+                'sources' => implode("\n", [self::WIKI_DAM]),
+            ],
+            $base + [
+                'slug' => 'jawai-in-summer', 'title' => 'Jawai in summer (April to June)', 'image_id' => $i('jawai-in-summer'),
+                'intro' => 'Summer in Jawai is hot, often above 40°C in the afternoon, but early and late drives still bring leopards out on the rocks. How to visit in April, May and June.',
+                'meta_title' => 'Jawai in Summer: April–June Weather, Leopards & Tips',
+                'meta_description' => 'Visiting Jawai in April, May or June: very hot afternoons, early and late leopard safaris, thin vegetation and quiet roads. Tips for a summer trip.',
+                'body' => <<<'HTML'
+<p>From April to June, afternoons in Jawai regularly pass 40°C. It is the quietest season for visitors, and with the right timing it can still be rewarding.</p>
+
+<h2>Leopards in the heat</h2>
+<ul>
+<li>Leopards rest in the cool caves and shade through the day and become active at <strong>dawn and dusk</strong>, exactly when safaris run.</li>
+<li>Vegetation is thin and dry, so the open granite can make animals easier to see when they are out.</li>
+<li>Animals are often drawn to water near the dam and village ponds.</li>
+</ul>
+
+<h2>Plan around the heat</h2>
+<ul>
+<li>Take the <strong>morning safari (from 6:00 AM)</strong>, when it is coolest, and the evening drive as the sun drops.</li>
+<li>Rest indoors between about 11 AM and 4 PM.</li>
+<li>Drink plenty of water, wear a hat and sunglasses, and use sunscreen.</li>
+<li>Light, breathable, neutral-coloured clothes are best; see <a href="/what-to-wear-on-jawai-safari/">what to wear on a Jawai safari</a>.</li>
+</ul>
+
+<h2>Who should visit in summer</h2>
+<p>Travellers who don't mind the heat and want quiet roads and unhurried drives. For pleasant weather, choose <a href="/jawai-in-winter/">winter</a>; for green landscapes, the <a href="/jawai-in-monsoon/">monsoon</a>. <a href="/book-a-safari/">Book a summer safari</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'Is Jawai good to visit in summer? | It is hot, often above 40°C in the afternoon, but early morning and evening safaris still bring good chances of leopards, with quiet roads and few visitors.',
+                    'What time are summer safaris in Jawai? | The morning safari starts around 6:00 AM, the coolest part of the day, and the evening safari runs as the heat drops, around 4:00 to 7:00 PM.',
+                    'How hot is Jawai in May? | May and early June are the hottest months, with afternoon temperatures often above 40°C.',
+                ]),
+                'sources' => '',
+            ],
+            $base + [
+                'slug' => 'jawai-leopard-safari-what-to-expect', 'title' => 'Your first Jawai leopard safari: what to expect', 'image_id' => $i('jawai-leopard-safari-what-to-expect'),
+                'intro' => 'From the pickup to the moment a leopard appears on the rocks: how a Jawai leopard safari works, how long it takes, and how likely you are to see one.',
+                'meta_title' => 'Jawai Leopard Safari: What to Expect on Your First Drive',
+                'meta_description' => 'What happens on a Jawai leopard safari: timings, the open jeep, how trackers find leopards, sighting chances, safety and tips for your first drive.',
+                'body' => <<<'HTML'
+<p>A Jawai safari is different from a national-park drive. There are no gates or zones: your tracker reads the hills, the villages and the animals to find leopards resting on the granite.</p>
+
+<h2>Before the drive</h2>
+<ul>
+<li><strong>Timing:</strong> mornings 6:00 to 9:00 AM or evenings 4:00 to 7:00 PM, about three hours.</li>
+<li><strong>Pickup:</strong> we agree a meeting point near your hotel when you book. Be ready 10 minutes early.</li>
+<li><strong>Vehicle:</strong> an open 4x4 gypsy, private for your group (up to six guests), with a driver and a local tracker.</li>
+</ul>
+
+<h2>During the drive</h2>
+<ol>
+<li>The jeep heads into the granite hills on village roads and rough tracks; expect some bumps.</li>
+<li>Your tracker scans the rocks and caves, listens for alarm calls from peafowl and langurs, and checks with herders and villagers.</li>
+<li>When a leopard is found, the engine is switched off and the jeep stays at a respectful distance. You may watch for a few minutes or much longer.</li>
+<li>Between sightings you may see the dam, crocodiles, birds, hyena dens, temples and Rabari herders with their flocks.</li>
+</ul>
+
+<h2>Will you see a leopard?</h2>
+<p>Jawai offers some of the best leopard viewing in India, but leopards are wild and no honest operator can guarantee a sighting. Your chances rise with every drive, which is why we suggest <strong>two or three safaris</strong>. See <a href="/morning-vs-evening-jawai-safari/">morning vs evening safari</a>.</p>
+
+<h2>Safety and etiquette</h2>
+<ul>
+<li>Stay seated, keep your hands inside the jeep and follow your tracker's instructions.</li>
+<li>Talk quietly at sightings and never call out to animals.</li>
+<li>Flash photography and drones are not allowed near wildlife.</li>
+<li>Respect villagers and temples; ask before photographing people.</li>
+</ul>
+<p>Ready? <a href="/book-a-safari/">Book your first Jawai safari</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'How long is a Jawai leopard safari? | About three hours: mornings from 6:00 to 9:00 AM and evenings from 4:00 to 7:00 PM.',
+                    'Is a leopard sighting guaranteed in Jawai? | No. Leopards are wild animals. Jawai offers excellent chances, and taking two or three drives improves them a lot.',
+                    'Is a Jawai safari safe? | Yes, when you follow the rules: stay seated in the jeep, keep quiet at sightings and follow your tracker. Jeeps keep a respectful distance from animals.',
+                    'Can I use a flash or a drone on safari? | No. Flash photography and drones disturb wildlife and are not allowed near animals.',
+                ]),
+                'sources' => implode("\n", [self::WIKI_RESERVE]),
+            ],
+            $base + [
+                'slug' => 'what-to-wear-on-jawai-safari', 'title' => 'What to wear and pack for a Jawai safari', 'image_id' => $i('what-to-wear-on-jawai-safari'),
+                'intro' => 'Neutral colours, layers for cold winter mornings, sun protection in summer and a rain shell in the monsoon. A simple packing list for every season.',
+                'meta_title' => 'What to Wear on a Jawai Safari: Packing List by Season',
+                'meta_description' => 'What to wear on a Jawai leopard safari: neutral colours, warm layers for winter mornings, sun protection in summer and rain gear in the monsoon.',
+                'body' => <<<'HTML'
+<p>You'll be in an open jeep for about three hours, often at the coldest or hottest edges of the day. Dress for comfort and blend in with the landscape.</p>
+
+<h2>Every season</h2>
+<ul>
+<li><strong>Neutral colours:</strong> khaki, olive, brown, beige or grey. Avoid bright colours and white.</li>
+<li><strong>Closed, comfortable shoes</strong> with some grip.</li>
+<li>A cap or hat, sunglasses and sunscreen.</li>
+<li>Binoculars and a camera with a zoom lens.</li>
+<li>A small bag and a bottle of water.</li>
+</ul>
+
+<h2>By season</h2>
+<table>
+<thead><tr><th>Season</th><th>Add</th></tr></thead>
+<tbody>
+<tr><td>Winter (Nov–Feb)</td><td>Warm jacket, beanie or cap, gloves, scarf: morning drives are cold in an open jeep</td></tr>
+<tr><td>Spring &amp; autumn (Oct, Mar)</td><td>A light fleece for the early morning, layers to remove later</td></tr>
+<tr><td>Summer (Apr–Jun)</td><td>Light, breathable long sleeves, wide-brim hat, extra water</td></tr>
+<tr><td>Monsoon (Jul–Sep)</td><td>Rain jacket or poncho, quick-dry clothes, a camera rain cover</td></tr>
+</tbody>
+</table>
+
+<h2>Village visits</h2>
+<p>Jawai's villages and temples are part of the experience. Modest clothing covering shoulders and knees is appreciated, and remove shoes at temples.</p>
+<p>More planning help: <a href="/jawai-leopard-safari-what-to-expect/">what to expect on a Jawai safari</a> and <a href="/jawai-photography-tips/">Jawai photography tips</a>. <a href="/book-a-safari/">Book a safari</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'What colour clothes should I wear on a Jawai safari? | Neutral colours such as khaki, olive, brown, beige or grey. Avoid bright colours and white.',
+                    'Do I need a jacket for a Jawai safari? | Yes, from November to February. Morning drives in an open jeep are cold, so bring a warm jacket, cap and gloves.',
+                    'What should I bring on safari? | Water, a cap, sunscreen, sunglasses, binoculars and a camera with a zoom lens, plus a rain jacket in the monsoon.',
+                ]),
+                'sources' => '',
+            ],
+            $base + [
+                'slug' => 'jawai-with-kids', 'title' => 'Jawai with kids: a family leopard safari', 'image_id' => $i('jawai-with-kids'),
+                'intro' => 'Jawai is a wonderful first wildlife trip for children: a private jeep, short distances and leopards on open rock. How to plan a family safari.',
+                'meta_title' => 'Jawai with Kids: Family Leopard Safari Tips',
+                'meta_description' => 'Planning Jawai with children? Private jeeps, a gentle pace and leopards on open rock make Jawai great for families. Tips, timings and what to bring.',
+                'body' => <<<'HTML'
+<p>Many families choose Jawai for a child's first wildlife adventure. With a <strong>private jeep</strong>, you set the pace, and the open granite hills make animals easier for young eyes to see.</p>
+
+<h2>Why Jawai works for families</h2>
+<ul>
+<li><strong>Private jeep:</strong> just your family, up to six guests, with no strangers to disturb.</li>
+<li><strong>A gentle pace:</strong> we can plan shorter stops and comfortable breaks.</li>
+<li><strong>More than leopards:</strong> crocodiles, peacocks, birds at the dam, goats and camels with Rabari herders keep children interested.</li>
+<li><strong>Short transfers:</strong> Jawai is about 2.5 hours from Udaipur.</li>
+</ul>
+
+<h2>Tips for a happy family safari</h2>
+<ul>
+<li>Choose the <strong>evening drive</strong> for younger children who find early starts hard.</li>
+<li>Bring snacks, water, a warm layer in winter and a small pair of binoculars for each child.</li>
+<li>Explain the "quiet rule" at sightings beforehand: whispering is part of the game.</li>
+<li>Children must stay seated and hold on when the jeep is moving.</li>
+<li>Tell us your children's ages when you book so we can plan the drive.</li>
+</ul>
+
+<h2>Between safaris</h2>
+<p>The Jawai Dam, a hill temple and village life fill the middle of the day; see <a href="/jawai/places-to-visit/">places to visit in Jawai</a>. A <a href="/jawai-itinerary/">2-day itinerary</a> suits most families.</p>
+<p><a href="/book-a-safari/">Book a family safari</a>, from {price} per jeep for up to six guests.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'Is Jawai good for kids? | Yes. A private jeep, a gentle pace and leopards seen on open rock make Jawai a great first wildlife trip. Tell us the children\'s ages when you book.',
+                    'Which safari is best for young children? | The evening safari (4:00 to 7:00 PM) avoids the very early start and has warm, golden light.',
+                    'How many people fit in one jeep? | Up to six guests in one private open 4x4 gypsy, so most families need just one jeep.',
+                ]),
+                'sources' => '',
+            ],
+            $base + [
+                'slug' => 'jawai-photography-tips', 'title' => 'Jawai leopard photography tips', 'image_id' => $i('jawai-photography-tips'),
+                'intro' => 'Leopards on granite against the sky make Jawai one of India\'s best places for wildlife photography. Lenses, settings, light and etiquette.',
+                'meta_title' => 'Jawai Photography Tips: Lenses & Settings for Leopards',
+                'meta_description' => 'Wildlife photography in Jawai: best lenses (100–400 mm and longer), camera settings, golden-hour light, beanbags and ethical leopard photography.',
+                'body' => <<<'HTML'
+<p>In Jawai, leopards often sit on open granite with the sky behind them, a setting photographers dream of. A little preparation makes a big difference.</p>
+
+<h2>Gear</h2>
+<ul>
+<li><strong>Telephoto lens:</strong> 100–400 mm is the most versatile; 150–600 mm or similar helps for distant rocks.</li>
+<li><strong>A second body or a wider lens</strong> for landscapes and leopard-in-habitat shots.</li>
+<li><strong>Beanbag:</strong> far more practical than a tripod in a jeep. Ask us for one when you book.</li>
+<li>Spare batteries and memory cards, and a lens cloth for the dust.</li>
+</ul>
+
+<h2>Camera settings</h2>
+<ul>
+<li>Shutter speed at least 1/500 s for a resting leopard, faster for movement.</li>
+<li>Use Auto ISO; dawn and dusk light is low, so don't be afraid of higher ISO.</li>
+<li>Continuous autofocus with animal or eye detection if your camera has it.</li>
+<li>Expose for the animal: bright sky behind a dark rock can fool the meter, so use exposure compensation.</li>
+</ul>
+
+<h2>Light and timing</h2>
+<p>Evening drives give warm, golden light on the granite; mornings give soft light and sometimes mist over the dam. Silhouettes of leopards on ridges at sunset are a Jawai speciality. See <a href="/morning-vs-evening-jawai-safari/">morning vs evening safari</a>.</p>
+
+<h2>Ethics</h2>
+<ul>
+<li>No flash, drones or calling animals; never ask the driver to get closer than is safe.</li>
+<li>Switch engines off at sightings and keep the jeep still while shooting.</li>
+<li>Ask before photographing people in the villages.</li>
+</ul>
+<p>Serious about photography? The <a href="/safaris/photography-safari/">Wildlife Photography Expedition</a> is planned around light and positioning. Drives start from {price} per jeep; <a href="/book-a-safari/">book here</a>.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'What lens do I need for leopards in Jawai? | A 100–400 mm zoom covers most sightings; a 150–600 mm or similar helps when leopards are on distant rocks.',
+                    'Is a tripod useful on a Jawai safari? | Not really. A beanbag on the side of the jeep is far more practical and stable.',
+                    'Is morning or evening better for photography in Jawai? | Evenings give warm golden light and sunset silhouettes; mornings give soft light and sometimes mist over the dam. Both are good.',
+                ]),
+                'sources' => '',
             ],
         ];
     }

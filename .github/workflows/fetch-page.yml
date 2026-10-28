@@ -23,6 +23,9 @@ jobs:
           mkdir out && cd out
           i=0
           for u in $URLS; do i=$((i+1)); curl -sSL -m 30 -A "Mozilla/5.0" "$u" -o "page-$i.html" || true; echo "$i $u" >> index.txt; done
+          # Response headers as Googlebot sees them (status, redirects, content type)
+          i=0
+          for u in $URLS; do i=$((i+1)); curl -sS -m 30 -o /dev/null -D "headers-$i.txt" -w "final: %{http_code} %{url_effective} %{content_type} %{size_download} bytes\n" -L -A "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" "$u" >> "headers-$i.txt" 2>&1 || true; done
           npm i -s playwright@1.47.2 >/dev/null 2>&1 && npx -y playwright@1.47.2 install --with-deps chromium >/dev/null 2>&1
           cat > shot.js <<'JS'
           const { chromium } = require('playwright');

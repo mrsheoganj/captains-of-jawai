@@ -1,0 +1,4 @@
+1 https://captainsofjawai.com/sitemap.xml
+2 https://captainsofjawai.com/robots.txt
+3 http://captainsofjawai.com/sitemap.xml
+4 https://www.captainsofjawai.com/sitemap.xml

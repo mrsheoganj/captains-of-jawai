@@ -43,7 +43,60 @@ final class Articles
         'things-to-do-in-jawai' => 'granite-dome-dusk',
     ];
 
+    /** All articles: the original 22 plus the 50 added from Search Console queries, and a hub page that links to them all. */
     public static function pages(callable $img): array
+    {
+        $core = self::corePages($img);
+        $more = self::morePages($img);
+        return array_merge($core, $more, [self::hub($img, array_merge($core, $more))]);
+    }
+
+    /** The 50 articles in ArticlesPart1..5 (routes, transport, temples, wildlife, seasons, planning). */
+    private static function morePages(callable $img): array
+    {
+        $base = ['kicker' => 'Jawai travel guide', 'show_cta' => 1];
+        $groups = [
+            [ArticlesPart1::rows(), [self::OSM]],
+            [ArticlesPart2::rows(), [self::OSM]],
+            [ArticlesPart3::rows(), []],
+            [ArticlesPart4::rows(), [self::WIKI_RESERVE, self::WIKI_DAM]],
+            [ArticlesPart5::rows(), []],
+        ];
+        $out = [];
+        foreach ($groups as [$rows, $sources]) {
+            foreach ($rows as $r) {
+                $out[] = $base + [
+                    'slug' => $r['slug'], 'title' => $r['title'], 'image_id' => $img($r['img']),
+                    'intro' => $r['intro'], 'meta_title' => $r['mt'], 'meta_description' => $r['md'],
+                    'body' => $r['body'] . "\n<p><a href=\"/jawai-travel-guides/\">All Jawai travel guides</a></p>",
+                    'faq' => implode("\n", $r['faq']),
+                    'sources' => implode("\n", $sources),
+                ];
+            }
+        }
+        return $out;
+    }
+
+    /** /jawai-travel-guides/: one page linking every article, so crawlers and visitors can reach them all. */
+    private static function hub(callable $img, array $pages): array
+    {
+        $list = '';
+        foreach ($pages as $p) {
+            $list .= '<li><a href="/' . $p['slug'] . '/">' . htmlspecialchars((string) $p['title'], ENT_QUOTES) . "</a></li>\n";
+        }
+        return [
+            'kicker' => 'Jawai travel guide', 'show_cta' => 1,
+            'slug' => 'jawai-travel-guides', 'title' => 'Jawai travel guides: every article in one place', 'image_id' => $img('landscape1'),
+            'intro' => 'All our guides to Jawai in one list: how to reach it, distances, temples, wildlife, seasons, timings and planning.',
+            'meta_title' => 'Jawai Travel Guides: Routes, Wildlife, Seasons & Planning',
+            'meta_description' => 'Every Jawai travel guide in one place: distances from Udaipur, Jodhpur, Ahmedabad, Delhi and Mumbai, temples, wildlife, seasons, safari timings and planning.',
+            'body' => "<p>Start here if you are planning a Jawai leopard safari. Each guide answers one question people ask before they travel. For the overview, read the <a href=\"/jawai/\">Jawai guide</a> and <a href=\"/jawai-leopard-safari/\">the complete safari guide</a>, or <a href=\"/book-a-safari/\">book a safari</a>.</p>\n<h2>All guides</h2>\n<ul>\n" . $list . "</ul>\n",
+            'faq' => "Where do I start? | Read the complete Jawai leopard safari guide, then the route guide for your city.\nHow do I book? | Send your dates on the booking page or on WhatsApp.",
+            'sources' => self::OSM,
+        ];
+    }
+
+    private static function corePages(callable $img): array
     {
         $i = fn (string $slug) => $img(self::IMAGES[$slug]);
         $base = ['kicker' => 'Jawai travel guide', 'show_cta' => 1];

@@ -227,6 +227,50 @@ final class App
     }
 
     /** After uploading a new version, create any new tables/columns automatically (once). */
+    /** 2.13.3: fuller best-time guide; drive times on the places page measured from Bera. */
+    public const GUIDE_FIXES = [
+        ['<h2>What to pack</h2>
+<ul>
+<li>Winter: warm layers, a hat and gloves for early drives</li>
+<li>Summer: light, neutral clothing, a scarf and plenty of water</li>
+<li>All year: binoculars, sunscreen and a camera with a long lens</li>
+</ul>', '<h2>Season by season</h2>
+<h3>Winter (November to February): peak season</h3>
+<p>Clear skies, pleasant days and cold mornings. Leopards bask on the rocks in the early sun and the dam is full of migrant birds. It is also the busiest time, especially from Diwali to New Year. More: <a href="/jawai-in-winter/">Jawai in winter</a>.</p>
+<h3>Summer (April to June): hot and quiet</h3>
+<p>Afternoons often pass 40°C, so drives keep to dawn and dusk. Vegetation is thin, roads are quiet and wildlife stays close to water. More: <a href="/jawai-in-summer/">Jawai in summer</a>.</p>
+<h3>Monsoon (July to September): green and dramatic</h3>
+<p>The dam fills, the granite hills turn green and visitors are few. Rain can change routes or shorten a drive, and thicker cover makes leopards harder to spot. More: <a href="/jawai-in-monsoon/">Jawai in the monsoon</a>.</p>
+
+<h2>Safari timings through the year</h2>
+<p>Safaris run in the morning (about 6:00 to 9:00 AM) and evening (about 4:00 to 7:00 PM). Start times move a little with sunrise and sunset: earlier in summer, a touch later on winter mornings. See <a href="/morning-vs-evening-jawai-safari/">morning vs evening safari</a>.</p>
+
+<h2>Planning tips</h2>
+<ul>
+<li><strong>Book early</strong> for December, January and holiday weekends: one to two weeks ahead.</li>
+<li><strong>Stay two nights</strong> for three drives and a much better chance of leopards. See the <a href="/jawai-itinerary/">2-day itinerary</a>.</li>
+<li><strong>Combine Jawai</strong> with Udaipur (about 2.5 hours), Jodhpur, Ranakpur or Kumbhalgarh. See <a href="/jawai/how-to-reach/">how to reach Jawai</a>.</li>
+</ul>
+
+<h2>What to bring</h2>
+<ul>
+<li><strong>Winter:</strong> a warm jacket, cap or beanie and gloves for early drives in the open jeep</li>
+<li><strong>Summer:</strong> light, breathable, neutral clothing, a wide-brim hat and plenty of water</li>
+<li><strong>Monsoon:</strong> a rain jacket or poncho and a cover for your camera</li>
+<li><strong>All year:</strong> binoculars, sunscreen, sunglasses and a camera with a long lens</li>
+</ul>
+<p>The full list is in <a href="/what-to-wear-on-jawai-safari/">what to wear on a Jawai safari</a>. Ready to go? <a href="/book-a-safari/">Book a Jawai safari</a>.</p>'],
+        ['How many days do I need in Jawai? | Two nights is the minimum for a fair chance at leopards. Three nights gives you more drives and time for the dam and villages.', 'How many days do I need in Jawai? | Two nights is the minimum for a fair chance at leopards. Three nights gives you more drives and time for the dam and villages.
+What is the best time of day for a Jawai safari? | Both drives are good: mornings (about 6:00 to 9:00 AM) are cool with soft light, and evenings (about 4:00 to 7:00 PM) bring leopards onto the warm rocks in golden light.
+When should I book a Jawai safari? | For December, January and holiday weekends, book one to two weeks ahead. Outside peak season a few days is usually enough.'],
+        ['Best Time to Visit Jawai: Month-by-Month Guide', 'Best Time to Visit Jawai: Season, Weather & Month Guide'],
+        ['When to visit Jawai for leopards and birds. Weather, temperatures and wildlife in winter, summer and the monsoon, month by month.', 'The best time to visit Jawai is October to March. Weather, leopards and birds month by month, safari timings, planning tips and what to bring.'],
+        ['A 15th-century marble temple famous for its hundreds of carved pillars, about two hours away. Combine it with Kumbhalgarh.', 'A 15th-century marble temple famous for its hundreds of carved pillars, about 50 km (around 1.5 hours) away. Combine it with Kumbhalgarh, about 80 km from Jawai.'],
+        ['Rajasthan\'s only hill station, known for the Dilwara temples and Nakki Lake, about three hours to the south.', 'Rajasthan\'s only hill station, known for the Dilwara temples and Nakki Lake, about 100 km (2 to 2.5 hours) to the south.'],
+        ['Both cities are around three hours away and make natural start and end points for a trip to Jawai.', 'Udaipur is about 2.5 hours away and Jodhpur about 3 to 3.5 hours, so both make natural start and end points for a trip to Jawai.'],
+        ['Yes. Ranakpur is about two hours away and Kumbhalgarh a little further, so both fit in a long day trip.', 'Yes. Ranakpur is about 50 km (around 1.5 hours) away and Kumbhalgarh about 80 km, so both fit in a day trip.'],
+    ];
+
     /** 2.13.1: prices in article text follow the "starting from" setting (Settings → Enquiry Form). */
     public const PRICE_FIXES = [
         ['with six guests, a ₹3,500 jeep works out at under ₹600 each.', 'with six guests, a {price} jeep works out at about {price_each} each.'],
@@ -334,6 +378,17 @@ final class App
         if ($types !== '' && stripos($types, 'Shared gypsy safari') !== false) {
             $keep = array_filter(preg_split('/\R/', $types), fn ($l) => stripos($l, 'Shared gypsy safari') !== 0);
             Settings::set('booking_types', implode("\n", $keep));
+        }
+        foreach (self::GUIDE_FIXES as [$from, $to]) {
+            // Skip rows that already have the new text (some fixes append to the old text).
+            $same = 0;
+            while ($same < min(strlen($from), strlen($to)) && $from[$same] === $to[$same]) {
+                $same++;
+            }
+            $marker = '%' . mb_substr(mb_strcut($to, $same), 0, 60) . '%';
+            foreach (['body', 'faq', 'meta_title', 'meta_description'] as $col) {
+                DB::q("UPDATE pages SET $col = REPLACE($col, ?, ?) WHERE $col NOT LIKE ?", [$from, $to, $marker]);
+            }
         }
         foreach (self::PRICE_FIXES as [$from, $to]) {
             foreach (['title', 'intro', 'body', 'faq', 'meta_title', 'meta_description'] as $col) {

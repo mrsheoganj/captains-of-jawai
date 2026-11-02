@@ -232,8 +232,8 @@ HTML,
             [
                 'slug' => 'jawai/best-time-to-visit', 'title' => 'Best time to visit Jawai', 'kicker' => 'Jawai guide', 'image_id' => $img('jawai/best-time-to-visit'), 'show_cta' => 1,
                 'intro' => 'Weather, leopards and birds through the year, so you can pick the right month for your trip.',
-                'meta_title' => 'Best Time to Visit Jawai: Month-by-Month Guide',
-                'meta_description' => 'When to visit Jawai for leopards and birds. Weather, temperatures and wildlife in winter, summer and the monsoon, month by month.',
+                'meta_title' => 'Best Time to Visit Jawai: Season, Weather & Month Guide',
+                'meta_description' => 'The best time to visit Jawai is October to March. Weather, leopards and birds month by month, safari timings, planning tips and what to bring.',
                 'body' => <<<'HTML'
 <p>Short answer: <strong>October to March</strong>. Longer answer below, because each part of the year has something going for it.</p>
 
@@ -258,18 +258,40 @@ HTML,
 <h2>For quiet</h2>
 <p>The hot months and the monsoon are much quieter. If you can handle the heat, early summer mornings can still be rewarding.</p>
 
-<h2>What to pack</h2>
+<h2>Season by season</h2>
+<h3>Winter (November to February): peak season</h3>
+<p>Clear skies, pleasant days and cold mornings. Leopards bask on the rocks in the early sun and the dam is full of migrant birds. It is also the busiest time, especially from Diwali to New Year. More: <a href="/jawai-in-winter/">Jawai in winter</a>.</p>
+<h3>Summer (April to June): hot and quiet</h3>
+<p>Afternoons often pass 40°C, so drives keep to dawn and dusk. Vegetation is thin, roads are quiet and wildlife stays close to water. More: <a href="/jawai-in-summer/">Jawai in summer</a>.</p>
+<h3>Monsoon (July to September): green and dramatic</h3>
+<p>The dam fills, the granite hills turn green and visitors are few. Rain can change routes or shorten a drive, and thicker cover makes leopards harder to spot. More: <a href="/jawai-in-monsoon/">Jawai in the monsoon</a>.</p>
+
+<h2>Safari timings through the year</h2>
+<p>Safaris run in the morning (about 6:00 to 9:00 AM) and evening (about 4:00 to 7:00 PM). Start times move a little with sunrise and sunset: earlier in summer, a touch later on winter mornings. See <a href="/morning-vs-evening-jawai-safari/">morning vs evening safari</a>.</p>
+
+<h2>Planning tips</h2>
 <ul>
-<li>Winter: warm layers, a hat and gloves for early drives</li>
-<li>Summer: light, neutral clothing, a scarf and plenty of water</li>
-<li>All year: binoculars, sunscreen and a camera with a long lens</li>
+<li><strong>Book early</strong> for December, January and holiday weekends: one to two weeks ahead.</li>
+<li><strong>Stay two nights</strong> for three drives and a much better chance of leopards. See the <a href="/jawai-itinerary/">2-day itinerary</a>.</li>
+<li><strong>Combine Jawai</strong> with Udaipur (about 2.5 hours), Jodhpur, Ranakpur or Kumbhalgarh. See <a href="/jawai/how-to-reach/">how to reach Jawai</a>.</li>
 </ul>
+
+<h2>What to bring</h2>
+<ul>
+<li><strong>Winter:</strong> a warm jacket, cap or beanie and gloves for early drives in the open jeep</li>
+<li><strong>Summer:</strong> light, breathable, neutral clothing, a wide-brim hat and plenty of water</li>
+<li><strong>Monsoon:</strong> a rain jacket or poncho and a cover for your camera</li>
+<li><strong>All year:</strong> binoculars, sunscreen, sunglasses and a camera with a long lens</li>
+</ul>
+<p>The full list is in <a href="/what-to-wear-on-jawai-safari/">what to wear on a Jawai safari</a>. Ready to go? <a href="/book-a-safari/">Book a Jawai safari</a>.</p>
 HTML,
                 'faq' => implode("\n", [
                     'Which month is best for Jawai? | December and January are the most popular, with cold mornings and the best chance of leopards basking in the open. October to March is the main season.',
                     'Is Jawai open in the monsoon? | Yes, Jawai is not a closed park, but rain can disrupt drives and tracks can be rough from July to September.',
                     'How hot does Jawai get in summer? | April to June regularly passes 40°C in the afternoon. Drives are kept to early morning and evening.',
-                    'How many days do I need in Jawai? | Two nights is the minimum for a fair chance at leopards. Three nights gives you more drives and time for the dam and villages.',
+                    'How many days do I need in Jawai? | Two nights is the minimum for a fair chance at leopards. Three nights gives you more drives and time for the dam and villages.
+What is the best time of day for a Jawai safari? | Both drives are good: mornings (about 6:00 to 9:00 AM) are cool with soft light, and evenings (about 4:00 to 7:00 PM) bring leopards onto the warm rocks in golden light.
+When should I book a Jawai safari? | For December, January and holiday weekends, book one to two weeks ahead. Outside peak season a few days is usually enough.',
                 ]),
                 'sources' => implode("\n", [self::WIKI_RESERVE]),
             ],
@@ -348,18 +370,18 @@ HTML,
 
 <h2>Day trips</h2>
 <h3>Ranakpur Jain temple</h3>
-<p>A 15th-century marble temple famous for its hundreds of carved pillars, about two hours away. Combine it with Kumbhalgarh.</p>
+<p>A 15th-century marble temple famous for its hundreds of carved pillars, about 50 km (around 1.5 hours) away. Combine it with Kumbhalgarh, about 80 km from Jawai.</p>
 <h3>Kumbhalgarh Fort</h3>
 <p>A hill fort with one of the longest continuous walls in the world, and part of the UNESCO World Heritage listing for the hill forts of Rajasthan.</p>
 <h3>Mount Abu</h3>
-<p>Rajasthan's only hill station, known for the Dilwara temples and Nakki Lake, about three hours to the south.</p>
+<p>Rajasthan's only hill station, known for the Dilwara temples and Nakki Lake, about 100 km (2 to 2.5 hours) to the south.</p>
 <h3>Udaipur and Jodhpur</h3>
-<p>Both cities are around three hours away and make natural start and end points for a trip to Jawai. See <a href="/jawai/how-to-reach/">how to reach Jawai</a>.</p>
+<p>Udaipur is about 2.5 hours away and Jodhpur about 3 to 3.5 hours, so both make natural start and end points for a trip to Jawai. See <a href="/jawai/how-to-reach/">how to reach Jawai</a>.</p>
 HTML,
                 'faq' => implode("\n", [
                     'What can you do in Jawai apart from a leopard safari? | Visit the Jawai Dam for crocodiles and birds, walk the village lanes of Bera, meet Rabari herders, climb to a hill shrine and watch sunset from a granite outcrop.',
                     'Which famous temples can we visit in Jawai between safari drives? | Dev Giri Temple (Ashapura Mata cave temple) near Perwa and Bera, where leopards are often seen on the rocks and steps; Kambeshwar Mahadev Temple in the Aravalli foothills about 11 km from Jawai Dam; and the Khodiyar Mata and Tankeshwar Mahadev shrines overlooking the dam.',
-                    'Can I visit Ranakpur and Kumbhalgarh from Jawai? | Yes. Ranakpur is about two hours away and Kumbhalgarh a little further, so both fit in a long day trip.',
+                    'Can I visit Ranakpur and Kumbhalgarh from Jawai? | Yes. Ranakpur is about 50 km (around 1.5 hours) away and Kumbhalgarh about 80 km, so both fit in a day trip.',
                     'Is Jawai good for families? | Yes. Shorter drives and the wetland drive at the dam work well for children. Tell us their ages when you book a safari.',
                 ]),
                 'sources' => implode("\n", [

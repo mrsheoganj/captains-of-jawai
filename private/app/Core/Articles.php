@@ -39,6 +39,8 @@ final class Articles
         'what-to-wear-on-jawai-safari' => 'safari-guests',
         'jawai-with-kids' => 'safari-jeep',
         'jawai-photography-tips' => 'leopard-portrait',
+        'jawai-leopard-safari' => 'leopard-basking',
+        'things-to-do-in-jawai' => 'granite-dome-dusk',
     ];
 
     public static function pages(callable $img): array
@@ -797,6 +799,136 @@ HTML,
                     'Is morning or evening better for photography in Jawai? | Evenings give warm golden light and sunset silhouettes; mornings give soft light and sometimes mist over the dam. Both are good.',
                 ]),
                 'sources' => '',
+            ],
+            $base + [
+                'slug' => 'jawai-leopard-safari', 'title' => 'Jawai leopard safari: the complete guide', 'image_id' => $i('jawai-leopard-safari'),
+                'intro' => 'Everything about a Jawai leopard safari in one place: safari options, timings, price, how to book, what you will see, and how to watch leopards responsibly.',
+                'meta_title' => 'Jawai Leopard Safari Guide: Timings, Price & Booking',
+                'meta_description' => 'Complete Jawai leopard safari guide: morning and evening timings, safari options, price from {price} per jeep, how to book, sightings and responsible tourism.',
+                'body' => <<<'HTML'
+<p>Jawai, in Pali district, Rajasthan, is one of the best places in India to see wild leopards. They live in the caves of the granite hills around the Jawai Dam, close to villages, farms and temples. This guide covers everything you need to plan your safari.</p>
+
+<h2>Safari options</h2>
+<table>
+<thead><tr><th>Safari</th><th>Best for</th><th>Duration</th></tr></thead>
+<tbody>
+<tr><td><a href="/safaris/leopard-safari/">Classic Leopard Tracking Safari</a></td><td>First-time visitors; the best chance of a leopard</td><td>About 3 hours, morning or evening</td></tr>
+<tr><td><a href="/safaris/dam-birding-safari/">Jawai Bandh Wetland &amp; Raptor Drive</a></td><td>Birders: flamingos, cranes, raptors and crocodiles</td><td>About 3 hours</td></tr>
+<tr><td><a href="/safaris/private-safari/">Master Naturalist Private 4x4 Expedition</a></td><td>Flexible timings, longer sightings, special occasions</td><td>Half or full day</td></tr>
+<tr><td><a href="/safaris/photography-safari/">Wildlife Photography Expedition</a></td><td>Photographers who want the best light and positioning</td><td>Multi-drive</td></tr>
+</tbody>
+</table>
+<p>Every drive is in an open 4x4 gypsy, private to your group (up to six guests), with a driver and an experienced local tracker.</p>
+
+<h2>Timings</h2>
+<ul>
+<li><strong>Morning safari:</strong> 6:00 to 9:00 AM. Cool air, soft light, leopards returning to the rocks after the night.</li>
+<li><strong>Evening safari:</strong> 4:00 to 7:00 PM. Leopards come out onto the warm granite; golden light for photos.</li>
+</ul>
+<p>Start times shift a little with sunrise and sunset through the year. Not sure which to choose? Read <a href="/morning-vs-evening-jawai-safari/">morning vs evening safari in Jawai</a>.</p>
+
+<h2>Price</h2>
+<p>Leopard safaris start <strong>from {price} per jeep</strong> for your group, so the cost per person falls as more people share the jeep. Longer private and photography safaris are priced on request. Details: <a href="/jawai-safari-price/">Jawai safari price</a>.</p>
+
+<h2>How to book</h2>
+<ol>
+<li>Choose your safari and drive time.</li>
+<li>Send your date, number of guests and hotel through the <a href="/book-a-safari/">Book a safari</a> form or on WhatsApp.</li>
+<li>We reply personally, usually within 12 hours, with availability and the price.</li>
+<li>Confirm directly with us. Nothing is charged online.</li>
+</ol>
+<p>From October to March and on holidays, book one to two weeks ahead. Step by step: <a href="/how-to-book-jawai-safari/">how to book a Jawai safari</a>.</p>
+
+<h2>What you will see</h2>
+<ul>
+<li><strong>Leopards</strong> on granite outcrops, in caves and near hill temples; read about <a href="/jawai/leopards/">the leopards of Jawai</a>.</li>
+<li><strong>Mugger crocodiles</strong> basking on the banks of the <a href="/jawai/jawai-dam/">Jawai Dam</a>.</li>
+<li><strong>Birds:</strong> flamingos, demoiselle cranes and bar-headed geese in winter, plus raptors, peafowl and many residents.</li>
+<li><strong>Other wildlife:</strong> striped hyenas, jackals, nilgai and more, depending on luck. See <a href="/jawai/wildlife/">birds and wildlife of Jawai</a>.</li>
+<li><strong>Rabari herders</strong> with their flocks, living alongside the leopards as they have for generations.</li>
+</ul>
+
+<h2>Will you see a leopard?</h2>
+<p>Jawai offers excellent leopard sightings, but no honest operator can guarantee one: leopards are wild animals. Your chances rise with every drive, so we recommend <strong>two or three safaris</strong> over a stay of one or two nights. What happens on the drive: <a href="/jawai-leopard-safari-what-to-expect/">your first Jawai leopard safari</a>.</p>
+
+<h2>Responsible tourism</h2>
+<p>Jawai's leopards are not inside a fenced national park; they share the land with people. That makes good behaviour essential:</p>
+<ul>
+<li>Engines off at sightings and a respectful distance from every animal.</li>
+<li>No baiting, calling, flash photography or drones.</li>
+<li>Never block a leopard's path or crowd a sighting.</li>
+<li>Respect villagers, herders and temples; ask before photographing people.</li>
+</ul>
+<p>Read our <a href="/about/conservation-ethics/">conservation and ethics code</a>.</p>
+
+<h2>Plan your trip</h2>
+<ul>
+<li><a href="/jawai/best-time-to-visit/">Best time to visit Jawai</a> (October to March is the main season)</li>
+<li><a href="/where-is-jawai/">Where is Jawai</a> and <a href="/jawai/how-to-reach/">how to reach Jawai</a></li>
+<li><a href="/what-to-wear-on-jawai-safari/">What to wear</a>, <a href="/jawai-with-kids/">Jawai with kids</a> and <a href="/jawai-photography-tips/">photography tips</a></li>
+<li><a href="/things-to-do-in-jawai/">Things to do in Jawai</a> between drives, and a <a href="/jawai-itinerary/">2-day itinerary</a></li>
+</ul>
+<p><a href="/book-a-safari/">Book your Jawai leopard safari</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'What is the Jawai leopard safari timing? | Morning safaris run from 6:00 to 9:00 AM and evening safaris from 4:00 to 7:00 PM, about three hours each.',
+                    'How much does a Jawai leopard safari cost? | Leopard safaris start from {price} per jeep, private to your group of up to six guests. Longer private and photography safaris are priced on request.',
+                    'How do I book a Jawai leopard safari? | Send your date, drive time and number of guests through the Book a safari form or on WhatsApp. We reply with availability and the price, and you confirm directly with us.',
+                    'Which is the best time for a Jawai leopard safari? | October to March, especially winter mornings and evenings when leopards sit out on the warm rocks.',
+                    'Is a leopard sighting guaranteed in Jawai? | No. Jawai offers excellent chances, but leopards are wild. Two or three drives give you the best odds.',
+                    'Is Jawai a national park? | No. Jawai is open countryside around the Jawai Dam; a small area is the Jawai Bandh Leopard Conservation Reserve.',
+                ]),
+                'sources' => implode("\n", [self::WIKI_RESERVE, self::WIKI_DAM]),
+            ],
+            $base + [
+                'slug' => 'things-to-do-in-jawai', 'title' => 'Things to do in Jawai, Rajasthan', 'image_id' => $i('things-to-do-in-jawai'),
+                'intro' => 'Leopard safaris at dawn and dusk, birds and crocodiles at the dam, hill temples, Rabari villages, sunsets on the granite and day trips to Ranakpur and Kumbhalgarh.',
+                'meta_title' => 'Things to Do in Jawai, Rajasthan: 12 Best Experiences',
+                'meta_description' => 'The best things to do in Jawai, Rajasthan: leopard safaris, Jawai Dam birding and crocodiles, hill temples, Rabari villages, sunsets and day trips nearby.',
+                'body' => <<<'HTML'
+<p>Most visitors build their days around a dawn and a dusk safari. The hours in between, and the days around them, are full of things to see. Here are the best experiences in and around Jawai.</p>
+
+<h2>Wildlife experiences</h2>
+<h3>1. Go on a leopard safari</h3>
+<p>The reason most people come. An open 4x4 drive with a local tracker through the granite hills, at 6:00 AM or 4:00 PM. See the <a href="/jawai-leopard-safari/">complete Jawai leopard safari guide</a>.</p>
+<h3>2. Watch birds at the Jawai Dam</h3>
+<p>From about November to February the reservoir hosts flamingos, demoiselle cranes, bar-headed geese and many ducks and waders. The <a href="/safaris/dam-birding-safari/">wetland drive</a> is made for birders.</p>
+<h3>3. Spot mugger crocodiles</h3>
+<p>Crocodiles haul out on the sandbanks and rocks of the <a href="/jawai/jawai-dam/">Jawai Dam</a>, especially on sunny winter afternoons.</p>
+<h3>4. Photograph leopards on the granite</h3>
+<p>Leopards silhouetted on ridges at sunset are a Jawai speciality. Read our <a href="/jawai-photography-tips/">photography tips</a>.</p>
+
+<h2>Culture and temples</h2>
+<h3>5. Climb to a hill temple</h3>
+<p>The <a href="/jawai/places-to-visit/#dev-giri-temple">Dev Giri cave temple</a>, where leopards are often seen on the rocks around the steps, and the <a href="/jawai/places-to-visit/#khodiyar-mata-tankeshwar-mahadev">shrines overlooking the dam</a> are the best known.</p>
+<h3>6. Meet the Rabari herders</h3>
+<p>Learn how the Rabari have shared these hills with leopards for generations, on a respectful, arranged visit. See <a href="/experiences/rabari-culture/">Rabari heritage</a> and <a href="/jawai/culture/">Jawai culture</a>.</p>
+<h3>7. Walk the village lanes of Bera</h3>
+<p>Fields, small shrines and granite hills right behind the houses: the best way to understand how close people and leopards live here.</p>
+<h3>8. Try local food</h3>
+<p>Dal baati, ker sangri and other Marwari dishes are served at many homestays and hotels around Jawai.</p>
+
+<h2>Slow moments</h2>
+<h3>9. Watch the sunset from a granite outcrop</h3>
+<p>Climbing a rock for the last light of the day is a Jawai tradition. See <a href="/experiences/boulder-sundowners/">boulder sundowners</a>.</p>
+<h3>10. Sunrise at the dam</h3>
+<p>Before or after a morning drive, the dam is calm and misty in winter, with birds on the water and the granite domes reflected beyond.</p>
+
+<h2>Day trips</h2>
+<h3>11. Ranakpur and Kumbhalgarh</h3>
+<p>The 15th-century marble Jain temple at Ranakpur (about 50 km) and the huge walls of Kumbhalgarh Fort (about 80 km), part of the UNESCO-listed hill forts of Rajasthan, make an easy day out between safaris.</p>
+<h3>12. Mount Abu</h3>
+<p>Rajasthan's only hill station, with the Dilwara temples and Nakki Lake, is about 100 km away.</p>
+
+<h2>Plan your days</h2>
+<p>A <a href="/jawai-itinerary/">2-day Jawai itinerary</a> fits in three safaris plus the dam and a temple. Check the <a href="/jawai/best-time-to-visit/">best time to visit</a>, then <a href="/book-a-safari/">book your safaris</a>, from {price} per jeep.</p>
+HTML,
+                'faq' => implode("\n", [
+                    'What is there to do in Jawai apart from a leopard safari? | Birdwatching and crocodile spotting at the Jawai Dam, hill temples such as Dev Giri, Rabari village visits, sunsets on the granite and day trips to Ranakpur, Kumbhalgarh and Mount Abu.',
+                    'Is Jawai worth visiting? | Yes, especially from October to March. It is one of the best places in India to see wild leopards, in a beautiful landscape of granite hills and lakes.',
+                    'How many days should I spend in Jawai? | Two nights is ideal: three safaris plus time for the dam, a temple and village life. Add a night for a day trip to Ranakpur or Kumbhalgarh.',
+                ]),
+                'sources' => implode("\n", [self::WIKI_DAM, self::OSM]),
             ],
         ];
     }

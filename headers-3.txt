@@ -1,0 +1,17 @@
+HTTP/2 200 
+x-powered-by: PHP/8.3.36
+expires: Thu, 19 Nov 1981 08:52:00 GMT
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+x-content-type-options: nosniff
+strict-transport-security: max-age=31536000; includeSubDomains
+set-cookie: coj_session=li657rcvgub8ksda7g4q8qmdic; path=/; secure; HttpOnly; SameSite=Lax
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=()
+vary: Accept-Encoding
+content-type: text/html; charset=UTF-8
+date: Mon, 02 Nov 2026 19:33:39 GMT
+server: Apache
+
+final: 200 https://captainsofjawai.com/jawai/best-time-to-visit/ text/html; charset=UTF-8 51118 bytes

@@ -1,0 +1,17 @@
+HTTP/2 200 
+x-powered-by: PHP/8.3.36
+expires: Thu, 19 Nov 1981 08:52:00 GMT
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+x-content-type-options: nosniff
+strict-transport-security: max-age=31536000; includeSubDomains
+set-cookie: coj_session=dmg4co9rbibt4ts73eo76ac159; path=/; secure; HttpOnly; SameSite=Lax
+x-frame-options: SAMEORIGIN
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=()
+vary: Accept-Encoding
+content-type: text/html; charset=UTF-8
+date: Mon, 02 Nov 2026 19:33:36 GMT
+server: Apache
+
+final: 200 https://captainsofjawai.com/jawai-leopard-safari/ text/html; charset=UTF-8 44364 bytes

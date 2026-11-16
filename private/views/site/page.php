@@ -35,11 +35,11 @@
 
 <?php if (in_array($item['slug'], ['jawai', 'jawai/jawai-dam', 'jawai/best-time-to-visit'], true) && \App\Core\Settings::bool('seasons_enabled')): ?><?= View::partial('site/partials/seasons') ?><?php endif; ?>
 
-<?php if (!empty($related) && explode('/', (string) $item['slug'])[0] === 'jawai'): ?>
+<?php if (!empty($related) && (!empty($isArticle) || explode('/', (string) $item['slug'])[0] === 'jawai')): ?>
 <section class="section section-alt">
   <div class="container">
     <div class="section-head reveal">
-      <div><span class="kicker">The Jawai guide</span>
+      <div><span class="kicker"><?= !empty($isArticle) ? 'More Jawai guides' : 'The Jawai guide' ?></span>
       <h2 class="display-2">Keep reading</h2></div>
     </div>
     <div class="guide-grid reveal">

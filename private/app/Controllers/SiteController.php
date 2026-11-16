@@ -360,7 +360,37 @@ final class SiteController
         $root = $segs[0];
         $related = DB::all("SELECT slug, title, intro, image_id FROM pages WHERE status = 'published' AND (slug = ? OR slug LIKE ?) AND slug <> ? ORDER BY slug", [$root, $root . '/%', $slug]);
 
+        // Travel articles: link to the guides this one already points to (internal links help search engines
+        // and readers), add an Article schema and put the guides hub in the breadcrumb.
+        $isArticle = ($item['kicker'] ?? '') === 'Jawai travel guide' && $slug !== 'jawai-travel-guides';
+        if ($isArticle) {
+            preg_match_all('~href="/([a-z0-9-]+)/"~', (string) $item['body'], $m);
+            $links = array_values(array_diff(array_unique($m[1]), [$slug, 'jawai-travel-guides', 'book-a-safari', 'contact', 'faq', 'jawai']));
+            $related = [];
+            if ($links) {
+                $place = implode(',', array_fill(0, count($links), '?'));
+                $related = DB::all("SELECT slug, title, intro, image_id FROM pages WHERE status = 'published' AND slug IN ($place) LIMIT 6", $links);
+                foreach ($related as &$rel) {
+                    $rel['title'] = self::withPrice((string) $rel['title']);
+                    $rel['intro'] = self::withPrice((string) $rel['intro']);
+                }
+                unset($rel);
+            }
+            if ($hub = DB::val("SELECT title FROM pages WHERE slug = 'jawai-travel-guides' AND status = 'published'")) {
+                array_splice($crumbs, count($crumbs) - 1, 0, [[$hub, '/jawai-travel-guides/']]);
+            }
+        }
+
         $schema = [];
+        if ($isArticle) {
+            $schema[] = [
+                '@context' => 'https://schema.org', '@type' => 'Article', 'headline' => $item['title'], 'description' => excerpt($item['meta_description'] ?: $item['intro'] ?: $item['body'], 300),
+                'inLanguage' => str_starts_with($slug, 'udaipur-se-') ? 'hi' : 'en',
+                'datePublished' => date('c', strtotime($item['created_at'] ?: 'now')), 'dateModified' => date('c', strtotime($item['updated_at'] ?: 'now')),
+                'author' => ['@type' => 'Organization', 'name' => setting('site_name')], 'publisher' => ['@id' => abs_url('/#organization')],
+                'mainEntityOfPage' => abs_url('/' . $slug . '/'), 'about' => ['@type' => 'Place', 'name' => 'Jawai, Pali district, Rajasthan'],
+            ] + ($item['image_id'] && ($src = \App\Core\Media::url((int) $item['image_id'], 'lg')) ? ['image' => abs_url($src)] : []);
+        }
         if ($faq) {
             $schema[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map(
                 fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]],
@@ -392,7 +422,7 @@ final class SiteController
             ];
         }
 
-        return $this->show('page', compact('item', 'faq', 'sources', 'related'), [
+        return $this->show('page', compact('item', 'faq', 'sources', 'related', 'isArticle'), [
             'title' => $item['meta_title'] ?: $item['title'],
             'raw_title' => (bool) $item['meta_title'],
             'description' => $item['meta_description'] ?: excerpt($item['intro'] ?: $item['body']),

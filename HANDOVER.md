@@ -206,3 +206,8 @@ upgrades its own MySQL database. Nothing else (no SSH, no API) connects to the h
 
 Produced by PK Creative: *Website Handover Document*, *Enquiry CRM Guide*, *Growth & Listing Kit*. They contain the admin
 login and the current phone number (**+91 97993 68083**) and price (₹3,999). Regenerate them if those change.
+
+### Article SEO (added in 2.16.0)
+Pages with kicker `Jawai travel guide` get an Article schema (datePublished/dateModified, image), a breadcrumb through
+`/jawai-travel-guides/`, and a "More Jawai guides" block built from the guides they already link to (`SiteController::page`).
+New articles go in `ArticlesPartN.php` (`slug`, `title`, `img`, `intro`, `mt`, `md`, `body`, `faq`) and are registered in `Articles::morePages()`.

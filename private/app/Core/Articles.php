@@ -43,7 +43,7 @@ final class Articles
         'things-to-do-in-jawai' => 'granite-dome-dusk',
     ];
 
-    /** All articles: the original 22 plus the 70 added from Search Console queries, and a hub page that links to them all. */
+    /** All articles: the original 22 plus the 100 added from Search Console queries, and a hub page that links to them all. */
     public static function pages(callable $img): array
     {
         $core = self::corePages($img);
@@ -51,7 +51,7 @@ final class Articles
         return array_merge($core, $more, [self::hub($img, array_merge($core, $more))]);
     }
 
-    /** The 70 articles in ArticlesPart1..6 (routes, transport, temples, wildlife, seasons, planning). */
+    /** The 100 articles in ArticlesPart1..8 (routes, transport, temples, wildlife, seasons, planning). */
     private static function morePages(callable $img): array
     {
         $base = ['kicker' => 'Jawai travel guide', 'show_cta' => 1];
@@ -62,6 +62,8 @@ final class Articles
             [ArticlesPart4::rows(), [self::WIKI_RESERVE, self::WIKI_DAM]],
             [ArticlesPart5::rows(), []],
             [ArticlesPart6::rows(), []],
+            [ArticlesPart7::rows(), []],
+            [ArticlesPart8::rows(), []],
         ];
         $out = [];
         foreach ($groups as [$rows, $sources]) {
